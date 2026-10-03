@@ -1,0 +1,109 @@
+
+====================================================================================================
+IEEE 118: 2380 states (476 outage sets x 5 load levels), 118 buses (64 PQ), 152,320 PQ bus readings
+case voltage limits: 0.94-1.06 p.u.
+GENCO |Vm error| on PQ buses, p.u.: median 0.00001 / p99 0.00096 / p99.9 0.00218 / max 0.01209
+  worst bus per state: median 0.00049 / p99 0.00354; readings off by more than 0.005: 8 (0.005%), by more than 0.01: 2
+AC Vm on PQ buses: min 0.8629, 0.1% 0.9387, median 1.0336, 99.9% 1.0612, max 1.0769
+DC's implicit Vm = 1.0 is off by: median 0.0350 / p99 0.0600 / max 0.1371
+PV/REF buses outside the case limits (setpoints, known to every solver): 0 bus-states
+states with a real line overload (AC): 742; DC flags an overload in 647 states
+
+GENCO alone, all states, PQ buses (low/high = real violations below / above the band):
+  band                                  real    low   high  states  share  missed  false+  recall precis. st.unflag  V only  V,DC ok
+  case limits                            695    301    394     531  22.3%       8     200   98.8%   77.5%         4     308      331
+  0.95-1.05                           23,633  2,009 21,624    2380 100.0%      25      17   99.9%   99.9%         0    1638     1733
+  0.937-1.063 (rare-event band)          174    122     52     118   5.0%       3       9   98.3%   95.0%         3      66       75
+  undervoltage only (< 0.94)             301    301      0     231   9.7%       2     195   99.3%   60.5%         2     110      121
+  st.unflag = violating states where GENCO flags no bus at all; V only = violating states with no real line overload;
+  V,DC ok = violating states where DC power flow shows no line overload (no warning of any kind from DC screening).
+
+how big are the violations of the case limits, and GENCO's mistakes on them (PQ buses, all states):
+  AC outside by more than 0.0001:    695 bus-states in   531 states; GENCO calls no violation on    8
+  AC outside by more than 0.002 :    217 bus-states in   154 states; GENCO calls no violation on    1
+  AC outside by more than 0.005 :    140 bus-states in    97 states; GENCO calls no violation on    1
+  AC outside by more than 0.01  :    101 bus-states in    61 states; GENCO calls no violation on    0
+  AC outside by more than 0.02  :     42 bus-states in    29 states; GENCO calls no violation on    0
+  missed violations: AC outside by median 0.00011, max 0.00596 p.u.
+  false alarms: AC inside the limit by median 0.00000, max 0.00009 p.u.
+  states where AC has a PQ bus within 0.005 of a case limit: 100.0% (the OPF dispatch parks voltages on the limit)
+
+escalation to AC when GENCO puts a PQ bus within +-d of a limit; scored on the test half (1190 states):
+  band / rule                                                AC calls   real  missed  of real  states  false+
+  [case limits]
+    GENCO alone                                                  0.0%    303       1    0.33%       1     105
+    GENCO + AC within +-0.005 of a limit (fixed)               100.0%    303       0    0.00%       0       0
+    GENCO + AC within +-0.001 (calibrated, target <= 0%)       100.0%    303       0    0.00%       0       0   (calibration: 100.0% calls, 0 of 392 missed)
+    GENCO + AC within +-0.001 (calibrated, target <= 1%)       100.0%    303       0    0.00%       0       0   (calibration: 100.0% calls, 0 of 392 missed)
+  band / rule                                                AC calls   real  missed  of real  states  false+
+  [0.95-1.05]
+    GENCO alone                                                  0.0% 11,779      18    0.15%      18       7
+    GENCO + AC within +-0.005 of a limit (fixed)               100.0% 11,779       0    0.00%       0       0
+    GENCO + AC within +-0.002 (calibrated, target <= 0%)        99.7% 11,779       0    0.00%       0       0   (calibration: 99.4% calls, 0 of 11854 missed)
+    never escalate (calibrated, target <= 1%)                    0.0% 11,779      18    0.15%      18       7   (calibration: 0.0% calls, 7 of 11854 missed)
+  band / rule                                                AC calls   real  missed  of real  states  false+
+  [0.937-1.063 (rare-event band)]
+    GENCO alone                                                  0.0%     82       2    2.44%       2       7
+    GENCO + AC within +-0.005 of a limit (fixed)               100.0%     82       0    0.00%       0       0
+    GENCO + AC within +-0.003 (calibrated, target <= 0%)        97.8%     82       0    0.00%       0       0   (calibration: 97.3% calls, 0 of 92 missed)
+    GENCO + AC within +-0.003 (calibrated, target <= 1%)        97.8%     82       0    0.00%       0       0   (calibration: 97.3% calls, 0 of 92 missed)
+  band / rule                                                AC calls   real  missed  of real  states  false+
+  [undervoltage only (< 0.94)]
+    GENCO alone                                                  0.0%    131       0    0.00%       0     103
+    GENCO + AC within +-0.005 of a limit (fixed)                20.2%    131       0    0.00%       0       0
+    GENCO + AC within +-0.001 (calibrated, target <= 0%)        16.6%    131       0    0.00%       0       0   (calibration: 16.9% calls, 0 of 170 missed)
+    GENCO + AC within +-0.001 (calibrated, target <= 1%)        16.6%    131       0    0.00%       0       0   (calibration: 16.9% calls, 0 of 170 missed)
+
+====================================================================================================
+Texas 2000: 1505 states (301 outage sets x 5 load levels), 2000 buses (1609 PQ), 2,421,545 PQ bus readings
+case voltage limits: 0.9-1.1 p.u.
+GENCO |Vm error| on PQ buses, p.u.: median 0.00009 / p99 0.00188 / p99.9 0.00427 / max 0.04131
+  worst bus per state: median 0.00122 / p99 0.00904; readings off by more than 0.005: 297 (0.012%), by more than 0.01: 67
+AC Vm on PQ buses: min 0.8836, 0.1% 0.9526, median 0.9909, 99.9% 1.0776, max 1.1655
+DC's implicit Vm = 1.0 is off by: median 0.0125 / p99 0.0436 / max 0.1655
+PV/REF buses outside the case limits (setpoints, known to every solver): 0 bus-states
+states with a real line overload (AC): 89; DC flags an overload in 372 states
+
+GENCO alone, all states, PQ buses (low/high = real violations below / above the band):
+  band                                  real    low   high  states  share  missed  false+  recall precis. st.unflag  V only  V,DC ok
+  case limits                              7      5      2       6   0.4%       1       0   85.7%  100.0%         1       6        6
+  0.95-1.05                           15,068    894 14,174     671  44.6%      61       8   99.6%   99.9%         5     624      348
+  0.91-1.09 (rare-event band)             27     15     12      17   1.1%      13       0   51.9%  100.0%         7      15       14
+  undervoltage only (< 0.9)                5      5      0       5   0.3%       1       0   80.0%  100.0%         1       5        5
+  st.unflag = violating states where GENCO flags no bus at all; V only = violating states with no real line overload;
+  V,DC ok = violating states where DC power flow shows no line overload (no warning of any kind from DC screening).
+
+how big are the violations of the case limits, and GENCO's mistakes on them (PQ buses, all states):
+  AC outside by more than 0.0001:      7 bus-states in     6 states; GENCO calls no violation on    1
+  AC outside by more than 0.002 :      7 bus-states in     6 states; GENCO calls no violation on    1
+  AC outside by more than 0.005 :      7 bus-states in     6 states; GENCO calls no violation on    1
+  AC outside by more than 0.01  :      4 bus-states in     3 states; GENCO calls no violation on    0
+  AC outside by more than 0.02  :      2 bus-states in     1 states; GENCO calls no violation on    0
+  missed violations: AC outside by median 0.00612, max 0.00612 p.u.
+  states where AC has a PQ bus within 0.005 of a case limit: 0.4% (the OPF dispatch parks voltages on the limit)
+
+escalation to AC when GENCO puts a PQ bus within +-d of a limit; scored on the test half (755 states):
+  band / rule                                                AC calls   real  missed  of real  states  false+
+  [case limits]
+    GENCO alone                                                  0.0%      6       0    0.00%       0       0
+    GENCO + AC within +-0.005 of a limit (fixed)                 0.3%      6       0    0.00%       0       0
+    GENCO + AC within +-0.005 (calibrated, target <= 0%)         0.3%      6       0    0.00%       0       0   (calibration: 0.1% calls, 0 of 1 missed)
+    GENCO + AC within +-0.005 (calibrated, target <= 1%)         0.3%      6       0    0.00%       0       0   (calibration: 0.1% calls, 0 of 1 missed)
+  band / rule                                                AC calls   real  missed  of real  states  false+
+  [0.95-1.05]
+    GENCO alone                                                  0.0%  7,516      18    0.24%      10       7
+    GENCO + AC within +-0.005 of a limit (fixed)                44.4%  7,516       3    0.04%       1       0
+    GENCO + AC within +-0.0075 (calibrated, target <= 0%)       64.2%  7,516       3    0.04%       1       0   (calibration: 64.8% calls, 0 of 7552 missed)
+    never escalate (calibrated, target <= 1%)                    0.0%  7,516      18    0.24%      10       7   (calibration: 0.0% calls, 43 of 7552 missed)
+  band / rule                                                AC calls   real  missed  of real  states  false+
+  [0.91-1.09 (rare-event band)]
+    GENCO alone                                                  0.0%     16       5   31.25%       5       0
+    GENCO + AC within +-0.005 of a limit (fixed)                20.5%     16       2   12.50%       2       0
+    GENCO + AC within +-0.001 (calibrated, target <= 0%)        20.0%     16       2   12.50%       2       0   (calibration: 20.0% calls, 0 of 11 missed)
+    GENCO + AC within +-0.001 (calibrated, target <= 1%)        20.0%     16       2   12.50%       2       0   (calibration: 20.0% calls, 0 of 11 missed)
+  band / rule                                                AC calls   real  missed  of real  states  false+
+  [undervoltage only (< 0.9)]
+    GENCO alone                                                  0.0%      4       0    0.00%       0       0
+    GENCO + AC within +-0.005 of a limit (fixed)                 0.1%      4       0    0.00%       0       0
+    GENCO + AC within +-0.005 (calibrated, target <= 0%)         0.1%      4       0    0.00%       0       0   (calibration: 0.1% calls, 0 of 1 missed)
+    GENCO + AC within +-0.005 (calibrated, target <= 1%)         0.1%      4       0    0.00%       0       0   (calibration: 0.1% calls, 0 of 1 missed)

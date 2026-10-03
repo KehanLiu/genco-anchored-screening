@@ -1,0 +1,6 @@
+test_2 p0 runtime: already on disk
+test_2 p0 gen: already on disk
+test_2 p0 bus: already on disk
+test_2 p0 branch: 54740 rows, 8.9 of 8.8 MB
+test_2 p0 branch: 589260 rows, 94.3 of 94.3 MB
+rc=0

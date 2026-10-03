@@ -1,0 +1,70 @@
+work/goc500/lines_tiny_seed0.parquet: 14,992 scenarios, 10,875,975 in-service rated line readings, 728 lines; real overload = AC loading > 1.001
+branches removed per scenario: {1: 4498, 2: 3603, 3: 2855, 4: 2248, 5: 1788}
+
+a. absolute loading error, points of rating: median / p99 / max  (checkpoint was trained on N-1 only; n_out >= 2 is zero-shot)
+  n_out    readings                      GENCO                         DC
+  all    10,875,975       0.325 / 6.50 / 134.1      1.043 / 22.70 / 206.8
+  1       3,270,046        0.316 / 6.19 / 70.9      1.036 / 22.61 / 194.0
+  2       2,615,778        0.320 / 6.47 / 77.8      1.040 / 22.65 / 191.0
+  3       2,069,875       0.328 / 6.65 / 102.2      1.044 / 22.78 / 206.8
+  4       1,627,552       0.336 / 6.58 / 134.1      1.050 / 22.76 / 199.0
+  5       1,292,724        0.345 / 6.94 / 88.3      1.053 / 22.84 / 206.3
+  readings with AC loading > 90%: GENCO 1.433 / 39.42 / 134.1, DC 2.976 / 132.97 / 206.8  (11,520 readings)
+
+b. prevalence: 2,621 overloaded line readings (0.024% of readings) on 111 distinct lines; 1,876 critical scenarios = 12.5%
+   critical share by n_out: 1: 6.0%, 2: 9.8%, 3: 15.0%, 4: 19.6%, 5: 21.6%
+   sensitivity to the definition: AC > 1.000 -> 16.7% of scenarios, > 1.001 -> 12.5%, > 1.01 -> 9.5%  (the OPF dispatch parks congested lines at exactly 100%)
+   what the raw predictions say at t = limit: GENCO flags 25.0% of scenarios, recall 85.2%, DC flags 21.6% of scenarios, recall 73.5%
+
+canonical split (seed 0): 7,496 calibration / 7,496 test scenarios; test half has 935 critical scenarios (12.5%), 1,327 overloaded lines
+
+c. THEIR rule: scenario critical if any predicted loading > t, t maximising scenario-level F-beta (beta=3); evaluated on the test half
+  model  rule                            t  recall  flagged precision on secure  missed scen.  missed lines  of real 95% upper   worst
+  GENCO  F3, t from calibration       0.970   96.4%    37.6%     31.9%     29.3%     34/935        40/1327      3.01%     3.91%  139.6%
+  GENCO  F3, t tuned on test          0.985   93.9%    32.7%     35.9%     23.9%     57/935        64/1327      4.82%     5.91%  139.6%
+  DC     F3, t from calibration       0.955   83.2%    28.5%     36.4%     20.7%    157/935       188/1327     14.17%    15.84%  229.9%
+  DC     F3, t tuned on test          0.940   84.9%    31.1%     34.1%     23.4%    141/935       169/1327     12.74%    14.34%  229.9%
+   F3 at the chosen t: GENCO t from calibration 0.800, GENCO t tuned on test 0.808, DC t from calibration 0.762, DC t tuned on test 0.739
+   example post (their own Tiny, trained on this perturbation): GENCO recall 94.3%, 32.7% flagged; DC recall 99.8%, 98.5% flagged; prevalence 10.7%
+
+d. OUR rule: label-conditional split conformal (analysis_conformal.conformal_width / evaluate, sigma = global), calibrated on 1,294 real overloads of the calibration half; evaluated on the test half
+  model  rule                            t  recall  flagged precision on secure  missed scen.  missed lines  of real 95% upper   worst
+  GENCO  conformal alpha=10%          0.978   94.9%    35.3%     33.5%     26.8%     48/935        54/1327      4.07%     5.08%  139.6%
+  GENCO  conformal alpha=5%           0.942   98.4%    44.4%     27.7%     36.7%     15/935        18/1327      1.36%     2.00%  139.6%
+  GENCO  conformal alpha=2%           0.850   99.9%    79.1%     15.8%     76.1%      1/935         1/1327      0.08%     0.36%  105.1%
+  GENCO  conformal alpha=1%           0.808  100.0%    94.9%     13.1%     94.2%      0/935         0/1327      0.00%     0.23%        
+  DC     conformal alpha=10%          0.487  100.0%   100.0%     12.5%    100.0%      0/935         0/1327      0.00%     0.23%        
+  DC     conformal alpha=5%           0.242  100.0%   100.0%     12.5%    100.0%      0/935         0/1327      0.00%     0.23%        
+  DC     conformal alpha=2%           0.191  100.0%   100.0%     12.5%    100.0%      0/935         0/1327      0.00%     0.23%        
+  DC     conformal alpha=1%           0.177  100.0%   100.0%     12.5%    100.0%      0/935         0/1327      0.00%     0.23%        
+   band width below the limit, points of rating: GENCO 2.3 / 5.9 / 15.1 / 19.3; DC 51.4 / 75.9 / 81.0 / 82.4  (alpha 10/5/2/1%)
+   'flagged' = AC-call share, 'on secure' = share of secure scenarios sent to AC anyway, 'missed lines' = real overloads in scenarios accepted without AC
+
+   coverage check, 100 random 50/50 re-splits of scenarios:
+   model  alpha per-line miss rate         p10-p90 splits > alpha AC calls mean       p10-p90 on secure missed (state-level)
+   GENCO    10%              9.77%   8.18%-11.29%             41%         34.1%  33.0%-35.4%      25.6%                4.90%
+   GENCO     5%              4.77%   3.55%-5.92%              39%         44.8%  43.1%-46.7%      37.1%                1.39%
+   GENCO     2%              1.96%   1.02%-2.72%              51%         72.4%  63.6%-81.4%      68.5%                0.15%
+   GENCO     1%              1.03%   0.47%-1.56%              51%         94.2%  87.1%-99.9%      93.4%                0.03%
+   DC       10%              9.94%   8.45%-11.21%             51%        100.0% 100.0%-100.0%    100.0%                0.00%
+   DC        5%              5.02%   3.94%-6.22%              51%        100.0% 100.0%-100.0%    100.0%                0.00%
+   DC        2%              1.99%   1.27%-2.70%              49%        100.0% 100.0%-100.0%    100.0%                0.00%
+   DC        1%              0.96%   0.47%-1.53%              43%        100.0% 100.0%-100.0%    100.0%                0.00%
+
+   coverage check, 100 re-splits by whole load scenario (variants of one dispatch stay together):
+   model  alpha per-line miss rate         p10-p90 splits > alpha AC calls mean       p10-p90 on secure missed (state-level)
+   GENCO    10%             10.07%   8.29%-12.01%             53%         33.9%  32.5%-35.4%      25.4%                5.01%
+   GENCO     5%              5.00%   3.66%-6.25%              52%         44.4%  42.1%-46.8%      36.7%                1.45%
+   GENCO     2%              2.12%   1.11%-3.23%              54%         71.5%  60.0%-81.6%      67.5%                0.14%
+   GENCO     1%              1.10%   0.47%-1.98%              49%         93.5%  82.7%-99.9%      92.5%                0.02%
+   DC       10%              9.79%   8.56%-11.25%             41%        100.0% 100.0%-100.0%    100.0%                0.00%
+   DC        5%              4.88%   3.94%-6.12%              40%        100.0% 100.0%-100.0%    100.0%                0.00%
+   DC        2%              2.05%   1.41%-2.64%              51%        100.0% 100.0%-100.0%    100.0%                0.00%
+   DC        1%              0.96%   0.52%-1.50%              44%        100.0% 100.0%-100.0%    100.0%                0.00%
+
+e. fixed AC budget on the test half: share of real overloaded lines (critical scenarios) found when the riskiest x% of scenarios, ranked by max predicted loading, go to AC  (saved work/goc500/budget.csv)
+  model                5%             10%             20%             35%             50%   AC share needed to find all lines
+  GENCO     47.9% (36.4%)   62.2% (52.1%)   82.4% (76.7%)   95.9% (94.9%)   99.3% (99.1%)   82.5%
+  DC        49.7% (38.7%)   58.9% (50.2%)   74.6% (69.1%)   87.9% (85.7%)   91.6% (89.9%)   99.9%
+  oracle    51.5% (40.0%)   85.5% (80.1%) 100.0% (100.0%) 100.0% (100.0%) 100.0% (100.0%)   12.5%
+work/texas/tmo 3000 .venv/bin/python analysis_goc500.py --reuse   11.79s user 0.70s system 35% cpu 35.324 total

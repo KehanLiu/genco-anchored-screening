@@ -1,0 +1,25 @@
+extra: GENCO+1 / GENCO+2 conformal (global band) at smaller alpha, canonical split, test half (935 critical, 1327 overloaded lines)
+seed 0 genco1 alpha 0.5%: band 0.02 pt, AC calls 12.8%, on secure 0.4%, missed 2/1327 (upper95 0.47%), worst 1.0029
+seed 0 genco1 alpha 0.2%: band 0.20 pt, AC calls 20.7%, on secure 9.4%, missed 1/1327 (upper95 0.36%), worst 1.0029
+seed 0 genco1 alpha 0.1%: band 0.34 pt, AC calls 22.5%, on secure 11.5%, missed 1/1327 (upper95 0.36%), worst 1.0029
+   genco1: largest underestimate of a real overload 22.78 pt; real overloads predicted below limit: 22/2621; of those with AC>1.01: 4
+seed 0 genco2 alpha 0.5%: band -0.00 pt, AC calls 12.4%, on secure 0.0%, missed 3/1327 (upper95 0.58%), worst 1.0010
+seed 0 genco2 alpha 0.2%: band -0.00 pt, AC calls 12.4%, on secure 0.0%, missed 2/1327 (upper95 0.47%), worst 1.0010
+seed 0 genco2 alpha 0.1%: band -0.00 pt, AC calls 12.5%, on secure 0.0%, missed 0/1327 (upper95 0.23%), worst nan
+   genco2: largest underestimate of a real overload 8.83 pt; real overloads predicted below limit: 1/2621; of those with AC>1.01: 1
+seed 1 genco1 alpha 0.5%: band -0.00 pt, AC calls 12.5%, on secure 0.0%, missed 2/1327 (upper95 0.47%), worst 1.0029
+seed 1 genco1 alpha 0.2%: band 0.09 pt, AC calls 15.3%, on secure 3.3%, missed 2/1327 (upper95 0.47%), worst 1.0029
+seed 1 genco1 alpha 0.1%: band 0.18 pt, AC calls 20.3%, on secure 8.9%, missed 2/1327 (upper95 0.47%), worst 1.0029
+   genco1: largest underestimate of a real overload 99.54 pt; real overloads predicted below limit: 13/2621; of those with AC>1.01: 4
+seed 1 genco2 alpha 0.5%: band -0.00 pt, AC calls 12.4%, on secure 0.0%, missed 3/1327 (upper95 0.58%), worst 1.0010
+seed 1 genco2 alpha 0.2%: band -0.00 pt, AC calls 12.4%, on secure 0.0%, missed 2/1327 (upper95 0.47%), worst 1.0010
+seed 1 genco2 alpha 0.1%: band -0.00 pt, AC calls 12.5%, on secure 0.0%, missed 0/1327 (upper95 0.23%), worst nan
+   genco2: largest underestimate of a real overload 6.03 pt; real overloads predicted below limit: 0/2621; of those with AC>1.01: 0
+seed 42 genco1 alpha 0.5%: band 0.01 pt, AC calls 12.6%, on secure 0.2%, missed 1/1327 (upper95 0.36%), worst 1.0029
+seed 42 genco1 alpha 0.2%: band 0.06 pt, AC calls 14.2%, on secure 2.0%, missed 1/1327 (upper95 0.36%), worst 1.0029
+seed 42 genco1 alpha 0.1%: band 0.12 pt, AC calls 18.5%, on secure 6.9%, missed 1/1327 (upper95 0.36%), worst 1.0029
+   genco1: largest underestimate of a real overload 19.34 pt; real overloads predicted below limit: 15/2621; of those with AC>1.01: 4
+seed 42 genco2 alpha 0.5%: band -0.00 pt, AC calls 12.4%, on secure 0.0%, missed 3/1327 (upper95 0.58%), worst 1.0010
+seed 42 genco2 alpha 0.2%: band -0.00 pt, AC calls 12.4%, on secure 0.0%, missed 2/1327 (upper95 0.47%), worst 1.0010
+seed 42 genco2 alpha 0.1%: band -0.00 pt, AC calls 12.5%, on secure 0.0%, missed 0/1327 (upper95 0.23%), worst nan
+   genco2: largest underestimate of a real overload 7.23 pt; real overloads predicted below limit: 1/2621; of those with AC>1.01: 1

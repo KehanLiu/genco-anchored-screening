@@ -1,0 +1,38 @@
+19:26:01 worker 0: 0/7496  it flat/dc/genco 5/5/3  dv 3.3e-11  mis genco 0/1/2 152.6/9.07/0.0069 MW
+19:26:11 worker 0: 250/7496  it flat/dc/genco 5/5/3  dv 7.2e-14  mis genco 0/1/2 658.5/9.39/0.0016 MW
+19:26:22 worker 0: 500/7496  it flat/dc/genco 5/5/3  dv 1.0e-13  mis genco 0/1/2 228.5/0.87/0.0000 MW
+19:26:32 worker 0: 750/7496  it flat/dc/genco 5/5/3  dv 1.4e-14  mis genco 0/1/2 464.1/5.71/0.0006 MW
+19:26:42 worker 0: 1000/7496  it flat/dc/genco 5/5/3  dv 6.5e-11  mis genco 0/1/2 73.4/1.48/0.0003 MW
+19:26:53 worker 0: 1250/7496  it flat/dc/genco 5/5/3  dv 1.5e-14  mis genco 0/1/2 509.4/3.74/0.0002 MW
+19:27:03 worker 0: 1500/7496  it flat/dc/genco 5/5/3  dv 7.6e-13  mis genco 0/1/2 526.6/3.75/0.0003 MW
+19:27:13 worker 0: 1750/7496  it flat/dc/genco 5/5/3  dv 4.1e-14  mis genco 0/1/2 286.4/1.27/0.0000 MW
+19:27:23 worker 0: 2000/7496  it flat/dc/genco 5/5/3  dv 2.5e-10  mis genco 0/1/2 499.8/4.06/0.0003 MW
+19:27:33 worker 0: 2250/7496  it flat/dc/genco 5/5/3  dv 4.0e-14  mis genco 0/1/2 371.9/2.73/0.0001 MW
+19:27:44 worker 0: 2500/7496  it flat/dc/genco 5/5/3  dv 1.7e-11  mis genco 0/1/2 484.7/3.25/0.0002 MW
+19:27:54 worker 0: 2750/7496  it flat/dc/genco 5/5/3  dv 5.5e-10  mis genco 0/1/2 553.2/3.88/0.0002 MW
+19:28:04 worker 0: 3000/7496  it flat/dc/genco 5/5/3  dv 3.1e-14  mis genco 0/1/2 279.0/1.15/0.0000 MW
+19:28:14 worker 0: 3250/7496  it flat/dc/genco 5/5/3  dv 2.9e-13  mis genco 0/1/2 335.2/1.72/0.0001 MW
+19:28:24 worker 0: 3500/7496  it flat/dc/genco 5/5/3  dv 6.1e-13  mis genco 0/1/2 421.3/2.98/0.0002 MW
+19:28:34 worker 0: 3750/7496  it flat/dc/genco 5/5/3  dv 4.5e-14  mis genco 0/1/2 494.8/7.62/0.0012 MW
+19:28:44 worker 0: 4000/7496  it flat/dc/genco 5/5/3  dv 2.7e-12  mis genco 0/1/2 440.8/3.57/0.0003 MW
+19:28:54 worker 0: 4250/7496  it flat/dc/genco 5/5/3  dv 1.9e-14  mis genco 0/1/2 596.7/4.99/0.0004 MW
+19:29:04 worker 0: 4500/7496  it flat/dc/genco 5/5/3  dv 1.9e-14  mis genco 0/1/2 251.8/0.87/0.0000 MW
+19:29:14 worker 0: 4750/7496  it flat/dc/genco 5/5/3  dv 3.4e-10  mis genco 0/1/2 622.0/5.73/0.0005 MW
+19:29:24 worker 0: 5000/7496  it flat/dc/genco 5/5/3  dv 2.0e-14  mis genco 0/1/2 624.4/6.57/0.0007 MW
+19:29:34 worker 0: 5250/7496  it flat/dc/genco 5/5/3  dv 2.3e-11  mis genco 0/1/2 673.7/8.57/0.0012 MW
+19:29:44 worker 0: 5500/7496  it flat/dc/genco 5/5/3  dv 1.4e-14  mis genco 0/1/2 182.7/2.35/0.0001 MW
+19:29:54 worker 0: 5750/7496  it flat/dc/genco 5/5/3  dv 1.8e-10  mis genco 0/1/2 458.6/2.98/0.0001 MW
+19:30:03 worker 0: 6000/7496  it flat/dc/genco 5/5/3  dv 1.2e-11  mis genco 0/1/2 735.7/7.02/0.0007 MW
+19:30:13 worker 0: 6250/7496  it flat/dc/genco 5/5/3  dv 1.8e-14  mis genco 0/1/2 631.4/6.83/0.0008 MW
+19:30:23 worker 0: 6500/7496  it flat/dc/genco 5/5/3  dv 6.4e-12  mis genco 0/1/2 536.0/19.66/0.0075 MW
+19:30:33 worker 0: 6750/7496  it flat/dc/genco 5/5/3  dv 2.3e-13  mis genco 0/1/2 407.6/3.14/0.0002 MW
+19:30:42 worker 0: 7000/7496  it flat/dc/genco 5/5/3  dv 1.8e-10  mis genco 0/1/2 647.1/8.50/0.0013 MW
+19:30:52 worker 0: 7250/7496  it flat/dc/genco 5/5/3  dv 2.2e-09  mis genco 0/1/2 358.4/2.06/0.0001 MW
+14992 scenarios, 10,875,975 line readings, wall 312s
+validation: stored AC solution in this script's equations: mismatch max 9.99e-07 MW (median 1.83e-09); loading formula vs stored flows max 1.89e-11 points
+  Newton from flat : converged 14992/14992, iterations mean 5.00 (median 5, max 7), 6.0 ms median; max |V - V_ac stored| 1.4e-08 p.u. (0 scenarios > 1e-5); start mismatch median 8749.7 MW
+  Newton from dc   : converged 14992/14992, iterations mean 4.98 (median 5, max 7), 6.1 ms median; max |V - V_ac stored| 3.9e-09 p.u. (0 scenarios > 1e-5); start mismatch median 8746.6 MW
+  Newton from genco: converged 14992/14992, iterations mean 3.01 (median 3, max 7), 4.1 ms median; max |V - V_ac stored| 7.5e-09 p.u. (0 scenarios > 1e-5); start mismatch median 435.2 MW
+  converged Newton loading vs stored AC loading: max 1.01e-06 points
+  one Newton step from GENCO: 1.19 ms median
+  scenarios with a broken step (NaN loading): {'genco1': 0, 'genco2': 0, 'dc1': 0, 'flat1': 0}

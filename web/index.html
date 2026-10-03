@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GENCO what-if</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1 data-i18n="brand">GENCO what-if</h1>
+      <span id="grid-label" class="muted"></span>
+    </div>
+
+    <div id="views" class="seg" role="radiogroup" aria-label="Map shows" data-i18n-aria="mapShows">
+      <button type="button" role="radio" data-view="genco" aria-checked="true" data-i18n="viewGenco">GENCO</button>
+      <button type="button" role="radio" data-view="ac" aria-checked="false" data-i18n="viewAc">AC solver</button>
+      <button type="button" role="radio" data-view="diff" aria-checked="false" data-i18n="viewDiff">Difference</button>
+      <button type="button" role="radio" data-view="residual" aria-checked="false" data-i18n="viewResidual">GENCO residual</button>
+    </div>
+
+    <label class="load">
+      <span data-i18n="load">Load</span>
+      <input id="load" type="range" disabled>
+      <output id="load-out" for="load">–</output>
+    </label>
+
+    <div id="busy" class="busy" aria-live="polite" hidden data-i18n="solving">Solving…</div>
+
+    <div id="lang" class="seg lang" role="radiogroup" aria-label="Language / 语言">
+      <button type="button" role="radio" data-lang="zh" aria-checked="false" lang="zh-CN">中文</button>
+      <button type="button" role="radio" data-lang="en" aria-checked="true" lang="en">EN</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="map" aria-label="Grid map" data-i18n-aria="gridMap">
+      <svg id="map" role="img" aria-label="Grid map" data-i18n-aria="gridMap"></svg>
+      <div id="notice" class="notice" role="alert" hidden></div>
+      <div id="legend" class="legend"></div>
+      <p class="hint" data-i18n="hint">Click a line to trip it, click again to restore. Scroll to zoom, drag to pan.</p>
+      <div id="tooltip" class="tooltip" hidden></div>
+    </section>
+
+    <aside class="panel">
+      <section>
+        <h2 data-i18n="scenario">Scenario</h2>
+        <dl class="stats">
+          <div><dt data-i18n="load">Load</dt><dd id="s-load">–</dd></div>
+          <div><dt data-i18n="linesOut">Lines out</dt><dd id="s-out">–</dd></div>
+        </dl>
+        <ul id="outages" class="chips"></ul>
+        <button id="reset" type="button" class="ghost" disabled data-i18n="reset">Reset scenario</button>
+      </section>
+
+      <section>
+        <h2 data-i18n="advisor">GENCO advisor</h2>
+        <div id="advisor" class="verdict"></div>
+      </section>
+
+      <section>
+        <h2 data-i18n="agreement">Checked against the AC solver</h2>
+        <div id="verdict" class="verdict"></div>
+        <dl class="stats" id="errors"></dl>
+      </section>
+
+      <section>
+        <h2 data-i18n="ranked">Largest line disagreements</h2>
+        <ol id="ranked" class="ranked"></ol>
+      </section>
+
+      <section>
+        <h2 data-i18n="solveTime">Solve time</h2>
+        <dl class="stats" id="timing"></dl>
+      </section>
+    </aside>
+  </main>
+</body>
+</html>

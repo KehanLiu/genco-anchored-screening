@@ -1,0 +1,63 @@
+00:36:56 torch 2.13.0, threads 6, mps available True
+00:36:56 model loaded: 20,069,187 parameters
+00:36:56 test_2 partitions [0]: 200 states
+00:36:56 state 0/200: GENCO end-to-end 133 ms, max |dP| 27.9 MW
+00:36:59 state 25/200: GENCO end-to-end 118 ms, max |dP| 20.3 MW
+00:37:02 state 50/200: GENCO end-to-end 115 ms, max |dP| 38.2 MW
+00:37:05 state 75/200: GENCO end-to-end 116 ms, max |dP| 43.9 MW
+00:37:08 state 100/200: GENCO end-to-end 115 ms, max |dP| 24.7 MW
+00:37:11 state 125/200: GENCO end-to-end 115 ms, max |dP| 71.4 MW
+00:37:14 state 150/200: GENCO end-to-end 114 ms, max |dP| 14.3 MW
+00:37:17 state 175/200: GENCO end-to-end 114 ms, max |dP| 31.4 MW
+
+200 states, 643,664 in-service line readings (643,664 rated), 400,000 bus readings; overload = loading > 1.001
+method                 GENCO base  DC power flow
+P flow err mean MW          0.591          4.930
+P flow err max MW         237.224        519.096
+P residual mean MW          0.131          0.633
+P residual max MW          17.842         71.272
+loading err median pp       0.058          0.986
+loading err p99 pp          0.920         27.729
+real overloads             21.000         21.000
+missed                      1.000          1.000
+false                      37.000        196.000
+sanity: AC ground-truth residual mean/max 0.0000/0.0000 MW; GENCO residual graphkit vs numpy max diff 0.0104 MW
+GENCO voltage: |Vm err| mean 0.00014 max 0.0296 p.u.; |Va err| mean 0.2972 max 4.709 deg
+per-state worst P-flow error, median over states: GENCO 30.6 MW, DC 421.4 MW
+out-of-service branches per state: {0: 7, 1: 50, 2: 143}
+
+GENCO single state, CPU, end-to-end (graph build + normalise + model + inverse + residual): median 114.7 ms, p90 116.7 ms over 199 states
+00:37:20 building graphs for batched timing
+graph build + normalise + transforms per state (CPU): median 2.0 ms
+batched vs single prediction, max abs diff (normalised units): 0.00e+00
+00:37:22   cpu batch    1:     109.9 ms/batch    109.89 ms/state
+00:37:25   cpu batch    4:     418.1 ms/batch    104.51 ms/state
+00:37:36   cpu batch   16:    1646.6 ms/batch    102.91 ms/state
+00:37:59   cpu batch   32:    3225.1 ms/batch    100.78 ms/state
+00:38:44   cpu batch   64:    6368.6 ms/batch     99.51 ms/state
+00:40:14   cpu batch  128:   12811.3 ms/batch    100.09 ms/state
+00:40:14   mps batch    1:      64.6 ms/batch     64.58 ms/state
+00:40:16   mps batch    4:     216.3 ms/batch     54.08 ms/state
+00:40:22   mps batch   16:     840.2 ms/batch     52.51 ms/state
+00:40:35   mps batch   32:    1851.0 ms/batch     57.84 ms/state
+00:41:02   mps batch   64:    3788.0 ms/batch     59.19 ms/state
+00:41:56   mps batch  128:    7651.1 ms/batch     59.77 ms/state
+MPS vs CPU prediction, max abs diff (normalised units): 2.62e-04
+
+GENCO model forward only (graphs pre-built, in memory):
+device  batch  ms_per_batch  ms_per_state status
+   cpu      1    109.894583    109.894583     ok
+   cpu      4    418.057834    104.514458     ok
+   cpu     16   1646.625667    102.914104     ok
+   cpu     32   3225.110417    100.784701     ok
+   cpu     64   6368.590791     99.509231     ok
+   cpu    128  12811.275042    100.088086     ok
+   mps      1     64.583750     64.583750     ok
+   mps      4    216.336958     54.084240     ok
+   mps     16    840.200292     52.512518     ok
+   mps     32   1851.006917     57.843966     ok
+   mps     64   3787.985042     59.187266     ok
+   mps    128   7651.149542     59.774606     ok
+
+stored datakit solver runtime for these states (generated on gridfm's machine): AC median 621 ms, DC median 32 ms
+rc=0

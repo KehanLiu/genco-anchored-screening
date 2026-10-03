@@ -1,0 +1,7 @@
+#!/usr/bin/perl
+# usage: tmo SECONDS cmd args...   -- kill the command (and its group) after SECONDS
+use POSIX ":sys_wait_h";
+my $t = shift; my $pid = fork();
+if ($pid == 0) { setpgrp(0,0); exec @ARGV or die "exec: $!"; }
+local $SIG{ALRM} = sub { print STDERR "\n*** TIMEOUT after ${t}s: @ARGV\n"; kill 'TERM', -$pid; sleep 3; kill 'KILL', -$pid; exit 124; };
+alarm $t; waitpid($pid, 0); exit($? >> 8);

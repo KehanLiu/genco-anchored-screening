@@ -1,0 +1,24 @@
+[A] branch order matches the case file; 2 plain lines stored with from/to swapped
+
+[A] rebuilt 200 official test states from the case file; AC converged on 200
+    vs stored AC: max |dVm| 5.99e-09 p.u., max |dVa| 4.40e-07 deg, max |dPflow| 4.03e-06 MW; vs stored DC: max |dVa_dc| 1.43e-12 deg
+    AC PF (PowerModels compute_ac_pf, flat start, incl. data hand-off): median 64.1 ms, mean 67.0, p90 111.1, min 45.7 (n=199)
+    DC PF (PowerModels compute_dc_pf, incl. data hand-off):            median 18.1 ms, mean 20.9, p90 23.4, min 16.5 (n=199)
+00:58:26 building engine (initial AC-OPF dispatch at load x1.0)
+00:58:27 dropping 113 out-of-service generators of 544
+00:58:30 engine ready in 3.4 s
+00:58:41 load x0.7: No feasible generation dispatch at load x0.70. -> level skipped
+00:58:57 load x0.8: 41 states solved so far, failures {'opf_failed@x0.7': 41}
+00:59:14 load x0.9: 82 states solved so far, failures {'opf_failed@x0.7': 41}
+00:59:29 load x1.0: 123 states solved so far, failures {'opf_failed@x0.7': 41}
+00:59:43 load x1.05: No feasible generation dispatch at load x1.05. -> level skipped
+
+[B] new states from the case file via engine.Engine: 123 solved (3 load levels [0.8, 0.9, 1.0] x 41 outage sets: N-0, 20 N-1, 20 N-2), failures {'opf_failed@x0.7': 41, 'opf_failed@x1.05': 41}
+    AC-OPF dispatch per load level (s, x1.0 was solved at engine start): {0.8: 1.9, 0.9: 2.3, 1.0: 0.0}
+    engine timing    ac: median 43.8 ms, mean 51.7, p90 87.9, min 21.6 (n=122)
+    engine timing    dc: median 14.0 ms, mean 17.4, p90 18.7, min 13.5 (n=122)
+    engine timing genco: median 257.1 ms, mean 255.1, p90 271.9, min 110.8 (n=122)
+    genco: P flow err mean 1.25 / max 191.6 MW; loading err median 0.09 / p99 2.2 pp; overloads real 10, missed 0, false 1
+       dc: P flow err mean 5.26 / max 570.5 MW; loading err median 1.03 / p99 27.7 pp; overloads real 10, missed 1, false 41
+    GENCO P residual: mean over buses 0.27 MW, max 16.8 MW
+rc=0

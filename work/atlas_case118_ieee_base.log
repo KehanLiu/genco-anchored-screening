@@ -1,0 +1,83 @@
+hybrid_case118_ieee_base.parquet: 2380 states, 438,815 line readings, 186 lines
+large errors (> 3% of rating): 1,335 readings (0.304%), in 555 states
+
+loading error in points of rating, by number of lines out:
+       readings  genco median  genco p99  genco max  dc p99  bias (genco-ac)  large errors
+n_out                                                                                     
+0           930          0.06       1.31       4.53   19.55             0.06             1
+1        163725          0.06       1.36      24.32   20.13             0.05           333
+2        274160          0.06       1.73      45.82   21.11             0.04          1001
+
+loading error in points of rating, by load level:
+            readings  genco median  genco p99  genco max  dc p99  bias (genco-ac)  large errors
+load_scale                                                                                     
+0.70           87763          0.06       1.72       9.91   12.60            -0.02           211
+0.85           87763          0.07       2.25      16.02   10.80             0.00           586
+1.00           87763          0.04       1.02      42.40   18.45             0.05           127
+1.10           87763          0.07       1.45      45.82   19.87             0.10           165
+1.20           87763          0.08       1.53      32.17   28.62             0.08           246
+
+loading error in points of rating, by true loading of the line:
+          readings  genco median  genco p99  genco max  dc p99  bias (genco-ac)  large errors
+ac                                                                                           
+<50%        364975          0.06       1.39      16.02   18.70             0.03           873
+50-80%       52541          0.08       1.89      19.59   28.93             0.08           227
+80-95%       16021          0.17       1.73      15.50   18.32             0.16            60
+95-100%       3650          0.51       2.14      13.05   19.44             0.48            15
+100-105%       519          0.31       2.55      18.46   23.75             0.25             5
+>105%         1059          0.70      25.78      45.82   85.78            -0.28           155
+
+loading error in points of rating, by how far GENCO moved the line from its base-case loading (points):
+       readings  genco median  genco p99  genco max  dc p99  bias (genco-ac)  large errors
+shift                                                                                     
+<0.1     249242          0.04       0.85       6.96   18.67             0.03            54
+0.1-1    111420          0.10       1.56      15.16   23.30             0.06           264
+1-5       51642          0.10       2.60      16.02   23.29             0.06           375
+5-10      12831          0.12       3.39      12.69   23.62             0.06           159
+10-20      8343          0.15       4.37      14.08   29.70             0.05           169
+>20        5337          0.21      10.24      45.82   42.37            -0.02           314
+
+per state: rank correlation (Spearman) of the worst line error with GENCO's residual 0.37, with the residual in excess of the base case 0.46
+
+79 of 186 lines ever have a large error; the 10 worst carry 71% of them:
+      large  states  worst  bias
+line                            
+118     483     483   16.0   4.7
+106     118     118    7.0  -3.3
+105      60      60   45.8  -3.3
+29       56      56   32.7  -0.3
+108      55      55   42.4  -1.5
+107      45      45   23.0  -1.7
+104      42      42   39.3  -3.4
+115      36      36   13.0   1.7
+95       26      26    8.5  -0.7
+110      23      23   18.7  -2.3
+
+422 of 476 outage sets ever cause a large error; the 10 worst cause 39% of them:
+outages
+31+103     130
+106+159     50
+106         48
+84+106      46
+103         44
+140+141     43
+2+7         42
+68+95       40
+106+184     40
+20+36       33
+
+real overloads GENCO alone calls safe: 17 of 1569 (1.1%), on 11 lines
+  under-call in points: 50% quantile 4.7, 90% quantile 27.5, 100% quantile 32.7
+  share of these where the line had moved > 1 point from its base case: 100%  (all readings: 17.8%)
+      missed  worst_ac  genco_at_worst  outage_sets
+line                                               
+29         4     1.226           0.852            2
+30         2     1.003           1.000            2
+115        2     1.060           0.931            2
+122        2     1.002           1.000            2
+16         1     1.017           0.973            1
+40         1     1.031           0.983            1
+64         1     1.037           0.852            1
+65         1     1.008           0.994            1
+
+saved per-line table work/atlas_case118_ieee_base_lines.csv

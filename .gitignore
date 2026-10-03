@@ -1,0 +1,29 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+# checkpoints, downloaded data and bulky intermediate results stay local; see README for how to rebuild them
+work/**/*.pt
+work/**/*.ckpt
+work/**/mlruns/
+work/**/data/
+work/**/data_pilot/
+work/**/processed/
+work/**/raw/
+work/texas/*.m
+work/texas/ref/
+work/texas/pf_*/
+work/pf_*/
+work/pretrained/
+work/goc500/net/
+work/goc500/pf_*/
+# German grid experiments are built on data that must not be republished
+germany/
+work/germany/
+# bulky result tables: regenerate with reproduce.sh (or fetch from the results archive linked in the README)
+work/**/*.parquet
+work/**/mlruns/
+work/**/out/predictions*
+# internal working notes
+work/PROGRESS.md
+work/geo/
