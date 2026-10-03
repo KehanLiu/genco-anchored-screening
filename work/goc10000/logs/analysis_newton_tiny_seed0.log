@@ -1,0 +1,61 @@
+case10000_goc, GENCO tiny seed 0: 993 scenarios, 13,098,314 in-service rated line readings, 13,193 lines; real overload = AC loading > 1.001
+branches removed per scenario: {1: 357, 2: 240, 3: 168, 4: 146, 5: 82}
+scenarios with a broken Newton step (NaN loading, treated as flagged): {'genco1': 0, 'genco2': 0, 'dc1': 0, 'flat1': 0}
+
+0. validation of the Newton code against the stored AC solution
+  stored AC voltages in this script's equations: mismatch max 9.66e-07 MW (median 1.10e-09); loading formula vs stored flows max 3.94e-11 points
+  Newton from flat : converged 0/993; iterations mean nan median nan max nan; nan ms median; max |V - V_ac stored| nan p.u., 0 converged to a different solution (> 1e-5); start mismatch median 11270.2 MW
+  Newton from dc   : converged 0/993; iterations mean nan median nan max nan; nan ms median; max |V - V_ac stored| nan p.u., 0 converged to a different solution (> 1e-5); start mismatch median 11273.6 MW
+  Newton from genco: converged 993/993; iterations mean 3.22 median 3 max 6; 66.0 ms median; max |V - V_ac stored| 4.9e-09 p.u., 0 converged to a different solution (> 1e-5); start mismatch median 256.0 MW
+  converged Newton loading vs stored AC loading: max 1.31e-06 points; one step from GENCO 21.99 ms median
+
+1. absolute loading error, points of rating: median / p99 / p99.9 / max   (NaN steps excluded here)
+                                all readings                 AC loading > 90%
+  GENCO        0.541 / 9.30 / 19.01 / 1031.7   2.662 / 26.23 / 112.27 / 599.6
+  GENCO+1        0.008 / 0.25 / 0.70 / 412.0      0.048 / 0.69 / 4.37 / 126.7
+  GENCO+2         0.000 / 0.00 / 0.03 / 44.8       0.000 / 0.01 / 0.27 / 19.8
+  DC           0.982 / 22.64 / 43.10 / 175.3    8.512 / 69.86 / 79.23 / 132.7
+  DC+1      18.501 / 487.75 / 1385.56 / 11706.0 92.451 / 4222.99 / 5575.39 / 11706.0
+  flat+1    18.609 / 617.22 / 1000.72 / 2640.0 313.605 / 1069.19 / 1453.42 / 1798.8
+  blow-ups: readings with |error| > 50 points: GENCO 802, GENCO+1 20, GENCO+2 0, DC 5,592, DC+1 4,723,044, flat+1 4,940,906; scenarios with any such reading: GENCO 331, GENCO+1 6, GENCO+2 0, DC 993, DC+1 993, flat+1 993
+  bus power mismatch, MW/MVAr max-norm, median / p90 / p99 / max:
+    mis0_genco  256 / 429 / 588 / 4.69e+03
+    mis1_genco  12.8 / 31.9 / 68 / 473
+    mis2_genco  0.0506 / 0.153 / 2.51 / 105
+    mis0_dc     1.13e+04 / 1.2e+04 / 1.23e+04 / 1.25e+04
+    mis1_dc     4.07e+04 / 6.07e+04 / 7.31e+04 / 7.63e+04
+    mis0_flat   1.13e+04 / 1.2e+04 / 1.23e+04 / 1.25e+04
+    mis1_flat   7.02e+04 / 8.97e+04 / 1.01e+05 / 1.02e+05
+
+2. prevalence: 295 scenarios with a real overload = 29.7%; 507 overloaded line readings on 169 distinct lines; AC > 1.000 -> 91.6%, > 1.01 -> 12.3%
+   by n_out: 1: 14.8%, 2: 30.8%, 3: 33.3%, 4: 49.3%, 5: 48.8%
+
+   PLAIN rule, all 993 scenarios: send to AC iff any predicted loading > 1.001
+  model    rule          flagged on secure  recall  missed scen.  missed lines  of real 95% upper   worst
+  GENCO    t=1.001         98.5%     98.7%   98.0%      6/295        10/507       1.97%     3.32%  109.7%
+  GENCO+1  t=1.001         55.0%     37.0%   97.6%      7/295         7/507       1.38%     2.58%  100.7%
+  GENCO+2  t=1.001         29.8%      0.1%  100.0%      0/295         0/507       0.00%     0.59%        
+  DC       t=1.001        100.0%    100.0%  100.0%      0/295         0/507       0.00%     0.59%        
+  DC+1     t=1.001        100.0%    100.0%  100.0%      0/295         0/507       0.00%     0.59%        
+  flat+1   t=1.001        100.0%    100.0%  100.0%      0/295         0/507       0.00%     0.59%        
+
+3. EXAMPLE-POST rule: t maximising scenario-level F3 on the calibration half (496), scored on the test half (497; 146 critical)
+  model    rule          flagged on secure  recall  missed scen.  missed lines  of real 95% upper   worst
+  GENCO    t=0.500        100.0%    100.0%  100.0%      0/146         0/254       0.00%     1.17%           F3(cal)=0.811
+  GENCO+1  t=1.001         55.9%     38.2%   98.6%      2/146         2/254       0.79%     2.46%  100.4%   F3(cal)=0.895
+  GENCO+2  t=1.001         29.4%      0.0%  100.0%      0/146         0/254       0.00%     1.17%           F3(cal)=0.999
+  DC       t=1.154         99.4%     99.1%  100.0%      0/146         0/254       0.00%     1.17%           F3(cal)=0.812
+  DC+1     t=0.500        100.0%    100.0%  100.0%      0/146         0/254       0.00%     1.17%           F3(cal)=0.811
+  flat+1   t=0.500        100.0%    100.0%  100.0%      0/146         0/254       0.00%     1.17%           F3(cal)=0.811
+
+4. fixed AC budget, test half: share of real overloaded lines (critical scenarios) found when the riskiest x% go to AC  (saved work/goc10000/budget_newton_tiny_seed0.csv)
+  model                 5%             10%             20%             35%             50%   AC share needed to find all lines
+  GENCO        3.1% (4.1%)   10.6% (10.3%)   28.3% (23.3%)   44.5% (39.7%)   57.9% (55.5%)   99.8%
+  GENCO+1    30.3% (15.8%)   50.0% (32.2%)   76.0% (65.8%)   92.1% (87.7%)   98.8% (97.9%)   72.0%
+  GENCO+2    33.1% (16.4%)   51.2% (33.6%)   77.6% (67.8%) 100.0% (100.0%) 100.0% (100.0%)   29.4%
+  DC           9.8% (7.5%)   15.7% (13.7%)   25.6% (21.2%)   45.3% (41.8%)   56.3% (51.4%)   98.0%
+  DC+1         4.7% (4.8%)     7.5% (8.9%)   21.7% (20.5%)   30.7% (32.9%)   43.3% (45.2%)   100.0%
+  flat+1       5.9% (4.8%)   11.0% (11.6%)   24.4% (21.2%)   42.9% (39.7%)   56.7% (55.5%)   100.0%
+  oracle     33.1% (16.4%)   51.2% (33.6%)   77.2% (67.8%) 100.0% (100.0%) 100.0% (100.0%)   29.4%
+
+5. per-state ms while several workers ran in parallel (indicative): GENCO end-to-end 178, Newton full flat 760, from GENCO 66, one step 22

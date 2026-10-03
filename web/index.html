@@ -17,6 +17,7 @@
 
     <div id="views" class="seg" role="radiogroup" aria-label="Map shows" data-i18n-aria="mapShows">
       <button type="button" role="radio" data-view="genco" aria-checked="true" data-i18n="viewGenco">GENCO</button>
+      <button type="button" role="radio" data-view="newton" aria-checked="false" data-i18n="viewNewton" hidden>After one Newton step</button>
       <button type="button" role="radio" data-view="ac" aria-checked="false" data-i18n="viewAc">AC solver</button>
       <button type="button" role="radio" data-view="diff" aria-checked="false" data-i18n="viewDiff">Difference</button>
       <button type="button" role="radio" data-view="residual" aria-checked="false" data-i18n="viewResidual">GENCO residual</button>
@@ -27,6 +28,11 @@
       <input id="load" type="range" disabled>
       <output id="load-out" for="load">–</output>
     </label>
+
+    <div id="alpha-box" class="alpha" hidden data-i18n-title="alphaTip">
+      <span data-i18n="alphaLabel">Allowed miss rate</span>
+      <div id="alpha" class="seg" role="radiogroup" aria-label="Allowed miss rate" data-i18n-aria="alphaLabel"></div>
+    </div>
 
     <div id="busy" class="busy" aria-live="polite" hidden data-i18n="solving">Solving…</div>
 
@@ -56,7 +62,21 @@
         <button id="reset" type="button" class="ghost" disabled data-i18n="reset">Reset scenario</button>
       </section>
 
-      <section>
+      <section id="staged-section" hidden>
+        <h2 data-i18n="staged">Staged check of this state</h2>
+        <ol id="stages" class="stages"></ol>
+        <p id="stage-head" class="stage-head"></p>
+        <p id="stage-why" class="stage-why"></p>
+        <div id="stage-rows" class="verdict"></div>
+      </section>
+
+      <section id="session-section" hidden>
+        <h2 data-i18n="session">This session</h2>
+        <dl class="stats" id="session"></dl>
+        <button id="session-reset" type="button" class="ghost" data-i18n="sessionReset">Reset counter</button>
+      </section>
+
+      <section id="advisor-section">
         <h2 data-i18n="advisor">GENCO advisor</h2>
         <div id="advisor" class="verdict"></div>
       </section>

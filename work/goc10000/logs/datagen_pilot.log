@@ -1,0 +1,27 @@
+Generating power flow data from work/goc10000/datagen_pilot.yaml...
+Global random seed set to: 0
+Finding upper limit u ..........
+OPF did not converge for u=1.900. Using u=1.800 for upper limit
+.venv/lib/python3.12/site-packages/gridfm_datakit/utils/param_handler.py:314: UserWarning: The following arguments are not used by the generation generator "cost_permutation": {'sigma': 1.0}
+  warnings.warn(
+min, max of ref_curve: 1.0800000000000005, 1.8000000000000007
+l, u: 1.0800000000000005, 1.8000000000000007
+cutting the load profile (original length: 8760, requested length: 10)
+Skipping plot of scenarios for large networks (number of buses > 100)
+Processing scenarios:   0%|          | 0/10 [00:00<?, ?it/s]Processing scenarios:   0%|          | 0/10 [00:10<?, ?it/s]Processing scenarios:  50%|#####     | 5/10 [28:43<28:43, 344.70s/it]Processing scenarios: 100%|##########| 10/10 [28:44<00:00, 172.42s/it]
+
+Data generation complete!
+Generated files:
+  - tqdm_log: work/goc10000/data_pilot/case10000_goc/raw/tqdm.log
+  - error_log: work/goc10000/data_pilot/case10000_goc/raw/error.log
+  - args_log: work/goc10000/data_pilot/case10000_goc/raw/args.log
+  - solver_log_dir: None
+  - bus_data: work/goc10000/data_pilot/case10000_goc/raw/bus_data.parquet
+  - branch_data: work/goc10000/data_pilot/case10000_goc/raw/branch_data.parquet
+  - gen_data: work/goc10000/data_pilot/case10000_goc/raw/gen_data.parquet
+  - y_bus_data: work/goc10000/data_pilot/case10000_goc/raw/y_bus_data.parquet
+  - runtime_data: work/goc10000/data_pilot/case10000_goc/raw/runtime_data.parquet
+  - scenarios: work/goc10000/data_pilot/case10000_goc/raw/scenarios_agg_load_profile.parquet
+  - scenarios_plot: work/goc10000/data_pilot/case10000_goc/raw/scenarios_agg_load_profile.html
+  - scenarios_log: work/goc10000/data_pilot/case10000_goc/raw/scenarios_agg_load_profile.log
+work/texas/tmo 2400 .venv/bin/gridfm_datakit generate   681.05s user 351.39s system 50% cpu 33:55.53 total

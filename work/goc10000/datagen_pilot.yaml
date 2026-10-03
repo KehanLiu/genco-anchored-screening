@@ -1,0 +1,40 @@
+# GOC 10000: same settings as work/goc500/datagen.yaml (random topology perturbation, up to k=5 branches removed),
+# only network, scenario count, process count and chunk size changed.
+#   .venv/bin/gridfm_datakit generate work/goc10000/datagen_pilot.yaml
+network:
+  name: case10000_goc
+  source: file
+  network_dir: work/goc10000/net
+load:
+  generator: agg_load_profile
+  agg_profile: default
+  scenarios: 10
+  sigma: 0.2
+  change_reactive_power: true
+  global_range: 0.4
+  max_scaling_factor: 4.0
+  step_size: 0.1
+  start_scaling_factor: 1.0
+topology_perturbation:
+  type: random
+  k: 5
+  n_topology_variants: 5
+  elements: [branch]
+generation_perturbation:
+  type: cost_permutation
+  sigma: 1.0
+admittance_perturbation:
+  type: random_perturbation
+  sigma: 0.2
+settings:
+  num_processes: 2
+  data_dir: work/goc10000/data_pilot
+  large_chunk_size: 500
+  overwrite: true
+  mode: pf
+  include_dc_res: true
+  enable_solver_logs: false
+  pf_fast: true
+  dcpf_fast: true
+  max_iter: 200
+  seed: 0

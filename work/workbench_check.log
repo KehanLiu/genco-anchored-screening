@@ -1,0 +1,35 @@
+mismatch after one Newton step from GENCO, 600 states (N-1/N-2/N-3, load x0.7-1.2), MW:
+  start (GENCO's voltages): median 8.9, max 117.7
+  after the step: median 0.010, p99 0.42, p99.9 8.48, max 19.92
+  loading error after the step, points of rating: p99 0.130, max 5.148
+  loading error where the mismatch is above 1 MW: max 5.148 (1 states)
+  threshold in engine.py: 1.0 MW -> 1 of these states fail the self-check
+
+alpha 1%: 200 random states (N-1 and N-2 alternating, load x0.8-1.2), 64 with a real overload (32.0%)
+  accepted at stage 1 (GENCO band):    135 (67.5%)
+  accepted after the Newton step:        1 (0.5%)
+  sent to full AC:                      64 (32.0%)
+  staged verdict vs AC: correct 200, missed overloads 0 (states), false alarms 0 (secure states sent to AC)
+  self-check failures: 0; worst mismatch after the step 0.81 MW
+  Newton iterations: flat start 803, staged 135 (saved 668, 83%)
+
+alpha 2%: 200 random states (N-1 and N-2 alternating, load x0.8-1.2), 64 with a real overload (32.0%)
+  accepted at stage 1 (GENCO band):    136 (68.0%)
+  accepted after the Newton step:        0 (0.0%)
+  sent to full AC:                      64 (32.0%)
+  staged verdict vs AC: correct 200, missed overloads 0 (states), false alarms 0 (secure states sent to AC)
+  self-check failures: 0; worst mismatch after the step 0.81 MW
+  Newton iterations: flat start 803, staged 134 (saved 669, 83%)
+
+alpha 5%: 200 random states (N-1 and N-2 alternating, load x0.8-1.2), 64 with a real overload (32.0%)
+  accepted at stage 1 (GENCO band):    141 (70.5%)
+  accepted after the Newton step:        0 (0.0%)
+  sent to full AC:                      59 (29.5%)
+  staged verdict vs AC: correct 195, missed overloads 5 (states), false alarms 0 (secure states sent to AC)
+    missed: load x0.8, outages [146, 162], accepted at stage 1, worst real loading 100.49%
+    missed: load x1.2, outages [21], accepted at stage 1, worst real loading 100.31%
+    missed: load x1.2, outages [21, 147], accepted at stage 1, worst real loading 100.32%
+    missed: load x1.0, outages [2, 149], accepted at stage 1, worst real loading 101.09%
+    missed: load x1.0, outages [2, 62], accepted at stage 1, worst real loading 101.11%
+  self-check failures: 0; worst mismatch after the step 0.81 MW
+  Newton iterations: flat start 803, staged 124 (saved 679, 85%)

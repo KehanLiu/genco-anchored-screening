@@ -94,6 +94,9 @@ h2 { font-size: 12px; color: var(--ink-2); margin-bottom: 10px; }
 .load input { width: 200px; accent-color: var(--accent); }
 .load output { min-width: 4ch; color: var(--ink); font-variant-numeric: tabular-nums; }
 
+.alpha { display: flex; align-items: center; gap: 8px; color: var(--ink-2); }
+.alpha .seg button { padding: 5px 9px; font-variant-numeric: tabular-nums; }
+
 .busy { color: var(--muted); }
 .lang { margin-left: auto; }
 
@@ -135,6 +138,7 @@ main {
 .branch.out { stroke: var(--muted) !important; stroke-width: 2; stroke-dasharray: 5 5; }
 .branch.over { stroke: var(--critical) !important; stroke-width: 4.5; }
 .branch.uncertain { stroke: var(--uncertain) !important; stroke-width: 4.5; }
+.branch.cleared { stroke: var(--good) !important; stroke-width: 4.5; }
 .branch.plain { stroke: var(--axis) !important; }
 .branch-halo { fill: none; stroke: var(--ink); stroke-opacity: 0.22; stroke-width: 12; stroke-linecap: round; pointer-events: none; }
 .bus { stroke: var(--surface); stroke-width: 2; cursor: default; }
@@ -287,3 +291,33 @@ main {
 .ranked .delta { font-variant-numeric: tabular-nums; font-weight: 600; }
 .ranked .sub { grid-column: 1 / -1; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .ranked .empty { color: var(--muted); cursor: default; }
+
+/* ---- staged check ---- */
+.stages { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.stages li {
+  position: relative;
+  padding: 7px 8px 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  min-width: 0;
+}
+.stages .num { display: block; font-size: 11px; color: var(--muted); }
+.stages .name { display: block; font-weight: 600; line-height: 1.25; }
+.stages .state { display: block; margin-top: 3px; font-size: 12px; color: var(--ink-2); }
+.stages li.idle { background: transparent; border-style: dashed; }
+.stages li.idle .name, .stages li.idle .state { color: var(--muted); font-weight: 400; }
+.stages li.decided { border-color: var(--accent); box-shadow: inset 0 3px 0 var(--accent); }
+.stages li.decided.secure { border-color: var(--good); box-shadow: inset 0 3px 0 var(--good); }
+.stages li.decided.overloaded { border-color: var(--critical); box-shadow: inset 0 3px 0 var(--critical); }
+.stages li.decided .state { color: var(--ink); font-weight: 600; }
+.stage-head { margin: 12px 0 2px; font-size: 15px; font-weight: 600; }
+.stage-head.secure::before { content: "✓ "; color: var(--good); }
+.stage-head.overloaded::before { content: "⚠ "; color: var(--critical); }
+.stage-why { margin: 0 0 12px; color: var(--ink-2); }
+.verdict .tag { color: var(--muted); font-size: 12px; }
+.verdict .rule { border-top: 1px solid var(--hairline); margin: 4px 0 2px; }
+.stats dt[title] { cursor: help; text-decoration: underline dotted var(--axis); text-underline-offset: 3px; }
+#session + .ghost { margin-top: 10px; }
+#stage-rows .detail { display: block; }
+#session dt { white-space: nowrap; }

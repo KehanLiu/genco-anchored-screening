@@ -1,0 +1,46 @@
+chose 12 states from 50 solved candidates (seed 0):
+  state  0: load x1.15, outages [105], worst AC loading 107.6%, 153 actions
+  state  1: load x1.10, outages [20, 27], worst AC loading 112.4%, 175 actions
+  state  2: load x1.20, outages [27, 92], worst AC loading 104.0%, 131 actions
+  state  3: load x1.15, outages [68, 138], worst AC loading 102.4%, 153 actions
+  state  4: load x1.00, outages [25, 104], worst AC loading 115.3%, 175 actions
+  state  5: load x1.20, outages [25, 117], worst AC loading 118.9%, 131 actions
+  state  6: load x1.20, outages [29, 128], worst AC loading 117.2%, 131 actions
+  state  7: load x1.10, outages [143], worst AC loading 102.3%, 175 actions
+  state  8: load x1.05, outages [40], worst AC loading 118.7%, 195 actions
+  state  9: load x1.00, outages [96], worst AC loading 105.7%, 175 actions
+  state 10: load x1.00, outages [170], worst AC loading 105.1%, 175 actions
+  state 11: load x1.15, outages [173], worst AC loading 110.3%, 153 actions
+paused before state 2 chunk 5
+paused before state 6 chunk 4
+paused before state 9 chunk 8
+all done: 100 parts -> work/remedial_case118.parquet
+
+=== per state ===
+state 0: before 107.6% (1 lines over), 153 actions solved (0 AC failures), 3 clear all overloads, best achievable 97.8%, median 107.9%
+state 1: before 112.4% (2 lines over), 175 actions solved (0 AC failures), 0 clear all overloads, best achievable 105.7%, median 112.4%
+state 2: before 104.0% (4 lines over), 131 actions solved (0 AC failures), 0 clear all overloads, best achievable 101.8%, median 105.2%
+state 3: before 102.4% (1 lines over), 153 actions solved (0 AC failures), 11 clear all overloads, best achievable 95.5%, median 102.4%
+state 4: before 115.3% (1 lines over), 175 actions solved (0 AC failures), 0 clear all overloads, best achievable 103.3%, median 115.9%
+state 5: before 118.9% (2 lines over), 131 actions solved (0 AC failures), 0 clear all overloads, best achievable 116.5%, median 118.9%
+state 6: before 117.2% (4 lines over), 131 actions solved (0 AC failures), 0 clear all overloads, best achievable 103.0%, median 117.2%
+state 7: before 102.3% (1 lines over), 175 actions solved (0 AC failures), 11 clear all overloads, best achievable 95.2%, median 102.3%
+state 8: before 118.7% (1 lines over), 195 actions solved (0 AC failures), 0 clear all overloads, best achievable 108.0%, median 118.7%
+state 9: before 105.7% (1 lines over), 175 actions solved (0 AC failures), 7 clear all overloads, best achievable 95.0%, median 107.0%
+state 10: before 105.1% (1 lines over), 175 actions solved (0 AC failures), 23 clear all overloads, best achievable 95.0%, median 105.1%
+state 11: before 110.3% (2 lines over), 153 actions solved (0 AC failures), 15 clear all overloads, best achievable 95.1%, median 110.3%
+
+=== case118_ieee: 12 states, mean+-sd over states; precision/recall pooled over all actions ===
+    method    kendall   spearman     top5/5   top10/10       regret_pts score_MAE_pts clear_prec clear_rec  pred_clear AC_checks med/max
+     genco 0.81+-0.17 0.90+-0.15 4.58+-0.67 9.00+-1.71  0.32 (max 2.96)          0.56      0.985     0.914          65           1.0/1.0
+    newton 0.90+-0.18 0.93+-0.14 5.00+-0.00 9.92+-0.29  0.00 (max 0.00)          0.00      1.000     1.000          70           1.0/1.0
+        dc 0.66+-0.29 0.73+-0.27 3.17+-1.99 6.42+-3.50  1.32 (max 6.07)          6.47      0.088     0.671         535          1.0/67.0
+   dc_anch 0.95+-0.04 0.98+-0.02 4.67+-0.65 9.33+-0.98  0.00 (max 0.06)          0.20      0.919     0.971          74           1.0/1.0
+genco_anch 0.82+-0.17 0.89+-0.15 4.67+-0.65 9.33+-0.78  0.28 (max 2.96)          0.25      0.985     0.943          67           1.0/1.0
+    random 0.01+-0.04 0.01+-0.06 0.33+-0.65 0.75+-0.75 8.22 (max 15.18)             -          -         -           0         13.8/38.5
+states where no candidate clears all overloads (AC): 6 of 12; AC_checks over the other 6
+actions: 1922 solved, 0 AC failures; clearing actions 70
+Newton step: mismatch after the step median 0.010 MW, max 0.21 MW
+  d= 20 MW: score MAE in points  genco 0.49  newton 0.00  dc 6.30  dc_anch 0.09  genco_anch 0.13
+  d= 50 MW: score MAE in points  genco 0.58  newton 0.00  dc 6.04  dc_anch 0.28  genco_anch 0.31
+  d=100 MW: score MAE in points  genco 0.71  newton 0.00  dc 7.34  dc_anch 0.36  genco_anch 0.50

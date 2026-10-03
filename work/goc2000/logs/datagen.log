@@ -1,0 +1,15 @@
+Generating power flow data from work/goc2000/datagen.yaml...
+Global random seed set to: 0
+Finding upper limit u ......
+OPF did not converge for u=1.500. Using u=1.400 for upper limit
+.venv/lib/python3.12/site-packages/gridfm_datakit/utils/param_handler.py:314: UserWarning: The following arguments are not used by the generation generator "cost_permutation": {'sigma': 1.0}
+  warnings.warn(
+min, max of ref_curve: 0.8400000000000002, 1.4000000000000004
+l, u: 0.8400000000000002, 1.4000000000000004
+cutting the load profile (original length: 8760, requested length: 1000)
+Skipping plot of scenarios for large networks (number of buses > 100)
+Processing scenarios:   0%|          | 0/1000 [00:00<?, ?it/s]Processing scenarios:   0%|          | 0/1000 [00:10<?, ?it/s]Processing scenarios:  17%|#6        | 167/1000 [2:52:06<14:18:28, 61.84s/it]
+*** TIMEOUT after 7200s: .venv/bin/gridfm_datakit generate work/goc2000/datagen.yaml
+~/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+work/texas/tmo 7200 .venv/bin/gridfm_datakit generate   41.84s user 7.95s system 0% cpu 3:57:23.02 total

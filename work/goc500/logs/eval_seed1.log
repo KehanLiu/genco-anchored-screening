@@ -1,0 +1,25 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+14992 scenarios, 5 branches out of service in every scenario (pglib case)
+19:20:20 worker 0: 0/4998, 27 ms/state
+19:20:26 worker 0: 250/4998, 18 ms/state
+19:20:31 worker 0: 500/4998, 18 ms/state
+19:20:37 worker 0: 750/4998, 19 ms/state
+19:20:42 worker 0: 1000/4998, 19 ms/state
+19:20:48 worker 0: 1250/4998, 19 ms/state
+19:20:53 worker 0: 1500/4998, 19 ms/state
+19:20:58 worker 0: 1750/4998, 19 ms/state
+19:21:03 worker 0: 2000/4998, 19 ms/state
+19:21:09 worker 0: 2250/4998, 19 ms/state
+19:21:14 worker 0: 2500/4998, 19 ms/state
+19:21:18 worker 0: 2750/4998, 19 ms/state
+19:21:23 worker 0: 3000/4998, 18 ms/state
+19:21:28 worker 0: 3250/4998, 18 ms/state
+19:21:33 worker 0: 3500/4998, 18 ms/state
+19:21:38 worker 0: 3750/4998, 18 ms/state
+19:21:42 worker 0: 4000/4998, 18 ms/state
+19:21:47 worker 0: 4250/4998, 18 ms/state
+19:21:52 worker 0: 4500/4998, 18 ms/state
+19:21:57 worker 0: 4750/4998, 18 ms/state
+wrote work/goc500/lines_tiny_seed1.parquet: 10,875,975 line readings, 14992 states, wall 208s; GENCO end-to-end per state (1 thread, 3 procs in parallel): median 18 ms
+n_out: {1: 4498, 2: 3603, 3: 2855, 4: 2248, 5: 1788}
+datakit solver runtime on this machine: AC median 5.6 ms, DC median 2.1 ms

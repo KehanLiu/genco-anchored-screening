@@ -1,0 +1,17 @@
+14992 scenarios, 5 branches out of service in every scenario (pglib case)
+19:16:23 worker 0: 0/2999, 20 ms/state
+19:16:29 worker 0: 250/2999, 24 ms/state
+19:16:36 worker 0: 500/2999, 25 ms/state
+19:16:43 worker 0: 750/2999, 25 ms/state
+19:16:50 worker 0: 1000/2999, 25 ms/state
+19:16:57 worker 0: 1250/2999, 25 ms/state
+19:17:04 worker 0: 1500/2999, 25 ms/state
+19:17:11 worker 0: 1750/2999, 25 ms/state
+19:17:17 worker 0: 2000/2999, 24 ms/state
+19:17:24 worker 0: 2250/2999, 24 ms/state
+19:17:31 worker 0: 2500/2999, 24 ms/state
+19:17:38 worker 0: 2750/2999, 24 ms/state
+wrote work/goc500/lines_tiny_seed0.parquet: 10,875,975 line readings, 14992 states, wall 118s; GENCO end-to-end per state (1 thread, 5 procs in parallel): median 24 ms
+n_out: {1: 4498, 2: 3603, 3: 2855, 4: 2248, 5: 1788}
+datakit solver runtime on this machine: AC median 5.6 ms, DC median 2.1 ms
+work/texas/tmo 7200 .venv/bin/python -u work/goc500/01_eval.py --seed 0  5  355.74s user 25.52s system 307% cpu 2:03.81 total

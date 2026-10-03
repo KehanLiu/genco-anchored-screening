@@ -1,0 +1,294 @@
+19:32:08 dropping 113 out-of-service generators of 544
+  control: 100 states solved, failures {}, 56 s
+  control: 200 states solved, failures {}, 102 s
+  control: 300 states solved, failures {}, 140 s
+  control: 400 states solved, failures {}, 175 s
+  control: 500 states solved, failures {}, 210 s
+  control: 505 states solved (5 anchors), failures {}, 212 s
+saved work/shift_texas_control.parquet
+  n3: 100 states solved, failures {}, 34 s
+  n3: 200 states solved, failures {}, 70 s
+  n3: 300 states solved, failures {}, 105 s
+  n3: 400 states solved, failures {}, 140 s
+  n3: 500 states solved, failures {}, 174 s
+  n3: 505 states solved (5 anchors), failures {}, 176 s
+saved work/shift_texas_n3.parquet
+  load: 100 states solved, failures {}, 44 s
+  load: 200 states solved, failures {}, 79 s
+  load: 300 states solved, failures {}, 113 s
+  load: 400 states solved, failures {}, 148 s
+  load: 404 states solved (4 anchors), failures {}, 149 s
+saved work/shift_texas_load.parquet
+=== texas: calibrated once on hybrid_texas_n2x450.parquet: 3000 states with outages, 224 real overloads
+fixed widths: genco_d+global -0.51 pt/0.18 pt/3.53 pt/9.13 pt; genco_d+shift -0.02 sig/0.01 sig/0.05 sig/0.20 sig; genco+shift -0.01 sig/0.02 sig/0.09 sig/0.23 sig; dc_d+shift -0.03 sig/0.01 sig/0.03 sig/0.32 sig   (alpha 10/5/2/1 %)
+verdict: 'BROKEN' = the 90% interval of the per-line miss rate (resampling whole outage sets) lies wholly above alpha; 'above' = point estimate above alpha but within sampling noise; 'ok' = at or below alpha.
+
+--- control
+states 500, real overloads 57 on 23 lines, states with an overload 55 (11.0%)
+abs loading error, points of rating (median / p99 / max): genco 0.077 / 1.91 / 10.8; genco_d 0.005 / 0.34 / 10.1; dc_d 0.001 / 0.56 / 44.8
+  surrogate sigma  alpha     width | per-line miss   90% interval  vs alpha | missed (state-level)  share states   worst | AC calls on secure
+  genco_d  global   10%  -0.51 pt |        14.04%     5.4%-25.5%     above |              8/57    14.04%      6  101.8% |     9.8%      0.0%
+  genco_d  global    5%   0.18 pt |         5.26%     1.4%-11.3%     above |              3/57     5.26%      3  101.2% |    10.6%      0.2%
+  genco_d  global    2%   3.53 pt |         0.00%      0.0%-0.0%        ok |              0/57     0.00%      0         |    16.4%      6.1%
+  genco_d  global    1%   9.13 pt |         0.00%      0.0%-0.0%        ok |              0/57     0.00%      0         |   100.0%    100.0%
+  genco_d  shift    10% -0.02 sig |        12.28%     3.5%-23.2%     above |              7/57    12.28%      5  101.2% |    10.2%      0.2%
+  genco_d  shift     5%  0.01 sig |         3.51%      0.0%-8.5%        ok |              2/57     3.51%      2  101.2% |    10.8%      0.2%
+  genco_d  shift     2%  0.05 sig |         1.75%      0.0%-5.7%        ok |              1/57     1.75%      1  101.2% |    12.4%      1.8%
+  genco_d  shift     1%  0.20 sig |         0.00%      0.0%-0.0%        ok |              0/57     0.00%      0         |    19.0%      9.0%
+  genco    shift    10% -0.01 sig |        14.04%     5.7%-25.5%     above |              8/57    14.04%      6  102.0% |     9.8%      0.0%
+  genco    shift     5%  0.02 sig |         1.75%      0.0%-5.7%        ok |              1/57     1.75%      1  101.2% |    11.4%      0.7%
+  genco    shift     2%  0.09 sig |         1.75%      0.0%-5.8%        ok |              1/57     1.75%      1  101.2% |    13.8%      3.4%
+  genco    shift     1%  0.23 sig |         0.00%      0.0%-0.0%        ok |              0/57     0.00%      0         |    20.4%     10.6%
+  dc_d     shift    10% -0.03 sig |        17.54%     3.3%-33.3%     above |             10/57    17.54%      8  107.9% |    10.4%      1.1%
+  dc_d     shift     5%  0.01 sig |        14.04%     0.0%-30.0%     above |              8/57    14.04%      6  107.9% |    11.4%      1.8%
+  dc_d     shift     2%  0.03 sig |         8.77%     0.0%-24.6%     above |              5/57     8.77%      5  107.9% |    12.0%      2.2%
+  dc_d     shift     1%  0.32 sig |         1.75%      0.0%-4.7%     above |              1/57     1.75%      1  100.1% |    25.4%     16.4%
+
+--- control: recalibration on m labelled shifted states, scored on the rest (mean of 20 draws)
+  surrogate sigma  alpha    m |     fixed widths      |       shifted sample only        | pooled with original 
+                             | line miss  AC calls   | line miss  AC calls  all->AC    | line miss  AC calls
+  genco_d  global   10%   50 |    13.66%      9.8%   |     0.10%     95.5%      95%    |    13.25%      9.9%
+  genco_d  global    5%   50 |     5.18%     10.6%   |     0.00%    100.0%     100%    |     5.18%     10.6%
+  genco_d  global    2%   50 |     0.00%     16.4%   |     0.00%    100.0%     100%    |     0.00%     16.4%
+  genco_d  global    1%   50 |     0.00%    100.0%   |     0.00%    100.0%     100%    |     0.00%    100.0%
+  genco_d  shift    10%   50 |    11.99%     10.2%   |     0.00%     95.7%      95%    |    12.78%     10.1%
+  genco_d  shift     5%   50 |     3.52%     10.8%   |     0.00%    100.0%     100%    |     3.52%     10.8%
+  genco_d  shift     2%   50 |     1.76%     12.4%   |     0.00%    100.0%     100%    |     1.76%     12.5%
+  genco_d  shift     1%   50 |     0.00%     18.9%   |     0.00%    100.0%     100%    |     0.00%     18.9%
+  genco    shift    10%   50 |    13.65%      9.8%   |     0.00%     95.9%      95%    |    13.34%      9.9%
+  genco    shift     5%   50 |     1.76%     11.4%   |     0.00%    100.0%     100%    |     1.76%     11.4%
+  genco    shift     2%   50 |     1.76%     13.8%   |     0.00%    100.0%     100%    |     1.76%     13.9%
+  genco    shift     1%   50 |     0.00%     20.3%   |     0.00%    100.0%     100%    |     0.00%     20.3%
+  dc_d     shift    10%   50 |    17.25%     10.4%   |     0.52%     95.6%      95%    |    16.86%     10.5%
+  dc_d     shift     5%   50 |    13.95%     11.4%   |     0.00%    100.0%     100%    |    13.95%     11.4%
+  dc_d     shift     2%   50 |     9.00%     12.0%   |     0.00%    100.0%     100%    |     9.00%     12.2%
+  dc_d     shift     1%   50 |     1.86%     25.2%   |     0.00%    100.0%     100%    |     1.86%     25.2%
+  genco_d  global   10%  100 |    13.58%      9.8%   |     7.35%     19.3%      10%    |    13.13%      9.9%
+  genco_d  global    5%  100 |     5.26%     10.6%   |     0.00%    100.0%     100%    |     5.26%     10.6%
+  genco_d  global    2%  100 |     0.00%     16.3%   |     0.00%    100.0%     100%    |     0.00%     16.3%
+  genco_d  global    1%  100 |     0.00%    100.0%   |     0.00%    100.0%     100%    |     0.00%    100.0%
+  genco_d  shift    10%  100 |    11.95%     10.2%   |     7.23%     20.1%      10%    |    12.28%     10.2%
+  genco_d  shift     5%  100 |     3.62%     10.8%   |     0.00%    100.0%     100%    |     3.62%     10.8%
+  genco_d  shift     2%  100 |     1.53%     12.4%   |     0.00%    100.0%     100%    |     1.53%     12.6%
+  genco_d  shift     1%  100 |     0.00%     19.1%   |     0.00%    100.0%     100%    |     0.00%     19.1%
+  genco    shift    10%  100 |    12.56%     10.0%   |     6.84%     21.2%      10%    |    12.10%     10.0%
+  genco    shift     5%  100 |     1.53%     11.4%   |     0.00%    100.0%     100%    |     1.53%     11.4%
+  genco    shift     2%  100 |     1.53%     13.8%   |     0.00%    100.0%     100%    |     1.53%     13.9%
+  genco    shift     1%  100 |     0.00%     20.5%   |     0.00%    100.0%     100%    |     0.00%     20.5%
+  dc_d     shift    10%  100 |    16.77%     10.6%   |     8.90%     25.0%      10%    |    16.44%     10.7%
+  dc_d     shift     5%  100 |    13.94%     11.5%   |     0.00%    100.0%     100%    |    13.62%     11.5%
+  dc_d     shift     2%  100 |     9.10%     12.0%   |     0.00%    100.0%     100%    |     8.88%     13.1%
+  dc_d     shift     1%  100 |     1.85%     25.6%   |     0.00%    100.0%     100%    |     1.85%     25.6%
+
+--- n3
+states 500, real overloads 73 on 30 lines, states with an overload 67 (13.4%)
+abs loading error, points of rating (median / p99 / max): genco 0.079 / 1.94 / 10.9; genco_d 0.008 / 0.44 / 10.9; dc_d 0.002 / 0.83 / 60.7
+  surrogate sigma  alpha     width | per-line miss   90% interval  vs alpha | missed (state-level)  share states   worst | AC calls on secure
+  genco_d  global   10%  -0.51 pt |        15.07%     7.1%-25.3%     above |             10/73    13.70%      8  107.4% |    11.8%      0.0%
+  genco_d  global    5%   0.18 pt |         6.85%     1.5%-14.3%     above |              5/73     6.85%      5  107.4% |    12.6%      0.2%
+  genco_d  global    2%   3.53 pt |         1.37%      0.0%-4.1%        ok |              1/73     1.37%      1  101.4% |    19.6%      7.4%
+  genco_d  global    1%   9.13 pt |         0.00%      0.0%-0.0%        ok |              0/73     0.00%      0         |   100.0%    100.0%
+  genco_d  shift    10% -0.02 sig |        13.70%     5.7%-23.9%     above |             10/73    13.70%      8  107.4% |    12.0%      0.2%
+  genco_d  shift     5%  0.01 sig |         5.48%     1.2%-12.3%     above |              4/73     5.48%      4  107.4% |    12.8%      0.2%
+  genco_d  shift     2%  0.05 sig |         2.74%      0.0%-6.6%     above |              2/73     2.74%      2  101.4% |    15.0%      2.3%
+  genco_d  shift     1%  0.20 sig |         0.00%      0.0%-0.0%        ok |              0/73     0.00%      0         |    23.6%     11.8%
+  genco    shift    10% -0.01 sig |        15.07%     7.1%-25.4%     above |             10/73    13.70%      8  107.4% |    12.0%      0.2%
+  genco    shift     5%  0.02 sig |         5.48%     1.2%-11.9%     above |              4/73     5.48%      4  107.4% |    13.4%      0.9%
+  genco    shift     2%  0.09 sig |         2.74%      0.0%-6.6%     above |              2/73     2.74%      2  101.3% |    17.2%      4.8%
+  genco    shift     1%  0.23 sig |         0.00%      0.0%-0.0%        ok |              0/73     0.00%      0         |    25.4%     13.9%
+  dc_d     shift    10% -0.03 sig |        19.18%     7.7%-31.5%     above |             12/73    16.44%     10  107.9% |    13.2%      2.1%
+  dc_d     shift     5%  0.01 sig |         6.85%     0.0%-19.5%     above |              5/73     6.85%      5  107.9% |    14.8%      2.8%
+  dc_d     shift     2%  0.03 sig |         6.85%     0.0%-19.5%     above |              5/73     6.85%      5  107.9% |    15.2%      3.2%
+  dc_d     shift     1%  0.32 sig |         1.37%      0.0%-3.7%     above |              1/73     1.37%      1  100.1% |    31.6%     21.2%
+
+--- n3: recalibration on m labelled shifted states, scored on the rest (mean of 20 draws)
+  surrogate sigma  alpha    m |     fixed widths      |       shifted sample only        | pooled with original 
+                             | line miss  AC calls   | line miss  AC calls  all->AC    | line miss  AC calls
+  genco_d  global   10%   50 |    14.96%     11.8%   |     3.53%     74.4%      70%    |    14.56%     11.8%
+  genco_d  global    5%   50 |     6.89%     12.6%   |     0.00%    100.0%     100%    |     6.89%     12.6%
+  genco_d  global    2%   50 |     1.45%     19.6%   |     0.00%    100.0%     100%    |     1.45%     19.9%
+  genco_d  global    1%   50 |     0.00%    100.0%   |     0.00%    100.0%     100%    |     0.00%    100.0%
+  genco_d  shift    10%   50 |    13.66%     12.0%   |     3.52%     73.9%      70%    |    14.20%     12.0%
+  genco_d  shift     5%   50 |     5.59%     12.8%   |     0.00%    100.0%     100%    |     5.59%     12.8%
+  genco_d  shift     2%   50 |     2.82%     15.0%   |     0.00%    100.0%     100%    |     2.67%     15.1%
+  genco_d  shift     1%   50 |     0.00%     23.5%   |     0.00%    100.0%     100%    |     0.00%     23.5%
+  genco    shift    10%   50 |    14.94%     12.0%   |     3.60%     74.2%      70%    |    14.71%     12.0%
+  genco    shift     5%   50 |     5.66%     13.4%   |     0.00%    100.0%     100%    |     5.66%     13.4%
+  genco    shift     2%   50 |     2.83%     17.3%   |     0.00%    100.0%     100%    |     2.67%     17.3%
+  genco    shift     1%   50 |     0.00%     25.3%   |     0.00%    100.0%     100%    |     0.00%     25.3%
+  dc_d     shift    10%   50 |    18.91%     13.2%   |     4.41%     75.5%      70%    |    18.21%     13.4%
+  dc_d     shift     5%   50 |     7.04%     14.8%   |     0.00%    100.0%     100%    |     7.04%     14.8%
+  dc_d     shift     2%   50 |     7.04%     15.2%   |     0.00%    100.0%     100%    |     7.04%     15.5%
+  dc_d     shift     1%   50 |     1.45%     31.3%   |     0.00%    100.0%     100%    |     1.45%     31.3%
+  genco_d  global   10%  100 |    14.96%     11.8%   |     6.02%     14.9%       0%    |    14.51%     11.8%
+  genco_d  global    5%  100 |     6.91%     12.6%   |     0.20%     91.8%      90%    |     6.91%     12.6%
+  genco_d  global    2%  100 |     1.45%     19.5%   |     0.00%    100.0%     100%    |     1.45%     20.1%
+  genco_d  global    1%  100 |     0.00%    100.0%   |     0.00%    100.0%     100%    |     0.00%    100.0%
+  genco_d  shift    10%  100 |    13.70%     12.0%   |     5.11%     14.2%       0%    |    13.70%     12.0%
+  genco_d  shift     5%  100 |     5.64%     12.8%   |     0.39%     91.4%      90%    |     5.64%     12.8%
+  genco_d  shift     2%  100 |     2.66%     15.0%   |     0.00%    100.0%     100%    |     2.14%     15.3%
+  genco_d  shift     1%  100 |     0.00%     23.7%   |     0.00%    100.0%     100%    |     0.00%     23.7%
+  genco    shift    10%  100 |    14.16%     12.1%   |     5.80%     15.9%       0%    |    13.81%     12.2%
+  genco    shift     5%  100 |     5.55%     13.4%   |     0.59%     91.4%      90%    |     5.55%     13.5%
+  genco    shift     2%  100 |     2.75%     17.2%   |     0.00%    100.0%     100%    |     2.24%     17.4%
+  genco    shift     1%  100 |     0.00%     25.5%   |     0.00%    100.0%     100%    |     0.00%     25.5%
+  dc_d     shift    10%  100 |    18.35%     13.4%   |     9.17%     19.9%       0%    |    17.91%     13.6%
+  dc_d     shift     5%  100 |     7.10%     14.9%   |     0.29%     92.7%      90%    |     7.10%     14.9%
+  dc_d     shift     2%  100 |     7.10%     15.2%   |     0.00%    100.0%     100%    |     6.93%     16.6%
+  dc_d     shift     1%  100 |     1.44%     31.8%   |     0.00%    100.0%     100%    |     1.44%     31.8%
+
+--- load
+states 400, real overloads 40 on 14 lines, states with an overload 40 (10.0%)
+abs loading error, points of rating (median / p99 / max): genco 0.047 / 0.85 / 9.2; genco_d 0.005 / 0.28 / 5.3; dc_d 0.001 / 0.56 / 44.3
+  surrogate sigma  alpha     width | per-line miss   90% interval  vs alpha | missed (state-level)  share states   worst | AC calls on secure
+  genco_d  global   10%  -0.51 pt |         5.00%     0.0%-12.1%        ok |              2/40     5.00%      2  100.5% |     9.5%      0.0%
+  genco_d  global    5%   0.18 pt |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |    10.0%      0.0%
+  genco_d  global    2%   3.53 pt |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |    16.0%      6.7%
+  genco_d  global    1%   9.13 pt |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |   100.0%    100.0%
+  genco_d  shift    10% -0.02 sig |         7.50%     2.2%-15.2%        ok |              3/40     7.50%      3  101.0% |     9.2%      0.0%
+  genco_d  shift     5%  0.01 sig |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |    10.0%      0.0%
+  genco_d  shift     2%  0.05 sig |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |    11.2%      1.4%
+  genco_d  shift     1%  0.20 sig |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |    19.0%     10.0%
+  genco    shift    10% -0.01 sig |         5.00%     0.0%-12.0%        ok |              2/40     5.00%      2  100.5% |     9.5%      0.0%
+  genco    shift     5%  0.02 sig |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |    10.2%      0.3%
+  genco    shift     2%  0.09 sig |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |    13.2%      3.6%
+  genco    shift     1%  0.23 sig |         0.00%      0.0%-0.0%        ok |              0/40     0.00%      0         |    20.2%     11.4%
+  dc_d     shift    10% -0.03 sig |        20.00%     5.7%-37.8%     above |              8/40    20.00%      8  107.0% |     9.5%      1.7%
+  dc_d     shift     5%  0.01 sig |        17.50%     4.3%-35.9%     above |              7/40    17.50%      7  107.0% |    10.8%      2.8%
+  dc_d     shift     2%  0.03 sig |        10.00%     0.0%-27.3%     above |              4/40    10.00%      4  107.0% |    11.5%      2.8%
+  dc_d     shift     1%  0.32 sig |         2.50%      0.0%-7.0%     above |              1/40     2.50%      1  101.0% |    24.2%     16.1%
+
+--- load: recalibration on m labelled shifted states, scored on the rest (mean of 20 draws)
+  surrogate sigma  alpha    m |     fixed widths      |       shifted sample only        | pooled with original 
+                             | line miss  AC calls   | line miss  AC calls  all->AC    | line miss  AC calls
+  genco_d  global   10%   50 |     5.16%      9.5%   |     0.00%     95.4%      95%    |     5.16%      9.5%
+  genco_d  global    5%   50 |     0.00%     10.0%   |     0.00%    100.0%     100%    |     0.00%     10.0%
+  genco_d  global    2%   50 |     0.00%     16.0%   |     0.00%    100.0%     100%    |     0.00%     16.0%
+  genco_d  global    1%   50 |     0.00%    100.0%   |     0.00%    100.0%     100%    |     0.00%    100.0%
+  genco_d  shift    10%   50 |     8.02%      9.2%   |     0.00%     95.4%      95%    |     8.02%      9.2%
+  genco_d  shift     5%   50 |     0.00%     10.0%   |     0.00%    100.0%     100%    |     0.00%     10.0%
+  genco_d  shift     2%   50 |     0.00%     11.3%   |     0.00%    100.0%     100%    |     0.00%     11.3%
+  genco_d  shift     1%   50 |     0.00%     19.1%   |     0.00%    100.0%     100%    |     0.00%     19.1%
+  genco    shift    10%   50 |     5.16%      9.5%   |     0.00%     95.4%      95%    |     5.02%      9.5%
+  genco    shift     5%   50 |     0.00%     10.3%   |     0.00%    100.0%     100%    |     0.00%     10.3%
+  genco    shift     2%   50 |     0.00%     13.4%   |     0.00%    100.0%     100%    |     0.00%     13.4%
+  genco    shift     1%   50 |     0.00%     20.5%   |     0.00%    100.0%     100%    |     0.00%     20.5%
+  dc_d     shift    10%   50 |    20.88%      9.4%   |     0.81%     95.5%      95%    |    20.88%      9.5%
+  dc_d     shift     5%   50 |    18.15%     10.7%   |     0.00%    100.0%     100%    |    18.15%     10.7%
+  dc_d     shift     2%   50 |    10.59%     11.4%   |     0.00%    100.0%     100%    |    10.59%     11.5%
+  dc_d     shift     1%   50 |     2.87%     24.3%   |     0.00%    100.0%     100%    |     2.87%     24.3%
+  genco_d  global   10%  100 |     5.09%      9.7%   |     5.74%     40.8%      35%    |     5.09%      9.7%
+  genco_d  global    5%  100 |     0.00%     10.2%   |     0.00%    100.0%     100%    |     0.00%     10.2%
+  genco_d  global    2%  100 |     0.00%     16.2%   |     0.00%    100.0%     100%    |     0.00%     16.2%
+  genco_d  global    1%  100 |     0.00%    100.0%   |     0.00%    100.0%     100%    |     0.00%    100.0%
+  genco_d  shift    10%  100 |     7.66%      9.4%   |     4.78%     40.9%      35%    |     7.66%      9.4%
+  genco_d  shift     5%  100 |     0.00%     10.2%   |     0.00%    100.0%     100%    |     0.00%     10.2%
+  genco_d  shift     2%  100 |     0.00%     11.5%   |     0.00%    100.0%     100%    |     0.00%     11.5%
+  genco_d  shift     1%  100 |     0.00%     19.5%   |     0.00%    100.0%     100%    |     0.00%     19.5%
+  genco    shift    10%  100 |     5.09%      9.7%   |     4.27%     40.9%      35%    |     5.09%      9.7%
+  genco    shift     5%  100 |     0.00%     10.5%   |     0.00%    100.0%     100%    |     0.00%     10.5%
+  genco    shift     2%  100 |     0.00%     13.5%   |     0.00%    100.0%     100%    |     0.00%     13.5%
+  genco    shift     1%  100 |     0.00%     20.7%   |     0.00%    100.0%     100%    |     0.00%     20.7%
+  dc_d     shift    10%  100 |    20.02%      9.7%   |     2.84%     48.9%      35%    |    20.02%      9.9%
+  dc_d     shift     5%  100 |    17.20%     10.9%   |     0.00%    100.0%     100%    |    17.20%     10.9%
+  dc_d     shift     2%  100 |     9.21%     11.8%   |     0.00%    100.0%     100%    |     8.34%     14.5%
+  dc_d     shift     1%  100 |     2.58%     24.9%   |     0.00%    100.0%     100%    |     2.58%     24.9%
+
+--- load x0.825
+states 100, real overloads 6 on 6 lines, states with an overload 6 (6.0%)
+abs loading error, points of rating (median / p99 / max): genco 0.024 / 0.33 / 4.0; genco_d 0.004 / 0.25 / 3.9; dc_d 0.001 / 0.55 / 44.3
+  surrogate sigma  alpha     width | per-line miss   90% interval  vs alpha | missed (state-level)  share states   worst | AC calls on secure
+  genco_d  global   10%  -0.51 pt |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |     6.0%      0.0%
+  genco_d  global    5%   0.18 pt |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |     6.0%      0.0%
+  genco_d  global    2%   3.53 pt |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |    11.0%      5.3%
+  genco_d  global    1%   9.13 pt |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |   100.0%    100.0%
+  genco_d  shift    10% -0.02 sig |        16.67%     0.0%-50.0%     above |              1/6     16.67%      1  101.0% |     5.0%      0.0%
+  genco_d  shift     5%  0.01 sig |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |     6.0%      0.0%
+  genco_d  shift     2%  0.05 sig |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |     6.0%      0.0%
+  genco_d  shift     1%  0.20 sig |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |     9.0%      3.2%
+  genco    shift    10% -0.01 sig |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |     6.0%      0.0%
+  genco    shift     5%  0.02 sig |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |     6.0%      0.0%
+  genco    shift     2%  0.09 sig |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |     7.0%      1.1%
+  genco    shift     1%  0.23 sig |         0.00%      0.0%-0.0%        ok |              0/6      0.00%      0         |    10.0%      4.3%
+  dc_d     shift    10% -0.03 sig |        16.67%     0.0%-50.0%     above |              1/6     16.67%      1  101.0% |     6.0%      1.1%
+  dc_d     shift     5%  0.01 sig |        16.67%     0.0%-50.0%     above |              1/6     16.67%      1  101.0% |     6.0%      1.1%
+  dc_d     shift     2%  0.03 sig |        16.67%     0.0%-50.0%     above |              1/6     16.67%      1  101.0% |     6.0%      1.1%
+  dc_d     shift     1%  0.32 sig |        16.67%     0.0%-50.0%     above |              1/6     16.67%      1  101.0% |    17.0%     12.8%
+
+--- load x0.875
+states 100, real overloads 9 on 8 lines, states with an overload 9 (9.0%)
+abs loading error, points of rating (median / p99 / max): genco 0.036 / 0.38 / 4.1; genco_d 0.005 / 0.25 / 3.9; dc_d 0.001 / 0.55 / 44.2
+  surrogate sigma  alpha     width | per-line miss   90% interval  vs alpha | missed (state-level)  share states   worst | AC calls on secure
+  genco_d  global   10%  -0.51 pt |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |     9.0%      0.0%
+  genco_d  global    5%   0.18 pt |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |     9.0%      0.0%
+  genco_d  global    2%   3.53 pt |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |    13.0%      4.4%
+  genco_d  global    1%   9.13 pt |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |   100.0%    100.0%
+  genco_d  shift    10% -0.02 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |     9.0%      0.0%
+  genco_d  shift     5%  0.01 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |     9.0%      0.0%
+  genco_d  shift     2%  0.05 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |     9.0%      0.0%
+  genco_d  shift     1%  0.20 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |    16.0%      7.7%
+  genco    shift    10% -0.01 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |     9.0%      0.0%
+  genco    shift     5%  0.02 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |     9.0%      0.0%
+  genco    shift     2%  0.09 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |    10.0%      1.1%
+  genco    shift     1%  0.23 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |    19.0%     11.0%
+  dc_d     shift    10% -0.03 sig |        22.22%     0.0%-44.4%     above |              2/9     22.22%      2  102.8% |     7.0%      0.0%
+  dc_d     shift     5%  0.01 sig |        22.22%     0.0%-44.4%     above |              2/9     22.22%      2  102.8% |     9.0%      2.2%
+  dc_d     shift     2%  0.03 sig |        11.11%     0.0%-33.3%     above |              1/9     11.11%      1  102.8% |    10.0%      2.2%
+  dc_d     shift     1%  0.32 sig |         0.00%      0.0%-0.0%        ok |              0/9      0.00%      0         |    23.0%     15.4%
+
+--- load x0.925
+states 100, real overloads 12 on 11 lines, states with an overload 12 (12.0%)
+abs loading error, points of rating (median / p99 / max): genco 0.064 / 0.58 / 4.5; genco_d 0.005 / 0.27 / 4.3; dc_d 0.001 / 0.56 / 43.7
+  surrogate sigma  alpha     width | per-line miss   90% interval  vs alpha | missed (state-level)  share states   worst | AC calls on secure
+  genco_d  global   10%  -0.51 pt |         8.33%     0.0%-25.0%        ok |              1/12     8.33%      1  100.4% |    11.0%      0.0%
+  genco_d  global    5%   0.18 pt |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    12.0%      0.0%
+  genco_d  global    2%   3.53 pt |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    16.0%      4.5%
+  genco_d  global    1%   9.13 pt |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |   100.0%    100.0%
+  genco_d  shift    10% -0.02 sig |         8.33%     0.0%-25.0%        ok |              1/12     8.33%      1  100.4% |    11.0%      0.0%
+  genco_d  shift     5%  0.01 sig |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    12.0%      0.0%
+  genco_d  shift     2%  0.05 sig |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    13.0%      1.1%
+  genco_d  shift     1%  0.20 sig |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    23.0%     12.5%
+  genco    shift    10% -0.01 sig |         8.33%     0.0%-25.0%        ok |              1/12     8.33%      1  100.4% |    11.0%      0.0%
+  genco    shift     5%  0.02 sig |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    12.0%      0.0%
+  genco    shift     2%  0.09 sig |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    15.0%      3.4%
+  genco    shift     1%  0.23 sig |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    24.0%     13.6%
+  dc_d     shift    10% -0.03 sig |        16.67%     0.0%-33.3%     above |              2/12    16.67%      2  104.8% |    12.0%      2.3%
+  dc_d     shift     5%  0.01 sig |         8.33%     0.0%-25.0%     above |              1/12     8.33%      1  104.8% |    14.0%      3.4%
+  dc_d     shift     2%  0.03 sig |         8.33%     0.0%-25.0%     above |              1/12     8.33%      1  104.8% |    14.0%      3.4%
+  dc_d     shift     1%  0.32 sig |         0.00%      0.0%-0.0%        ok |              0/12     0.00%      0         |    27.0%     17.0%
+
+--- load x0.975
+states 100, real overloads 13 on 12 lines, states with an overload 13 (13.0%)
+abs loading error, points of rating (median / p99 / max): genco 0.121 / 1.35 / 9.2; genco_d 0.006 / 0.36 / 5.3; dc_d 0.001 / 0.57 / 42.8
+  surrogate sigma  alpha     width | per-line miss   90% interval  vs alpha | missed (state-level)  share states   worst | AC calls on secure
+  genco_d  global   10%  -0.51 pt |         7.69%     0.0%-23.1%        ok |              1/13     7.69%      1  100.5% |    12.0%      0.0%
+  genco_d  global    5%   0.18 pt |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    13.0%      0.0%
+  genco_d  global    2%   3.53 pt |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    24.0%     12.6%
+  genco_d  global    1%   9.13 pt |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |   100.0%    100.0%
+  genco_d  shift    10% -0.02 sig |         7.69%     0.0%-23.1%        ok |              1/13     7.69%      1  100.5% |    12.0%      0.0%
+  genco_d  shift     5%  0.01 sig |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    13.0%      0.0%
+  genco_d  shift     2%  0.05 sig |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    17.0%      4.6%
+  genco_d  shift     1%  0.20 sig |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    28.0%     17.2%
+  genco    shift    10% -0.01 sig |         7.69%     0.0%-23.1%        ok |              1/13     7.69%      1  100.5% |    12.0%      0.0%
+  genco    shift     5%  0.02 sig |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    14.0%      1.1%
+  genco    shift     2%  0.09 sig |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    21.0%      9.2%
+  genco    shift     1%  0.23 sig |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    28.0%     17.2%
+  dc_d     shift    10% -0.03 sig |        23.08%     7.7%-46.2%     above |              3/13    23.08%      3  107.0% |    13.0%      3.4%
+  dc_d     shift     5%  0.01 sig |        23.08%     7.7%-46.2%    BROKEN |              3/13    23.08%      3  107.0% |    14.0%      4.6%
+  dc_d     shift     2%  0.03 sig |         7.69%     0.0%-23.1%     above |              1/13     7.69%      1  107.0% |    16.0%      4.6%
+  dc_d     shift     1%  0.32 sig |         0.00%      0.0%-0.0%        ok |              0/13     0.00%      0         |    30.0%     19.5%
+
+=== summary: per-line miss rate with the fixed widths (guarantee: <= alpha); * = BROKEN, i.e. 90% interval wholly above alpha
+  shift                        states  real |       genco_d+global        |        genco_d+shift        |         genco+shift         |         dc_d+shift         
+                                            |    10%     5%     2%     1% |    10%     5%     2%     1% |    10%     5%     2%     1% |    10%     5%     2%     1%
+  control                         500    57 |  14.0    5.3    0.0    0.0  |  12.3    3.5    1.8    0.0  |  14.0    1.8    1.8    0.0  |  17.5   14.0    8.8    1.8 
+  n3                              500    73 |  15.1    6.8    1.4    0.0  |  13.7    5.5    2.7    0.0  |  15.1    5.5    2.7    0.0  |  19.2    6.8    6.8    1.4 
+  load                            400    40 |   5.0    0.0    0.0    0.0  |   7.5    0.0    0.0    0.0  |   5.0    0.0    0.0    0.0  |  20.0   17.5   10.0    2.5 
+
+=== summary: AC-call share with the fixed widths (in brackets: share of secure states sent to AC)
+  shift                        insecure |  genco_d+global @5% / @1%   |   genco_d+shift @5% / @1%   |    genco+shift @5% / @1%    |    dc_d+shift @5% / @1%    
+  control                         11.0% | 10.6% ( 0.2%) 100.0% (100.0%) | 10.8% ( 0.2%) 19.0% ( 9.0%) | 11.4% ( 0.7%) 20.4% (10.6%) | 11.4% ( 1.8%) 25.4% (16.4%)
+  n3                              13.4% | 12.6% ( 0.2%) 100.0% (100.0%) | 12.8% ( 0.2%) 23.6% (11.8%) | 13.4% ( 0.9%) 25.4% (13.9%) | 14.8% ( 2.8%) 31.6% (21.2%)
+  load                            10.0% | 10.0% ( 0.0%) 100.0% (100.0%) | 10.0% ( 0.0%) 19.0% (10.0%) | 10.2% ( 0.3%) 20.2% (11.4%) | 10.8% ( 2.8%) 24.2% (16.1%)
+
+report written to work/shift_report_texas.txt

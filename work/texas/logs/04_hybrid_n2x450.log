@@ -1,0 +1,85 @@
+18:15:28 dropping 113 out-of-service generators of 544
+18:19:09 load x0.8: 601 states solved so far, failures {}
+18:22:42 load x0.85: 1202 states solved so far, failures {}
+18:26:14 load x0.9: 1803 states solved so far, failures {}
+18:29:47 load x0.95: 2404 states solved so far, failures {}
+18:33:20 load x1.0: 3005 states solved so far, failures {}
+18:33:21 saved work/texas/out/hybrid_texas_n2x450.parquet after 1084 s (margin 0.95)
+
+=== rules from analysis_hybrid.py (absolute residual) ===
+
+3005 states (601 outage sets x 5 load levels), 9,670,850 line readings
+real overloads: 224 on 58 distinct lines; 6% of states have at least one
+loading error in points of rating (median / 99th percentile): GENCO 0.08 / 1.9, DC 1.03 / 27.6
+
+scored on the test half (1505 states, 122 real overloads):
+  workflow                                             AC calls  missed  of real  states  false+
+  GENCO alone                                              0.0%      11    9.02%       9       3
+  DC power flow alone                                      0.0%      14   11.48%      10     330
+  GENCO + AC when band 95.0%-105.0%                       28.9%       2    1.64%       2       0   (calibration: 28.3% calls, 0 missed; target <= 0%)
+  DC + AC when band 95.0%-105.0%                          99.9%       0    0.00%       0       0   (calibration: 99.9% calls, 0 missed; target <= 0%)
+  GENCO + AC when band 95.0%-105.0%                       28.9%       2    1.64%       2       0   (calibration: 28.3% calls, 0 missed; target <= 1%)
+  DC + AC when band 97.0%-103.0%                          81.3%       2    1.64%       2      11   (calibration: 81.7% calls, 1 missed; target <= 1%)
+  AC power flow always                                   100.0%       0    0.00%       0       0
+
+trade-off on the test half, GENCO with the residual rule at 0.5 MW and a widening band:
+  workflow                                             AC calls  missed  of real  states  false+
+  residual > 0.5 MW                                      100.0%       0    0.00%       0       0
+  band 99.0%-101.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 98.0%-102.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 97.0%-103.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 95.0%-105.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 92.5%-107.5% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 90.0%-110.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 85.0%-115.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 80.0%-120.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+
+=== finer bands, residual as excess over the N-0 state of the same dispatch ===
+
+3005 states (601 outage sets x 5 load levels), 9,670,850 line readings
+real overloads: 224 on 58 distinct lines; 6% of states have at least one
+loading error in points of rating (median / 99th percentile): GENCO 0.08 / 1.9, DC 1.03 / 27.6
+
+scored on the test half (1505 states, 122 real overloads):
+  workflow                                             AC calls  missed  of real  states  false+
+  GENCO alone                                              0.0%      11    9.02%       9       3
+  DC power flow alone                                      0.0%      14   11.48%      10     330
+  GENCO + AC when band 96.5%-103.5% or residual > 0.5 MW    12.2%       2    1.64%       2       0   (calibration: 10.3% calls, 0 missed; target <= 0%)
+  DC + AC when band 96.5%-103.5%                          98.8%       2    1.64%       2       2   (calibration: 98.9% calls, 0 missed; target <= 0%)
+  GENCO + AC when band 96.5%-103.5%                        5.1%       2    1.64%       2       0   (calibration: 4.4% calls, 1 missed; target <= 1%)
+  DC + AC when band 97.0%-103.0%                          81.3%       2    1.64%       2      11   (calibration: 81.7% calls, 1 missed; target <= 1%)
+  AC power flow always                                   100.0%       0    0.00%       0       0
+
+trade-off on the test half, GENCO with the residual rule at 0.5 MW and a widening band:
+  workflow                                             AC calls  missed  of real  states  false+
+  residual > 0.5 MW                                        8.2%       8    6.56%       6       3
+  band 99.5%-100.5% or residual > 0.5 MW                   9.0%       4    3.28%       4       0
+  band 99.0%-101.0% or residual > 0.5 MW                   9.3%       3    2.46%       3       0
+  band 98.5%-101.5% or residual > 0.5 MW                   9.8%       3    2.46%       3       0
+  band 98.0%-102.0% or residual > 0.5 MW                  10.1%       3    2.46%       3       0
+  band 97.5%-102.5% or residual > 0.5 MW                  10.8%       2    1.64%       2       0
+  band 97.0%-103.0% or residual > 0.5 MW                  11.1%       2    1.64%       2       0
+  band 96.5%-103.5% or residual > 0.5 MW                  12.2%       2    1.64%       2       0
+  band 96.0%-104.0% or residual > 0.5 MW                  14.8%       2    1.64%       2       0
+  band 95.5%-104.5% or residual > 0.5 MW                  30.3%       2    1.64%       2       0
+  band 95.0%-105.0% or residual > 0.5 MW                  33.4%       2    1.64%       2       0
+  band 94.0%-106.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 92.5%-107.5% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+  band 90.0%-110.0% or residual > 0.5 MW                 100.0%       0    0.00%       0       0
+
+band only, test half:
+  never escalate                                           0.0%      11    9.02%       9       3
+  band 99.5%-100.5%                                        1.0%       6    4.92%       6       0
+  band 99.0%-101.0%                                        1.3%       5    4.10%       5       0
+  band 98.5%-101.5%                                        2.2%       4    3.28%       4       0
+  band 98.0%-102.0%                                        2.5%       4    3.28%       4       0
+  band 97.5%-102.5%                                        3.3%       2    1.64%       2       0
+  band 97.0%-103.0%                                        3.9%       2    1.64%       2       0
+  band 96.5%-103.5%                                        5.1%       2    1.64%       2       0
+  band 96.0%-104.0%                                        8.2%       2    1.64%       2       0
+  band 95.5%-104.5%                                       24.3%       2    1.64%       2       0
+  band 95.0%-105.0%                                       28.9%       2    1.64%       2       0
+  band 94.0%-106.0%                                       99.9%       0    0.00%       0       0
+  band 92.5%-107.5%                                      100.0%       0    0.00%       0       0
+  band 90.0%-110.0%                                      100.0%       0    0.00%       0       0
+rc=0

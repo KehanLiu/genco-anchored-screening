@@ -52,6 +52,14 @@ sweeps() {
         $TMO 7200 $PY -u work/goc500/01_eval.py --seed $seed
         $TMO 7200 $PY -u work/goc500/02_newton.py --seed $seed
     done
+    # 2,000 and 10,000 buses: generation, Newton steps, analysis and timing (many hours; see work/goc2000/run_all.sh)
+    $PY work/goc2000/01_fetch.py && $PY work/goc10000/01_fetch.py
+    ( $TMO 80000 .venv/bin/gridfm_datakit generate work/goc2000/datagen.yaml > work/goc2000/logs/datagen.log 2>&1 ; echo total >> work/goc2000/logs/datagen.log ) &
+    ( $TMO 80000 .venv/bin/gridfm_datakit generate work/goc10000/datagen.yaml > work/goc10000/logs/datagen.log 2>&1 ; echo total >> work/goc10000/logs/datagen.log ) &
+    zsh work/goc2000/run_all.sh
+    # embeddings and remedial actions
+    $TMO 9000 $PY -u analysis_embedding.py extract
+    $TMO 3000 $PY -u analysis_remedial.py run --budget 2400
 }
 
 analysis() {
@@ -67,6 +75,14 @@ analysis() {
         $PY analysis_goc500.py --reuse work/goc500/lines_tiny_seed$seed.parquet
         $PY analysis_goc500_newton.py --seed $seed
     done
+    for grid in goc2000 goc10000; do
+        for variant in tiny small; do
+            $PY work/$grid/03_analysis.py --variant $variant
+        done
+    done
+    $PY analysis_embedding.py report
+    $PY analysis_remedial.py report
+    $PY work/verify_round1.py
 }
 
 figures() {

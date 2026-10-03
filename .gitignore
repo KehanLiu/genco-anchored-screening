@@ -27,3 +27,7 @@ work/**/out/predictions*
 # internal working notes
 work/PROGRESS.md
 work/geo/
+work/goc*/net/
+work/goc*/pf_*/
+work/goc*/data*/
+work/remedial_case118_parts/

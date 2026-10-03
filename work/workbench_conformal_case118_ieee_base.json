@@ -1,0 +1,13 @@
+{
+ "widths": {
+  "0.05": -0.03047091412742353,
+  "0.02": -0.005276279932741731,
+  "0.01": 0.02863847771147019
+ },
+ "sigma_floor": 0.005,
+ "surrogate": "genco_d",
+ "sigma": "shift",
+ "n_calibration_overloads": 777,
+ "sweep": "hybrid_case118_ieee_base.parquet",
+ "split_seed": 0
+}

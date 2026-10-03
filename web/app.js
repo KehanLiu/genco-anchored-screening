@@ -111,6 +111,71 @@ const TEXT = {
     islanded: "Tripping these lines splits the grid into separate islands.",
     opf_failed: "No feasible generation dispatch at this load level.",
     ac_failed: "The classical AC power flow did not converge for this state.",
+    // staged check
+    viewNewton: "After one Newton step",
+    loadingNewton: "Line loading, after one Newton step",
+    voltageNewton: "Bus voltage, after one Newton step (p.u.)",
+    alphaLabel: "Allowed miss rate",
+    alphaTip: "Width of the conformal band at stage 1: the share of real overloads the band is allowed to leave unflagged, on average over outage sets like the calibration ones. Smaller means a wider band.",
+    staged: "Staged check of this state",
+    stageName1: "GENCO",
+    stageName2: "Newton step",
+    stageName3: "Full AC",
+    stageDecided: "decided here",
+    stagePassed: "passed on",
+    stageIdle: "not needed",
+    stageUnused: "not used",
+    head_genco: "Secure: accepted at stage 1",
+    head_newton: "Secure: accepted after the Newton step",
+    head_ac_overloaded: (n) => `Sent to full AC: ${n} line${n === 1 ? "" : "s"} overloaded`,
+    head_ac_secure: "Sent to full AC: no overload",
+    head_anchor_secure: "Base case, solved with full AC: no overload",
+    head_anchor_overloaded: (n) => `Base case, solved with full AC: ${n} line${n === 1 ? "" : "s"} overloaded`,
+    why_band_clear: "No line is inside the conformal band, so GENCO's prediction is accepted.",
+    why_newton_clear: (n, pctText, line) => `${n} line${n === 1 ? " is" : "s are"} inside the conformal band, so the state is not accepted on GENCO alone. After the Newton step the highest loading is ${pctText} (${line}) and the self-check passes.`,
+    why_newton_overload: (line, pctText, more) => `${line} at ${pctText} after the Newton step${more ? `, ${more} more over the limit` : ""}.`,
+    why_selfcheck: (mw, limit) => `Self-check failed: ${mw} MW of power mismatch left after the Newton step (limit ${limit} MW).`,
+    why_anchor: "No outage: this is the base case of this load level. Its AC solution is the anchor that stage 1 adds GENCO's predicted change to.",
+    row1: "Stage 1",
+    row2: "Stage 2",
+    row3: "Stage 3",
+    s1None: "no line inside the band",
+    s1Flagged: (n) => `${n} line${n === 1 ? "" : "s"} possibly overloaded`,
+    s2Worst: (pctText, line) => `highest loading ${pctText}, ${line}`,
+    s2Over: (n) => `${n} line${n === 1 ? "" : "s"} over the limit`,
+    s2Check: (mw, limit) => `self-check ${mw} MW, limit ${limit}`,
+    s2CheckFail: (mw, limit) => `self-check failed: ${mw} MW, limit ${limit}`,
+    forReference: "not needed, shown for reference",
+    acNeeded: "AC needed",
+    acNotNeeded: "AC not needed, shown for reference",
+    acFinds: (n) => `${n} line${n === 1 ? "" : "s"} overloaded`,
+    acFindsNone: "no overload",
+    checkLabel: "Check against AC",
+    check_correct: "correct, the staged verdict agrees with AC",
+    check_missed: (n) => `missed overload: accepted as secure, AC finds ${n} overloaded line${n === 1 ? "" : "s"}`,
+    check_false_alarm: "false alarm: sent to AC, which finds no overload",
+    check_anchor: "base case, AC is the verdict",
+    session: "This session",
+    sessionReset: "Reset counter",
+    sessStates: "States examined",
+    sessStage1: "Accepted at stage 1",
+    sessStage2: "Accepted after the Newton step",
+    sessNoAc: "Decided without full AC",
+    sessAc: "Needed full AC",
+    sessAcDetail: (n) => `${n} base case${n === 1 ? "" : "s"}`,
+    sessIter: "Newton iterations saved",
+    sessIterValue: (saved, flat) => `${saved} of ${flat}`,
+    sessIterTip: "Counted with one plain Newton solver (tolerance 1e-8 p.u.). Reference: every state solved from a flat start. Staged: 0 iterations for a state accepted at stage 1, 1 for a state accepted after the Newton step, and for a state sent to full AC the iterations Newton needs from GENCO's voltages (the stage-2 step included). A base case counts as a flat-start solve. GENCO's own inference is not counted and is not free.",
+    sessCheck: "Against AC",
+    sessCheckTip: "States with an outage only. Missed: accepted as secure although AC finds an overload. False: a false alarm, sent to full AC although AC finds no overload.",
+    sessCheckValue: (ok, missed, alarms) => `${ok} correct · ${missed} missed · ${alarms} false`,
+    possibleKey: "Possibly overloaded (inside the band)",
+    overNewtonKey: "Over the limit after the step",
+    clearedKey: "Inside the band, cleared by the step",
+    newtonPct: "After one Newton step",
+    tipStage1: (pred, limit) => `Stage 1: anchored prediction ${pred}, flagged from ${limit}`,
+    tip_possible: "possibly overloaded",
+    tip_safe: "safe",
   },
   zh: {
     brand: "GENCO 假设分析",
@@ -202,6 +267,71 @@ const TEXT = {
     islanded: "断开这些线路会使电网分裂成孤岛。",
     opf_failed: "在该负荷水平下找不到可行的发电调度。",
     ac_failed: "该状态下传统交流潮流不收敛。",
+    // 分级校核
+    viewNewton: "一步牛顿之后",
+    loadingNewton: "线路负载率 · 一步牛顿之后",
+    voltageNewton: "节点电压 · 一步牛顿之后 (p.u.)",
+    alphaLabel: "允许漏报率",
+    alphaTip: "第 1 级保形带的宽度：在与校准集同类的断线组合上，平均允许有多大比例的真实过载未被标记。数值越小，带越宽。",
+    staged: "该状态的分级校核",
+    stageName1: "GENCO",
+    stageName2: "一步牛顿",
+    stageName3: "完整交流",
+    stageDecided: "在此判定",
+    stagePassed: "转下一级",
+    stageIdle: "无需执行",
+    stageUnused: "未使用",
+    head_genco: "安全：第 1 级即接受",
+    head_newton: "安全：一步牛顿后接受",
+    head_ac_overloaded: (n) => `转交完整交流潮流：${n} 条线路过载`,
+    head_ac_secure: "转交完整交流潮流：无过载",
+    head_anchor_secure: "基态，由完整交流潮流求解：无过载",
+    head_anchor_overloaded: (n) => `基态，由完整交流潮流求解：${n} 条线路过载`,
+    why_band_clear: "没有线路落在保形带内，因此接受 GENCO 的预测。",
+    why_newton_clear: (n, pctText, line) => `${n} 条线路落在保形带内，不能仅凭 GENCO 接受该状态。一步牛顿之后最高负载率为 ${pctText}（${line}），且自检通过。`,
+    why_newton_overload: (line, pctText, more) => `一步牛顿之后${line}负载率为 ${pctText}${more ? `，另有 ${more} 条线路超限` : ""}。`,
+    why_selfcheck: (mw, limit) => `自检未通过：一步牛顿之后仍有 ${mw} MW 的功率不平衡量（限值 ${limit} MW）。`,
+    why_anchor: "没有断线：这是该负荷水平的基态。它的交流潮流解是锚点，第 1 级在其上叠加 GENCO 预测的变化量。",
+    row1: "第 1 级",
+    row2: "第 2 级",
+    row3: "第 3 级",
+    s1None: "没有线路落在带内",
+    s1Flagged: (n) => `${n} 条线路可能过载`,
+    s2Worst: (pctText, line) => `最高负载率 ${pctText}，${line}`,
+    s2Over: (n) => `${n} 条线路超限`,
+    s2Check: (mw, limit) => `自检 ${mw} MW，限值 ${limit}`,
+    s2CheckFail: (mw, limit) => `自检未通过：${mw} MW，限值 ${limit}`,
+    forReference: "无需执行，仅供参考",
+    acNeeded: "需要交流潮流",
+    acNotNeeded: "无需交流潮流，仅供参考",
+    acFinds: (n) => `${n} 条线路过载`,
+    acFindsNone: "无过载",
+    checkLabel: "与交流潮流核对",
+    check_correct: "正确，分级结论与交流潮流一致",
+    check_missed: (n) => `漏报：已判为安全，交流潮流发现 ${n} 条线路过载`,
+    check_false_alarm: "误报：已转交交流潮流，但其未发现过载",
+    check_anchor: "基态，以交流潮流为准",
+    session: "本次会话",
+    sessionReset: "重置计数",
+    sessStates: "已检查状态数",
+    sessStage1: "第 1 级接受",
+    sessStage2: "一步牛顿后接受",
+    sessNoAc: "无需完整交流潮流",
+    sessAc: "需要完整交流潮流",
+    sessAcDetail: (n) => `其中基态 ${n} 个`,
+    sessIter: "节省的牛顿迭代次数",
+    sessIterValue: (saved, flat) => `${saved} / ${flat}`,
+    sessIterTip: "均用同一个普通牛顿法求解器计数（收敛精度 1e-8 p.u.）。基准：每个状态都从平启动求解。分级流程：第 1 级接受的状态计 0 次，一步牛顿后接受的状态计 1 次，转交完整交流潮流的状态计从 GENCO 电压出发收敛所需的次数（含第 2 级那一步）。基态按一次平启动求解计。GENCO 自身的推理未计入，而它并非没有开销。",
+    sessCheck: "与交流潮流对比",
+    sessCheckTip: "仅统计有断线的状态。漏报：已判为安全，但交流潮流发现过载。误报：已转交完整交流潮流，但其未发现过载。",
+    sessCheckValue: (ok, missed, alarms) => `${ok} 正确 · ${missed} 漏报 · ${alarms} 误报`,
+    possibleKey: "可能过载（带内）",
+    overNewtonKey: "一步牛顿之后超限",
+    clearedKey: "带内，经一步牛顿排除",
+    newtonPct: "一步牛顿之后",
+    tipStage1: (pred, limit) => `第 1 级：锚定预测 ${pred}，自 ${limit} 起标记`,
+    tip_possible: "可能过载",
+    tip_safe: "安全",
   },
 };
 
@@ -213,7 +343,8 @@ function storedLang() {
   }
 }
 
-let lang = storedLang() || ((navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en");
+const QUERY = new URLSearchParams(location.search);
+let lang = QUERY.get("lang") || storedLang() || ((navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en");
 if (!TEXT[lang]) lang = "en";
 
 function t(key, ...args) {
@@ -228,14 +359,23 @@ const VIEWS = {
   genco: {
     branch: { value: (b) => b.loading_genco, domain: [0, 1], title: "loadingGenco", ticks: ["0%", "50%", "100%"] },
     bus: { value: (n) => n.vm_genco, domain: [0.94, 1.06], title: "voltageGenco", ticks: ["0.94", "1.00", "1.06"] },
-    status: (row) => (row.verdict === "overload" ? "over" : row.verdict === "uncertain" ? "uncertain" : ""),
-    keys: ["over", "uncertain"],
+    // With the staged check the map marks the lines inside the conformal band; without it, the fixed band.
+    status: (row, sol) => (sol.staged
+      ? (row.stage1 === "possible" ? "uncertain" : "")
+      : row.verdict === "overload" ? "over" : row.verdict === "uncertain" ? "uncertain" : ""),
+    keys: (sol) => (sol && sol.staged ? ["possible"] : ["over", "uncertain"]),
+  },
+  newton: {
+    branch: { value: (b) => b.loading_newton, domain: [0, 1], title: "loadingNewton", ticks: ["0%", "50%", "100%"] },
+    bus: { value: (n) => n.vm_newton, domain: [0.94, 1.06], title: "voltageNewton", ticks: ["0.94", "1.00", "1.06"] },
+    status: (row) => (row.stage2 === "over" ? "over" : row.stage1 === "possible" ? "cleared" : ""),
+    keys: () => ["overNewton", "cleared"],
   },
   ac: {
     branch: { value: (b) => b.loading_ac, domain: [0, 1], title: "loadingAc", ticks: ["0%", "50%", "100%"] },
     bus: { value: (n) => n.vm_ac, domain: [0.94, 1.06], title: "voltageAc", ticks: ["0.94", "1.00", "1.06"] },
     status: (row, sol) => (sol.summary.overloads_ac.includes(row.id) ? "over" : ""),
-    keys: ["over"],
+    keys: () => ["over"],
   },
   diff: {
     branch: { value: (b) => absDiff(b.p_genco, b.p_ac), domain: [0, 10], title: "flowError", ticks: ["0", "5", "10+"] },
@@ -257,6 +397,8 @@ const state = {
   sol: null,
   scenario: null, // last scenario the solver accepted
   view: "genco",
+  alpha: null,
+  session: new Map(), // state key -> staged outcome, so a state looked at twice counts once
   selected: null,
   transform: d3.zoomIdentity,
 };
@@ -410,8 +552,14 @@ function drawLegend() {
   if (view.branch) parts.push(rampBlock(view.branch, ramps().branch));
   parts.push(rampBlock(view.bus, ramps().bus));
   const band = state.grid ? state.grid.advisor.band.map(pct) : ["", ""];
-  const labels = { over: t("overloaded"), uncertain: t("uncertainKey", ...band) };
-  const lines = (view.keys || []).map((key) => lineKey(key, labels[key]));
+  const labels = {
+    over: ["over", t("overloaded")],
+    uncertain: ["uncertain", t("uncertainKey", ...band)],
+    possible: ["uncertain", t("possibleKey")],
+    overNewton: ["over", t("overNewtonKey")],
+    cleared: ["cleared", t("clearedKey")],
+  };
+  const lines = (view.keys ? view.keys(state.sol) : []).map((key) => lineKey(...labels[key]));
   lines.push(lineKey("out", t("outOfService")));
   parts.push(`<div class="keys">${lines.join("")}</div>`);
   parts.push(`<div class="keys">${["PQ", "PV", "REF"].map(shapeKey).join("")}</div>`);
@@ -441,7 +589,11 @@ function branchTooltip(b) {
     ${tableRow(t("loadingPct"), pc(row.loading_genco), pc(row.loading_ac), 1)}
   </table>
   <div class="sub" style="margin: 6px 0 0">${t("dcApprox", fmt(row.p_dc, 1))}</div>`;
-  if (row.verdict) {
+  if (state.sol.staged && row.stage1) {
+    html += `<div class="flag">${t("newtonPct")}: ${row.loading_newton == null ? "–" : `${fmt(row.loading_newton * 100, 1)}%`}<br>
+      ${t("tipStage1", `${fmt(row.loading_anchored * 100, 1)}%`, `${fmt(row.band_limit * 100, 1)}%`)}: ${t(`tip_${row.stage1}`)}<br>
+      ${t("acSays")}: ${t(state.sol.summary.overloads_ac.includes(b.id) ? "acOver" : "acOk")}</div>`;
+  } else if (row.verdict) {
     const s = state.sol.summary;
     const acOver = s.overloads_ac.includes(b.id);
     const icon = s.advisor.missed.includes(b.id) ? "⚠ " : s.advisor.false_alarms.includes(b.id) ? "▲ " : "";
@@ -504,6 +656,15 @@ function drawPanel() {
     .join("");
   $("reset").disabled = scenario.outages.length === 0 && scenario.load_scale === grid.load_scale.default;
 
+  const staged = sol.staged;
+  $("staged-section").hidden = !staged;
+  $("session-section").hidden = !staged;
+  $("advisor-section").hidden = !!staged;
+  if (staged) {
+    drawStaged(sol);
+    drawSession();
+  }
+
   // What GENCO says on its own: a confidence level, and each line in one of three tiers.
   const a = s.advisor;
   const conf = { high: ["good", "✓"], medium: ["warn", "▲"], low: ["crit", "⚠"] }[a.confidence];
@@ -518,10 +679,16 @@ function drawPanel() {
 
   // How those calls hold up against the AC solver.
   const rows = [];
-  if (a.missed.length) rows.push(verdictRow("crit", "⚠", t("missed", a.missed.length), lineList(a.missed)));
-  if (a.false_alarms.length) rows.push(verdictRow("warn", "▲", t("falseAlarms", a.false_alarms.length), lineList(a.false_alarms)));
-  if (a.confirmed.length) rows.push(verdictRow("good", "✓", t("confirmed", a.confirmed.length), lineList(a.confirmed)));
-  if (a.uncertain.length) rows.push(verdictRow("unsure", "?", t("uncertainResolved", a.uncertain.length, a.uncertain_overloaded.length), a.uncertain_overloaded.length ? lineList(a.uncertain_overloaded) : ""));
+  if (staged) {
+    const anchor = staged.decided_by === "anchor";
+    const cls = { correct: ["good", "✓"], missed: ["crit", "⚠"], false_alarm: ["warn", "▲"] }[staged.check];
+    rows.push(verdictRow(cls[0], cls[1], `${t("checkLabel")}:`,
+      anchor ? t("check_anchor") : t(`check_${staged.check}`, s.overloads_ac.length)));
+    if (s.overloads_ac.length) rows.push(verdictRow("crit", "⚠", t("acFinds", s.overloads_ac.length), lineList(s.overloads_ac)));
+  } else if (a.missed.length) rows.push(verdictRow("crit", "⚠", t("missed", a.missed.length), lineList(a.missed)));
+  if (!staged && a.false_alarms.length) rows.push(verdictRow("warn", "▲", t("falseAlarms", a.false_alarms.length), lineList(a.false_alarms)));
+  if (!staged && a.confirmed.length) rows.push(verdictRow("good", "✓", t("confirmed", a.confirmed.length), lineList(a.confirmed)));
+  if (!staged && a.uncertain.length) rows.push(verdictRow("unsure", "?", t("uncertainResolved", a.uncertain.length, a.uncertain_overloaded.length), a.uncertain_overloaded.length ? lineList(a.uncertain_overloaded) : ""));
   if (!s.overloads_ac.length) rows.push(verdictRow("good", "✓", t("noOverloads")));
   $("verdict").innerHTML = rows.join("");
 
@@ -553,6 +720,126 @@ function drawPanel() {
   ]);
 }
 
+// ---------- staged check ----------
+
+const pct1 = (v) => (v == null ? "–" : `${fmt(v * 100, 1)}%`);
+const mw = (v) => (v == null ? "–" : fmt(v, v < 0.1 ? 3 : 2));
+
+function drawStaged(sol) {
+  const g = sol.staged, n = g.newton;
+  const anchor = g.decided_by === "anchor";
+  const nOver = sol.summary.overloads_ac.length;
+
+  // Which stage decided: earlier stages passed the state on, later ones were not needed.
+  $("stages").innerHTML = [1, 2, 3].map((i) => {
+    const kind = i === g.stage ? `decided ${g.verdict}` : i < g.stage && !anchor ? "passed" : "idle";
+    const label = i === g.stage ? "stageDecided" : anchor ? "stageUnused" : i < g.stage ? "stagePassed" : "stageIdle";
+    return `<li class="${kind}"><span class="num">${i}</span><span class="name">${t(`stageName${i}`)}</span><span class="state">${t(label)}</span></li>`;
+  }).join("");
+
+  const head = $("stage-head");
+  head.className = `stage-head ${g.verdict}`;
+  head.textContent = g.stage < 3 ? t(`head_${g.decided_by}`) : t(`head_${g.decided_by}_${g.verdict}`, nOver);
+
+  const worstLine = n.worst_line == null ? "–" : lineName(n.worst_line);
+  const why = {
+    band_clear: () => t("why_band_clear"),
+    newton_clear: () => t("why_newton_clear", g.flagged.length, pct1(n.worst_loading), worstLine),
+    newton_overload: () => t("why_newton_overload", worstLine, pct1(n.worst_loading), n.overloads.length - 1),
+    selfcheck: () => t("why_selfcheck", mw(n.mismatch_mw), n.threshold_mw),
+    anchor: () => t("why_anchor"),
+  }[g.reason];
+  $("stage-why").textContent = why();
+
+  // One line per stage: what it found, whether or not the flow needed it.
+  const reference = (used) => (used ? "" : ` · ${t("forReference")}`);
+  const rows = [];
+  rows.push(g.flagged.length
+    ? verdictRow("unsure", "?", `${t("row1")}: ${t("s1Flagged", g.flagged.length)}`, lineList(g.flagged))
+    : verdictRow("good", "✓", `${t("row1")}: ${t("s1None")}`));
+  const stepUsed = !anchor && g.stage >= 2;
+  const stepBad = n.overloads.length > 0 || !n.selfcheck_ok;
+  rows.push(verdictRow(stepBad ? "crit" : "good", stepBad ? "⚠" : "✓",
+    `${t("row2")}: ${n.overloads.length ? t("s2Over", n.overloads.length) : t("s2Worst", pct1(n.worst_loading), worstLine)}`,
+    `${n.overloads.length ? `${lineList(n.overloads)} · ` : ""}${t(n.selfcheck_ok ? "s2Check" : "s2CheckFail", mw(n.mismatch_mw), n.threshold_mw)}${reference(stepUsed)}`));
+  rows.push(verdictRow(nOver ? "crit" : "good", nOver ? "⚠" : "✓",
+    `${t("row3")}: ${t(g.ac.needed ? "acNeeded" : "acNotNeeded")}`,
+    nOver ? `${t("acFinds", nOver)}, ${lineList(sol.summary.overloads_ac)}` : t("acFindsNone")));
+  $("stage-rows").innerHTML = rows.join("");
+}
+
+const stateKey = (sol) => `${sol.load_scale}|${sol.outages.join(",")}`;
+
+function drawSession() {
+  const seen = [...state.session.values()];
+  const count = (test) => seen.filter(test).length;
+  const anchors = count((g) => g.decided_by === "anchor");
+  const ac = count((g) => g.stage === 3);
+  const counted = seen.filter((g) => g.iterations.saved != null);
+  const flat = d3.sum(counted, (g) => g.iterations.flat);
+  const saved = d3.sum(counted, (g) => g.iterations.saved);
+  const judged = seen.filter((g) => g.decided_by !== "anchor");
+  const tally = (kind) => judged.filter((g) => g.check === kind).length;
+  $("session").innerHTML = statRows([
+    [t("sessStates"), seen.length],
+    [t("sessStage1"), count((g) => g.stage === 1)],
+    [t("sessStage2"), count((g) => g.stage === 2)],
+    [t("sessNoAc"), seen.length - ac],
+    [t("sessAc"), `${ac}${anchors ? ` <span class="muted">(${t("sessAcDetail", anchors)})</span>` : ""}`],
+    [t("sessIter"), t("sessIterValue", saved, flat)],
+    [t("sessCheck"), t("sessCheckValue", tally("correct"), tally("missed"), tally("false_alarm"))],
+  ]);
+  const dt = $("session").querySelectorAll("dt")[5];
+  dt.title = t("sessIterTip");
+  dt.tabIndex = 0;
+  $("session").querySelectorAll("dt")[6].title = t("sessCheckTip");
+}
+
+function drawAlpha() {
+  const staged = state.grid && state.grid.staged;
+  $("alpha-box").hidden = !staged;
+  document.querySelector('#views [data-view="newton"]').hidden = !staged;
+  if (!staged) return;
+  $("alpha").innerHTML = staged.alphas
+    .map((a) => `<button type="button" role="radio" data-alpha="${a}" aria-checked="${a === state.alpha}">${Math.round(a * 100)}%</button>`)
+    .join("");
+}
+
+// The state on screen as a link: ?load=1.1&out=32,104&alpha=0.01&view=newton&lang=en (line numbers as displayed).
+function syncUrl() {
+  const { scenario, grid } = state;
+  const query = new URLSearchParams();
+  if (scenario.load_scale !== grid.load_scale.default) query.set("load", scenario.load_scale);
+  if (scenario.outages.length) query.set("out", scenario.outages.map((id) => id + 1).join(","));
+  if (grid.staged && state.alpha !== grid.staged.default_alpha) query.set("alpha", state.alpha);
+  if (state.view !== "genco") query.set("view", state.view);
+  if (QUERY.get("lang")) query.set("lang", lang);
+  const text = query.toString().replace(/%2C/g, ",");
+  try {
+    history.replaceState(null, "", text ? `?${text}` : location.pathname);
+  } catch {
+    // Not every embedding allows it; the link just stays as it was.
+  }
+}
+
+function scenarioFromUrl() {
+  const { grid } = state;
+  const scale = grid.load_scale;
+  let load = Number(QUERY.get("load"));
+  if (!QUERY.get("load") || !Number.isFinite(load)) load = scale.default;
+  load = Math.min(scale.max, Math.max(scale.min, Math.round(load / scale.step) * scale.step));
+  const outages = (QUERY.get("out") || "").split(",").map((v) => Number(v) - 1)
+    .filter((id, i, all) => Number.isInteger(id) && id >= 0 && id < grid.branches.length && all.indexOf(id) === i);
+  if (grid.staged) {
+    let alpha = Number(QUERY.get("alpha"));
+    if (alpha >= 1) alpha /= 100; // alpha=2 means 2%
+    state.alpha = grid.staged.alphas.find((a) => Math.abs(a - alpha) < 1e-9) ?? grid.staged.default_alpha;
+  }
+  const view = QUERY.get("view");
+  if (VIEWS[view] && (view !== "newton" || grid.staged)) state.view = view;
+  return { load_scale: Number(load.toFixed(4)), outages };
+}
+
 function render() {
   paint();
   drawLegend();
@@ -565,6 +852,7 @@ function applyLanguage() {
   document.title = t("brand");
   document.querySelectorAll("[data-i18n]").forEach((el) => (el.textContent = t(el.dataset.i18n)));
   document.querySelectorAll("[data-i18n-aria]").forEach((el) => el.setAttribute("aria-label", t(el.dataset.i18nAria)));
+  document.querySelectorAll("[data-i18n-title]").forEach((el) => (el.title = t(el.dataset.i18nTitle)));
   document.querySelectorAll("#lang button").forEach((b) => b.setAttribute("aria-checked", b.dataset.lang === lang));
   hideTooltip();
   clearNotice();
@@ -622,7 +910,7 @@ async function solve(next) {
     const res = await fetch("api/solve", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(next),
+      body: JSON.stringify(state.alpha == null ? next : { ...next, alpha: state.alpha }),
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     data = await res.json();
@@ -638,11 +926,17 @@ async function solve(next) {
   if (!data.ok) {
     syncControls();
     notify(t(data.reason) || data.message);
+    // A state from the link that cannot be solved: fall back to the base case.
+    if (!state.sol && (next.outages.length || next.load_scale !== state.grid.load_scale.default)) {
+      solve({ load_scale: state.grid.load_scale.default, outages: [] });
+    }
     return;
   }
   clearNotice();
   state.sol = data;
   state.scenario = { load_scale: data.load_scale, outages: data.outages };
+  if (data.staged) state.session.set(stateKey(data), data.staged);
+  syncUrl();
   if (state.selected != null && !data.branches[state.selected].in_service) state.selected = null;
   syncControls();
   render();
@@ -685,6 +979,7 @@ function wire() {
       document.querySelectorAll("#views button").forEach((b) => b.setAttribute("aria-checked", b === button));
       paint();
       drawLegend();
+      if (state.scenario && state.grid) syncUrl();
     });
   });
 
@@ -703,6 +998,20 @@ function wire() {
   $("outages").addEventListener("click", (event) => {
     const id = event.target.dataset.restore;
     if (id != null) toggleBranch(state.grid.branches[Number(id)]);
+  });
+
+  $("alpha").addEventListener("click", (event) => {
+    const value = event.target.dataset.alpha;
+    if (value == null || !state.scenario) return;
+    state.alpha = Number(value);
+    drawAlpha();
+    solve(state.scenario);
+  });
+
+  $("session-reset").addEventListener("click", () => {
+    state.session.clear();
+    if (state.sol && state.sol.staged) state.session.set(stateKey(state.sol), state.sol.staged);
+    drawSession();
   });
 
   $("reset").addEventListener("click", () => solve({ load_scale: state.grid.load_scale.default, outages: [] }));
@@ -740,11 +1049,14 @@ async function init() {
   slider.min = scale.min;
   slider.max = scale.max;
   slider.step = scale.step;
-  slider.value = scale.default;
   slider.disabled = false;
-  $("load-out").textContent = pct(scale.default);
   $("grid-label").textContent = state.grid.label;
-  state.scenario = { load_scale: scale.default, outages: [] };
+  if (state.grid.staged) state.alpha = state.grid.staged.default_alpha;
+  state.scenario = scenarioFromUrl();
+  slider.value = state.scenario.load_scale;
+  $("load-out").textContent = pct(state.scenario.load_scale);
+  document.querySelectorAll("#views button").forEach((b) => b.setAttribute("aria-checked", b.dataset.view === state.view));
+  drawAlpha();
   drawGrid();
   drawLegend();
   solve(state.scenario);

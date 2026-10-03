@@ -306,7 +306,73 @@ def stress():
     fig.subplots_adjust(top=0.8, left=0.36)
     save(fig, "stress.png")
 
+def workflow():
+    """The three-stage workflow, with what happens to 1,000 scenarios of the GOC 500 set."""
+    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+    lines = pd.read_parquet(WORK / "goc500/lines_newton_tiny_seed0.parquet", columns=["state", "ac", "genco1"])
+    n = lines.state.nunique()
+    real = lines.ac > OVERLOAD
+    sent = lines.state[lines.genco1 > OVERLOAD].unique()
+    to_ac = round(1000 * len(sent) / n)
+    wasted = round(1000 * len(np.setdiff1d(sent, lines.state[real].unique())) / n)
+    missed = (real & ~lines.state.isin(sent)).sum()
+
+    fig, ax = plt.subplots(figsize=(10, 3.9))
+    ax.set_xlim(0, 10), ax.set_ylim(0, 3.9)
+    ax.axis("off")
+    boxes = [
+        (0.2, "1  GENCO", ["predicts voltages", "and line loadings"], GENCO),
+        (3.6, "2  One Newton step", ["on the real equations, from", "GENCO's voltages; remaining", "mismatch is a self-check"], GENCO1),
+        (7.0, "3  Full AC power flow", ["only if a line is at its limit", "or the self-check fails"], INK),
+    ]
+    for x, title, body, colour in boxes:
+        ax.add_patch(FancyBboxPatch((x, 1.5), 2.7, 1.6, boxstyle="round,pad=0.02,rounding_size=0.08", facecolor=SURFACE, edgecolor=colour, linewidth=2))
+        ax.text(x + 0.15, 2.8, title, fontsize=11, fontweight="bold", color=INK, va="center")
+        for i, line in enumerate(body):
+            ax.text(x + 0.15, 2.4 - 0.27 * i, line, fontsize=9, color=MUTED, va="center")
+    for x0, x1, label in ((2.95, 3.55, "1,000"), (6.35, 6.95, f"{to_ac}")):
+        ax.add_patch(FancyArrowPatch((x0, 2.3), (x1, 2.3), arrowstyle="-|>", mutation_scale=14, color=INK, linewidth=1.5))
+        ax.text((x0 + x1) / 2, 2.52, label, ha="center", fontsize=9, color=INK)
+    ax.add_patch(FancyArrowPatch((4.95, 1.48), (4.95, 0.75), arrowstyle="-|>", mutation_scale=14, color=INK, linewidth=1.5))
+    ax.text(5.1, 1.1, f"{1000 - to_ac}", fontsize=9, color=INK, va="center")
+    ax.text(4.95, 0.5, "accepted as secure, no AC solve", ha="center", fontsize=10, color=INK)
+    ax.text(8.35, 1.3, f"{to_ac - wasted} really have an overload,\n{wasted} turn out to be secure", ha="center", fontsize=9, color=MUTED, va="top", linespacing=1.4)
+    fig.suptitle("Three stages, the expensive one last", x=0.03, ha="left", fontsize=13, fontweight="bold")
+    fig.text(0.03, 0.885, f"Per 1,000 scenarios of the GOC 500 set (up to five branches removed, released GENCO Tiny). "
+             f"Of {int(real.sum()):,} overloaded lines in all {n:,} scenarios, {missed} sit in an accepted scenario.", color=MUTED, fontsize=9)
+    save(fig, "workflow.png")
+
+def scale():
+    """The plain rule on three grid sizes: secure scenarios sent to AC, and overloaded lines missed."""
+    grids = {"GOC 500": WORK / "goc500/lines_newton_tiny_seed0.parquet", "GOC 2000": WORK / "goc2000/lines_newton_tiny_seed0.parquet",
+             "GOC 10000": WORK / "goc10000/lines_newton_tiny_seed0.parquet"}
+    series = {"genco": ("GENCO", GENCO), "genco1": ("+1 step", GENCO1), "genco2": ("+2 steps", "#4a3aa7"), "dc": ("DC", DC)}
+    fig, axes = plt.subplots(1, 3, figsize=(11, 4.6), sharey=True)
+    for ax, (grid, path) in zip(axes, grids.items()):
+        lines = pd.read_parquet(path, columns=["state", "ac", *series])
+        n, real = lines.state.nunique(), lines.ac > OVERLOAD
+        critical = set(lines.state[real])
+        for i, (column, (label, colour)) in enumerate(series.items()):
+            sent = set(lines.state[(lines[column] > OVERLOAD) | lines[column].isna()])
+            wasted = len(sent - critical) / (n - len(critical))
+            missed = int((real & ~lines.state.isin(sent)).sum())
+            ax.bar(i, wasted, width=0.6, color=colour)
+            ax.annotate(f"{wasted:.1%}", (i, wasted), xytext=(0, 3), textcoords="offset points", ha="center", color=INK, fontsize=9)
+            ax.text(i, -0.17, f"{missed} missed", ha="center", va="top", color=INK, fontsize=8.5)
+        ax.set_title(grid, pad=22)
+        ax.text(0, 1.02, f"{n:,} scenarios · {int(real.sum()):,} overloaded lines", transform=ax.transAxes, color=MUTED, fontsize=9, va="bottom")
+        ax.set_xticks(range(len(series)), [label for label, _ in series.values()], fontsize=9)
+        ax.set_ylim(0, 1.12)
+        ax.grid(axis="x", visible=False)
+        percent(ax.yaxis)
+    axes[0].set_ylabel("secure scenarios sent to AC anyway")
+    fig.suptitle("From 500 to 10,000 buses: one Newton step, then two", x=0.06, ha="left", fontsize=13, fontweight="bold")
+    fig.text(0.06, 0.915, "Up to five branches removed per scenario, released GENCO Tiny checkpoints. Rule: send a scenario to AC if any predicted loading exceeds the limit.\n"
+             "Steps are Newton steps started from GENCO. Under each bar: overloaded lines left in scenarios that were not sent to AC.", color=MUTED, fontsize=9, va="top")
+    fig.subplots_adjust(top=0.72, bottom=0.16, wspace=0.08)
+    save(fig, "scale.png")
+
 
 if __name__ == "__main__":
-    for figure in (onestep, newton, voltage, stress, budget, coverage, cost, scatter, shift):
+    for figure in (workflow, onestep, scale, newton, voltage, stress, budget, coverage, cost, scatter, shift):
         figure()

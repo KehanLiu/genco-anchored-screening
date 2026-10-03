@@ -58,6 +58,21 @@ UNCERTAIN_BAND = (0.98, 1.02)
 # GENCO's worst bus power-balance residual, in MW, above which its answer is less reliable.
 RESIDUAL_MEDIUM, RESIDUAL_LOW = 0.25, 0.5
 
+# ---- staged check (GENCO -> one Newton step -> full AC), only computed when solve() gets an alpha ----
+# Stage 1 is the conformal band of analysis_conformal.py: surrogate "genco_d" (AC loading of the N-0
+# state of the same dispatch + GENCO's predicted change), sigma "shift". The allowed miss rates:
+STAGE_ALPHAS = (0.05, 0.02, 0.01)
+STAGE_ALPHA_DEFAULT = 0.01
+# Stage 2 self-check: the largest bus power mismatch (MW / MVAr) left after one Newton step from GENCO's
+# voltages, above which the corrected loadings are not trusted and the state goes to full AC.
+# work/warmstart_case118.parquet has no mismatch-after-one-step column, so it was measured through
+# Engine.solve on 600 random IEEE 118 states (N-1/N-2/N-3 at load x0.7-1.2; work/workbench_check.py
+# --mismatch, numbers in work/workbench_check.log): median 0.01, 99th percentile 0.42 MW, and a single
+# state above 1 MW (19.9 MW), which is also the only one whose loadings were still off after the step
+# (5.1 points of rating; 99th percentile 0.13). With one outlier in 600 the 99.9th percentile (8.5 MW)
+# is that outlier, so the threshold is put in the gap below it instead: 1 MW.
+NEWTON_MISMATCH_MW = 1.0
+
 
 class SolveError(Exception):
     def __init__(self, reason, message):
@@ -159,9 +174,44 @@ def records(frame):
     ]
 
 
+def conformal_band(network, variant):
+    """Band widths of stage 1, {"widths": {alpha: b}, "sigma_floor": ...}, or None without a sweep.
+
+    Calibrated as in analysis_conformal.py (label-conditional split conformal, surrogate genco_d,
+    sigma "shift") on the fit + calibration outage sets of the canonical split (seed 0) of the
+    sweep written by analysis_hybrid.py, so the widths are the ones in work/conformal_*.log and
+    the test half of that split stays untouched. Cached in a small JSON next to the sweep.
+    """
+    cache = WORK / f"workbench_conformal_{network}_{variant}.json"
+    sweep = WORK / f"hybrid_{network}_{variant}.parquet"
+    if cache.exists():
+        band = json.loads(cache.read_text())
+    elif sweep.exists():
+        import analysis_conformal as conformal
+
+        data, _, n_states = conformal.load(sweep)
+        fit, cal_keys, _ = conformal.split_keys(n_states.index, 0)
+        cal = data[data.outages.isin(fit | cal_keys)]
+        sigma = conformal.sigma_of(cal, "genco_d", "shift", None)
+        widths, n_cal = {}, 0
+        for alpha in STAGE_ALPHAS:
+            width, n_cal = conformal.conformal_width(cal, "genco_d", sigma, alpha)
+            widths[str(alpha)] = float(width)
+        band = {"widths": widths, "sigma_floor": conformal.SHIFT_FLOOR, "surrogate": "genco_d", "sigma": "shift",
+                "n_calibration_overloads": int(n_cal), "sweep": sweep.name, "split_seed": 0}
+        cache.write_text(json.dumps(band, indent=1))
+    else:
+        return None
+    if not all(str(a) in band["widths"] and np.isfinite(band["widths"][str(a)]) for a in STAGE_ALPHAS):
+        return None
+    return {"widths": {a: band["widths"][str(a)] for a in STAGE_ALPHAS}, "sigma_floor": band["sigma_floor"],
+            "n_calibration_overloads": band.get("n_calibration_overloads")}
+
+
 class Engine:
     def __init__(self, network="case118_ieee", variant="base", dispatch_margin=DISPATCH_MARGIN):
         self.network = network
+        self.genco_variant = variant
         self.dispatch_margin = dispatch_margin
         self.jl = init_julia(max_iter=200)
         self.genco = Genco(network, variant)
@@ -169,6 +219,8 @@ class Engine:
         self.base_pd = self.base.Pd.copy()
         self.base_qd = self.base.Qd.copy()
         self.dispatched = {}
+        self.anchors = {}
+        self._staged_info = False  # loaded on first use
         self.static = self._static()
 
     def _static(self):
@@ -229,9 +281,132 @@ class Engine:
         self.dispatched[key] = pf_preprocessing(net, opf)
         return self.dispatched[key], seconds
 
-    def solve(self, load_scale=1.0, outages=(), redispatch=None):
+    def staged_info(self):
+        """Settings of the staged check, or None if this grid has no outage sweep to calibrate the band on."""
+        if self._staged_info is False:
+            band = conformal_band(self.network, self.genco_variant)
+            self._staged_info = band and {
+                "alphas": list(STAGE_ALPHAS),
+                "default_alpha": STAGE_ALPHA_DEFAULT,
+                "mismatch_threshold_mw": NEWTON_MISMATCH_MW,
+                "limit": OVERLOAD,
+                **band,
+            }
+        return self._staged_info
+
+    def _anchor(self, load_scale, redispatch):
+        """AC and GENCO line loadings of the N-0 state of this dispatch: what the band is anchored on."""
+        key = (round(load_scale, 4), tuple(sorted((redispatch or {}).items())))
+        if key not in self.anchors:
+            self.solve(load_scale, (), redispatch)  # stores the anchor
+        return self.anchors[key]
+
+    def _staged(self, prob, branches, buses, bus_pred, load_scale, outages, redispatch, alpha):
+        """The three-stage verdict on one state. Adds per-line and per-bus columns in place."""
+        info = self.staged_info()
+        if info is None:
+            return None
+        alpha = min(info["widths"], key=lambda a: abs(float(a) - alpha))
+        width, floor = info["widths"][alpha], info["sigma_floor"]
+        live = branches.in_service.to_numpy()
+        ids = branches.id.to_numpy()
+        loading_ac = branches.loading_ac.to_numpy(float)
+        over_ac = loading_ac > OVERLOAD
+
+        # Stage 1: GENCO's predicted change on top of the base-case AC loading, with a band that
+        # widens with how far GENCO moved the line.
+        genco = branches.loading_genco.to_numpy(float)
+        if outages:
+            ac0, genco0 = self._anchor(load_scale, redispatch)
+        else:
+            ac0, genco0 = loading_ac, genco
+        with np.errstate(invalid="ignore"):
+            anchored = ac0 + genco - genco0
+            band_limit = OVERLOAD - width * (np.abs(genco - genco0) + floor)
+            flagged = anchored >= band_limit
+        branches["loading_anchored"] = anchored
+        branches["band_limit"] = np.where(np.isnan(anchored), np.nan, band_limit)
+        stage1 = pd.Series(np.where(flagged, "possible", "safe"), index=branches.index, dtype=object)
+        stage1[np.isnan(anchored)] = None
+        branches["stage1"] = stage1
+
+        # Stage 2: one Newton step on the network equations from GENCO's voltages.
+        v0 = prob.start(vm_pq=bus_pred.Vm.to_numpy(float), va=np.radians(bus_pred.Va.to_numpy(float)))
+        step = prob.newton(v0, max_it=1, keep=1)
+        stepped = (step["iterations"] == 1 or step["converged"]) and bool(np.isfinite(step["V"]).all())
+        loading_newton = prob.loading(step["V"]) if stepped else np.full(len(branches), np.nan)
+        loading_newton = np.where(live, loading_newton, np.nan)
+        mismatch = float(step["mis_end"]) if stepped else np.inf
+        selfcheck = bool(mismatch <= NEWTON_MISMATCH_MW)
+        with np.errstate(invalid="ignore"):
+            over_newton = loading_newton > OVERLOAD
+        branches["loading_newton"] = loading_newton
+        stage2 = pd.Series(np.where(over_newton, "over", "ok"), index=branches.index, dtype=object)
+        stage2[np.isnan(loading_newton)] = None
+        branches["stage2"] = stage2
+        buses["vm_newton"] = np.abs(step["V"]) if stepped else np.nan
+        buses["va_newton"] = np.degrees(np.angle(step["V"])) if stepped else np.nan
+
+        # Newton iterations of the same plain solver: from a flat start, and from GENCO's voltages to convergence.
+        flat = prob.newton(prob.start())
+        full = prob.newton(v0)
+        it_flat = flat["iterations"] if flat["converged"] else None
+        it_genco = full["iterations"] if full["converged"] else None
+
+        if not outages:
+            # The base case is solved by full AC whatever the surrogate says: it is the anchor.
+            stage, decided_by, reason, used = 3, "anchor", "anchor", it_flat
+        elif not flagged.any():
+            stage, decided_by, reason, used = 1, "genco", "band_clear", 0
+        elif selfcheck and not over_newton.any():
+            stage, decided_by, reason, used = 2, "newton", "newton_clear", 1
+        else:
+            stage, decided_by, reason = 3, "ac", "newton_overload" if selfcheck else "selfcheck"
+            # Full AC continues Newton from the stage-2 point; if that fails, a flat start after the wasted step.
+            used = it_genco if it_genco is not None else None if it_flat is None else it_flat + 1
+        if stage < 3:
+            verdict, check = "secure", "missed" if over_ac.any() else "correct"
+        else:
+            verdict = "overloaded" if over_ac.any() else "secure"
+            check = "false_alarm" if decided_by == "ac" and not over_ac.any() else "correct"
+
+        worst = int(np.nanargmax(loading_newton)) if stepped and not np.isnan(loading_newton).all() else None
+        return {
+            "alpha": float(alpha),
+            "width": width,
+            "sigma_floor": floor,
+            "stage": stage,
+            "decided_by": decided_by,
+            "reason": reason,
+            "verdict": verdict,
+            "check": check,
+            "flagged": [int(i) for i in ids[flagged]],
+            "newton": {
+                "mismatch_start_mw": round(float(step["mis0"]), 4),
+                "mismatch_mw": round(mismatch, 4) if np.isfinite(mismatch) else None,
+                "threshold_mw": NEWTON_MISMATCH_MW,
+                "selfcheck_ok": selfcheck,
+                "overloads": [int(i) for i in ids[over_newton]],
+                "worst_line": worst,
+                "worst_loading": None if worst is None else round(float(loading_newton[worst]), 5),
+                "max_loading_err": round(float(np.nanmax(np.abs(loading_newton - loading_ac))), 5) if worst is not None else None,
+            },
+            "ac": {"needed": stage == 3, "overloads": [int(i) for i in ids[over_ac]]},
+            "iterations": {
+                "flat": it_flat,
+                "genco_start": it_genco,
+                "staged": used,
+                "saved": None if it_flat is None or used is None else it_flat - used,
+            },
+        }
+
+    def solve(self, load_scale=1.0, outages=(), redispatch=None, alpha=None):
         """Solve one state. `redispatch` maps generator id to a MW change from the OPF dispatch;
-        whatever imbalance that leaves is picked up by the reference bus."""
+        whatever imbalance that leaves is picked up by the reference bus.
+
+        With `alpha` (an allowed miss rate, one of STAGE_ALPHAS) the result also carries the staged
+        check: extra columns in "branches" and "buses" and a "staged" entry. Without it the result
+        is what it always was."""
         outages = sorted(set(int(o) for o in outages))
         net, t_opf = self._dispatch(load_scale)
         state = net.copy_for_perturbation()
@@ -244,6 +419,10 @@ class Engine:
             state.deactivate_branches(outages)
             if not state.check_single_connected_component():
                 raise SolveError("islanded", "Tripping these lines splits the grid into separate islands.")
+        prob = None
+        if alpha is not None and self.staged_info() is not None:
+            from analysis_warmstart import Problem  # imports this module, so not at the top
+            prob = Problem(state)
         try:
             start = time.perf_counter()
             dc = run_dcpf(state, self.jl, fast=True)
@@ -349,7 +528,13 @@ class Engine:
             "missed": sorted(called_safe & over_ac),
             "false_alarms": sorted(called_over - over_ac),
         }
-        return {
+        if not outages:
+            key = (round(load_scale, 4), tuple(sorted((redispatch or {}).items())))
+            self.anchors.setdefault(key, (branches.loading_ac.to_numpy(float), branches.loading_genco.to_numpy(float)))
+        staged = None
+        if prob is not None:
+            staged = self._staged(prob, branches, buses, bus_pred, load_scale, outages, redispatch, alpha)
+        result = {
             "ok": True,
             "load_scale": load_scale,
             "outages": outages,
@@ -364,3 +549,6 @@ class Engine:
             "gens": records(gens),
             "summary": {k: (round(v, 5) if isinstance(v, float) else v) for k, v in summary.items()},
         }
+        if alpha is not None:
+            result["staged"] = staged
+        return result

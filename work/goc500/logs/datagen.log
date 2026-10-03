@@ -1,0 +1,27 @@
+Generating power flow data from work/goc500/datagen.yaml...
+Global random seed set to: 0
+Finding upper limit u ....
+OPF did not converge for u=1.300. Using u=1.200 for upper limit
+.venv/lib/python3.12/site-packages/gridfm_datakit/utils/param_handler.py:314: UserWarning: The following arguments are not used by the generation generator "cost_permutation": {'sigma': 1.0}
+  warnings.warn(
+min, max of ref_curve: 0.7200000000000001, 1.2000000000000002
+l, u: 0.7200000000000001, 1.2000000000000002
+cutting the load profile (original length: 8760, requested length: 3000)
+Skipping plot of scenarios for large networks (number of buses > 100)
+Processing scenarios:   0%|          | 0/3000 [00:00<?, ?it/s]Processing scenarios:   0%|          | 0/3000 [00:10<?, ?it/s]Processing scenarios:   3%|2         | 84/3000 [02:44<1:35:26,  1.96s/it]Processing scenarios:  19%|#9        | 584/3000 [04:06<14:10,  2.84it/s] Processing scenarios:  36%|###6      | 1084/3000 [05:27<07:49,  4.08it/s]Processing scenarios:  53%|#####2    | 1584/3000 [07:02<05:13,  4.52it/s]Processing scenarios:  69%|######9   | 2084/3000 [08:30<03:06,  4.91it/s]Processing scenarios:  86%|########6 | 2584/3000 [10:12<01:24,  4.90it/s]Processing scenarios: 100%|##########| 3000/3000 [10:14<00:00,  4.89it/s]
+
+Data generation complete!
+Generated files:
+  - tqdm_log: work/goc500/data/case500_goc/raw/tqdm.log
+  - error_log: work/goc500/data/case500_goc/raw/error.log
+  - args_log: work/goc500/data/case500_goc/raw/args.log
+  - solver_log_dir: None
+  - bus_data: work/goc500/data/case500_goc/raw/bus_data.parquet
+  - branch_data: work/goc500/data/case500_goc/raw/branch_data.parquet
+  - gen_data: work/goc500/data/case500_goc/raw/gen_data.parquet
+  - y_bus_data: work/goc500/data/case500_goc/raw/y_bus_data.parquet
+  - runtime_data: work/goc500/data/case500_goc/raw/runtime_data.parquet
+  - scenarios: work/goc500/data/case500_goc/raw/scenarios_agg_load_profile.parquet
+  - scenarios_plot: work/goc500/data/case500_goc/raw/scenarios_agg_load_profile.html
+  - scenarios_log: work/goc500/data/case500_goc/raw/scenarios_agg_load_profile.log
+work/texas/tmo 14400 .venv/bin/gridfm_datakit generate   2104.41s user 72.52s system 329% cpu 11:00.70 total

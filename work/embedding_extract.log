@@ -1,0 +1,33 @@
+  ref: 500 states, failures {}, 30 s
+  ref: 1000 states, failures {'islanded': 1}, 58 s
+  ref: 1500 states, failures {'islanded': 4}, 87 s
+  ref: 2000 states, failures {'islanded': 8}, 117 s
+ref: 2370 states, failures {'islanded': 10}, 137 s -> embedding_states_ref.parquet
+  control: 500 states, failures {}, 27 s
+  control: 1000 states, failures {}, 60 s
+control: 1200 states, failures {'islanded': 5}, 71 s -> embedding_states_control.parquet
+  n3: 500 states, failures {}, 33 s
+  n3: 1000 states, failures {'ac_failed': 3}, 65 s
+n3: 1192 states, failures {'ac_failed': 3, 'islanded': 10}, 78 s -> embedding_states_n3.parquet
+  n4: 500 states, failures {'islanded': 20}, 34 s
+  n4: 1000 states, failures {'islanded': 35, 'ac_failed': 6}, 83 s
+n4: 1144 states, failures {'islanded': 55, 'ac_failed': 6}, 94 s -> embedding_states_n4.parquet
+  load: 500 states, failures {}, 28 s
+  load: 1000 states, failures {}, 65 s
+load: 1200 states, failures {'islanded': 5}, 81 s -> embedding_states_load.parquet
+  pf: 500 states, failures {}, 55 s
+  pf: 1000 states, failures {}, 84 s
+  pf: 1500 states, failures {'islanded': 5}, 110 s
+  pf: 2000 states, failures {'islanded': 5}, 133 s
+  pf: 2500 states, failures {'islanded': 10}, 160 s
+  pf: 3000 states, failures {'islanded': 10}, 185 s
+  pf: 3500 states, failures {'islanded': 10}, 212 s
+pf: 3600 states, failures {'islanded': 15}, 217 s -> embedding_states_pf.parquet
+  redispatch: 500 states, failures {'islanded': 2}, 26 s
+  redispatch: 1000 states, failures {'islanded': 4}, 52 s
+redispatch: 1345 states, failures {'islanded': 5}, 68 s -> embedding_states_redispatch.parquet
+  ref: 500 states, failures {}, 26 s
+  ref: 1000 states, failures {'islanded': 1}, 51 s
+  ref: 1500 states, failures {'islanded': 4}, 79 s
+  ref: 2000 states, failures {'islanded': 8}, 104 s
+ref: 2380 states, failures {'islanded': 10}, 124 s -> embedding_states_ref.parquet

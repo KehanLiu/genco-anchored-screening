@@ -1,0 +1,421 @@
+=== state matching with the saved sweeps (state id, outages, load, GENCO residual)
+  ref          2380 states here,  2380 in hybrid_case118_ieee_base.parquet: ids/outages/load identical, max |residual diff| 0.00000 MW
+  control      1200 states here,  1200 in shift_case118_control.parquet: ids/outages/load identical, max |residual diff| 0.00000 MW
+  n3           1192 states here,  1192 in shift_case118_n3.parquet: ids/outages/load identical, max |residual diff| 0.00000 MW
+  n4           1144 states here,  1144 in shift_case118_n4.parquet: ids/outages/load identical, max |residual diff| 0.00000 MW
+  load         1200 states here,  1200 in shift_case118_load.parquet: ids/outages/load identical, max |residual diff| 0.00000 MW
+  pf           3600 states here,  3600 in shift_case118_pf.parquet: ids/outages/load identical, max |residual diff| 0.00000 MW
+  redispatch   1345 states here,  1345 in shift_case118_redispatch.parquet: ids/outages/load identical, max |residual diff| 0.00000 MW
+
+reference: 2375 states (885 N-1, 1490 N-2; the whole calibration sweep). Embedding width 384, 118 buses. PCA components kept: L0.mean 52, L0.mean-N0 64, L0.max 64, L0.max-N0 64, L0.absmaxdiff 64, L0.busnorm 64, L5.mean 50, L5.mean-N0 64, L5.max 64, L5.max-N0 64, L5.absmaxdiff 64, L5.busnorm 64, L11.mean 36, L11.mean-N0 64, L11.max 64, L11.max-N0 64, L11.absmaxdiff 64, L11.busnorm 64
+scores: 5 cheap, 3 local embedding scalars, 54 embedding distances (3 layers x 6 feature sets x maha/knn5/knn10)
+
+=== (a) separation: AUROC of each score, shifted states vs control states (0.5 = no separation)
+    last columns: control vs the N-2 reference states (should be 0.5), Spearman rho with load level / lines out / max GENCO loading change in the reference
+  score            |      n3      n4    load  Qdx0.7  Qdx1.2  Qdx1.5 redispatch | ctl/ref  rho_load rho_nout rho_dload
+  n_out            |   1.000   1.000   0.500   0.500   0.500   0.500   0.500 |   0.500      0.00     1.00      0.26
+  res_p            |   0.584   0.639   0.630   0.836   0.824   0.966   0.747 |   0.479      0.04     0.12      0.21
+  res_excess       |   0.583   0.639   0.524   0.600   0.441   0.355   0.513 |   0.477     -0.23     0.14      0.17
+  res_q            |   0.624   0.708   0.567   0.784   0.741   0.915   0.714 |   0.483      0.07     0.24      0.37
+  dload_max        |   0.614   0.674   0.471   0.499   0.498   0.495   0.499 |   0.500      0.22     0.26      1.00
+  L0.busnorm_max   |   0.590   0.671   0.499   0.501   0.498   0.495   0.499 |   0.512      0.01     0.28      0.10
+  L5.busnorm_max   |   0.593   0.652   0.496   0.506   0.499   0.496   0.501 |   0.496     -0.00     0.30      0.42
+  L11.busnorm_max  |   0.594   0.651   0.498   0.505   0.500   0.498   0.502 |   0.500     -0.01     0.29      0.43
+  L11.mean|maha    |   0.667   0.773   0.645   0.780   0.710   0.936   0.754 |   0.462      0.00     0.42      0.47
+  L11.mean|knn5    |   0.684   0.793   0.875   0.847   0.807   0.955   0.829 |   0.471      0.01     0.39      0.51
+  L11.mean-N0|maha |   0.692   0.804   0.497   0.499   0.501   0.500   0.498 |   0.497      0.01     0.44      0.48
+  L11.mean-N0|knn5 |   0.755   0.876   0.504   0.513   0.505   0.523   0.521 |   0.464     -0.02     0.36      0.49
+  L0.mean|maha     |   0.678   0.811   0.645   1.000   1.000   1.000   0.735 |   0.513      0.03     0.40      0.28
+  L0.mean|knn5     |   0.672   0.806   0.897   1.000   0.984   1.000   0.715 |   0.488      0.02     0.37      0.26
+  L0.mean|knn10    |   0.663   0.786   0.867   1.000   0.976   1.000   0.673 |   0.502      0.01     0.36      0.26
+  L5.mean|knn5     |   0.685   0.796   0.854   0.853   0.780   0.945   0.819 |   0.467      0.02     0.39      0.51
+  L11.mean|knn10   |   0.670   0.769   0.830   0.796   0.759   0.915   0.784 |   0.461      0.02     0.41      0.52
+  L0.max|knn5      |   0.617   0.708   0.785   0.874   0.787   0.988   0.807 |   0.461      0.02     0.33      0.37
+  all embedding distances, range over the 54: n3 0.57-0.79; n4 0.62-0.93; load 0.49-0.90; pf Qd x0.7 0.49-1.00; pf Qd x1.2 0.49-1.00; pf Qd x1.5 0.48-1.00; redispatch 0.48-0.83
+  by layer/feature set/distance, mean AUROC over n3, n4, Qd x0.7:
+    L0.mean          maha n3 0.678 n4 0.811 Qd0.7 1.000 load 0.645  knn5 n3 0.672 n4 0.806 Qd0.7 1.000 load 0.897
+    L0.mean-N0       maha n3 0.712 n4 0.851 Qd0.7 0.498 load 0.487  knn5 n3 0.766 n4 0.901 Qd0.7 0.506 load 0.498
+    L0.max           maha n3 0.625 n4 0.723 Qd0.7 0.894 load 0.596  knn5 n3 0.617 n4 0.708 Qd0.7 0.874 load 0.785
+    L0.max-N0        maha n3 0.625 n4 0.727 Qd0.7 0.503 load 0.498  knn5 n3 0.680 n4 0.800 Qd0.7 0.524 load 0.505
+    L0.absmaxdiff    maha n3 0.614 n4 0.707 Qd0.7 0.501 load 0.489  knn5 n3 0.740 n4 0.868 Qd0.7 0.508 load 0.501
+    L0.busnorm       maha n3 0.701 n4 0.829 Qd0.7 0.497 load 0.494  knn5 n3 0.784 n4 0.916 Qd0.7 0.500 load 0.497
+    L5.mean          maha n3 0.686 n4 0.797 Qd0.7 0.824 load 0.635  knn5 n3 0.685 n4 0.796 Qd0.7 0.853 load 0.854
+    L5.mean-N0       maha n3 0.697 n4 0.811 Qd0.7 0.498 load 0.497  knn5 n3 0.770 n4 0.893 Qd0.7 0.514 load 0.504
+    L5.max           maha n3 0.651 n4 0.733 Qd0.7 0.588 load 0.558  knn5 n3 0.654 n4 0.748 Qd0.7 0.694 load 0.747
+    L5.max-N0        maha n3 0.651 n4 0.740 Qd0.7 0.489 load 0.494  knn5 n3 0.687 n4 0.811 Qd0.7 0.509 load 0.501
+    L5.absmaxdiff    maha n3 0.568 n4 0.624 Qd0.7 0.495 load 0.492  knn5 n3 0.722 n4 0.851 Qd0.7 0.513 load 0.505
+    L5.busnorm       maha n3 0.705 n4 0.846 Qd0.7 0.506 load 0.496  knn5 n3 0.795 n4 0.930 Qd0.7 0.509 load 0.504
+    L11.mean         maha n3 0.667 n4 0.773 Qd0.7 0.780 load 0.645  knn5 n3 0.684 n4 0.793 Qd0.7 0.847 load 0.875
+    L11.mean-N0      maha n3 0.692 n4 0.804 Qd0.7 0.499 load 0.497  knn5 n3 0.755 n4 0.876 Qd0.7 0.513 load 0.504
+    L11.max          maha n3 0.646 n4 0.730 Qd0.7 0.612 load 0.578  knn5 n3 0.650 n4 0.744 Qd0.7 0.712 load 0.766
+    L11.max-N0       maha n3 0.649 n4 0.738 Qd0.7 0.489 load 0.493  knn5 n3 0.688 n4 0.809 Qd0.7 0.509 load 0.501
+    L11.absmaxdiff   maha n3 0.569 n4 0.619 Qd0.7 0.495 load 0.493  knn5 n3 0.721 n4 0.843 Qd0.7 0.514 load 0.506
+    L11.busnorm      maha n3 0.673 n4 0.801 Qd0.7 0.503 load 0.495  knn5 n3 0.767 n4 0.893 Qd0.7 0.511 load 0.504
+
+=== (b) does the score rank the trust-layer failures first? (genco_d+shift, fixed width, alpha 5%)
+    failure = state with a real overload reading that is not flagged. Per shift: AUROC over all states / AUROC among states that
+    have a real overload (a state without overloads cannot fail, so the first number rewards any 'is it stressed' score) / share of failures in top 10% / top 20%
+  failing states / insecure / all |  control   34/443/1195 |    n3      71/625/1187 |    n4      92/715/1139 |   load     19/368/1195 |  Qdx0.7    43/443/1195 |  Qdx1.2    32/457/1195 |  Qdx1.5    35/456/1195 | redispatch  53/933/1195
+  n_out            | 0.50 0.50   9%  18% | 0.50 0.50   8%  21% | 0.50 0.50  13%  18% | 0.50 0.50  11%  21% | 0.50 0.50   7%  12% | 0.50 0.50   9%  22% | 0.50 0.50  11%  20% | 0.50 0.50  17%  30%
+  res_p            | 0.72 0.64  35%  44% | 0.63 0.59  34%  41% | 0.62 0.59  30%  39% | 0.68 0.67  42%  53% | 0.67 0.64  28%  40% | 0.68 0.60  41%  44% | 0.52 0.45  23%  29% | 0.62 0.61  32%  47%
+  res_excess       | 0.65 0.61  38%  53% | 0.60 0.57  34%  41% | 0.58 0.57  30%  38% | 0.68 0.67  47%  53% | 0.71 0.68  33%  49% | 0.62 0.64  41%  47% | 0.47 0.52  29%  31% | 0.66 0.66  43%  55%
+  res_q            | 0.70 0.62  38%  53% | 0.68 0.63  35%  45% | 0.65 0.61  27%  41% | 0.77 0.73  58%  63% | 0.68 0.62  35%  44% | 0.63 0.55  47%  47% | 0.57 0.49  26%  37% | 0.63 0.61  34%  42%
+  dload_max        | 0.74 0.57  41%  50% | 0.69 0.59  35%  46% | 0.72 0.63  28%  51% | 0.82 0.68  58%  68% | 0.70 0.50  30%  37% | 0.73 0.58  41%  53% | 0.72 0.57  43%  57% | 0.70 0.67  38%  51%
+  L0.busnorm_max   | 0.56 0.51   9%  21% | 0.55 0.52  14%  27% | 0.55 0.54  13%  27% | 0.57 0.50   5%  21% | 0.58 0.53  23%  28% | 0.51 0.46   6%  16% | 0.51 0.47  17%  26% | 0.52 0.52  11%  21%
+  L5.busnorm_max   | 0.68 0.59  41%  44% | 0.66 0.57  23%  41% | 0.64 0.59  30%  43% | 0.78 0.66  42%  68% | 0.64 0.53  28%  33% | 0.70 0.61  44%  47% | 0.73 0.64  31%  57% | 0.67 0.66  19%  49%
+  L11.busnorm_max  | 0.70 0.60  38%  44% | 0.66 0.59  28%  41% | 0.66 0.61  30%  47% | 0.76 0.65  42%  63% | 0.66 0.55  30%  33% | 0.70 0.61  34%  50% | 0.74 0.64  31%  57% | 0.67 0.66  21%  51%
+  L11.mean|maha    | 0.67 0.54  26%  38% | 0.64 0.57  21%  37% | 0.63 0.58  22%  32% | 0.66 0.60  32%  53% | 0.73 0.56  21%  40% | 0.69 0.54  28%  41% | 0.71 0.59  34%  46% | 0.63 0.62  17%  40%
+  L11.mean|knn5    | 0.68 0.53  24%  38% | 0.64 0.55  25%  39% | 0.64 0.57  25%  36% | 0.55 0.55  32%  32% | 0.79 0.65  40%  47% | 0.69 0.55  34%  47% | 0.73 0.66  37%  51% | 0.63 0.61  26%  36%
+  L11.mean-N0|maha | 0.67 0.54  18%  38% | 0.63 0.55  21%  35% | 0.63 0.57  17%  34% | 0.70 0.57  26%  58% | 0.70 0.56  21%  44% | 0.65 0.52  25%  41% | 0.69 0.57  23%  51% | 0.67 0.67  26%  42%
+  L11.mean-N0|knn5 | 0.73 0.58  24%  44% | 0.65 0.58  25%  39% | 0.62 0.57  20%  34% | 0.71 0.56  32%  42% | 0.71 0.57  30%  44% | 0.66 0.52  22%  38% | 0.72 0.59  29%  51% | 0.71 0.71  32%  43%
+  L0.mean|maha     | 0.61 0.54   9%  21% | 0.55 0.50  11%  21% | 0.55 0.53  11%  25% | 0.56 0.56   0%   5% | 0.71 0.60  21%  53% | 0.62 0.50  16%  31% | 0.60 0.50  23%  31% | 0.51 0.53  11%  21%
+  L0.mean|knn5     | 0.60 0.53   6%  24% | 0.54 0.50  11%  20% | 0.52 0.50   8%  15% | 0.42 0.48   5%   5% | 0.72 0.59  19%  51% | 0.63 0.51   9%  28% | 0.65 0.56  29%  40% | 0.51 0.52  13%  21%
+  L0.mean|knn10    | 0.59 0.52   9%  26% | 0.54 0.50  11%  23% | 0.53 0.50   8%  18% | 0.42 0.46   5%   5% | 0.71 0.58  16%  53% | 0.62 0.49   9%  28% | 0.65 0.55  31%  40% | 0.52 0.53  15%  17%
+  L5.mean|knn5     | 0.68 0.54  21%  41% | 0.63 0.54  20%  37% | 0.63 0.57  23%  35% | 0.54 0.54  26%  32% | 0.77 0.63  30%  56% | 0.68 0.53  25%  41% | 0.73 0.62  31%  57% | 0.61 0.58  17%  32%
+  L11.mean|knn10   | 0.70 0.55  29%  41% | 0.66 0.57  25%  39% | 0.65 0.58  25%  38% | 0.66 0.61  47%  53% | 0.78 0.62  35%  49% | 0.69 0.55  34%  47% | 0.73 0.65  37%  54% | 0.66 0.65  34%  47%
+  L0.max|knn5      | 0.61 0.54  18%  41% | 0.61 0.56  18%  31% | 0.63 0.60  18%  30% | 0.53 0.56  11%  16% | 0.69 0.57   5%  30% | 0.70 0.60  22%  47% | 0.68 0.58  26%  49% | 0.54 0.57  11%  19%
+
+=== (b) does the score rank the trust-layer failures first? (genco_d+shift, fixed width, alpha 1%)
+    failure = state with a real overload reading that is not flagged. Per shift: AUROC over all states / AUROC among states that
+    have a real overload (a state without overloads cannot fail, so the first number rewards any 'is it stressed' score) / share of failures in top 10% / top 20%
+  failing states / insecure / all |  control    8/443/1195 |    n3      19/625/1187 |    n4      27/715/1139 |   load      3/368/1195 |  Qdx0.7    12/443/1195 |  Qdx1.2     8/457/1195 |  Qdx1.5    12/456/1195 | redispatch  23/933/1195
+  n_out            | 0.50 0.50   0%  12% | 0.50 0.50  16%  32% | 0.50 0.50  22%  26% | 0.50 0.50   0%   0% | 0.50 0.50   8%  25% | 0.50 0.50  12%  25% | 0.50 0.50   8%  17% | 0.50 0.50  13%  26%
+  res_p            | 0.70 0.64  50%  50% | 0.81 0.79  74%  74% | 0.79 0.78  59%  70% | 0.98 0.97 100% 100% | 0.82 0.80  50%  58% | 0.70 0.61  50%  50% | 0.68 0.63  42%  50% | 0.72 0.71  52%  65%
+  res_excess       | 0.57 0.56  50%  50% | 0.76 0.76  74%  74% | 0.76 0.75  59%  70% | 0.99 0.97 100% 100% | 0.90 0.87  58%  83% | 0.54 0.56  50%  50% | 0.55 0.59  42%  42% | 0.78 0.78  57%  65%
+  res_q            | 0.71 0.65  50%  62% | 0.84 0.80  68%  74% | 0.80 0.78  56%  70% | 0.98 0.96 100% 100% | 0.78 0.73  58%  58% | 0.65 0.57  50%  50% | 0.69 0.62  42%  50% | 0.66 0.65  52%  52%
+  dload_max        | 0.71 0.54  38%  38% | 0.74 0.67  53%  68% | 0.82 0.75  48%  70% | 0.87 0.76  67%  67% | 0.76 0.59  50%  50% | 0.71 0.55  38%  50% | 0.75 0.60  50%  58% | 0.58 0.55  30%  35%
+  L0.busnorm_max   | 0.58 0.52   0%  12% | 0.64 0.61  16%  37% | 0.59 0.58  11%  37% | 0.65 0.56   0%   0% | 0.48 0.41   8%   8% | 0.59 0.54  12%  12% | 0.47 0.43   8%  17% | 0.52 0.52  13%  22%
+  L5.busnorm_max   | 0.73 0.62  38%  38% | 0.78 0.71  37%  63% | 0.77 0.72  44%  67% | 0.94 0.85  67% 100% | 0.76 0.64  25%  42% | 0.80 0.71  38%  50% | 0.79 0.70  42%  58% | 0.68 0.67  13%  48%
+  L11.busnorm_max  | 0.73 0.64  38%  38% | 0.79 0.73  47%  63% | 0.79 0.75  52%  70% | 0.93 0.85  67% 100% | 0.78 0.66  42%  42% | 0.80 0.70  38%  62% | 0.79 0.70  42%  58% | 0.68 0.67  17%  57%
+  L11.mean|maha    | 0.65 0.55  38%  50% | 0.75 0.69  37%  53% | 0.75 0.71  41%  52% | 0.89 0.81  33% 100% | 0.84 0.70  33%  58% | 0.73 0.60  38%  50% | 0.81 0.69  33%  50% | 0.66 0.64  22%  43%
+  L11.mean|knn5    | 0.66 0.53  25%  50% | 0.79 0.72  42%  68% | 0.76 0.71  37%  59% | 0.65 0.65  33%  33% | 0.86 0.74  58%  67% | 0.74 0.62  50%  62% | 0.82 0.76  42%  58% | 0.65 0.63  26%  35%
+  L11.mean-N0|maha | 0.65 0.54  25%  50% | 0.76 0.70  37%  63% | 0.74 0.70  37%  59% | 0.89 0.75  33% 100% | 0.72 0.57  25%  42% | 0.68 0.58  38%  50% | 0.72 0.60  25%  50% | 0.69 0.68  26%  43%
+  L11.mean-N0|knn5 | 0.76 0.64  38%  50% | 0.81 0.75  42%  63% | 0.73 0.69  33%  48% | 0.94 0.89 100% 100% | 0.72 0.58  33%  42% | 0.75 0.62  38%  50% | 0.79 0.66  25%  58% | 0.69 0.69  39%  43%
+  L0.mean|maha     | 0.68 0.60   0%  25% | 0.78 0.74  26%  53% | 0.69 0.68  19%  48% | 0.71 0.74   0%   0% | 0.89 0.82  42%  92% | 0.75 0.67  50%  62% | 0.69 0.60  33%  50% | 0.55 0.56  17%  30%
+  L0.mean|knn5     | 0.67 0.60   0%  25% | 0.75 0.72  21%  47% | 0.64 0.62  11%  22% | 0.52 0.61   0%   0% | 0.88 0.79  42%  92% | 0.74 0.65  12%  62% | 0.75 0.66  50%  58% | 0.54 0.55  17%  30%
+  L0.mean|knn10    | 0.62 0.54   0%  25% | 0.74 0.69  16%  37% | 0.63 0.61  11%  22% | 0.49 0.56   0%   0% | 0.87 0.77  33%  92% | 0.74 0.64  12%  62% | 0.74 0.65  50%  58% | 0.54 0.55  17%  17%
+  L5.mean|knn5     | 0.64 0.50  12%  50% | 0.76 0.68  21%  47% | 0.74 0.68  30%  48% | 0.63 0.65  33%  33% | 0.83 0.68  25%  67% | 0.78 0.66  62%  62% | 0.80 0.69  33%  58% | 0.62 0.59  13%  30%
+  L11.mean|knn10   | 0.67 0.54  38%  50% | 0.78 0.71  42%  63% | 0.76 0.71  44%  63% | 0.83 0.76  67%  67% | 0.85 0.70  25%  58% | 0.72 0.60  38%  62% | 0.83 0.74  50%  58% | 0.70 0.69  35%  52%
+  L0.max|knn5      | 0.65 0.55  12%  38% | 0.75 0.71  32%  37% | 0.65 0.61  15%  26% | 0.63 0.66   0%   0% | 0.72 0.59   0%  25% | 0.73 0.62  25%  50% | 0.73 0.66  50%  67% | 0.54 0.56  13%  22%
+
+=== (c) gate: escalate to AC when the score is above the 95% quantile of the reference (out-of-fold reference scores)
+    per shift: states gated / secure states gated / extra AC calls at alpha 5% (gated and not already sent) | per-line miss before -> after, alpha 5% | alpha 1%
+    a blind gate of the same size would cut the miss rate by the gated share; only a larger cut is information
+  -- control: trust layer alone: AC calls 36.2% / 39.2%, per-line miss 4.42% (alpha 5%) / 1.05% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  4.42% ->  4.42% OK  (cut   0%) |  1.05% ->  1.05% >1%
+     res_p            gated   6.7%  secure   4.1%  extra AC   2.7% |  4.42% ->  3.05% OK  (cut  31%) |  1.05% ->  0.42% OK 
+     res_excess       gated   6.6%  secure   3.7%  extra AC   2.4% |  4.42% ->  3.05% OK  (cut  31%) |  1.05% ->  0.42% OK 
+     res_q            gated   6.4%  secure   2.8%  extra AC   1.9% |  4.42% ->  2.84% OK  (cut  36%) |  1.05% ->  0.42% OK 
+     dload_max        gated   5.8%  secure   0.1%  extra AC   0.1% |  4.42% ->  3.05% OK  (cut  31%) |  1.05% ->  0.53% OK 
+     L0.busnorm_max   gated   6.9%  secure   5.5%  extra AC   3.4% |  4.42% ->  4.10% OK  (cut   7%) |  1.05% ->  1.05% >1%
+     L5.busnorm_max   gated   6.9%  secure   1.3%  extra AC   0.8% |  4.42% ->  2.94% OK  (cut  33%) |  1.05% ->  0.53% OK 
+     L11.busnorm_max  gated   7.7%  secure   1.1%  extra AC   0.7% |  4.42% ->  2.94% OK  (cut  33%) |  1.05% ->  0.53% OK 
+     L11.mean|maha    gated   7.4%  secure   2.7%  extra AC   1.7% |  4.42% ->  3.36% OK  (cut  24%) |  1.05% ->  0.53% OK 
+     L11.mean|knn5    gated   5.9%  secure   1.9%  extra AC   1.2% |  4.42% ->  3.26% OK  (cut  26%) |  1.05% ->  0.63% OK 
+     L11.mean-N0|maha gated   7.4%  secure   2.9%  extra AC   1.8% |  4.42% ->  3.47% OK  (cut  21%) |  1.05% ->  0.63% OK 
+     L11.mean-N0|knn5 gated   4.1%  secure   2.8%  extra AC   1.8% |  4.42% ->  3.36% OK  (cut  24%) |  1.05% ->  0.53% OK 
+     L0.mean|maha     gated   5.1%  secure   2.5%  extra AC   1.6% |  4.42% ->  4.31% OK  (cut   2%) |  1.05% ->  1.05% >1%
+     L0.mean|knn5     gated   7.1%  secure   4.0%  extra AC   2.5% |  4.42% ->  4.31% OK  (cut   2%) |  1.05% ->  1.05% >1%
+     L0.mean|knn10    gated   7.6%  secure   4.0%  extra AC   2.5% |  4.42% ->  4.21% OK  (cut   5%) |  1.05% ->  1.05% >1%
+     L5.mean|knn5     gated   4.9%  secure   1.9%  extra AC   1.2% |  4.42% ->  3.58% OK  (cut  19%) |  1.05% ->  0.84% OK 
+     L11.mean|knn10   gated   5.1%  secure   1.5%  extra AC   0.9% |  4.42% ->  3.15% OK  (cut  29%) |  1.05% ->  0.63% OK 
+     L0.max|knn5      gated   3.8%  secure   3.2%  extra AC   2.0% |  4.42% ->  4.10% OK  (cut   7%) |  1.05% ->  1.05% >1%
+  -- n3: trust layer alone: AC calls 51.1% / 54.8%, per-line miss 6.51% (alpha 5%) / 2.15% (alpha 1%)
+     n_out            gated 100.0%  secure 100.0%  extra AC  48.9% |  6.51% ->  0.00% OK  (cut 100%) |  2.15% ->  0.00% OK 
+     res_p            gated  12.3%  secure   6.8%  extra AC   3.2% |  6.51% ->  3.60% OK  (cut  45%) |  2.15% ->  0.42% OK 
+     res_excess       gated  12.2%  secure   6.6%  extra AC   3.1% |  6.51% ->  3.53% OK  (cut  46%) |  2.15% ->  0.42% OK 
+     res_q            gated  13.1%  secure   7.1%  extra AC   3.5% |  6.51% ->  3.25% OK  (cut  50%) |  2.15% ->  0.42% OK 
+     dload_max        gated   9.7%  secure   0.0%  extra AC   0.0% |  6.51% ->  3.88% OK  (cut  40%) |  2.15% ->  0.97% OK 
+     L0.busnorm_max   gated   9.6%  secure   7.3%  extra AC   3.6% |  6.51% ->  5.47% >5% (cut  16%) |  2.15% ->  1.73% >1%
+     L5.busnorm_max   gated   9.7%  secure   2.7%  extra AC   1.3% |  6.51% ->  4.57% OK  (cut  30%) |  2.15% ->  1.25% >1%
+     L11.busnorm_max  gated  10.6%  secure   2.1%  extra AC   1.1% |  6.51% ->  3.95% OK  (cut  39%) |  2.15% ->  0.90% OK 
+     L11.mean|maha    gated  17.4%  secure   9.1%  extra AC   4.2% |  6.51% ->  4.02% OK  (cut  38%) |  2.15% ->  1.11% >1%
+     L11.mean|knn5    gated  11.6%  secure   5.7%  extra AC   2.8% |  6.51% ->  4.29% OK  (cut  34%) |  2.15% ->  1.18% >1%
+     L11.mean-N0|maha gated  19.0%  secure   9.8%  extra AC   4.7% |  6.51% ->  3.67% OK  (cut  44%) |  2.15% ->  0.76% OK 
+     L11.mean-N0|knn5 gated  14.3%  secure   8.5%  extra AC   4.2% |  6.51% ->  3.60% OK  (cut  45%) |  2.15% ->  0.76% OK 
+     L0.mean|maha     gated  16.4%  secure   9.6%  extra AC   4.7% |  6.51% ->  4.71% OK  (cut  28%) |  2.15% ->  1.04% >1%
+     L0.mean|knn5     gated  11.7%  secure   8.0%  extra AC   3.9% |  6.51% ->  5.33% >5% (cut  18%) |  2.15% ->  1.59% >1%
+     L0.mean|knn10    gated  13.5%  secure   9.3%  extra AC   4.5% |  6.51% ->  5.12% >5% (cut  21%) |  2.15% ->  1.59% >1%
+     L5.mean|knn5     gated  11.4%  secure   5.2%  extra AC   2.4% |  6.51% ->  4.57% OK  (cut  30%) |  2.15% ->  1.45% >1%
+     L11.mean|knn10   gated   8.3%  secure   3.0%  extra AC   1.4% |  6.51% ->  4.50% OK  (cut  31%) |  2.15% ->  1.18% >1%
+     L0.max|knn5      gated   6.6%  secure   6.8%  extra AC   3.1% |  6.51% ->  5.33% >5% (cut  18%) |  2.15% ->  1.39% >1%
+  -- n4: trust layer alone: AC calls 61.4% / 64.8%, per-line miss 7.08% (alpha 5%) / 2.38% (alpha 1%)
+     n_out            gated 100.0%  secure 100.0%  extra AC  38.6% |  7.08% ->  0.00% OK  (cut 100%) |  2.38% ->  0.00% OK 
+     res_p            gated  17.4%  secure   9.7%  extra AC   3.8% |  7.08% ->  3.49% OK  (cut  51%) |  2.38% ->  0.50% OK 
+     res_excess       gated  17.3%  secure   9.7%  extra AC   3.8% |  7.08% ->  3.49% OK  (cut  51%) |  2.38% ->  0.50% OK 
+     res_q            gated  18.5%  secure  11.1%  extra AC   4.4% |  7.08% ->  3.54% OK  (cut  50%) |  2.38% ->  0.50% OK 
+     dload_max        gated  13.3%  secure   0.0%  extra AC   0.0% |  7.08% ->  3.54% OK  (cut  50%) |  2.38% ->  0.83% OK 
+     L0.busnorm_max   gated  12.7%  secure  11.3%  extra AC   4.5% |  7.08% ->  5.53% >5% (cut  22%) |  2.38% ->  1.66% >1%
+     L5.busnorm_max   gated  11.2%  secure   3.1%  extra AC   1.1% |  7.08% ->  4.04% OK  (cut  43%) |  2.38% ->  1.00% OK 
+     L11.busnorm_max  gated  12.4%  secure   2.8%  extra AC   1.1% |  7.08% ->  3.60% OK  (cut  49%) |  2.38% ->  0.66% OK 
+     L11.mean|maha    gated  27.8%  secure  15.3%  extra AC   5.7% |  7.08% ->  3.27% OK  (cut  54%) |  2.38% ->  0.61% OK 
+     L11.mean|knn5    gated  21.0%  secure  11.1%  extra AC   4.1% |  7.08% ->  3.43% OK  (cut  52%) |  2.38% ->  0.61% OK 
+     L11.mean-N0|maha gated  33.5%  secure  20.0%  extra AC   7.7% |  7.08% ->  2.60% OK  (cut  63%) |  2.38% ->  0.39% OK 
+     L11.mean-N0|knn5 gated  32.8%  secure  22.2%  extra AC   8.4% |  7.08% ->  2.82% OK  (cut  60%) |  2.38% ->  0.50% OK 
+     L0.mean|maha     gated  36.5%  secure  33.3%  extra AC  12.7% |  7.08% ->  3.32% OK  (cut  53%) |  2.38% ->  0.55% OK 
+     L0.mean|knn5     gated  21.1%  secure  20.5%  extra AC   7.7% |  7.08% ->  5.76% >5% (cut  19%) |  2.38% ->  1.88% >1%
+     L0.mean|knn10    gated  23.1%  secure  19.8%  extra AC   7.5% |  7.08% ->  5.09% >5% (cut  28%) |  2.38% ->  1.44% >1%
+     L5.mean|knn5     gated  22.2%  secure  11.1%  extra AC   4.0% |  7.08% ->  3.49% OK  (cut  51%) |  2.38% ->  0.89% OK 
+     L11.mean|knn10   gated  15.0%  secure   6.4%  extra AC   2.4% |  7.08% ->  4.10% OK  (cut  42%) |  2.38% ->  0.94% OK 
+     L0.max|knn5      gated  12.6%  secure  10.1%  extra AC   4.0% |  7.08% ->  5.42% >5% (cut  23%) |  2.38% ->  1.94% >1%
+  -- load: trust layer alone: AC calls 30.2% / 32.7%, per-line miss 3.86% (alpha 5%) / 1.00% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  3.86% ->  3.86% OK  (cut   0%) |  1.00% ->  1.00% OK 
+     res_p            gated  10.7%  secure   8.9%  extra AC   6.3% |  3.86% ->  1.86% OK  (cut  52%) |  1.00% ->  0.00% OK 
+     res_excess       gated   6.8%  secure   5.0%  extra AC   3.5% |  3.86% ->  1.86% OK  (cut  52%) |  1.00% ->  0.00% OK 
+     res_q            gated   5.7%  secure   2.9%  extra AC   2.1% |  3.86% ->  2.00% OK  (cut  48%) |  1.00% ->  0.29% OK 
+     dload_max        gated   4.4%  secure   0.1%  extra AC   0.1% |  3.86% ->  1.57% OK  (cut  59%) |  1.00% ->  0.29% OK 
+     L0.busnorm_max   gated   7.4%  secure   5.7%  extra AC   3.9% |  3.86% ->  3.57% OK  (cut   7%) |  1.00% ->  1.00% OK 
+     L5.busnorm_max   gated   6.9%  secure   2.1%  extra AC   1.4% |  3.86% ->  2.00% OK  (cut  48%) |  1.00% ->  0.29% OK 
+     L11.busnorm_max  gated   6.4%  secure   0.6%  extra AC   0.4% |  3.86% ->  1.86% OK  (cut  52%) |  1.00% ->  0.29% OK 
+     L11.mean|maha    gated  13.6%  secure   9.4%  extra AC   6.6% |  3.86% ->  1.86% OK  (cut  52%) |  1.00% ->  0.14% OK 
+     L11.mean|knn5    gated  43.2%  secure  46.7%  extra AC  32.6% |  3.86% ->  2.29% OK  (cut  41%) |  1.00% ->  0.71% OK 
+     L11.mean-N0|maha gated   7.4%  secure   3.1%  extra AC   2.2% |  3.86% ->  3.14% OK  (cut  19%) |  1.00% ->  1.00% OK 
+     L11.mean-N0|knn5 gated   5.3%  secure   3.0%  extra AC   2.2% |  3.86% ->  2.57% OK  (cut  33%) |  1.00% ->  0.14% OK 
+     L0.mean|maha     gated  25.3%  secure  27.4%  extra AC  19.0% |  3.86% ->  3.43% OK  (cut  11%) |  1.00% ->  0.86% OK 
+     L0.mean|knn5     gated  43.6%  secure  47.6%  extra AC  33.1% |  3.86% ->  2.71% OK  (cut  30%) |  1.00% ->  0.71% OK 
+     L0.mean|knn10    gated  38.5%  secure  41.2%  extra AC  28.6% |  3.86% ->  3.14% OK  (cut  19%) |  1.00% ->  1.00% OK 
+     L5.mean|knn5     gated  33.6%  secure  35.8%  extra AC  25.0% |  3.86% ->  2.57% OK  (cut  33%) |  1.00% ->  0.71% OK 
+     L11.mean|knn10   gated   8.0%  secure   4.0%  extra AC   2.8% |  3.86% ->  2.00% OK  (cut  48%) |  1.00% ->  0.43% OK 
+     L0.max|knn5      gated  19.6%  secure  20.9%  extra AC  14.5% |  3.86% ->  3.14% OK  (cut  19%) |  1.00% ->  1.00% OK 
+  -- pf Qd x0.7: trust layer alone: AC calls 36.4% / 38.2%, per-line miss 5.71% (alpha 5%) / 1.80% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  5.71% ->  5.71% >5% (cut   0%) |  1.80% ->  1.80% >1%
+     res_p            gated  19.8%  secure  18.1%  extra AC  11.5% |  5.71% ->  3.17% OK  (cut  44%) |  1.80% ->  0.63% OK 
+     res_excess       gated   6.5%  secure   4.0%  extra AC   2.6% |  5.71% ->  3.92% OK  (cut  31%) |  1.80% ->  0.74% OK 
+     res_q            gated   9.7%  secure   5.3%  extra AC   3.5% |  5.71% ->  3.39% OK  (cut  41%) |  1.80% ->  0.63% OK 
+     dload_max        gated   5.8%  secure   0.1%  extra AC   0.1% |  5.71% ->  4.23% OK  (cut  26%) |  1.80% ->  0.85% OK 
+     L0.busnorm_max   gated   6.9%  secure   4.9%  extra AC   3.2% |  5.71% ->  5.08% >5% (cut  11%) |  1.80% ->  1.80% >1%
+     L5.busnorm_max   gated   6.7%  secure   1.3%  extra AC   0.9% |  5.71% ->  4.02% OK  (cut  30%) |  1.80% ->  0.95% OK 
+     L11.busnorm_max  gated   6.6%  secure   1.3%  extra AC   0.9% |  5.71% ->  3.81% OK  (cut  33%) |  1.80% ->  0.74% OK 
+     L11.mean|maha    gated  14.7%  secure   5.6%  extra AC   3.6% |  5.71% ->  3.49% OK  (cut  39%) |  1.80% ->  0.85% OK 
+     L11.mean|knn5    gated  16.6%  secure   6.8%  extra AC   4.3% |  5.71% ->  2.75% OK  (cut  52%) |  1.80% ->  0.53% OK 
+     L11.mean-N0|maha gated   7.7%  secure   2.9%  extra AC   1.8% |  5.71% ->  4.44% OK  (cut  22%) |  1.80% ->  1.06% >1%
+     L11.mean-N0|knn5 gated   5.3%  secure   3.2%  extra AC   2.0% |  5.71% ->  4.13% OK  (cut  28%) |  1.80% ->  1.06% >1%
+     L0.mean|maha     gated 100.0%  secure 100.0%  extra AC  63.6% |  5.71% ->  0.00% OK  (cut 100%) |  1.80% ->  0.00% OK 
+     L0.mean|knn5     gated 100.0%  secure 100.0%  extra AC  63.6% |  5.71% ->  0.00% OK  (cut 100%) |  1.80% ->  0.00% OK 
+     L0.mean|knn10    gated 100.0%  secure 100.0%  extra AC  63.6% |  5.71% ->  0.00% OK  (cut 100%) |  1.80% ->  0.00% OK 
+     L5.mean|knn5     gated  14.9%  secure   6.1%  extra AC   3.8% |  5.71% ->  3.17% OK  (cut  44%) |  1.80% ->  0.95% OK 
+     L11.mean|knn10   gated   6.2%  secure   1.3%  extra AC   0.8% |  5.71% ->  4.55% OK  (cut  20%) |  1.80% ->  1.59% >1%
+     L0.max|knn5      gated  18.7%  secure  13.3%  extra AC   8.5% |  5.71% ->  3.60% OK  (cut  37%) |  1.80% ->  0.95% OK 
+  -- pf Qd x1.2: trust layer alone: AC calls 37.8% / 40.5%, per-line miss 3.92% (alpha 5%) / 1.34% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  3.92% ->  3.92% OK  (cut   0%) |  1.34% ->  1.34% >1%
+     res_p            gated  23.7%  secure  19.4%  extra AC  12.0% |  3.92% ->  1.86% OK  (cut  53%) |  1.34% ->  0.52% OK 
+     res_excess       gated   4.7%  secure   2.0%  extra AC   1.3% |  3.92% ->  2.58% OK  (cut  34%) |  1.34% ->  0.62% OK 
+     res_q            gated   5.4%  secure   1.2%  extra AC   0.9% |  3.92% ->  2.17% OK  (cut  45%) |  1.34% ->  0.52% OK 
+     dload_max        gated   5.2%  secure   0.0%  extra AC   0.1% |  3.92% ->  2.58% OK  (cut  34%) |  1.34% ->  0.83% OK 
+     L0.busnorm_max   gated   6.9%  secure   5.3%  extra AC   3.3% |  3.92% ->  3.72% OK  (cut   5%) |  1.34% ->  1.24% >1%
+     L5.busnorm_max   gated   7.7%  secure   2.3%  extra AC   1.4% |  3.92% ->  2.58% OK  (cut  34%) |  1.34% ->  0.72% OK 
+     L11.busnorm_max  gated   7.8%  secure   1.1%  extra AC   0.7% |  3.92% ->  2.58% OK  (cut  34%) |  1.34% ->  0.72% OK 
+     L11.mean|maha    gated  11.8%  secure   4.6%  extra AC   2.8% |  3.92% ->  2.58% OK  (cut  34%) |  1.34% ->  0.72% OK 
+     L11.mean|knn5    gated   9.9%  secure   3.1%  extra AC   1.9% |  3.92% ->  2.27% OK  (cut  42%) |  1.34% ->  0.52% OK 
+     L11.mean-N0|maha gated   7.5%  secure   3.0%  extra AC   1.8% |  3.92% ->  2.99% OK  (cut  24%) |  1.34% ->  0.83% OK 
+     L11.mean-N0|knn5 gated   4.3%  secure   3.0%  extra AC   1.8% |  3.92% ->  3.20% OK  (cut  18%) |  1.34% ->  0.83% OK 
+     L0.mean|maha     gated 100.0%  secure 100.0%  extra AC  62.2% |  3.92% ->  0.00% OK  (cut 100%) |  1.34% ->  0.00% OK 
+     L0.mean|knn5     gated 100.0%  secure 100.0%  extra AC  62.2% |  3.92% ->  0.00% OK  (cut 100%) |  1.34% ->  0.00% OK 
+     L0.mean|knn10    gated  99.6%  secure  99.3%  extra AC  61.8% |  3.92% ->  0.00% OK  (cut 100%) |  1.34% ->  0.00% OK 
+     L5.mean|knn5     gated   7.2%  secure   2.7%  extra AC   1.7% |  3.92% ->  3.30% OK  (cut  16%) |  1.34% ->  1.03% >1%
+     L11.mean|knn10   gated   6.0%  secure   1.5%  extra AC   0.9% |  3.92% ->  2.79% OK  (cut  29%) |  1.34% ->  0.83% OK 
+     L0.max|knn5      gated  12.3%  secure   8.7%  extra AC   5.2% |  3.92% ->  2.89% OK  (cut  26%) |  1.34% ->  0.93% OK 
+  -- pf Qd x1.5: trust layer alone: AC calls 37.7% / 40.3%, per-line miss 4.63% (alpha 5%) / 1.83% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  4.63% ->  4.63% OK  (cut   0%) |  1.83% ->  1.83% >1%
+     res_p            gated  86.7%  secure  82.0%  extra AC  51.0% |  4.63% ->  0.32% OK  (cut  93%) |  1.83% ->  0.00% OK 
+     res_excess       gated   5.3%  secure   2.7%  extra AC   1.8% |  4.63% ->  3.12% OK  (cut  33%) |  1.83% ->  0.86% OK 
+     res_q            gated  26.7%  secure  20.2%  extra AC  12.4% |  4.63% ->  2.37% OK  (cut  49%) |  1.83% ->  0.65% OK 
+     dload_max        gated   5.2%  secure   0.0%  extra AC   0.1% |  4.63% ->  2.80% OK  (cut  40%) |  1.83% ->  0.86% OK 
+     L0.busnorm_max   gated   6.5%  secure   5.7%  extra AC   3.6% |  4.63% ->  4.20% OK  (cut   9%) |  1.83% ->  1.72% >1%
+     L5.busnorm_max   gated   8.2%  secure   3.0%  extra AC   2.0% |  4.63% ->  2.80% OK  (cut  40%) |  1.83% ->  0.97% OK 
+     L11.busnorm_max  gated   8.0%  secure   1.9%  extra AC   1.2% |  4.63% ->  3.02% OK  (cut  35%) |  1.83% ->  0.97% OK 
+     L11.mean|maha    gated  80.8%  secure  73.7%  extra AC  45.9% |  4.63% ->  0.43% OK  (cut  91%) |  1.83% ->  0.00% OK 
+     L11.mean|knn5    gated  80.8%  secure  75.1%  extra AC  46.6% |  4.63% ->  0.43% OK  (cut  91%) |  1.83% ->  0.00% OK 
+     L11.mean-N0|maha gated   6.8%  secure   2.7%  extra AC   1.7% |  4.63% ->  3.56% OK  (cut  23%) |  1.83% ->  1.40% >1%
+     L11.mean-N0|knn5 gated   5.4%  secure   2.8%  extra AC   1.8% |  4.63% ->  3.56% OK  (cut  23%) |  1.83% ->  1.40% >1%
+     L0.mean|maha     gated 100.0%  secure 100.0%  extra AC  62.3% |  4.63% ->  0.00% OK  (cut 100%) |  1.83% ->  0.00% OK 
+     L0.mean|knn5     gated 100.0%  secure 100.0%  extra AC  62.3% |  4.63% ->  0.00% OK  (cut 100%) |  1.83% ->  0.00% OK 
+     L0.mean|knn10    gated 100.0%  secure 100.0%  extra AC  62.3% |  4.63% ->  0.00% OK  (cut 100%) |  1.83% ->  0.00% OK 
+     L5.mean|knn5     gated  62.8%  secure  51.7%  extra AC  32.3% |  4.63% ->  0.43% OK  (cut  91%) |  1.83% ->  0.00% OK 
+     L11.mean|knn10   gated  15.9%  secure   8.5%  extra AC   5.6% |  4.63% ->  1.94% OK  (cut  58%) |  1.83% ->  0.65% OK 
+     L0.max|knn5      gated  98.7%  secure  98.5%  extra AC  61.3% |  4.63% ->  0.11% OK  (cut  98%) |  1.83% ->  0.11% OK 
+  -- redispatch: trust layer alone: AC calls 78.0% / 78.2%, per-line miss 3.16% (alpha 5%) / 1.34% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  3.16% ->  3.16% OK  (cut   0%) |  1.34% ->  1.34% >1%
+     res_p            gated  16.2%  secure   8.0%  extra AC   1.9% |  3.16% ->  1.69% OK  (cut  47%) |  1.34% ->  0.48% OK 
+     res_excess       gated   8.2%  secure   7.6%  extra AC   1.8% |  3.16% ->  1.78% OK  (cut  44%) |  1.34% ->  0.52% OK 
+     res_q            gated   9.4%  secure   6.1%  extra AC   1.4% |  3.16% ->  1.95% OK  (cut  38%) |  1.34% ->  0.56% OK 
+     dload_max        gated   5.3%  secure   0.0%  extra AC   0.0% |  3.16% ->  2.30% OK  (cut  27%) |  1.34% ->  1.00% OK 
+     L0.busnorm_max   gated   7.0%  secure   7.6%  extra AC   1.7% |  3.16% ->  2.99% OK  (cut   5%) |  1.34% ->  1.26% >1%
+     L5.busnorm_max   gated   6.7%  secure   2.3%  extra AC   0.4% |  3.16% ->  2.56% OK  (cut  19%) |  1.34% ->  1.13% >1%
+     L11.busnorm_max  gated   6.5%  secure   2.3%  extra AC   0.4% |  3.16% ->  2.56% OK  (cut  19%) |  1.34% ->  1.13% >1%
+     L11.mean|maha    gated  14.3%  secure   8.4%  extra AC   1.8% |  3.16% ->  2.12% OK  (cut  33%) |  1.34% ->  0.87% OK 
+     L11.mean|knn5    gated  20.0%  secure  11.1%  extra AC   2.4% |  3.16% ->  1.99% OK  (cut  37%) |  1.34% ->  0.78% OK 
+     L11.mean-N0|maha gated   7.6%  secure   6.9%  extra AC   1.5% |  3.16% ->  2.69% OK  (cut  15%) |  1.34% ->  1.08% >1%
+     L11.mean-N0|knn5 gated   7.9%  secure   7.3%  extra AC   1.6% |  3.16% ->  2.38% OK  (cut  25%) |  1.34% ->  0.95% OK 
+     L0.mean|maha     gated  19.1%  secure  19.5%  extra AC   4.2% |  3.16% ->  2.51% OK  (cut  21%) |  1.34% ->  0.95% OK 
+     L0.mean|knn5     gated   8.4%  secure   8.4%  extra AC   1.9% |  3.16% ->  2.82% OK  (cut  11%) |  1.34% ->  1.17% >1%
+     L0.mean|knn10    gated   9.5%  secure   8.8%  extra AC   2.0% |  3.16% ->  2.73% OK  (cut  14%) |  1.34% ->  1.13% >1%
+     L5.mean|knn5     gated  20.8%  secure  11.5%  extra AC   2.5% |  3.16% ->  2.12% OK  (cut  33%) |  1.34% ->  0.87% OK 
+     L11.mean|knn10   gated   6.4%  secure   3.4%  extra AC   0.8% |  3.16% ->  2.38% OK  (cut  25%) |  1.34% ->  0.95% OK 
+     L0.max|knn5      gated  18.2%  secure  25.2%  extra AC   5.5% |  3.16% ->  2.51% OK  (cut  21%) |  1.34% ->  1.04% >1%
+
+=== (c) gate: escalate to AC when the score is above the 90% quantile of the reference (out-of-fold reference scores)
+    per shift: states gated / secure states gated / extra AC calls at alpha 5% (gated and not already sent) | per-line miss before -> after, alpha 5% | alpha 1%
+    a blind gate of the same size would cut the miss rate by the gated share; only a larger cut is information
+  -- control: trust layer alone: AC calls 36.2% / 39.2%, per-line miss 4.42% (alpha 5%) / 1.05% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  4.42% ->  4.42% OK  (cut   0%) |  1.05% ->  1.05% >1%
+     res_p            gated  12.5%  secure   7.6%  extra AC   4.9% |  4.42% ->  2.42% OK  (cut  45%) |  1.05% ->  0.42% OK 
+     res_excess       gated  12.6%  secure   8.0%  extra AC   5.2% |  4.42% ->  2.52% OK  (cut  43%) |  1.05% ->  0.42% OK 
+     res_q            gated  12.3%  secure   6.6%  extra AC   4.4% |  4.42% ->  2.52% OK  (cut  43%) |  1.05% ->  0.42% OK 
+     dload_max        gated  12.0%  secure   0.9%  extra AC   0.6% |  4.42% ->  2.42% OK  (cut  45%) |  1.05% ->  0.53% OK 
+     L0.busnorm_max   gated  11.4%  secure   9.7%  extra AC   6.1% |  4.42% ->  3.89% OK  (cut  12%) |  1.05% ->  0.95% OK 
+     L5.busnorm_max   gated  13.8%  secure   5.9%  extra AC   3.8% |  4.42% ->  2.42% OK  (cut  45%) |  1.05% ->  0.53% OK 
+     L11.busnorm_max  gated  13.6%  secure   5.6%  extra AC   3.7% |  4.42% ->  2.42% OK  (cut  45%) |  1.05% ->  0.53% OK 
+     L11.mean|maha    gated  13.1%  secure   5.7%  extra AC   3.6% |  4.42% ->  2.84% OK  (cut  36%) |  1.05% ->  0.53% OK 
+     L11.mean|knn5    gated  12.1%  secure   4.5%  extra AC   2.8% |  4.42% ->  2.94% OK  (cut  33%) |  1.05% ->  0.53% OK 
+     L11.mean-N0|maha gated  13.9%  secure   5.7%  extra AC   3.6% |  4.42% ->  2.84% OK  (cut  36%) |  1.05% ->  0.53% OK 
+     L11.mean-N0|knn5 gated  11.9%  secure   5.5%  extra AC   3.5% |  4.42% ->  3.05% OK  (cut  31%) |  1.05% ->  0.53% OK 
+     L0.mean|maha     gated  12.7%  secure   8.0%  extra AC   5.0% |  4.42% ->  4.00% OK  (cut  10%) |  1.05% ->  0.95% OK 
+     L0.mean|knn5     gated  11.7%  secure   8.6%  extra AC   5.4% |  4.42% ->  4.21% OK  (cut   5%) |  1.05% ->  1.05% >1%
+     L0.mean|knn10    gated  11.3%  secure   7.8%  extra AC   5.1% |  4.42% ->  3.89% OK  (cut  12%) |  1.05% ->  1.05% >1%
+     L5.mean|knn5     gated  11.6%  secure   3.5%  extra AC   2.2% |  4.42% ->  3.36% OK  (cut  24%) |  1.05% ->  0.84% OK 
+     L11.mean|knn10   gated   9.8%  secure   3.7%  extra AC   2.3% |  4.42% ->  2.84% OK  (cut  36%) |  1.05% ->  0.53% OK 
+     L0.max|knn5      gated  12.1%  secure   9.3%  extra AC   5.9% |  4.42% ->  3.47% OK  (cut  21%) |  1.05% ->  0.84% OK 
+  -- n3: trust layer alone: AC calls 51.1% / 54.8%, per-line miss 6.51% (alpha 5%) / 2.15% (alpha 1%)
+     n_out            gated 100.0%  secure 100.0%  extra AC  48.9% |  6.51% ->  0.00% OK  (cut 100%) |  2.15% ->  0.00% OK 
+     res_p            gated  22.7%  secure  15.3%  extra AC   7.3% |  6.51% ->  3.19% OK  (cut  51%) |  2.15% ->  0.42% OK 
+     res_excess       gated  24.5%  secure  16.7%  extra AC   8.0% |  6.51% ->  3.05% OK  (cut  53%) |  2.15% ->  0.42% OK 
+     res_q            gated  22.6%  secure  15.3%  extra AC   7.4% |  6.51% ->  2.84% OK  (cut  56%) |  2.15% ->  0.42% OK 
+     dload_max        gated  19.5%  secure   2.3%  extra AC   1.2% |  6.51% ->  3.19% OK  (cut  51%) |  2.15% ->  0.69% OK 
+     L0.busnorm_max   gated  15.9%  secure  13.3%  extra AC   6.5% |  6.51% ->  4.64% OK  (cut  29%) |  2.15% ->  1.39% >1%
+     L5.busnorm_max   gated  19.0%  secure   8.4%  extra AC   4.0% |  6.51% ->  3.39% OK  (cut  48%) |  2.15% ->  0.76% OK 
+     L11.busnorm_max  gated  19.3%  secure   8.7%  extra AC   4.2% |  6.51% ->  3.39% OK  (cut  48%) |  2.15% ->  0.76% OK 
+     L11.mean|maha    gated  26.4%  secure  13.5%  extra AC   6.5% |  6.51% ->  2.98% OK  (cut  54%) |  2.15% ->  0.62% OK 
+     L11.mean|knn5    gated  26.0%  secure  12.1%  extra AC   6.0% |  6.51% ->  3.12% OK  (cut  52%) |  2.15% ->  0.62% OK 
+     L11.mean-N0|maha gated  31.8%  secure  18.1%  extra AC   8.8% |  6.51% ->  2.70% OK  (cut  59%) |  2.15% ->  0.55% OK 
+     L11.mean-N0|knn5 gated  34.1%  secure  22.2%  extra AC  10.9% |  6.51% ->  2.42% OK  (cut  63%) |  2.15% ->  0.21% OK 
+     L0.mean|maha     gated  32.5%  secure  29.2%  extra AC  14.2% |  6.51% ->  3.25% OK  (cut  50%) |  2.15% ->  0.28% OK 
+     L0.mean|knn5     gated  28.2%  secure  23.3%  extra AC  11.3% |  6.51% ->  3.74% OK  (cut  43%) |  2.15% ->  0.48% OK 
+     L0.mean|knn10    gated  25.2%  secure  19.6%  extra AC   9.5% |  6.51% ->  4.16% OK  (cut  36%) |  2.15% ->  0.90% OK 
+     L5.mean|knn5     gated  24.3%  secure   9.3%  extra AC   4.6% |  6.51% ->  3.05% OK  (cut  53%) |  2.15% ->  0.55% OK 
+     L11.mean|knn10   gated  20.6%  secure   9.8%  extra AC   4.5% |  6.51% ->  3.46% OK  (cut  47%) |  2.15% ->  0.76% OK 
+     L0.max|knn5      gated  18.4%  secure  15.5%  extra AC   7.4% |  6.51% ->  4.16% OK  (cut  36%) |  2.15% ->  1.11% >1%
+  -- n4: trust layer alone: AC calls 61.4% / 64.8%, per-line miss 7.08% (alpha 5%) / 2.38% (alpha 1%)
+     n_out            gated 100.0%  secure 100.0%  extra AC  38.6% |  7.08% ->  0.00% OK  (cut 100%) |  2.38% ->  0.00% OK 
+     res_p            gated  33.8%  secure  25.5%  extra AC   9.8% |  7.08% ->  2.71% OK  (cut  62%) |  2.38% ->  0.50% OK 
+     res_excess       gated  36.0%  secure  28.1%  extra AC  10.8% |  7.08% ->  2.71% OK  (cut  62%) |  2.38% ->  0.50% OK 
+     res_q            gated  32.0%  secure  22.4%  extra AC   8.8% |  7.08% ->  2.55% OK  (cut  64%) |  2.38% ->  0.39% OK 
+     dload_max        gated  25.3%  secure   3.1%  extra AC   1.4% |  7.08% ->  2.16% OK  (cut  70%) |  2.38% ->  0.39% OK 
+     L0.busnorm_max   gated  22.4%  secure  21.5%  extra AC   8.3% |  7.08% ->  4.43% OK  (cut  38%) |  2.38% ->  1.22% >1%
+     L5.busnorm_max   gated  22.9%  secure  10.4%  extra AC   4.0% |  7.08% ->  3.04% OK  (cut  57%) |  2.38% ->  0.50% OK 
+     L11.busnorm_max  gated  23.1%  secure  10.4%  extra AC   4.0% |  7.08% ->  3.04% OK  (cut  57%) |  2.38% ->  0.50% OK 
+     L11.mean|maha    gated  40.8%  secure  27.1%  extra AC  10.2% |  7.08% ->  2.10% OK  (cut  70%) |  2.38% ->  0.39% OK 
+     L11.mean|knn5    gated  40.3%  secure  24.5%  extra AC   9.2% |  7.08% ->  2.32% OK  (cut  67%) |  2.38% ->  0.39% OK 
+     L11.mean-N0|maha gated  47.4%  secure  33.0%  extra AC  12.6% |  7.08% ->  1.83% OK  (cut  74%) |  2.38% ->  0.33% OK 
+     L11.mean-N0|knn5 gated  57.9%  secure  40.3%  extra AC  15.5% |  7.08% ->  1.33% OK  (cut  81%) |  2.38% ->  0.28% OK 
+     L0.mean|maha     gated  56.2%  secure  50.7%  extra AC  19.6% |  7.08% ->  2.21% OK  (cut  69%) |  2.38% ->  0.28% OK 
+     L0.mean|knn5     gated  51.8%  secure  46.7%  extra AC  17.7% |  7.08% ->  2.71% OK  (cut  62%) |  2.38% ->  0.33% OK 
+     L0.mean|knn10    gated  44.4%  secure  39.4%  extra AC  15.2% |  7.08% ->  3.10% OK  (cut  56%) |  2.38% ->  0.50% OK 
+     L5.mean|knn5     gated  38.5%  secure  22.6%  extra AC   8.6% |  7.08% ->  2.38% OK  (cut  66%) |  2.38% ->  0.39% OK 
+     L11.mean|knn10   gated  32.0%  secure  19.3%  extra AC   7.2% |  7.08% ->  2.71% OK  (cut  62%) |  2.38% ->  0.50% OK 
+     L0.max|knn5      gated  28.9%  secure  21.7%  extra AC   8.3% |  7.08% ->  4.10% OK  (cut  42%) |  2.38% ->  1.44% >1%
+  -- load: trust layer alone: AC calls 30.2% / 32.7%, per-line miss 3.86% (alpha 5%) / 1.00% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  3.86% ->  3.86% OK  (cut   0%) |  1.00% ->  1.00% OK 
+     res_p            gated  33.5%  secure  34.8%  extra AC  24.3% |  3.86% ->  1.57% OK  (cut  59%) |  1.00% ->  0.00% OK 
+     res_excess       gated  17.0%  secure  12.9%  extra AC   9.1% |  3.86% ->  1.71% OK  (cut  56%) |  1.00% ->  0.00% OK 
+     res_q            gated  17.0%  secure  13.8%  extra AC   9.7% |  3.86% ->  1.00% OK  (cut  74%) |  1.00% ->  0.00% OK 
+     dload_max        gated  10.2%  secure   1.2%  extra AC   0.8% |  3.86% ->  1.29% OK  (cut  67%) |  1.00% ->  0.29% OK 
+     L0.busnorm_max   gated  11.7%  secure   9.6%  extra AC   6.6% |  3.86% ->  3.57% OK  (cut   7%) |  1.00% ->  1.00% OK 
+     L5.busnorm_max   gated  13.5%  secure   5.9%  extra AC   4.2% |  3.86% ->  1.43% OK  (cut  63%) |  1.00% ->  0.29% OK 
+     L11.busnorm_max  gated  13.3%  secure   5.9%  extra AC   4.2% |  3.86% ->  1.57% OK  (cut  59%) |  1.00% ->  0.29% OK 
+     L11.mean|maha    gated  26.4%  secure  22.2%  extra AC  15.6% |  3.86% ->  0.86% OK  (cut  78%) |  1.00% ->  0.00% OK 
+     L11.mean|knn5    gated  55.4%  secure  56.0%  extra AC  39.0% |  3.86% ->  0.86% OK  (cut  78%) |  1.00% ->  0.00% OK 
+     L11.mean-N0|maha gated  14.1%  secure   6.4%  extra AC   4.5% |  3.86% ->  1.43% OK  (cut  63%) |  1.00% ->  0.00% OK 
+     L11.mean-N0|knn5 gated  12.6%  secure   6.4%  extra AC   4.5% |  3.86% ->  2.14% OK  (cut  44%) |  1.00% ->  0.00% OK 
+     L0.mean|maha     gated  32.6%  secure  33.0%  extra AC  23.0% |  3.86% ->  1.43% OK  (cut  63%) |  1.00% ->  0.00% OK 
+     L0.mean|knn5     gated  73.6%  secure  76.5%  extra AC  53.3% |  3.86% ->  0.86% OK  (cut  78%) |  1.00% ->  0.00% OK 
+     L0.mean|knn10    gated  62.1%  secure  65.2%  extra AC  45.4% |  3.86% ->  1.57% OK  (cut  59%) |  1.00% ->  0.00% OK 
+     L5.mean|knn5     gated  51.0%  secure  52.6%  extra AC  36.7% |  3.86% ->  1.14% OK  (cut  70%) |  1.00% ->  0.14% OK 
+     L11.mean|knn10   gated  45.8%  secure  47.2%  extra AC  32.9% |  3.86% ->  0.71% OK  (cut  81%) |  1.00% ->  0.00% OK 
+     L0.max|knn5      gated  32.7%  secure  34.7%  extra AC  24.0% |  3.86% ->  1.86% OK  (cut  52%) |  1.00% ->  0.43% OK 
+  -- pf Qd x0.7: trust layer alone: AC calls 36.4% / 38.2%, per-line miss 5.71% (alpha 5%) / 1.80% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  5.71% ->  5.71% >5% (cut   0%) |  1.80% ->  1.80% >1%
+     res_p            gated  60.9%  secure  55.2%  extra AC  35.3% |  5.71% ->  0.85% OK  (cut  85%) |  1.80% ->  0.00% OK 
+     res_excess       gated  16.7%  secure  11.8%  extra AC   7.6% |  5.71% ->  2.54% OK  (cut  56%) |  1.80% ->  0.42% OK 
+     res_q            gated  24.9%  secure  20.2%  extra AC  13.0% |  5.71% ->  2.75% OK  (cut  52%) |  1.80% ->  0.63% OK 
+     dload_max        gated  11.8%  secure   1.5%  extra AC   0.9% |  5.71% ->  3.60% OK  (cut  37%) |  1.80% ->  0.63% OK 
+     L0.busnorm_max   gated  11.3%  secure   9.4%  extra AC   6.1% |  5.71% ->  4.66% OK  (cut  19%) |  1.80% ->  1.69% >1%
+     L5.busnorm_max   gated  13.7%  secure   5.7%  extra AC   3.7% |  5.71% ->  3.49% OK  (cut  39%) |  1.80% ->  0.74% OK 
+     L11.busnorm_max  gated  13.4%  secure   5.2%  extra AC   3.3% |  5.71% ->  3.49% OK  (cut  39%) |  1.80% ->  0.74% OK 
+     L11.mean|maha    gated  27.4%  secure  14.4%  extra AC   9.2% |  5.71% ->  2.54% OK  (cut  56%) |  1.80% ->  0.32% OK 
+     L11.mean|knn5    gated  43.3%  secure  28.3%  extra AC  18.2% |  5.71% ->  0.42% OK  (cut  93%) |  1.80% ->  0.00% OK 
+     L11.mean-N0|maha gated  14.6%  secure   5.6%  extra AC   3.6% |  5.71% ->  3.28% OK  (cut  43%) |  1.80% ->  0.95% OK 
+     L11.mean-N0|knn5 gated  13.0%  secure   6.0%  extra AC   3.9% |  5.71% ->  3.28% OK  (cut  43%) |  1.80% ->  0.95% OK 
+     L0.mean|maha     gated 100.0%  secure 100.0%  extra AC  63.6% |  5.71% ->  0.00% OK  (cut 100%) |  1.80% ->  0.00% OK 
+     L0.mean|knn5     gated 100.0%  secure 100.0%  extra AC  63.6% |  5.71% ->  0.00% OK  (cut 100%) |  1.80% ->  0.00% OK 
+     L0.mean|knn10    gated 100.0%  secure 100.0%  extra AC  63.6% |  5.71% ->  0.00% OK  (cut 100%) |  1.80% ->  0.00% OK 
+     L5.mean|knn5     gated  39.6%  secure  26.5%  extra AC  16.9% |  5.71% ->  0.95% OK  (cut  83%) |  1.80% ->  0.11% OK 
+     L11.mean|knn10   gated  21.3%  secure   9.2%  extra AC   5.8% |  5.71% ->  2.43% OK  (cut  57%) |  1.80% ->  0.42% OK 
+     L0.max|knn5      gated  43.7%  secure  32.6%  extra AC  20.8% |  5.71% ->  0.95% OK  (cut  83%) |  1.80% ->  0.21% OK 
+  -- pf Qd x1.2: trust layer alone: AC calls 37.8% / 40.5%, per-line miss 3.92% (alpha 5%) / 1.34% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  3.92% ->  3.92% OK  (cut   0%) |  1.34% ->  1.34% >1%
+     res_p            gated  68.1%  secure  58.4%  extra AC  36.2% |  3.92% ->  0.31% OK  (cut  92%) |  1.34% ->  0.00% OK 
+     res_excess       gated  12.1%  secure   8.7%  extra AC   5.5% |  3.92% ->  1.96% OK  (cut  50%) |  1.34% ->  0.52% OK 
+     res_q            gated  13.3%  secure   6.8%  extra AC   4.4% |  3.92% ->  1.86% OK  (cut  53%) |  1.34% ->  0.52% OK 
+     dload_max        gated  11.8%  secure   0.5%  extra AC   0.4% |  3.92% ->  1.86% OK  (cut  53%) |  1.34% ->  0.52% OK 
+     L0.busnorm_max   gated  11.2%  secure   9.3%  extra AC   5.6% |  3.92% ->  3.72% OK  (cut   5%) |  1.34% ->  1.24% >1%
+     L5.busnorm_max   gated  13.9%  secure   5.7%  extra AC   3.8% |  3.92% ->  1.86% OK  (cut  53%) |  1.34% ->  0.52% OK 
+     L11.busnorm_max  gated  13.6%  secure   5.6%  extra AC   3.6% |  3.92% ->  2.06% OK  (cut  47%) |  1.34% ->  0.72% OK 
+     L11.mean|maha    gated  20.8%  secure   9.9%  extra AC   5.9% |  3.92% ->  2.17% OK  (cut  45%) |  1.34% ->  0.62% OK 
+     L11.mean|knn5    gated  36.3%  secure  25.3%  extra AC  15.6% |  3.92% ->  1.65% OK  (cut  58%) |  1.34% ->  0.41% OK 
+     L11.mean-N0|maha gated  14.1%  secure   5.6%  extra AC   3.4% |  3.92% ->  2.37% OK  (cut  39%) |  1.34% ->  0.62% OK 
+     L11.mean-N0|knn5 gated  12.3%  secure   5.4%  extra AC   3.4% |  3.92% ->  2.68% OK  (cut  32%) |  1.34% ->  0.72% OK 
+     L0.mean|maha     gated 100.0%  secure 100.0%  extra AC  62.2% |  3.92% ->  0.00% OK  (cut 100%) |  1.34% ->  0.00% OK 
+     L0.mean|knn5     gated 100.0%  secure 100.0%  extra AC  62.2% |  3.92% ->  0.00% OK  (cut 100%) |  1.34% ->  0.00% OK 
+     L0.mean|knn10    gated 100.0%  secure 100.0%  extra AC  62.2% |  3.92% ->  0.00% OK  (cut 100%) |  1.34% ->  0.00% OK 
+     L5.mean|knn5     gated  22.7%  secure  11.4%  extra AC   6.9% |  3.92% ->  1.96% OK  (cut  50%) |  1.34% ->  0.41% OK 
+     L11.mean|knn10   gated  16.3%  secure   6.4%  extra AC   3.9% |  3.92% ->  1.96% OK  (cut  50%) |  1.34% ->  0.41% OK 
+     L0.max|knn5      gated  24.5%  secure  17.5%  extra AC  10.8% |  3.92% ->  1.86% OK  (cut  53%) |  1.34% ->  0.62% OK 
+  -- pf Qd x1.5: trust layer alone: AC calls 37.7% / 40.3%, per-line miss 4.63% (alpha 5%) / 1.83% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  4.63% ->  4.63% OK  (cut   0%) |  1.83% ->  1.83% >1%
+     res_p            gated  99.8%  secure  99.7%  extra AC  62.2% |  4.63% ->  0.00% OK  (cut 100%) |  1.83% ->  0.00% OK 
+     res_excess       gated  10.7%  secure   8.3%  extra AC   5.4% |  4.63% ->  2.80% OK  (cut  40%) |  1.83% ->  0.86% OK 
+     res_q            gated  86.8%  secure  82.4%  extra AC  51.2% |  4.63% ->  0.32% OK  (cut  93%) |  1.83% ->  0.00% OK 
+     dload_max        gated  11.7%  secure   0.9%  extra AC   0.7% |  4.63% ->  2.05% OK  (cut  56%) |  1.83% ->  0.54% OK 
+     L0.busnorm_max   gated  10.8%  secure   9.2%  extra AC   5.5% |  4.63% ->  3.88% OK  (cut  16%) |  1.83% ->  1.72% >1%
+     L5.busnorm_max   gated  13.8%  secure   6.2%  extra AC   4.1% |  4.63% ->  2.05% OK  (cut  56%) |  1.83% ->  0.54% OK 
+     L11.busnorm_max  gated  14.0%  secure   6.2%  extra AC   4.0% |  4.63% ->  2.37% OK  (cut  49%) |  1.83% ->  0.86% OK 
+     L11.mean|maha    gated  87.3%  secure  81.7%  extra AC  50.8% |  4.63% ->  0.32% OK  (cut  93%) |  1.83% ->  0.00% OK 
+     L11.mean|knn5    gated  94.9%  secure  92.6%  extra AC  57.5% |  4.63% ->  0.32% OK  (cut  93%) |  1.83% ->  0.00% OK 
+     L11.mean-N0|maha gated  14.1%  secure   5.1%  extra AC   3.3% |  4.63% ->  2.59% OK  (cut  44%) |  1.83% ->  0.97% OK 
+     L11.mean-N0|knn5 gated  13.9%  secure   6.0%  extra AC   3.8% |  4.63% ->  2.91% OK  (cut  37%) |  1.83% ->  1.19% >1%
+     L0.mean|maha     gated 100.0%  secure 100.0%  extra AC  62.3% |  4.63% ->  0.00% OK  (cut 100%) |  1.83% ->  0.00% OK 
+     L0.mean|knn5     gated 100.0%  secure 100.0%  extra AC  62.3% |  4.63% ->  0.00% OK  (cut 100%) |  1.83% ->  0.00% OK 
+     L0.mean|knn10    gated 100.0%  secure 100.0%  extra AC  62.3% |  4.63% ->  0.00% OK  (cut 100%) |  1.83% ->  0.00% OK 
+     L5.mean|knn5     gated  88.5%  secure  83.5%  extra AC  51.9% |  4.63% ->  0.32% OK  (cut  93%) |  1.83% ->  0.00% OK 
+     L11.mean|knn10   gated  82.2%  secure  76.9%  extra AC  47.7% |  4.63% ->  0.43% OK  (cut  91%) |  1.83% ->  0.00% OK 
+     L0.max|knn5      gated 100.0%  secure 100.0%  extra AC  62.3% |  4.63% ->  0.00% OK  (cut 100%) |  1.83% ->  0.00% OK 
+  -- redispatch: trust layer alone: AC calls 78.0% / 78.2%, per-line miss 3.16% (alpha 5%) / 1.34% (alpha 1%)
+     n_out            gated   0.0%  secure   0.0%  extra AC   0.0% |  3.16% ->  3.16% OK  (cut   0%) |  1.34% ->  1.34% >1%
+     res_p            gated  48.3%  secure  37.4%  extra AC   8.3% |  3.16% ->  1.17% OK  (cut  63%) |  1.34% ->  0.26% OK 
+     res_excess       gated  15.4%  secure  12.2%  extra AC   2.8% |  3.16% ->  1.52% OK  (cut  52%) |  1.34% ->  0.35% OK 
+     res_q            gated  25.8%  secure  16.8%  extra AC   3.8% |  3.16% ->  1.65% OK  (cut  48%) |  1.34% ->  0.56% OK 
+     dload_max        gated  10.5%  secure   1.1%  extra AC   0.3% |  3.16% ->  1.95% OK  (cut  38%) |  1.34% ->  0.91% OK 
+     L0.busnorm_max   gated  12.6%  secure  14.1%  extra AC   3.1% |  3.16% ->  2.86% OK  (cut  10%) |  1.34% ->  1.17% >1%
+     L5.busnorm_max   gated  14.1%  secure   9.2%  extra AC   1.9% |  3.16% ->  2.30% OK  (cut  27%) |  1.34% ->  1.00% OK 
+     L11.busnorm_max  gated  14.7%  secure   9.2%  extra AC   2.0% |  3.16% ->  2.21% OK  (cut  30%) |  1.34% ->  0.95% OK 
+     L11.mean|maha    gated  25.7%  secure  17.9%  extra AC   4.0% |  3.16% ->  1.82% OK  (cut  42%) |  1.34% ->  0.61% OK 
+     L11.mean|knn5    gated  43.0%  secure  31.3%  extra AC   6.9% |  3.16% ->  1.34% OK  (cut  58%) |  1.34% ->  0.52% OK 
+     L11.mean-N0|maha gated  13.4%  secure  11.5%  extra AC   2.5% |  3.16% ->  2.12% OK  (cut  33%) |  1.34% ->  0.87% OK 
+     L11.mean-N0|knn5 gated  15.4%  secure  13.7%  extra AC   3.0% |  3.16% ->  1.99% OK  (cut  37%) |  1.34% ->  0.69% OK 
+     L0.mean|maha     gated  35.1%  secure  40.1%  extra AC   8.7% |  3.16% ->  2.12% OK  (cut  33%) |  1.34% ->  0.78% OK 
+     L0.mean|knn5     gated  25.2%  secure  28.2%  extra AC   6.1% |  3.16% ->  2.30% OK  (cut  27%) |  1.34% ->  0.91% OK 
+     L0.mean|knn10    gated  20.3%  secure  19.5%  extra AC   4.2% |  3.16% ->  2.69% OK  (cut  15%) |  1.34% ->  1.13% >1%
+     L5.mean|knn5     gated  40.7%  secure  30.2%  extra AC   6.6% |  3.16% ->  1.43% OK  (cut  55%) |  1.34% ->  0.56% OK 
+     L11.mean|knn10   gated  25.4%  secure  15.6%  extra AC   3.5% |  3.16% ->  1.43% OK  (cut  55%) |  1.34% ->  0.43% OK 
+     L0.max|knn5      gated  38.5%  secure  49.2%  extra AC  10.8% |  3.16% ->  1.78% OK  (cut  44%) |  1.34% ->  0.74% OK 
+
+=== (d) embedding vs cheap scores, one line per question
+  separation (mean AUROC n3/n4/Qd x0.7): best cheap: n_out 0.833  (n3 1.000, n4 1.000, Qd0.7 0.500)
+  separation (mean AUROC n3/n4/Qd x0.7): best local embedding scalar: L0.busnorm_max 0.588  (n3 0.590, n4 0.671, Qd0.7 0.501)
+  separation (mean AUROC n3/n4/Qd x0.7): best embedding distance: L0.mean|maha 0.830  (n3 0.678, n4 0.811, Qd0.7 1.000)
+  failure ranking among insecure states (mean AUROC n3/n4/Qd x0.7, alpha 5%): best cheap: res_q 0.620  (control 0.62, n3 0.63, n4 0.61, pf Qd x0.7 0.62)
+  failure ranking among insecure states (mean AUROC n3/n4/Qd x0.7, alpha 5%): best local embedding scalar: L11.busnorm_max 0.581  (control 0.60, n3 0.59, n4 0.61, pf Qd x0.7 0.55)
+  failure ranking among insecure states (mean AUROC n3/n4/Qd x0.7, alpha 5%): best embedding distance: L11.mean|knn5 0.592  (control 0.53, n3 0.55, n4 0.57, pf Qd x0.7 0.65)
+  95% gate brings n3, n4 and Qd x0.7 back under alpha 5%: 24 of 62 scores. Cheapest: dload_max (extra AC 0.0% of shifted states, control gated 5.8%); L11.busnorm_max (extra AC 1.1% of shifted states, control gated 7.7%); L5.busnorm_max (extra AC 1.1% of shifted states, control gated 6.9%); L11.absmaxdiff|maha (extra AC 1.2% of shifted states, control gated 5.5%); L11.mean|knn10 (extra AC 1.5% of shifted states, control gated 5.1%); L5.mean|knn10 (extra AC 2.1% of shifted states, control gated 5.3%)
+  95% gate brings n3, n4 and Qd x0.7 back under alpha 5% and 1%: 5 of 62 scores. Cheapest: dload_max (extra AC 0.0% of shifted states, control gated 5.8%); L11.busnorm_max (extra AC 1.1% of shifted states, control gated 7.7%); res_excess (extra AC 3.2% of shifted states, control gated 6.6%); res_q (extra AC 3.8% of shifted states, control gated 6.4%); res_p (extra AC 6.2% of shifted states, control gated 6.7%)

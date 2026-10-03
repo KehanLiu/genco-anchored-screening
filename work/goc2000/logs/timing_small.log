@@ -1,0 +1,30 @@
+00:44:25 case2000_goc small: 5,047,011 parameters; torch 2.13.0, 6 CPU threads, mps available True
+00:44:25 64 graphs built, 2.0 ms/state
+00:44:25 batched vs single prediction, max abs diff (normalised units): 0.00e+00
+00:44:26   cpu batch    1:      54.6 ms/batch     54.59 ms/state
+00:44:27   cpu batch    4:     164.0 ms/batch     41.00 ms/state
+00:44:31   cpu batch   16:     638.7 ms/batch     39.92 ms/state
+00:44:49   cpu batch   64:    2537.6 ms/batch     39.65 ms/state
+00:44:50   mps batch    1:      37.8 ms/batch     37.78 ms/state
+00:44:51   mps batch    4:     103.3 ms/batch     25.81 ms/state
+00:44:54   mps batch   16:     399.9 ms/batch     24.99 ms/state
+00:45:06   mps batch   64:    1698.8 ms/batch     26.54 ms/state
+00:45:06 MPS vs CPU prediction, max abs diff (normalised units): 5.42e-04
+variant                                                                  item device  batch  ms_per_state    n                                                                                note
+  small             graph build + normalise + transforms (from pandas tables)    cpu      1          1.99   64                                                                              median
+  small                                                         GENCO forward    cpu      1         54.59    5                                                                                  ok
+  small                                                         GENCO forward    cpu      4         41.00    5                                                                                  ok
+  small                                                         GENCO forward    cpu     16         39.92    5                                                                                  ok
+  small                                                         GENCO forward    cpu     64         39.65    5                                                                                  ok
+  small                                                         GENCO forward    mps      1         37.78    5                                                                                  ok
+  small                                                         GENCO forward    mps      4         25.81    5                                                                                  ok
+  small                                                         GENCO forward    mps     16         24.99    5                                                                                  ok
+  small                                                         GENCO forward    mps     64         26.54    5                                                                                  ok
+  small GENCO end-to-end single state (graph build + model + inverse + flows)    cpu      1         78.70   39                                                                              median
+  small                   Newton problem build (Ybus from stored admittances)    cpu      1          1.23   39                                                                              median
+  small                                    one Newton step from GENCO (SciPy)    cpu      1          4.07   39                                                                              median
+  small                                         full Newton from flat (SciPy)    cpu      1         24.20   39 median; 5.75 iterations; converged 40/40 (not converged = stopped at 30 iterations)
+  small                                        full Newton from GENCO (SciPy)    cpu      1         12.19   39                                            median; 3.35 iterations; converged 40/40
+  small           datakit PowerModels AC power flow (stored runtime, pf_fast)    cpu      1         21.50 2494                  median, measured during generation under load; mean 35.5, p90 81.9
+  small         datakit PowerModels DC power flow (stored runtime, dcpf_fast)    cpu      1          9.27 2494                 median, measured during generation under load; mean 754.7, p90 15.2
+saved work/goc2000/timing_small.csv

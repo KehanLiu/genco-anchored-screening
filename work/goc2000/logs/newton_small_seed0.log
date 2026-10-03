@@ -1,0 +1,29 @@
+00:00:50 worker 0: 0/832  it flat/dc/genco 6/6/3  dv 1.8e-12  mis genco 0/1/2 237.8/9.80/0.0122 MW
+00:00:57 worker 0: 41/832  it flat/dc/genco 6/6/3  dv 2.2e-13  mis genco 0/1/2 163.7/4.52/0.0040 MW
+00:01:04 worker 0: 82/832  it flat/dc/genco 6/6/3  dv 4.9e-12  mis genco 0/1/2 374.5/7.70/0.0035 MW
+00:01:11 worker 0: 123/832  it flat/dc/genco 6/6/4  dv 3.5e-13  mis genco 0/1/2 186.8/21.33/0.0990 MW
+00:01:19 worker 0: 164/832  it flat/dc/genco 6/6/3  dv 9.6e-11  mis genco 0/1/2 179.5/15.42/0.0411 MW
+00:01:27 worker 0: 205/832  it flat/dc/genco 7/7/3  dv 1.2e-11  mis genco 0/1/2 39.9/5.62/0.0026 MW
+00:01:34 worker 0: 246/832  it flat/dc/genco 6/6/3  dv 3.9e-10  mis genco 0/1/2 110.7/8.78/0.0139 MW
+00:01:41 worker 0: 287/832  it flat/dc/genco 7/6/3  dv 5.1e-14  mis genco 0/1/2 187.2/4.32/0.0032 MW
+00:01:48 worker 0: 328/832  it flat/dc/genco 7/7/4  dv 7.9e-11  mis genco 0/1/2 285.8/28.56/0.1317 MW
+00:01:57 worker 0: 369/832  it flat/dc/genco 6/6/3  dv 4.0e-10  mis genco 0/1/2 306.7/7.34/0.0023 MW
+00:02:06 worker 0: 410/832  it flat/dc/genco 8/7/3  dv 1.3e-10  mis genco 0/1/2 259.8/4.36/0.0026 MW
+00:02:15 worker 0: 451/832  it flat/dc/genco 8/7/3  dv 4.6e-14  mis genco 0/1/2 64.1/8.69/0.0068 MW
+00:02:25 worker 0: 492/832  it flat/dc/genco 7/6/4  dv 6.0e-14  mis genco 0/1/2 93.9/35.46/0.2361 MW
+00:02:32 worker 0: 533/832  it flat/dc/genco 8/8/3  dv 1.2e-10  mis genco 0/1/2 213.9/15.40/0.0380 MW
+00:02:42 worker 0: 574/832  it flat/dc/genco 30/9/3  dv nan  mis genco 0/1/2 325.6/5.90/0.0035 MW
+00:02:51 worker 0: 615/832  it flat/dc/genco 7/7/3  dv 1.0e-12  mis genco 0/1/2 288.1/11.89/0.0102 MW
+00:03:02 worker 0: 656/832  it flat/dc/genco 8/7/3  dv 7.9e-14  mis genco 0/1/2 65.4/2.64/0.0018 MW
+00:03:10 worker 0: 697/832  it flat/dc/genco 8/7/3  dv 7.1e-11  mis genco 0/1/2 216.1/1.82/0.0010 MW
+00:03:20 worker 0: 738/832  it flat/dc/genco 7/7/3  dv 5.9e-10  mis genco 0/1/2 358.4/14.53/0.0091 MW
+00:03:29 worker 0: 779/832  it flat/dc/genco 8/8/3  dv 4.1e-11  mis genco 0/1/2 94.6/10.60/0.0194 MW
+00:03:37 worker 0: 820/832  it flat/dc/genco 8/7/3  dv 8.0e-11  mis genco 0/1/2 268.4/2.84/0.0017 MW
+2494 scenarios, 9,053,733 line readings, wall 180s
+validation: stored AC solution in this script's equations: mismatch max 9.96e-07 MW (median 4.99e-09); loading formula vs stored flows max 1.79e-11 points
+  Newton from flat : converged 2366/2494, iterations mean 6.75 (median 7, max 10), 31.4 ms median; max |V - V_ac stored| 2.1e+00 p.u. (3 scenarios > 1e-5); start mismatch median 9934.4 MW
+  Newton from dc   : converged 2393/2494, iterations mean 6.61 (median 7, max 11), 31.1 ms median; max |V - V_ac stored| 2.1e+00 p.u. (4 scenarios > 1e-5); start mismatch median 9945.3 MW
+  Newton from genco: converged 2494/2494, iterations mean 3.19 (median 3, max 5), 14.1 ms median; max |V - V_ac stored| 9.1e-09 p.u. (0 scenarios > 1e-5); start mismatch median 202.6 MW
+  converged Newton loading vs stored AC loading: max 7.90e+02 points
+  one Newton step from GENCO: 4.60 ms median
+  scenarios with a broken step (NaN loading): {'genco1': 0, 'genco2': 0, 'dc1': 0, 'flat1': 0}

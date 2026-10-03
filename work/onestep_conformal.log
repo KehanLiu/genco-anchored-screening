@@ -1,0 +1,26 @@
+
+IEEE 118: 366 states (normal set), 280 real overloads, 34% of states have one
+  surrogate                      p99 err (pt)    max | alpha:                        10%                        5%                        2%                        1%
+                                                     |             AC on secure / missed     AC on secure / missed     AC on secure / missed     AC on secure / missed
+  GENCO                                  1.69   34.5 |                   0.0% /    3.41%           0.6% /    1.20%           7.7% /    0.22%          24.8% /    0.03%
+  GENCO + 1 Newton step                  0.01    3.3 |                   0.0% /    3.99%           0.0% /    1.20%           0.0% /    0.08%           1.0% /    0.00%
+  GENCO + 2 steps                        0.00    0.0 |                   0.0% /    3.99%           0.0% /    1.20%           0.0% /    0.08%           1.0% /    0.00%
+  DC                                    20.13  118.7 |                  99.4% /    0.00%         100.0% /    0.00%         100.0% /    0.00%         100.0% /    0.00%
+  DC + 1 step                           10.38   57.9 |                  35.1% /    2.31%          93.5% /    0.15%          99.0% /    0.00%          99.3% /    0.00%
+  flat start + 1 step                   20.37  134.8 |                 100.0% /    0.00%         100.0% /    0.00%         100.0% /    0.00%         100.0% /    0.00%
+  flat start + 2 steps                   0.53   31.5 |                   0.0% /    3.37%           0.0% /    1.04%           0.8% /    0.10%           5.4% /    0.02%
+  pre-outage solution + 1 step           1.83   70.0 |                   4.2% /    0.34%          47.6% /    0.00%          96.3% /    0.00%          99.0% /    0.00%
+
+Texas 2000: 305 states (normal set), 44 real overloads, 10% of states have one
+  surrogate                      p99 err (pt)    max | alpha:                        10%                        5%                        2%                        1%
+                                                     |             AC on secure / missed     AC on secure / missed     AC on secure / missed     AC on secure / missed
+  GENCO                                  1.93   16.4 |                   0.0% /    1.11%          22.7% /    0.13%         100.0% /    0.00%         100.0% /    0.00%
+  GENCO + 1 Newton step                  0.01    0.3 |                   0.0% /    2.05%          22.5% /    0.30%         100.0% /    0.00%         100.0% /    0.00%
+  GENCO + 2 steps                        0.00    0.0 |                   0.0% /    2.05%          22.5% /    0.30%         100.0% /    0.00%         100.0% /    0.00%
+  DC                                    27.68   77.3 |                  95.3% /    0.67%          99.7% /    0.04%         100.0% /    0.00%         100.0% /    0.00%
+  DC + 1 step                            0.95    9.6 |                   0.0% /    4.09%          22.5% /    2.21%         100.0% /    0.00%         100.0% /    0.00%
+  flat start + 1 step                   13.51   68.8 |                  84.7% /    1.48%          98.2% /    0.23%         100.0% /    0.00%         100.0% /    0.00%
+  flat start + 2 steps                   0.56    4.8 |                   0.0% /    2.74%          22.5% /    0.80%         100.0% /    0.00%         100.0% /    0.00%
+  pre-outage solution + 1 step           0.08   12.8 |                   0.0% /    3.30%          22.5% /    1.01%         100.0% /    0.00%         100.0% /    0.00%
+
+saved work/onestep_conformal.csv  (mean over 200 random splits of the states)

@@ -4,7 +4,7 @@
 """
 
 # engine first: it loads Julia, which has to happen before torch.
-from engine import Engine, SolveError
+from engine import STAGE_ALPHA_DEFAULT, Engine, SolveError
 
 import argparse
 from pathlib import Path
@@ -22,13 +22,15 @@ engine = None
 class Scenario(BaseModel):
     load_scale: float = Field(1.0, ge=0.1, le=3.0)
     outages: list[int] = []
+    alpha: float = Field(STAGE_ALPHA_DEFAULT, gt=0, lt=1)  # allowed miss rate of the staged check
 
 
 # Handlers are `async def` on purpose: they run on the event loop in the main
 # thread, which is the only thread Julia may be called from.
 @app.get("/api/grid")
 async def grid():
-    return engine.static
+    # "staged" is null for a grid without a calibrated band; the front-end then shows the plain advisor.
+    return {**engine.static, "staged": engine.staged_info()}
 
 
 @app.post("/api/solve")
@@ -37,7 +39,7 @@ async def solve(scenario: Scenario):
     if any(not 0 <= o < n_branches for o in scenario.outages):
         return {"ok": False, "reason": "ac_failed", "message": "Unknown branch id."}
     try:
-        return engine.solve(scenario.load_scale, scenario.outages)
+        return engine.solve(scenario.load_scale, scenario.outages, alpha=scenario.alpha)
     except SolveError as err:
         return {"ok": False, "reason": err.reason, "message": err.message}
 

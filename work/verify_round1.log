@@ -1,0 +1,51 @@
+== voltage, IEEE 118 (PQ buses, case limits, tolerance 1e-4) ==
+states 2380, violating states 531 (22.3%); bus readings violating 695
+GENCO: missed 8, false 200, recall 98.8%
+violations deeper than 0.01 p.u.: 101, missed by GENCO: 0
+violating states with no DC overload: 331; with no AC overload: 308
+GENCO Vm error p99 0.00096
+
+== Newton start points (normal set) ==
+IEEE 118: 366 states; mean iterations flat 4.02, dc 4.01, prev 2.99, genco 2.03; all converged: True
+   stress states 495: converged per start {'conv_flat': 285, 'conv_dc': 285, 'conv_prev': 285, 'conv_genco': 285}; GENCO converged where flat or dc failed: 0; GENCO failed where flat converged: 0
+Texas 2000: 305 states; mean iterations flat 4.41, dc 3.22, prev 3.15, genco 2.44; all converged: True
+   stress states 223: converged per start {'conv_flat': 157, 'conv_dc': 157, 'conv_prev': 157, 'conv_genco': 157}; GENCO converged where flat or dc failed: 0; GENCO failed where flat converged: 0
+
+== one Newton step on IEEE 118 / Texas (normal set) ==
+IEEE 118 genco   p99 1.69 max 34.5 missed 5/280 false 17
+IEEE 118 genco1  p99 0.01 max 3.3 missed 0/280 false 0
+IEEE 118 dc1     p99 10.38 max 57.9 missed 53/280 false 9
+IEEE 118 prev1   p99 1.83 max 70.0 missed 31/280 false 2
+Texas 2000 genco   p99 1.93 max 16.4 missed 3/44 false 0
+Texas 2000 genco1  p99 0.01 max 0.3 missed 0/44 false 0
+Texas 2000 dc1     p99 0.95 max 9.6 missed 0/44 false 1
+Texas 2000 prev1   p99 0.08 max 12.8 missed 0/44 false 1
+
+== stress test, IEEE 118, alpha 5% ==
+surrogate   dc_d genco genco_d      
+sigma      shift shift  global shift
+shift                               
+control      1.9   4.8     4.8   4.4
+load         2.3   4.1     4.6   3.9
+n3           2.7   6.6     7.6   6.5
+n4           2.4   6.9     7.9   7.1
+pf Qd x0.7   1.8  10.3     6.7   5.7
+pf Qd x1.2   1.4   3.6     4.9   3.9
+pf Qd x1.5   2.2   4.7     5.8   4.6
+redispatch   1.0   2.9     7.2   3.2
+worst missed loading, genco_d rows: 1.09249
+n3 sweep columns: ['state', 'load_scale', 'outages', 'line', 'ac', 'genco', 'dc', 'residual', 'anchor', 'q_scale', 'moved_mw']
+
+== GOC 500: example rule and conformal on raw GENCO (seed 0, same 50/50 split as the report) ==
+scenarios 14992 columns ['state', 'n_out', 'line', 'ac', 'genco', 'dc', 'load_idx']
+== GOC 500: example rule and conformal on raw GENCO (seed 0, same 50/50 split as the report) ==
+scenarios 14992 columns ['state', 'n_out', 'line', 'ac', 'genco', 'dc', 'load_idx']
+genco: F3 threshold from calibration half 0.970; test: recall 96.4%, flagged 37.6%, secure flagged 29.3%, missed lines 40/1327 worst 1.396
+dc: F3 threshold from calibration half 0.955; test: recall 83.2%, flagged 28.5%, secure flagged 20.7%, missed lines 188/1327 worst 2.299
+conformal 1%: width 19.28 pt, sent to AC 94.9%, missed 0/1327
+raw GENCO loading error p99 6.50
+
+== stress test: N-3 cell re-derived from the raw sweeps (genco_d + shift, alpha 5%) ==
+control: width -0.026 sigma, real overloads 951, not flagged 4.4%, state-level missed 13 worst 1.008
+n3: width -0.026 sigma, real overloads 1444, not flagged 6.5%, state-level missed 25 worst 1.009
+n4: width -0.026 sigma, real overloads 1807, not flagged 7.1%, state-level missed 21 worst 1.024
