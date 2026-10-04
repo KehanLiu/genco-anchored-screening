@@ -57,6 +57,12 @@ sweeps() {
     ( $TMO 80000 .venv/bin/gridfm_datakit generate work/goc2000/datagen.yaml > work/goc2000/logs/datagen.log 2>&1 ; echo total >> work/goc2000/logs/datagen.log ) &
     ( $TMO 80000 .venv/bin/gridfm_datakit generate work/goc10000/datagen.yaml > work/goc10000/logs/datagen.log 2>&1 ; echo total >> work/goc10000/logs/datagen.log ) &
     zsh work/goc2000/run_all.sh
+    # controls: pre-outage start, hybrid start, full N-1, solver timing, reactive limits, zero-shot
+    for grid in 500 2000 10000; do
+        $TMO 9000 $PY -u analysis_prev_control.py run --grid $grid
+        $TMO 9000 $PY -u analysis_hybrid_start.py run --grid $grid
+    done
+    # analysis_full_n1.py, analysis_solver_timing.py, analysis_qlimits.py and analysis_zeroshot.py: see the usage line at the top of each script
     # embeddings and remedial actions
     $TMO 9000 $PY -u analysis_embedding.py extract
     $TMO 3000 $PY -u analysis_remedial.py run --budget 2400
@@ -80,6 +86,11 @@ analysis() {
             $PY work/$grid/03_analysis.py --variant $variant
         done
     done
+    for grid in 500 2000 10000; do
+        $PY analysis_prev_control.py report --grid $grid
+        $PY analysis_hybrid_start.py report --grid $grid
+    done
+    $PY -m pytest gridtrust/tests -q
     $PY analysis_embedding.py report
     $PY analysis_remedial.py report
     $PY work/verify_round1.py

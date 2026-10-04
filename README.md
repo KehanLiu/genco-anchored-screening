@@ -1,10 +1,10 @@
-# A Newton step or two is enough
+# Let GENCO predict the change, not the state
 
 An entry for the [GENCO Challenge](https://gridfm.org/porto/challenge/): GENCO as the first stage of a contingency screen with a stated miss rate. The write-up is in [`submission/POST.md`](submission/POST.md); the poster outline in [`submission/POSTER.md`](submission/POSTER.md).
 
-On GOC 500 with up to five branches removed, one Newton step started from GENCO's prediction sends 12.5% of scenarios to the AC solver (the share that really has an overload) and finds 99.7% of the overloaded lines. The same holds on 2,000 buses; on 10,000 buses it takes two steps. Where no Newton step is taken, a conformal band decides which states go to AC and keeps the share of missed overloads at a chosen level.
+Start Newton from the operator's pre-outage AC solution plus GENCO's predicted voltage change, take one step, and the contingency screen misses fewer overloads than the classic one-step screen on IEEE 118, GOC 500 and GOC 2000. It stops helping at 10,000 buses and it is not faster on a laptop. Where no Newton step is taken, a conformal band decides which states go to AC and keeps the share of missed overloads at a chosen level.
 
-![One Newton step from GENCO](figures/onestep.png)
+![Which start makes one Newton step enough?](figures/starts.png)
 
 ## What is here
 
@@ -15,6 +15,15 @@ On GOC 500 with up to five branches removed, one Newton step started from GENCO'
 | `analysis_conformal.py` | The conformal trust layer: band calibration, held-out scoring, coverage over 100 splits, fixed-budget curves. |
 | `analysis_goc500.py`, `analysis_goc500_newton.py`, `work/goc500/` | The example entry's setup (GOC 500, N-1 to N-5): its F-beta rule, the conformal band, GENCO + one Newton step. |
 | `work/goc2000/`, `work/goc10000/` | The same experiment on 2,000 and 10,000 buses (`run_all.sh` chains generation, Newton steps, analysis and timing). |
+| `analysis_prev_control.py`, `analysis_hybrid_start.py` | One Newton step from the pre-outage AC solution, and from that solution plus GENCO's predicted change. |
+| `analysis_full_n1.py` | A complete N-1 analysis on GOC 2000 with the cost of six workflows. |
+| `analysis_solver_timing.py` | Start points inside PowerModels' AC power flow: convergence, iterations, time. |
+| `analysis_qlimits.py` | The main experiments with generator reactive limits (PV-to-PQ switching). |
+| `analysis_zeroshot.py` | The pretrained model, without fine-tuning, on grids it has not seen. |
+| `analysis_finetune.py`, `work/finetune/` | Data and scripts for fine-tuning on multi-outage scenarios (prepared, not run). |
+| `gridtrust/` | Standalone package: Newton refinement, conformal band, staged decision; 32 tests (`pytest gridtrust/tests`). |
+| `upstream/` | Draft contribution to gridfm-graphkit (not submitted). |
+| `Dockerfile`, `docker/` | Container for the workbench (written, not yet built). |
 | `analysis_warmstart.py`, `analysis_onestep.py` | GENCO as a Newton start point; one Newton step as a physics correction. |
 | `analysis_shift.py` | The guarantee under distribution shift (N-3, N-4, load, power factor, redispatch) and recalibration. |
 | `analysis_voltage.py` | Voltage-limit violations, which DC power flow cannot see. |
@@ -50,7 +59,7 @@ No model is trained. All checkpoints are the released ones: `gridfm/genco-pf-dat
 
 ## Limits
 
-No speed claim is made: up to 2,000 buses GENCO inference on a laptop is slower than an AC solve, and the 10,000-bus timings compare different implementations. The savings reported are AC solves and Newton iterations. See "Limits of this work" in the write-up.
+No speed claim is made: on a laptop, with inference counted, every GENCO workflow is slower than the classic one-step screen. No model was trained. The savings reported are AC solves and Newton iterations. See "Limits of this work" in the write-up.
 
 ## Licence
 

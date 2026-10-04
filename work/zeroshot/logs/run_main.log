@@ -1,0 +1,51 @@
+2026-10-04 06:43:36 === run case118_ieee: 2,996 of 2,996 scenarios (600 of 600 load scenarios), 0 branches always out, 2 processes
+2026-10-04 06:43:36   zero-shot normaliser: baseMVA 141.41 (graphkit recipe on these scenarios gives 141.41), vn_kv_max 345; released per-grid checkpoint (base) uses baseMVA 137.93, vn_kv_max 345
+06:43:50 worker 0: 20/300 load scenarios, 100 scenarios
+06:43:58 worker 0: 40/300 load scenarios, 200 scenarios
+06:44:06 worker 0: 60/300 load scenarios, 300 scenarios
+06:44:14 worker 0: 80/300 load scenarios, 400 scenarios
+06:44:21 worker 0: 100/300 load scenarios, 500 scenarios
+06:44:29 worker 0: 120/300 load scenarios, 599 scenarios
+06:44:36 worker 0: 140/300 load scenarios, 699 scenarios
+06:44:44 worker 0: 160/300 load scenarios, 799 scenarios
+06:44:52 worker 0: 180/300 load scenarios, 899 scenarios
+06:44:59 worker 0: 200/300 load scenarios, 999 scenarios
+06:45:07 worker 0: 220/300 load scenarios, 1099 scenarios
+06:45:15 worker 0: 240/300 load scenarios, 1199 scenarios
+06:45:23 worker 0: 260/300 load scenarios, 1298 scenarios
+06:45:30 worker 0: 280/300 load scenarios, 1398 scenarios
+06:45:38 worker 0: 300/300 load scenarios, 1498 scenarios
+2026-10-04 06:45:39   case118_ieee: 2,996 scenarios, 548,585 line readings, wall 123 s; base states 600 (failed intact solves: 0); checks: stored AC solution mismatch max 1.0e-06 MW, admittance formula vs stored max 0.0e+00
+2026-10-04 06:45:41 === run case500_goc: 2,998 of 14,992 scenarios (600 of 3,000 load scenarios), 5 branches always out, 2 processes
+2026-10-04 06:45:41   zero-shot normaliser: baseMVA 146.40 (graphkit recipe on these scenarios gives 146.40), vn_kv_max 345; released per-grid checkpoint (tiny) uses baseMVA 143.39, vn_kv_max 345
+06:45:59 worker 0: 20/300 load scenarios, 100 scenarios
+06:46:13 worker 0: 40/300 load scenarios, 200 scenarios
+06:46:25 worker 0: 60/300 load scenarios, 300 scenarios
+06:46:40 worker 0: 80/300 load scenarios, 400 scenarios
+06:46:53 worker 0: 100/300 load scenarios, 500 scenarios
+06:47:06 worker 0: 120/300 load scenarios, 600 scenarios
+06:47:21 worker 0: 140/300 load scenarios, 699 scenarios
+06:47:35 worker 0: 160/300 load scenarios, 799 scenarios
+06:47:49 worker 0: 180/300 load scenarios, 899 scenarios
+06:48:03 worker 0: 200/300 load scenarios, 998 scenarios
+06:48:19 worker 0: 220/300 load scenarios, 1098 scenarios
+06:48:33 worker 0: 240/300 load scenarios, 1198 scenarios
+06:48:50 worker 0: 260/300 load scenarios, 1298 scenarios
+06:49:03 worker 0: 280/300 load scenarios, 1398 scenarios
+06:49:16 worker 0: 300/300 load scenarios, 1498 scenarios
+2026-10-04 06:49:20   case500_goc: 2,998 scenarios, 2,174,851 line readings, wall 220 s; base states 600 (failed intact solves: 0); checks: stored AC solution mismatch max 1.0e-06 MW, admittance formula vs stored max 0.0e+00
+2026-10-04 06:49:22 === run case2000_goc: 2,494 of 2,494 scenarios (500 of 500 load scenarios), 6 branches always out, 2 processes
+2026-10-04 06:49:22   zero-shot normaliser: baseMVA 124.57 (graphkit recipe on these scenarios gives 124.57), vn_kv_max 345; released per-grid checkpoint (tiny) uses baseMVA 121.00, vn_kv_max 345
+06:50:27 worker 0: 21/250 load scenarios, 105 scenarios
+06:51:18 worker 0: 42/250 load scenarios, 210 scenarios
+06:52:01 worker 0: 63/250 load scenarios, 315 scenarios
+06:52:45 worker 0: 84/250 load scenarios, 419 scenarios
+06:53:30 worker 0: 105/250 load scenarios, 524 scenarios
+06:54:16 worker 0: 126/250 load scenarios, 628 scenarios
+06:55:03 worker 0: 147/250 load scenarios, 732 scenarios
+06:55:48 worker 0: 168/250 load scenarios, 837 scenarios
+06:56:33 worker 0: 189/250 load scenarios, 941 scenarios
+06:57:24 worker 0: 210/250 load scenarios, 1045 scenarios
+06:58:08 worker 0: 230/250 load scenarios, 1145 scenarios
+06:58:49 worker 0: 250/250 load scenarios, 1245 scenarios
+2026-10-04 06:58:54   case2000_goc: 2,494 scenarios, 9,053,733 line readings, wall 572 s; base states 500 (failed intact solves: 0); checks: stored AC solution mismatch max 1.0e-06 MW, admittance formula vs stored max 0.0e+00

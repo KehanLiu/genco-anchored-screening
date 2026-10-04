@@ -1,0 +1,2 @@
+Sun Oct  4 06:23:57 CEST 2026 datagen500 launched (not training). pmset: AC Power; AppleClamshellState=Yes (lid CLOSED) -> training not allowed at this time
+Sun Oct  4 06:28:25 CEST 2026 chain launched: split500 -> datagen2000 (skip wrapper, 4 procs) -> split2000

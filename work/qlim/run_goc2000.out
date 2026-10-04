@@ -1,0 +1,6 @@
+07:02:05 === run case2000_goc: 500 load scenarios, 3 processes
+07:02:51   worker 0: 210 scenarios done
+07:03:32   worker 0: 419 scenarios done
+07:04:20   worker 0: 628 scenarios done
+07:05:05   worker 0: 832 scenarios done
+07:05:06 case2000_goc: 2,494 scenarios, 9,053,733 line readings, wall 182 s; limit-enforced truth converged 2,492/2,494; pre-outage converged 2,494

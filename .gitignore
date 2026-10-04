@@ -31,3 +31,10 @@ work/goc*/net/
 work/goc*/pf_*/
 work/goc*/data*/
 work/remedial_case118_parts/
+work/finetune/data*/
+work/zeroshot/data/
+work/fulln1/chunks_*/
+work/timing/superseded/
+work/timing/*.npz
+work/**/*.npz
+work/**/ckpt/

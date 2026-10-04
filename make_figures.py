@@ -372,7 +372,83 @@ def scale():
     fig.subplots_adjust(top=0.72, bottom=0.16, wspace=0.08)
     save(fig, "scale.png")
 
+def starts():
+    """One Newton step from three starts: overloaded lines missed, on four grids."""
+    def frame(grid):
+        if grid == "IEEE 118":
+            d = pd.read_parquet(WORK / "zeroshot/lines_118.parquet", columns=["state", "ac", "prev1", "pg1", "hybpg1"])
+            return d.rename(columns={"pg1": "genco1", "hybpg1": "hyb1"})
+        folder = WORK / {"GOC 500": "goc500", "GOC 2000": "goc2000", "GOC 10000": "goc10000"}[grid]
+        d = pd.read_parquet(folder / "lines_newton_tiny_seed0.parquet", columns=["state", "line", "ac", "genco1"])
+        for name, column in (("prev", "prev1"), ("hybrid", "hyb1")):
+            d = d.merge(pd.read_parquet(folder / f"lines_{name}_tiny_seed0.parquet", columns=["state", "line", column]), on=["state", "line"])
+        return d
+    series = {"prev1": ("pre-outage AC solution", DC), "genco1": ("GENCO", GENCO), "hyb1": ("pre-outage solution + GENCO's change", GENCO1)}
+    grids = ["IEEE 118", "GOC 500", "GOC 2000", "GOC 10000"]
+    fig, axes = plt.subplots(1, 4, figsize=(12, 4.4))
+    for ax, grid in zip(axes, grids):
+        d = frame(grid)
+        n, real = d.state.nunique(), d.ac > OVERLOAD
+        critical = set(d.state[real])
+        shares = []
+        for i, (column, (label, colour)) in enumerate(series.items()):
+            sent = set(d.state[(d[column] > OVERLOAD) | d[column].isna()])
+            missed = int((real & ~d.state.isin(sent)).sum())
+            wasted = len(sent - critical) / max(n - len(critical), 1)
+            share = missed / real.sum()
+            shares.append(share)
+            ax.bar(i, share, width=0.6, color=colour, label=label)
+            ax.annotate(f"{missed}", (i, share), xytext=(0, 3), textcoords="offset points", ha="center", color=INK, fontsize=10)
+            ax.text(i, -0.14, f"{wasted:.1%}", transform=ax.get_xaxis_transform(), ha="center", va="top", color=INK, fontsize=9)
+        ax.set_title(grid, pad=22)
+        ax.text(0, 1.02, f"{int(real.sum()):,} overloaded lines", transform=ax.transAxes, color=MUTED, fontsize=9, va="bottom")
+        ax.set_xticks([])
+        ax.set_ylim(0, max(shares) * 1.25)
+        ax.grid(axis="x", visible=False)
+        ax.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=1))
+    axes[0].set_ylabel("overloaded lines missed")
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.02), title="Newton step started from")
+    fig.suptitle("Which start makes one Newton step enough?", x=0.06, ha="left", fontsize=13, fontweight="bold")
+    fig.text(0.06, 0.915, "Up to five branches removed per scenario. A scenario goes to the full solver if any loading after the step exceeds the limit.\n"
+             "Above each bar: lines missed. Below: secure scenarios sent to the full solver anyway. Each panel has its own scale.", color=MUTED, fontsize=9, va="top")
+    fig.subplots_adjust(top=0.70, bottom=0.26, wspace=0.36, left=0.09)
+    save(fig, "starts.png")
+
+
+def fulln1():
+    """Complete N-1 analysis on GOC 2000: what each workflow costs and what it misses."""
+    summary = pd.read_csv(WORK / "fulln1/summary.csv")
+    rows = summary[(summary.kind == "workflow") & (summary.bases == "test")].set_index("item")
+    labels = {"W0": "Full AC for every outage", "W1": "One Newton step from the\npre-outage solution", "W3": "One step from GENCO",
+              "W4": "One step from pre-outage\nsolution + GENCO's change", "W2": "GENCO alone", "W5": "DC sensitivities alone"}
+    colours = {"W0": DC, "W1": DC, "W3": GENCO, "W4": GENCO1, "W2": GENCO, "W5": DC1}
+    iteration_column = [c for c in rows.columns if "iter" in c and ("share" in c or "rel" in c or "vs" in c)]
+    time_column = [c for c in rows.columns if "mps" in c.lower()]
+    fig, axes = plt.subplots(1, 3, figsize=(12, 4.2), sharey=True)
+    order = list(labels)
+    panels = (("Newton iterations vs full AC", iteration_column[0], "{:.0%}", True),
+              ("Critical outages missed", "missed_share_of_critical", "{:.1%}", True),
+              ("Estimated seconds per 1,000 outages", time_column[0], "{:.1f}", False))
+    for ax, (title, column, fmt, is_share) in zip(axes, panels):
+        values = rows.loc[order, column].astype(float)
+        ax.barh(range(len(order)), values, height=0.55, color=[colours[w] for w in order])
+        for y, value in enumerate(values):
+            ax.annotate(fmt.format(value), (value, y), xytext=(4, 0), textcoords="offset points", va="center", color=INK, fontsize=9)
+        ax.set_title(title, fontsize=10)
+        ax.set_xlim(0, values.max() * 1.22)
+        ax.grid(axis="y", visible=False)
+        if is_share:
+            percent(ax.xaxis)
+    axes[0].set_yticks(range(len(order)), [labels[w] for w in order], fontsize=9)
+    axes[0].invert_yaxis()
+    fig.suptitle("A complete N-1 analysis: 57,384 outages on GOC 2000", x=0.02, ha="left", fontsize=13, fontweight="bold")
+    fig.text(0.02, 0.9, "18 base cases, every non-islanding branch outage; 2.5% of outages are critical. Time includes GENCO inference (batched on the laptop GPU), unit costs measured on this laptop.",
+             color=MUTED, fontsize=9)
+    fig.subplots_adjust(top=0.78, left=0.2, wspace=0.12)
+    save(fig, "fulln1.png")
+
 
 if __name__ == "__main__":
-    for figure in (workflow, onestep, scale, newton, voltage, stress, budget, coverage, cost, scatter, shift):
+    for figure in (starts, fulln1, workflow, onestep, scale, newton, voltage, stress, budget, coverage, cost, scatter, shift):
         figure()

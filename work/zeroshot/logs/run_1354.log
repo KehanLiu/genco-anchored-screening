@@ -1,0 +1,9 @@
+2026-10-04 06:48:20 === run case1354_pegase: 1,339 of 1,339 scenarios (268 of 268 load scenarios), 0 branches always out, 2 processes
+2026-10-04 06:48:20   zero-shot normaliser: baseMVA 333.33 (graphkit recipe on these scenarios gives 333.33), vn_kv_max 380
+06:48:59 worker 0: 23/134 load scenarios, 115 scenarios
+06:49:32 worker 0: 46/134 load scenarios, 230 scenarios
+06:49:59 worker 0: 68/134 load scenarios, 339 scenarios
+06:50:27 worker 0: 90/134 load scenarios, 449 scenarios
+06:50:54 worker 0: 112/134 load scenarios, 559 scenarios
+06:51:16 worker 0: 134/134 load scenarios, 669 scenarios
+2026-10-04 06:51:18   case1354_pegase: 1,339 scenarios, 2,662,831 line readings, wall 177 s; base states 268 (failed intact solves: 0); checks: stored AC solution mismatch max 9.9e-07 MW, admittance formula vs stored max 0.0e+00

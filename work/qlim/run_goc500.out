@@ -1,0 +1,27 @@
+06:56:56 === run case500_goc: 3,000 load scenarios, 3 processes
+06:57:15   worker 0: 200 scenarios done
+06:57:28   worker 0: 400 scenarios done
+06:57:41   worker 0: 600 scenarios done
+06:57:54   worker 0: 799 scenarios done
+06:58:07   worker 0: 998 scenarios done
+06:58:19   worker 0: 1198 scenarios done
+06:58:32   worker 0: 1398 scenarios done
+06:58:44   worker 0: 1598 scenarios done
+06:58:56   worker 0: 1798 scenarios done
+06:59:08   worker 0: 1998 scenarios done
+06:59:19   worker 0: 2198 scenarios done
+06:59:31   worker 0: 2398 scenarios done
+06:59:43   worker 0: 2598 scenarios done
+06:59:55   worker 0: 2798 scenarios done
+07:00:06   worker 0: 2998 scenarios done
+07:00:18   worker 0: 3198 scenarios done
+07:00:29   worker 0: 3398 scenarios done
+07:00:41   worker 0: 3598 scenarios done
+07:00:53   worker 0: 3798 scenarios done
+07:01:04   worker 0: 3998 scenarios done
+07:01:16   worker 0: 4198 scenarios done
+07:01:27   worker 0: 4398 scenarios done
+07:01:39   worker 0: 4598 scenarios done
+07:01:50   worker 0: 4798 scenarios done
+07:02:02   worker 0: 4998 scenarios done
+07:02:04 case500_goc: 14,992 scenarios, 10,875,975 line readings, wall 308 s; limit-enforced truth converged 14,986/14,992; pre-outage converged 14,992

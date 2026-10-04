@@ -1,0 +1,20 @@
+# Whitelist: the build context is only what the Dockerfile copies (about 150 kB instead of 11 GB:
+# .venv is 2.2 GB, work/ 8.6 GB). Checkpoint, bus layout and PGLib case are downloaded during the build.
+*
+
+!requirements.lock.txt
+!LICENSE
+!server.py
+!engine.py
+!analysis_warmstart.py
+!analysis_conformal.py
+!run_pretrained.py
+!web
+!docker
+!work
+work/*
+!work/workbench_conformal_case118_ieee_base.json
+
+**/__pycache__
+**/*.pyc
+**/.DS_Store

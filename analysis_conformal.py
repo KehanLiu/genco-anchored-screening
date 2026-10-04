@@ -28,11 +28,14 @@ states are the anchor and are left out of the scoring.
     .venv/bin/python analysis_conformal.py work/texas/out/hybrid_texas_n2x450.parquet
 """
 import argparse
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from scipy.stats import beta
+
+sys.path.insert(0, str(Path(__file__).parent / "gridtrust" / "src"))
+import gridtrust.conformal  # noqa: E402  (the standalone package holds the calibration and scoring)
 
 OVERLOAD = 1.001  # same as engine.OVERLOAD (not imported: engine starts Julia)
 ALPHAS = [0.10, 0.05, 0.02, 0.01]
@@ -79,36 +82,13 @@ def sigma_of(data, surrogate, kind, line_sigma):
 
 def conformal_width(cal, surrogate, sigma, alpha):
     """Band width b (in sigma units) such that at most alpha of real overloads fall below limit - b*sigma."""
-    real = (cal.ac > OVERLOAD).to_numpy()
-    scores = np.sort(((OVERLOAD - cal[surrogate].to_numpy()) / sigma)[real])
-    n = len(scores)
-    k = int(np.ceil((n + 1) * (1 - alpha)))
-    return (np.inf if k > n else scores[k - 1]), n
+    return gridtrust.conformal.calibrate(cal[surrogate].to_numpy(), cal.ac.to_numpy(), limit=OVERLOAD, alpha=alpha, sigma=sigma, return_n=True)
 
 
 def evaluate(test, n_states, surrogate, sigma, width):
     """Screening: every state with a possibly overloaded line goes to AC; the rest is accepted as secure."""
-    real = (test.ac > OVERLOAD).to_numpy()
-    flagged = test[surrogate].to_numpy() >= OVERLOAD - width * sigma
-    state = test.state.to_numpy()
-    sent = np.unique(state[flagged])
-    escalated = np.isin(state, sent)
-    missed = real & ~escalated          # real overload in a state that was accepted without AC
-    insecure = np.unique(state[real])
-    n_real, k = int(real.sum()), int(missed.sum())
-    return {
-        "ac_calls": len(sent) / n_states,
-        # AC runs spent on states that turn out to have no overload, as a share of those states
-        "wasted": len(np.setdiff1d(sent, insecure)) / max(n_states - len(insecure), 1),
-        "real": n_real,
-        "missed": k,
-        "missed_share": k / max(n_real, 1),
-        "missed_upper95": beta.ppf(0.95, k + 1, n_real - k) if n_real > k else 1.0,
-        # the per-reading event the guarantee is about: a real overload that is not flagged itself
-        "line_missed_share": (real & ~flagged).sum() / max(n_real, 1),
-        "worst_missed": float(test.ac.to_numpy()[missed].max()) if k else np.nan,
-        "states_with_miss": len(np.unique(state[missed])),
-    }
+    return gridtrust.conformal.evaluate(test[surrogate].to_numpy(), test.ac.to_numpy(), test.state.to_numpy(), width,
+                                        limit=OVERLOAD, sigma=sigma, n_states=n_states)
 
 
 def run(data, errors, n_states, seed, alphas=ALPHAS):
