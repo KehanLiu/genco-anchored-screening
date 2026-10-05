@@ -1,0 +1,10 @@
+network case10000_goc: new dataset work/finetune/data10000_ft/case10000_goc/raw vs test set work/goc10000/data/case10000_goc/raw (read only)
+datakit seed: new [seed: 1234]  test [seed: 0]
+scenarios kept: 1497 (train 1347, val 150, pool 0); load cases train 270, val 30, pool 0
+load_scenario_idx: new 200..499   test 0..199   -> common indices: 0
+load vectors (Pd,Qd of all buses, rounded to 1e-6 MW): new 300 distinct, test 199 distinct, common: 0
+(load vector, set of removed branches) pairs: new 1497, test 993, common: 0
+for information: removed-branch sets that also occur in the test set: 20 of 1487 distinct new sets (1.3% of new scenarios; mostly single outages)
+n_out distribution (new): {1: 507, 2: 389, 3: 275, 4: 183, 5: 143}
+total load range MW: new 84728..112705, test 84672..116767
+DISJOINT: yes (assert passed)

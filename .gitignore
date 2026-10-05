@@ -38,3 +38,4 @@ work/timing/superseded/
 work/timing/*.npz
 work/**/*.npz
 work/**/ckpt/
+work/finetune/models/*/stats/*_scenario_splits.json

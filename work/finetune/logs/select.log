@@ -1,0 +1,7 @@
+pool 4996 scenarios, K = 1500 (17% of the 8969 base training scenarios); 1839 pool scenarios have a line predicted within +-3% of its limit
+  criterion  mean n_out  median max line err (pt)  critical  missed by plain rule  overlap with mis1
+  (whole pool)     2.54                      8.79     22.0%        195/195                      30%
+  mis1             2.62                     14.56     42.7%         99/195                     100%
+  mis0             2.55                     10.48     41.1%        100/195                      70%
+  nearlimit        2.58                     11.02     45.9%        127/195                      55%
+  random           2.54                      8.99     22.4%         56/195                      31%

@@ -1,12 +1,13 @@
 #!/bin/zsh
 # GOC 500: fine-tune (2 seeds) -> evaluate on the existing test set -> active-learning round -> evaluate -> summary.
 # usage: nohup work/finetune/20_pipeline500.sh STEPS DEVICE [LR] &      (STEPS/DEVICE from the pilot, 10_pilot500.sh)
-# Every training goes through run_train.sh (AC-power + lid-open gate, tmo <= 8 h, resumable: just rerun this script;
+# Every training goes through run_train.sh (AC-power + sleep-prevention gate, tmo <= 8 h, resumable: just rerun this script;
 # finished stages are skipped via their DONE markers / result files).
 cd "$(dirname "$0")/../.."
 STEPS=${1:?steps}; DEV=${2:?device}; LR=${3:-0}
 F=work/finetune; L=$F/logs; D=$F/data500_ft; M=$F/models; R=$F/results; PY=.venv/bin/python; T=work/texas/tmo
-VAL=$(( STEPS / 10 )); K=1500
+VAL=$(( STEPS / 10 )); [ $VAL -gt 1000 ] && VAL=1000  # must validate before the first epoch ends (1,121 steps): the LR scheduler needs the metric
+K=1500
 train() {  # tag init splits seed steps
   [ -f $M/pf_case500_goc_$1/DONE ] && return 0
   $F/run_train.sh 14400 $1 --net case500_goc --data $D --splits $D/$3 --init $2 --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml \

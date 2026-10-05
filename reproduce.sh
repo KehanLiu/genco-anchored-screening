@@ -63,6 +63,8 @@ sweeps() {
         $TMO 9000 $PY -u analysis_hybrid_start.py run --grid $grid
     done
     # analysis_full_n1.py, analysis_solver_timing.py, analysis_qlimits.py and analysis_zeroshot.py: see the usage line at the top of each script
+    # fine-tuning (optional, hours of GPU time; steps, device, learning rate): data from work/finetune/00_datagen*.sh, then
+    #   work/finetune/20_pipeline500.sh 20000 mps 0.0001; work/finetune/20_pipeline2000.sh 6000 mps 0.0001 "0 1"; work/finetune/20_pipeline10000.sh 20000 mps 0.0001
     # embeddings and remedial actions
     $TMO 9000 $PY -u analysis_embedding.py extract
     $TMO 3000 $PY -u analysis_remedial.py run --budget 2400
@@ -90,6 +92,13 @@ analysis() {
         $PY analysis_prev_control.py report --grid $grid
         $PY analysis_hybrid_start.py report --grid $grid
     done
+    # fine-tuning tables (only if the fine-tuned results exist)
+    R=work/finetune/results
+    if [ -f $R/lines_hybrid_10000_ft10000_seed0.parquet ]; then
+        $PY analysis_finetune_hybrid.py released=$R/lines_hybrid_500_released.parquet ft_seed0=$R/lines_hybrid_500_ft_seed0.parquet ft_seed1=$R/lines_hybrid_500_ft_seed1.parquet
+        $PY analysis_finetune_hybrid.py released=$R/lines_hybrid_2000_released.parquet ft2000_seed0=$R/lines_hybrid_2000_ft2000_seed0.parquet ft2000_seed1=$R/lines_hybrid_2000_ft2000_seed1.parquet
+        $PY analysis_finetune_hybrid.py released=$R/lines_hybrid_10000_released.parquet ft10000_seed0=$R/lines_hybrid_10000_ft10000_seed0.parquet
+    fi
     $PY -m pytest gridtrust/tests -q
     $PY analysis_embedding.py report
     $PY analysis_remedial.py report

@@ -1,0 +1,17 @@
+{
+ "net": "case500_goc",
+ "data": "work/finetune/data500_ft",
+ "splits": "work/finetune/data500_ft/splits_base",
+ "init": "work/finetune/models/pf_case500_goc_ft_seed0",
+ "hparams": "work/goc500/pf_case500_goc_tiny/released_training.yaml",
+ "tag": "al_none_seed0",
+ "max_steps": 20000,
+ "val_every": 1000,
+ "accelerator": "mps",
+ "lr": 0.0001,
+ "batch": 0,
+ "seed": 0,
+ "workers": 0,
+ "threads": 4,
+ "limit_val": 0
+}

@@ -1,0 +1,17 @@
+{
+ "net": "case10000_goc",
+ "data": "work/finetune/data10000_ft",
+ "splits": "work/finetune/data10000_ft/splits_base",
+ "init": "work/goc10000/pf_case10000_goc_tiny",
+ "hparams": "work/goc10000/pf_case10000_goc_tiny/released_training.yaml",
+ "tag": "ft10000_seed0",
+ "max_steps": 20000,
+ "val_every": 605,
+ "accelerator": "mps",
+ "lr": 0.0001,
+ "batch": 0,
+ "seed": 0,
+ "workers": 0,
+ "threads": 4,
+ "limit_val": 0
+}

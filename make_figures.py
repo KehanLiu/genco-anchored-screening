@@ -416,6 +416,49 @@ def starts():
     save(fig, "starts.png")
 
 
+def finetune():
+    """Fine-tuning the released checkpoint: lines missed after one Newton step, before and after, on three grids."""
+    results = WORK / "finetune/results"
+    grids = {"GOC 500": ("500", "ft_seed0"), "GOC 2000": ("2000", "ft2000_seed0"), "GOC 10000": ("10000", "ft10000_seed0")}
+    grids = {g: v for g, v in grids.items() if (results / f"lines_hybrid_{v[0]}_{v[1]}.parquet").exists()}
+    bars = (("prev1", "released", "pre-outage AC solution", DC, None), ("genco1", "released", "GENCO, released", GENCO, None),
+            ("genco1", "tuned", "GENCO, fine-tuned", GENCO, "///"), ("hyb1", "released", "pre-outage + GENCO's change, released", GENCO1, None),
+            ("hyb1", "tuned", "pre-outage + GENCO's change, fine-tuned", GENCO1, "///"))
+    positions = [0, 1.3, 2.1, 3.4, 4.2]
+    fig, axes = plt.subplots(1, len(grids), figsize=(4 * len(grids), 4.4), squeeze=False)
+    for ax, (grid, (size, tag)) in zip(axes[0], grids.items()):
+        columns = ["state", "ac", "genco", "prev1", "genco1", "hyb1"]
+        frames = {"released": pd.read_parquet(results / f"lines_hybrid_{size}_released.parquet", columns=columns),
+                  "tuned": pd.read_parquet(results / f"lines_hybrid_{size}_{tag}.parquet", columns=columns)}
+        shares = []
+        for x, (column, model, label, colour, hatch) in zip(positions, bars):
+            d = frames[model]
+            real = d.ac > OVERLOAD
+            critical = set(d.state[real])
+            sent = set(d.state[(d[column] > OVERLOAD) | d[column].isna()])
+            missed = int((real & ~d.state.isin(sent)).sum())
+            wasted = len(sent - critical) / (d.state.nunique() - len(critical))
+            shares.append(missed / real.sum())
+            ax.bar(x, shares[-1], width=0.7, color=colour, hatch=hatch, edgecolor=SURFACE, linewidth=0, label=label)
+            ax.annotate(f"{missed}", (x, shares[-1]), xytext=(0, 3), textcoords="offset points", ha="center", color=INK, fontsize=10)
+            ax.text(x, -0.03, f"{wasted:.1%}", transform=ax.get_xaxis_transform(), ha="center", va="top", color=INK, fontsize=8.5)
+        errors = [np.median((d.genco - d.ac).abs()) * 100 for d in frames.values()]
+        ax.set_title(grid, pad=22)
+        ax.text(0, 1.02, f"{int(real.sum()):,} overloaded lines; raw error {errors[0]:.2f} → {errors[1]:.2f} pt", transform=ax.transAxes, color=MUTED, fontsize=9, va="bottom")
+        ax.set_xticks([])
+        ax.set_ylim(0, max(max(shares), 1e-3) * 1.25)
+        ax.grid(axis="x", visible=False)
+        ax.yaxis.set_major_formatter(matplotlib.ticker.PercentFormatter(1.0, decimals=1))
+    axes[0][0].set_ylabel("overloaded lines missed")
+    handles, labels = axes[0][0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.06), title="Newton step started from")
+    fig.suptitle("Does fine-tuning make GENCO's predicted change more useful?", x=0.06, ha="left", fontsize=13, fontweight="bold")
+    fig.text(0.06, 0.915, "Released GENCO Tiny against the same checkpoint fine-tuned on new multi-outage scenarios of the same grid (hatched). Same held-out test scenarios.\n"
+             "Above each bar: lines missed. Below: secure scenarios sent to the full solver anyway. 'Raw error' is GENCO's median loading error before any Newton step.", color=MUTED, fontsize=9, va="top")
+    fig.subplots_adjust(top=0.70, bottom=0.24, wspace=0.3, left=0.09)
+    save(fig, "finetune.png")
+
+
 def fulln1():
     """Complete N-1 analysis on GOC 2000: what each workflow costs and what it misses."""
     summary = pd.read_csv(WORK / "fulln1/summary.csv")
@@ -450,5 +493,5 @@ def fulln1():
 
 
 if __name__ == "__main__":
-    for figure in (starts, fulln1, workflow, onestep, scale, newton, voltage, stress, budget, coverage, cost, scatter, shift):
+    for figure in (starts, fulln1, finetune, workflow, onestep, scale, newton, voltage, stress, budget, coverage, cost, scatter, shift):
         figure()

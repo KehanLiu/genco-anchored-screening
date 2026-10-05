@@ -1,2 +1,74 @@
 Sun Oct  4 06:23:57 CEST 2026 datagen500 launched (not training). pmset: AC Power; AppleClamshellState=Yes (lid CLOSED) -> training not allowed at this time
 Sun Oct  4 06:28:25 CEST 2026 chain launched: split500 -> datagen2000 (skip wrapper, 4 procs) -> split2000
+2026-10-04 15:43:11 gate for pilot500_cpu: [Now drawing from 'AC Power'] lid closed=No
+2026-10-04 15:43:11 START pilot500_cpu (1800 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --max_steps 300 --val_every 100 --limit_val 25 --accelerator cpu
+2026-10-04 15:44:04 END pilot500_cpu rc=1
+pilot cpu rc=1
+2026-10-04 15:44:04 gate for pilot500_mps: [Now drawing from 'AC Power'] lid closed=No
+2026-10-04 15:44:04 START pilot500_mps (1800 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --max_steps 300 --val_every 100 --limit_val 25 --accelerator mps
+2026-10-04 15:44:26 END pilot500_mps rc=1
+pilot mps rc=1
+2026-10-04 15:45:41 gate for pilot500_cpu: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 15:45:41 START pilot500_cpu (1800 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --max_steps 300 --val_every 100 --limit_val 25 --accelerator cpu
+2026-10-04 15:45:44 END pilot500_cpu rc=1
+pilot cpu rc=1
+2026-10-04 15:45:44 gate for pilot500_mps: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 15:45:44 START pilot500_mps (1800 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --max_steps 300 --val_every 100 --limit_val 25 --accelerator mps
+2026-10-04 15:45:47 END pilot500_mps rc=1
+pilot mps rc=1
+2026-10-04 15:47:42 gate for pilot500_cpu: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 15:47:42 START pilot500_cpu (1800 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --max_steps 300 --val_every 100 --limit_val 25 --accelerator cpu
+2026-10-04 15:48:49 END pilot500_cpu rc=0
+2026-10-04 15:48:49 gate for pilot500_mps: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 15:48:49 START pilot500_mps (1800 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --max_steps 300 --val_every 100 --limit_val 25 --accelerator mps
+2026-10-04 15:49:41 END pilot500_mps rc=0
+2026-10-04 15:50:35 gate for ft_seed0: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 15:50:35 START ft_seed0 (14400 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml --seed 0 --max_steps 20000 --val_every 2000 --accelerator mps --lr 0
+2026-10-04 15:54:18 END ft_seed0 rc=1
+training ft_seed0 failed/blocked (rc=1)
+2026-10-04 16:14:38 gate for ft_seed0: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 16:14:38 START ft_seed0 (14400 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml --seed 0 --max_steps 20000 --val_every 1000 --accelerator mps --lr 0
+2026-10-04 16:43:08 END ft_seed0 rc=143
+2026-10-04 16:43:11 gate for ft_seed0: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 16:43:11 START ft_seed0 (14400 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml --seed 0 --max_steps 20000 --val_every 1000 --accelerator mps --lr 0.0001
+2026-10-04 17:22:16 pilot2000: queued behind pilot10000 (PID 99071)
+2026-10-04 17:22:16 pilot10000: waiting for the running GOC 500 pipeline / training to finish
+2026-10-04 17:44:40 END ft_seed0 rc=0
+2026-10-04 17:47:29 gate for ft_seed1: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 17:47:29 START ft_seed1 (14400 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/goc500/pf_case500_goc_tiny_seed1 --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml --seed 1 --max_steps 20000 --val_every 1000 --accelerator mps --lr 0.0001
+2026-10-04 18:25:47 pipeline2000: queued behind pilot10000 (PID 99071)
+2026-10-04 18:43:08 END ft_seed1 rc=0
+2026-10-04 18:46:44 gate for al_mis1_seed0: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 18:46:44 START al_mis1_seed0 (14400 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_al_mis1 --init work/finetune/models/pf_case500_goc_ft_seed0 --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml --seed 0 --max_steps 20000 --val_every 1000 --accelerator mps --lr 0.0001
+2026-10-04 19:38:45 END al_mis1_seed0 rc=0
+2026-10-04 19:41:32 gate for al_random_seed0: [Now drawing from 'AC Power'] lid closed=No sleep prevented=yes
+2026-10-04 19:41:32 START al_random_seed0 (14400 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_al_random --init work/finetune/models/pf_case500_goc_ft_seed0 --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml --seed 0 --max_steps 20000 --val_every 1000 --accelerator mps --lr 0.0001
+2026-10-04 20:33:06 END al_random_seed0 rc=0
+2026-10-04 20:35:57 gate for al_nearlimit_seed0: [Now drawing from 'AC Power'] lid closed=Yes sleep prevented=yes
+2026-10-04 20:35:57 START al_nearlimit_seed0 (14400 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_al_nearlimit --init work/finetune/models/pf_case500_goc_ft_seed0 --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml --seed 0 --max_steps 20000 --val_every 1000 --accelerator mps --lr 0.0001
+2026-10-04 21:29:20 END al_nearlimit_seed0 rc=0
+2026-10-04 21:32:09 gate for al_none_seed0: [Now drawing from 'AC Power'] lid closed=Yes sleep prevented=yes
+2026-10-04 21:32:09 START al_none_seed0 (14400 s limit): --net case500_goc --data work/finetune/data500_ft --splits work/finetune/data500_ft/splits_base --init work/finetune/models/pf_case500_goc_ft_seed0 --hparams work/goc500/pf_case500_goc_tiny/released_training.yaml --seed 0 --max_steps 20000 --val_every 1000 --accelerator mps --lr 0.0001
+2026-10-04 22:26:10 END al_none_seed0 rc=0
+2026-10-04 22:29:53 pilot10000: queue passed, starting
+2026-10-04 22:29:53 gate for pilot10000_mps: [Now drawing from 'AC Power'] lid closed=Yes sleep prevented=yes
+2026-10-04 22:29:53 START pilot10000_mps (7200 s limit): --net case10000_goc --data work/finetune/data10000_ft --splits work/finetune/data10000_ft/splits_base --init work/goc10000/pf_case10000_goc_tiny --hparams work/goc10000/pf_case10000_goc_tiny/released_training.yaml --max_steps 150 --val_every 50 --limit_val 10 --accelerator mps
+2026-10-04 22:30:56 END pilot10000_mps rc=0
+2026-10-04 22:31:53 pilot2000: queue passed, starting
+2026-10-04 22:31:53 gate for pilot2000_mps: [Now drawing from 'AC Power'] lid closed=Yes sleep prevented=yes
+2026-10-04 22:31:53 START pilot2000_mps (3600 s limit): --net case2000_goc --data work/finetune/data2000_ft --splits work/finetune/data2000_ft/splits_base --init work/goc2000/pf_case2000_goc_tiny --hparams work/goc2000/pf_case2000_goc_tiny/released_training.yaml --max_steps 300 --val_every 100 --limit_val 25 --accelerator mps
+2026-10-04 22:34:13 END pilot2000_mps rc=0
+2026-10-04 22:35:13 pipeline2000: queue passed, starting
+2026-10-04 22:35:14 gate for ft2000_seed0: [Now drawing from 'AC Power'] lid closed=Yes sleep prevented=yes
+2026-10-04 22:35:14 START ft2000_seed0 (28800 s limit): --net case2000_goc --data work/finetune/data2000_ft --splits work/finetune/data2000_ft/splits_base --init work/goc2000/pf_case2000_goc_tiny --hparams work/goc2000/pf_case2000_goc_tiny/released_training.yaml --seed 0 --max_steps 6000 --val_every 252 --accelerator mps --lr 0.0001
+2026-10-04 22:36:55 pipeline10000: queued behind pipeline2000 (PID 3980)
+2026-10-04 23:08:59 END ft2000_seed0 rc=0
+2026-10-04 23:12:48 gate for ft2000_seed1: [Now drawing from 'AC Power'] lid closed=Yes sleep prevented=yes
+2026-10-04 23:12:48 START ft2000_seed1 (28800 s limit): --net case2000_goc --data work/finetune/data2000_ft --splits work/finetune/data2000_ft/splits_base --init work/goc2000/pf_case2000_goc_tiny --hparams work/goc2000/pf_case2000_goc_tiny/released_training.yaml --seed 1 --max_steps 6000 --val_every 252 --accelerator mps --lr 0.0001
+2026-10-04 23:46:20 END ft2000_seed1 rc=0
+2026-10-04 23:50:38 pipeline2000: done, see work/finetune/logs/summary2000.log and work/finetune/logs/summary_hybrid2000.log
+2026-10-04 23:51:19 pipeline10000: queue passed, starting
+2026-10-04 23:51:20 gate for ft10000_seed0: [Now drawing from 'AC Power'] lid closed=Yes sleep prevented=yes
+2026-10-04 23:51:20 START ft10000_seed0 (28800 s limit): --net case10000_goc --data work/finetune/data10000_ft --splits work/finetune/data10000_ft/splits_base --init work/goc10000/pf_case10000_goc_tiny --hparams work/goc10000/pf_case10000_goc_tiny/released_training.yaml --seed 0 --max_steps 20000 --val_every 605 --accelerator mps --lr 0.0001
+2026-10-05 01:48:29 END ft10000_seed0 rc=0
+2026-10-05 02:00:44 pipeline10000: done, see work/finetune/logs/summary10000.log and work/finetune/logs/summary_hybrid10000.log

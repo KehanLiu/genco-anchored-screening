@@ -1,6 +1,6 @@
 # Let GENCO predict the change, not the state: one-step contingency screening, tested until it breaks
 
-**In one sentence:** start Newton from the operator's pre-outage AC solution plus GENCO's predicted voltage *change*, take one step, and the screen misses 2 of 6,986 overloaded lines on IEEE 118, 5 of 2,621 on GOC 500 and 0 of 369 on GOC 2000, where the classic one-step screen from the pre-outage solution alone misses 74, 41 and 2; it stops helping at 10,000 buses, and on a laptop it does not pay in wall-clock time.
+**In one sentence:** start Newton from the operator's pre-outage AC solution plus GENCO's predicted voltage *change*, take one step, and the screen misses 2 of 6,986 overloaded lines on IEEE 118, 5 of 2,621 on GOC 500 and 0 of 369 on GOC 2000, where the classic one-step screen from the pre-outage solution alone misses 74, 41 and 2; it stops helping at 10,000 buses, fine-tuning does not change that, and on a laptop it does not pay in wall-clock time.
 
 This entry starts from the organisers' example ([discussion #1](https://huggingface.co/spaces/gridfm/genco-challenge/discussions/1)), reproduces it, and then asks what it would take to act on GENCO's verdict without checking most states. The answer changed twice as we added the baselines a practitioner would ask for. We report all of it, including the parts where GENCO loses.
 
@@ -21,7 +21,7 @@ Contingency screening asks one question for thousands of grid states: *is any li
 
 ### 1. One Newton step from three starts
 
-Scenarios remove up to five branches at random (gridfm-datakit). A scenario goes to the full solver if any line loading after the step exceeds its limit. Released checkpoints, no training.
+Scenarios remove up to five branches at random (gridfm-datakit). A scenario goes to the full solver if any line loading after the step exceeds its limit. Released checkpoints; fine-tuning is tested in section 6.
 
 | Grid (overloaded lines) | Pre-outage solution: missed / secure scenarios flagged | GENCO: missed / flagged | Pre-outage + GENCO's change: missed / flagged |
 |---|---|---|---|
@@ -88,7 +88,27 @@ For the case where only GENCO's own output is used, a conformal band decides whi
 
 ![Stress test](figures/stress.png)
 
-### 6. What else we learned about GENCO
+### 6. Does fine-tuning help?
+
+We fine-tuned the released Tiny checkpoints on new scenarios of the same kind (up to five branches removed), generated separately and checked to share no scenario with the test set: 8,969 scenarios for GOC 500, 2,248 for GOC 2000 and 1,347 for GOC 10000; 20,000, 6,000 and 20,000 steps at learning rate 1e-4, half an hour to two hours each on a laptop GPU. Same test scenarios as above.
+
+![Fine-tuning, before and after](figures/finetune.png)
+
+Lines missed after one Newton step (secure scenarios flagged in brackets):
+
+| Grid (overloaded lines) | Pre-outage solution | GENCO: released → fine-tuned | Pre-outage + GENCO's change: released → fine-tuned |
+|---|---|---|---|
+| GOC 500 (2,621) | 41 (0.2%) | 9 → 10 (0.1% → 0.1%) | 5 → 5 (0.0% → 0.0%) |
+| GOC 2000 (369) | 2 (0.0%) | 1 → 1 (0.6% → 0.6%) | 0 → 0 (0.0% → 0.0%) |
+| GOC 10000 (507) | **2 (0.3%)** | 7 → 8 (37.0% → 42.1%) | 5 → 4 (3.2% → 3.2%) |
+
+- **No. Fine-tuning does not rescue 10,000 buses.** The combined start still loses to the pre-outage solution alone (4 missed and 3.2% of secure scenarios flagged, against 2 and 0.3%). The validation loss moved from 0.0060 to 0.0057 and the raw error did not improve (median 0.54 → 0.56 points).
+- **Why the predicted change fails there.** On lines whose loading moves by more than one point, GENCO's predicted change removes 85% of the median error of assuming no change on GOC 500 (2.44 → 0.36 points), 74% on GOC 2000 (2.17 → 0.56) and 28% on GOC 10000 (2.22 → 1.60). Fine-tuning leaves all three where they were (0.29, 0.56 and 1.63).
+- **Where it has room, it improves the raw model and nothing after the step.** On GOC 500 the median raw error falls from 0.33 to 0.23 points, but the raw screen stays unusable (431 overloaded lines missed, 294 before) and after one Newton step nothing changes. A second seed gives 0.26 → 0.21 points and 3 lines missed from the combined start.
+- **Choosing the training scenarios does not matter either.** Adding 1,500 scenarios chosen at random, by largest mismatch after one step, or by closeness to a limit gives 9, 8 and 9 lines missed after one step from GENCO's start; training on with no new data gives 11.
+- One seed on GOC 10000, the Tiny model only, and a small training set. A larger model or far more data may behave differently; we did not test that.
+
+### 7. What else we learned about GENCO
 
 - **Zero-shot transfer does not give a universal start.** The organisers' pretrained model, used without fine-tuning on IEEE 118, GOC 500, PEGASE 1354 and GOC 2000, is 2 to 9 times less accurate than DC and a worse Newton start than the pre-outage solution. Its predicted *change* still helps a little on the three smaller grids (lines missed after one step: 74 → 19, 12 → 3, 8 → 5) and hurts on GOC 2000.
 - **The embedding space does not warn of unfamiliar states.** Distance to the calibration set separates N-3 and N-4 states from the control with AUROC 0.68 and 0.79; counting the lines out gives 1.00.
@@ -106,7 +126,7 @@ The staged workflow runs interactively on IEEE 118: pick a load level and an all
 ## Limits of this work
 
 - **No speed claim.** On a laptop, with inference counted, every GENCO workflow is slower than the classic one-step screen. The savings we report are Newton iterations.
-- **No training was done.** All results use released checkpoints. Whether fine-tuning on multi-outage data makes the predicted change useful at 10,000 buses is open; the data and scripts for that experiment are in the repository.
+- **Fine-tuning was small.** Sections 1 to 5 and 7 use released checkpoints. Section 6 fine-tunes the Tiny model for at most two hours per grid on a laptop, with one seed on the two larger grids; it shows no gain, which does not rule out a gain from a larger model or much more data.
 - The Newton step uses the true network model. Stage 2 measures GENCO plus physics.
 - GOC 500 is a near-replication of the example: its checkpoint and data are not published.
 - The larger grids use one checkpoint seed; GOC 10000 has 993 scenarios.

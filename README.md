@@ -20,7 +20,7 @@ Start Newton from the operator's pre-outage AC solution plus GENCO's predicted v
 | `analysis_solver_timing.py` | Start points inside PowerModels' AC power flow: convergence, iterations, time. |
 | `analysis_qlimits.py` | The main experiments with generator reactive limits (PV-to-PQ switching). |
 | `analysis_zeroshot.py` | The pretrained model, without fine-tuning, on grids it has not seen. |
-| `analysis_finetune.py`, `work/finetune/` | Data and scripts for fine-tuning on multi-outage scenarios (prepared, not run). |
+| `analysis_finetune.py`, `analysis_finetune_hybrid.py`, `work/finetune/` | Fine-tuning the released Tiny checkpoints on new multi-outage scenarios (GOC 500, 2000, 10000) and scoring them from GENCO's start and from the combined start. `20_pipeline500.sh`, `20_pipeline2000.sh` and `20_pipeline10000.sh` chain training and evaluation. |
 | `gridtrust/` | Standalone package: Newton refinement, conformal band, staged decision; 32 tests (`pytest gridtrust/tests`). |
 | `upstream/` | Draft contribution to gridfm-graphkit (not submitted). |
 | `Dockerfile`, `docker/` | Container for the workbench (written, not yet built). |
@@ -49,7 +49,7 @@ Start Newton from the operator's pre-outage AC solution plus GENCO's predicted v
 
 The `setup`, `analysis` and `figures` stages were verified in a fresh copy of the repository (with the saved result tables in place); `fetch` and `sweeps` were run piece by piece while the work was done, not through this script.
 
-No model is trained. All checkpoints are the released ones: `gridfm/genco-pf-datakit` (IEEE 118 Base and GOC 500 Tiny, seeds 0, 1 and 42; GOC 2000 and GOC 10000 Tiny and Small) and `gridfm/genco-pf-contingency` (Texas 2000).
+All results except the fine-tuning section use the released checkpoints: `gridfm/genco-pf-datakit` (IEEE 118 Base and GOC 500 Tiny, seeds 0, 1 and 42; GOC 2000 and GOC 10000 Tiny and Small) and `gridfm/genco-pf-contingency` (Texas 2000).
 
 ## Data
 
@@ -59,7 +59,7 @@ No model is trained. All checkpoints are the released ones: `gridfm/genco-pf-dat
 
 ## Limits
 
-No speed claim is made: on a laptop, with inference counted, every GENCO workflow is slower than the classic one-step screen. No model was trained. The savings reported are AC solves and Newton iterations. See "Limits of this work" in the write-up.
+No speed claim is made: on a laptop, with inference counted, every GENCO workflow is slower than the classic one-step screen. Fine-tuning was done only at laptop scale (at most two hours per grid) and showed no gain. The savings reported are AC solves and Newton iterations. See "Limits of this work" in the write-up.
 
 ## Licence
 

@@ -17,12 +17,12 @@
 - One line each: fewest Newton iterations; not faster on a laptop; break-even needs inference near 2 ms per state.
 
 ### Right: tested until it breaks
-- 10,000 buses: the predicted change stops helping.
+- 10,000 buses: the predicted change stops helping, and fine-tuning does not bring it back (`figures/finetune.png`): 5 → 4 lines missed, against 2 from the pre-outage solution alone.
 - Reactive limits: ranking survives, "almost nothing missed" does not; a withdrawn voltage finding.
 - `figures/stress.png` and `figures/cost.png`: a conformal band with a stated miss rate, where it holds and where it breaks.
 - Zero-shot transfer and embedding-space detection: negative results, one line each.
 
 ## Bottom strip
 - `figures/workbench.gif` first frame or `figures/workbench_outage.png`: the operator workbench.
-- Limits, stated plainly: no speed claim; no training; near-replication of the example setup.
+- Limits, stated plainly: no speed claim; fine-tuning only at laptop scale; near-replication of the example setup.
 - Tools: GENCO, gridfm-graphkit, gridfm-datakit; the `gridtrust` package. Code link and QR code. Author and contact.

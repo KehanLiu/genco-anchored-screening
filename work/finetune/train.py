@@ -84,7 +84,7 @@ def main():
         def __init__(self):
             self.best = float("inf")
             self.losses, self.t0, self.s0, self.spent = [], None, None, 0.0
-            self.log = out / "train_log.csv"
+            self.log_path = out / "train_log.csv"
 
         def state_dict(self):
             return {"best": self.best, "spent": self.spent}
@@ -115,9 +115,9 @@ def main():
                 self.best = val
                 torch.save(sd, out / "model" / "best_model_state_dict.pt")
             lr = pl_module.optimizer.param_groups[0]["lr"]
-            if not self.log.exists():
-                self.log.write_text("step,train_seconds,sec_per_step,train_loss,val_loss,lr,best\n")
-            with self.log.open("a") as f:
+            if not self.log_path.exists():
+                self.log_path.write_text("step,train_seconds,sec_per_step,train_loss,val_loss,lr,best\n")
+            with self.log_path.open("a") as f:
                 f.write(f"{trainer.global_step},{self.spent:.1f},{dt / max(n, 1):.4f},{tr:.6g},{val:.6g},{lr:.3g},{int(best)}\n")
             print(time.strftime("%H:%M:%S"), f"step {trainer.global_step}: train loss {tr:.5g}, val loss {val:.5g}{' *' if best else ''}, "
                   f"{dt / max(n, 1):.3f} s/step ({n} steps), lr {lr:.2g}", flush=True)
@@ -134,6 +134,9 @@ def main():
         callbacks=[Track(), ModelCheckpoint(dirpath=str(out / "ckpt"), save_last=True, save_top_k=0, every_n_train_steps=a.val_every)],
     )
     t = time.perf_counter()
+    # Our own checkpoints hold graphkit's NestedNamespace in their hyper-parameters; allow it for torch.load.
+    from gridfm_graphkit.io.param_handler import NestedNamespace
+    torch.serialization.add_safe_globals([NestedNamespace])
     trainer.fit(model=model, datamodule=dm, ckpt_path=str(ckpt) if ckpt.exists() else None)
     print(f"done: global step {trainer.global_step}, wall {time.perf_counter() - t:.0f}s this launch; "
           f"train {len(dm.train_dataset_multi)} / val {len(dm.val_dataset_multi)} scenarios, batch {args.training.batch_size}", flush=True)

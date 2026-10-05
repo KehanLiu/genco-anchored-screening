@@ -1,0 +1,3 @@
+Data Normalizer case10000_goc stats:
+{'baseMVA_orig': tensor(100.), 'baseMVA': tensor(88.3962), 'vn_kv_max': tensor(500.)}
+
