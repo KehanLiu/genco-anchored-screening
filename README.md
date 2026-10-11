@@ -2,16 +2,30 @@
 
 An entry for the [GENCO Challenge](https://gridfm.org/porto/challenge/): contingency screening with the anchored change start and one Newton step. The write-up is [`submission/POST.md`](submission/POST.md).
 
-Start Newton from the operator's pre-outage AC solution plus GENCO's predicted voltage *change* (the anchored change start), take one step, and the screen misses 2, 5 and 0 overloaded lines on IEEE 118, GOC 500 and GOC 2000 (of 6,986, 2,621 and 369) where the classic one-step screen from the pre-outage solution misses 74, 41 and 2, at 0.0% of secure scenarios flagged. A fresh operating-point pool with frozen policies (GOC 2000, 76,512 single-branch outages) confirms the referral cut, not a speed gain: 2.17% of outages referred to full AC against 27.94% for the classic screen, 1 against 2 critical outages missed, at a measured 22.3 ms per outage against 8.4 ms. At 10,000 buses it stops helping: every released checkpoint ties the classic screen on missed lines and flags 7 times more secure scenarios. The conformal band of the earlier rounds is now an appendix-level component, reported without a Newton step.
+GENCO's predicted voltage changes improve one-step Newton screening on several benchmark grids, but the measured implementation has no demonstrated end-to-end cost advantage. On a 4,800-outage sample from the fresh GOC 2000 pool, the anchored workflow took 22.3 ms per outage with GPU batch-16 inference, versus 8.4 ms for classical screening and 13.7 ms for complete AC. All three missed zero of the 69 critical cases in that timing sample; numerical nonconvergences were treated as flagged cases. These are laptop throughput measurements, not a demonstrated deployment advantage.
 
-![Which start makes one Newton step enough?](figures/starts.png)
+| Workflow (same 4,800 outages, 24 fresh GOC 2000 bases) | Measured ms per outage, first pass | Critical cases missed in this sample |
+|---|---:|---:|
+| Complete AC, Newton to convergence from the solved base case | 13.7 | 0 of 69 |
+| Classical screen, one Newton step from the solved base case | 8.4 | 0 of 69 |
+| Anchored change start, one Newton step, GENCO on the laptop GPU in batches of 16 (amortized throughput) | 22.3 | 0 of 69 |
+
+On the full fresh pool (76,512 single-branch outages, frozen policies) the anchored screen referred 2.17% of outages to full AC against 27.94% for the classical screen and missed 1 against 2 critical outages; the two screens keep their own residual thresholds from the old N-1 calibration, so the referral counts are not an equally tuned comparison. The pooled counts and the 4,800-sample timings are different scopes. At 10,000 buses no released checkpoint beats the classical screen: the classic start misses 2 lines, the anchored checkpoints miss 5, 3, 2 and 3; the best (Small seed 0) ties on misses while referring about seven times as many secure scenarios. The conformal band of the earlier rounds is an appendix-level component, reported without a Newton step.
+
+### Mechanism: better initialization for one Newton step
+
+In a separate loading-only diagnostic on scenarios with up to five branch outages, the anchored start missed 2, 5 and 0 overloaded line readings on IEEE 118, GOC 500 and GOC 2000, versus 74, 41 and 2 from the classical start after one Newton step. Both use a converged, matching AC base state. This demonstrates better one-step initialization on these datasets; it is not an equal-cost comparison or a safety guarantee.
+
+![Overload screening after one Newton step](figures/starts.png)
+
+*Loading-only diagnostic with cutoff 1.001 and a solved AC base state. The comparison fixes the number of Newton steps; GENCO inference cost and complete-AC performance are not shown. The measured end-to-end workflow is slower than complete AC on the separate fresh GOC 2000 timing sample.*
 
 ## What is here
 
 | Path | What it does |
 |---|---|
 | `engine.py` | One grid state (load level, line outages, optional redispatch) solved by AC power flow, DC power flow and GENCO. Used by everything else. |
-| `analysis/analysis_prev_control.py`, `analysis/analysis_hybrid_start.py` | The headline: one Newton step from the pre-outage AC solution (classic screen), and from that solution plus GENCO's predicted change (anchored change start). |
+| `analysis/analysis_prev_control.py`, `analysis/analysis_hybrid_start.py` | The headline: one Newton step from the solved pre-outage AC base case (classic screen), and from that base case plus GENCO's predicted change (anchored change start). |
 | `analysis/analysis_full_n1.py` | A complete N-1 analysis on GOC 2000 with the cost of six workflows, unit-cost timing and the measured end-to-end phase. |
 | `work/fresh/` | Fresh operating points, frozen policies: `policy_frozen.json` (the policy, frozen before generation), `POLICY_LOG.md` (freeze and amendments), `score_fresh_n1.py` and `score_fresh_hybrid.py` (scorers), `run_fresh.sh` with the chain scripts (`datagen_chain.sh`, `n1_2000_chain.sh`, `n1_extend_chain.sh`, `hybrid2000_chain.sh`, `chain10000.sh`), the results `results_n1.md` and `results_hybrid.md`, and a `README.md` with the recipe. |
 | `work/equiv/` | Equivalent-circuit robustness diagnostic: `SPEC.md` (pre-registered), `REPORT.md`, `transforms.py` (admittance-preserving rewrites), `run_equiv.py`, tests (`test_transforms.py`, `test_abort.py`), summaries in `results/*.csv`. |
@@ -40,7 +54,7 @@ Start Newton from the operator's pre-outage AC solution plus GENCO's predicted v
 | `workbench/whatif.py` | Every single-line outage on IEEE 118, GENCO against the AC solver, with the workbench's engine. |
 | `workbench/tools/record_workbench_gif.py` | Records `figures/workbench.gif` and the workbench screenshots from a running server (needs Chrome and Pillow). |
 | `work/workbench_check.py` | Checks of the workbench's staged verdict against the AC solution (`work/workbench_check.log`). |
-| `Dockerfile`, `workbench/docker/` | Container for the workbench (written, not yet built). |
+| `Dockerfile`, `workbench/docker/` | Container for the workbench, laid out for a Hugging Face Docker Space (port 7860, non-root). Built and smoke-tested on 2026-10-11 (Apple Silicon, linux/arm64): `docker build --platform linux/arm64 -t genco-workbench:dev .` (50 min with a cold pip cache, nearly all of it wheel downloads; 4.81 GB on disk, 1.07 GB compressed), then `docker run --rm -p 7860:7860 genco-workbench:dev` and open http://localhost:7860. The build downloads the IEEE 118 Base checkpoint (Hugging Face, no token needed) and the bus layout, checks their sha256, precompiles the Julia environment and solves one state before the image is accepted. |
 | `run_pretrained.py` | Fetch a released checkpoint and run it on one data shard. |
 | `work/**/*.log`, `work/*.txt`, `work/**/*.csv`, `work/**/*.md` | The printed reports and small result tables behind the numbers in the write-up. |
 
@@ -61,7 +75,7 @@ RUN_LONG=1 ./reproduce.sh all   # also sweeps, controls, finetune before analysi
 
 `analysis` and `figures` need the saved result tables (`work/**/*.parquet`, `*.csv`, `*.log`) that are **not in the repository**; without them these two stages fail. The long stages `sweeps`, `controls` and `finetune` rebuild those tables from the fetched inputs in about two days on a laptop (`finetune` needs AC power and `caffeinate`). No results archive is available yet.
 
-Replay status: the default path was last replayed in a fresh copy of the repository in round 2 (2026-10-03). Later additions were syntax- and import-checked in a simulated clean checkout on 2026-10-11 (74 files compile, 49 tests pass, 15 skip for missing data); no full clean replay of the current script has been done.
+Replay status: the default path was replayed from a fresh clone of commit 4c2987b on 2026-10-11 (macOS 27.0.1, Apple silicon, uv 0.12.7, Python 3.12.14). `setup`, `fetch` (53 manifest entries ok, the Texas case absent as documented), `checksums` and `tests` (64 collected; 49 pass / 15 skip with the fetched inputs only, 54 / 10 with the saved tables) ran unchanged from the clone. `analysis` (985 s) and `figures` (12 s) ran to completion once the saved result tables and the GOC 2000 test pool `work/goc2000/data/case2000_goc/raw/` (read by `analysis_full_n1.py report`) were copied in, and all 17 figures came back byte-identical to the committed ones; `work/fresh/results_n1.md` and `results_hybrid.md` were regenerated identically by their scorers. The first `import engine` inside `analysis` installs Julia 1.13.1 through juliacall (200 MB download, about 5 min); if that download fails, re-run the stage. The `analysis_embedding.py` tables are not bit-reproducible (unseeded PCA solver).
 
 ## Data
 
@@ -73,7 +87,7 @@ Replay status: the default path was last replayed in a fresh copy of the reposit
 
 ## Limits
 
-No speed claim is made: on a laptop, with inference counted, every GENCO workflow is slower than the classic one-step screen. Fine-tuning was done only at laptop scale (at most two hours per grid) and showed no gain. The savings reported are AC solves and Newton iterations. See "Limits of this work" in the write-up.
+No speed claim is made: on a laptop, with inference counted, every GENCO workflow is slower than the classic one-step screen, and the anchored workflow is slower than complete AC on the measured fresh GOC 2000 sample (22.3 against 13.7 ms per outage). Complete AC evaluates every case; that evaluation cost is not an overload false-alarm rate. We assume a converged AC base state consistent with the injections, controls and network model used for the contingency; sensitivity to state-estimation error, stale operating points and topology uncertainty was not tested. Fine-tuning was done only at laptop scale (at most two hours per grid) and showed no gain. The savings reported are AC solves and Newton iterations. See "Limits of this work" in the write-up.
 
 ## Licences
 

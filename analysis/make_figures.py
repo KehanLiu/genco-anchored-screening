@@ -384,9 +384,10 @@ def starts():
         for name, column in (("prev", "prev1"), ("hybrid", "hyb1")):
             d = d.merge(pd.read_parquet(folder / f"lines_{name}_tiny_seed0.parquet", columns=["state", "line", column]), on=["state", "line"])
         return d
-    series = {"prev1": ("pre-outage AC solution", DC), "genco1": ("GENCO", GENCO), "hyb1": ("pre-outage solution + GENCO's change", GENCO1)}
+    series = {"prev1": ("classic start: solved pre-outage AC base case", DC), "genco1": ("GENCO", GENCO),
+              "hyb1": ("solved pre-outage AC base case + GENCO's change", GENCO1)}
     grids = ["IEEE 118", "GOC 500", "GOC 2000", "GOC 10000"]
-    fig, axes = plt.subplots(1, 4, figsize=(12, 4.4))
+    fig, axes = plt.subplots(1, 4, figsize=(12, 5.4))
     for ax, grid in zip(axes, grids):
         d = frame(grid)
         n, real = d.state.nunique(), d.ac > OVERLOAD
@@ -410,10 +411,13 @@ def starts():
     axes[0].set_ylabel("overloaded lines missed")
     handles, labels = axes[0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.02), title="Newton step started from")
-    fig.suptitle("Which start makes one Newton step enough?", x=0.06, ha="left", fontsize=13, fontweight="bold")
-    fig.text(0.06, 0.915, "Up to five branches removed per scenario. A scenario goes to the full solver if any loading after the step exceeds the limit.\n"
+    fig.suptitle("Overload screening after one Newton step", x=0.06, ha="left", fontsize=13, fontweight="bold")
+    fig.text(0.06, 0.93, "Loading-only diagnostic with cutoff 1.001 and a solved AC base state. The comparison fixes the number of Newton steps; GENCO inference cost\n"
+             "and complete-AC performance are not shown. The measured end-to-end workflow is slower than complete AC on the separate fresh GOC 2000\n"
+             "timing sample (22.3 vs 13.7 ms per outage).", color=INK, fontsize=9, va="top")
+    fig.text(0.06, 0.845, "Up to five branches removed per scenario. A scenario goes to the full solver if any loading after the step exceeds the limit.\n"
              "Above each bar: lines missed. Below: secure scenarios sent to the full solver anyway. Each panel has its own scale.", color=MUTED, fontsize=9, va="top")
-    fig.subplots_adjust(top=0.70, bottom=0.26, wspace=0.36, left=0.09)
+    fig.subplots_adjust(top=0.66, bottom=0.22, wspace=0.36, left=0.09)
     save(fig, "starts.png")
 
 

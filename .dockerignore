@@ -18,6 +18,11 @@ workbench/*
 !work
 work/*
 !work/workbench_conformal_case118_ieee_base.json
+!gridtrust
+gridtrust/*
+!gridtrust/src
+gridtrust/src/*
+!gridtrust/src/gridtrust
 
 **/__pycache__
 **/*.pyc

@@ -5,6 +5,17 @@
 #   docker run --rm -p 7860:7860 genco-workbench            # http://localhost:7860
 #   docker run --rm -e PORT=8000 -p 8000:8000 genco-workbench
 #
+# Verified build (2026-10-11, Apple Silicon, Docker Desktop 29.7.2, built natively for linux/arm64):
+#   docker build --platform linux/arm64 -t genco-workbench:dev .
+#   docker run --rm -p 7860:7860 genco-workbench:dev
+#   Build time 50 min 28 s with a cold pip cache, of which 44 min were wheel downloads through Docker
+#   Desktop's proxy (torch step 797 s, requirements.lock.txt 1837 s); torch-scatter compiled from its
+#   sdist in 95 s, the Julia environment resolved and precompiled in 193 s, warm-up solve 20 s.
+#   Image: 4.81 GB on disk, 1.07 GB compressed (docker images). The server answers ~16 s after start.
+#   Smoke test: GET / -> 200 (4276 B html), GET /api/grid -> 200 (118 buses, 186 branches, staged band),
+#   POST /api/solve {"load_scale":1.1,"outages":[31,103],"alpha":0.01} -> 200, ok=true, stage 3,
+#   verdict "overloaded" decided by the AC check, timing_ms {ac: 2.9, dc: 1.3, genco: 89}.
+#
 # What is baked in at build time, so the container starts without any network access:
 #
 # * GENCO checkpoint (IEEE 118, Base, seed 0; 80 MB): DOWNLOADED from the Hugging Face model repo
@@ -35,6 +46,9 @@
 # * Python: requirements.lock.txt, with torch / torchvision / torchaudio taken from the PyTorch CPU
 #   wheel index (no CUDA libraries) and torch-scatter compiled from its sdist against that torch
 #   (PyPI has no wheels for it), which is why there is a builder stage with a compiler.
+#   (data.pyg.org/whl/torch-2.13.0+cpu lists only pyg_lib, no torch_scatter, so the sdist build stays.)
+# * gridtrust/src/gridtrust: imported by analysis_conformal.py, which engine.conformal_band() only
+#   loads when the band JSON is missing; copied so that path works too.
 #
 # The final build step starts the engine once and solves one state: the image fails to build
 # rather than fail to start. Platforms: linux/amd64 and linux/arm64 (all pinned wheels exist for
@@ -50,13 +64,21 @@ FROM julia:${JULIA_VERSION}-trixie AS julia
 # ---------------------------------------------------------------- Python environment
 FROM python:${PYTHON_VERSION}-slim-trixie AS builder
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends build-essential \
+# apt over https with retries: plain-http connections to deb.debian.org failed intermittently from
+# BuildKit's build network on Docker Desktop (both stages, two builds in a row).
+RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|' /etc/apt/sources.list.d/debian.sources \
+    && apt-get -o Acquire::Retries=5 update \
+    && apt-get -o Acquire::Retries=5 install -y --no-install-recommends build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+# pip's download cache lives in a BuildKit cache mount (not in the image), so a build retried after a
+# flaky download picks up where it left off. Retries/timeout: downloads through Docker Desktop's proxy
+# stalled and once arrived corrupt (hash mismatch).
 ENV VIRTUAL_ENV=/home/user/venv \
     PATH=/home/user/venv/bin:$PATH \
-    PIP_NO_CACHE_DIR=1 \
+    PIP_CACHE_DIR=/root/.cache/pip \
+    PIP_RETRIES=10 \
+    PIP_TIMEOUT=120 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 RUN python -m venv $VIRTUAL_ENV
 
@@ -64,11 +86,15 @@ COPY requirements.lock.txt /tmp/requirements.lock.txt
 # 1. CPU-only torch (the "+cpu" builds satisfy the "==" pins of the lock file)
 # 2. torch-scatter from source: its setup.py imports torch, so no build isolation
 # 3. everything else, torch and torch-scatter being already satisfied
-RUN pip install --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple \
-        -c /tmp/requirements.lock.txt torch==2.13.0 torchvision==0.28.0 torchaudio==2.11.0 \
-    && pip install -c /tmp/requirements.lock.txt setuptools wheel \
-    && FORCE_ONLY_CPU=1 pip install --no-build-isolation --no-deps torch-scatter==2.1.2 \
-    && pip install -r /tmp/requirements.lock.txt \
+# (three RUN steps so that a failure in a later one keeps the earlier layers)
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    pip install --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple \
+        -c /tmp/requirements.lock.txt torch==2.13.0 torchvision==0.28.0 torchaudio==2.11.0
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    pip install -c /tmp/requirements.lock.txt setuptools wheel \
+    && FORCE_ONLY_CPU=1 pip install --no-build-isolation --no-deps torch-scatter==2.1.2
+RUN --mount=type=cache,target=/root/.cache/pip,sharing=locked \
+    pip install -r /tmp/requirements.lock.txt \
     && python -c "import torch, torch_scatter; assert not torch.cuda.is_available(); print(torch.__version__, torch_scatter.__version__)" \
     && find $VIRTUAL_ENV -name __pycache__ -prune -exec rm -rf {} +
 
@@ -76,8 +102,9 @@ RUN pip install --index-url https://download.pytorch.org/whl/cpu --extra-index-u
 FROM python:${PYTHON_VERSION}-slim-trixie
 
 # libgomp: OpenMP runtime the compiled torch-scatter extension may link against
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends libgomp1 ca-certificates \
+RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|' /etc/apt/sources.list.d/debian.sources \
+    && apt-get -o Acquire::Retries=5 update \
+    && apt-get -o Acquire::Retries=5 install -y --no-install-recommends libgomp1 ca-certificates \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --uid 1000 user
 
@@ -130,6 +157,8 @@ COPY --chown=user:user LICENSE engine.py ./
 COPY --chown=user:user workbench/server.py workbench/
 COPY --chown=user:user workbench/web/ workbench/web/
 COPY --chown=user:user analysis/analysis_warmstart.py analysis/analysis_conformal.py analysis/
+# analysis_conformal.py imports gridtrust from ../gridtrust/src; only reached when the band JSON below is absent.
+COPY --chown=user:user gridtrust/src/gridtrust gridtrust/src/gridtrust
 COPY --chown=user:user work/workbench_conformal_case118_ieee_base.json work/
 
 # Smoke test: Julia, the checkpoint, AC-OPF, AC/DC power flow, GENCO and the staged check, offline settings on.

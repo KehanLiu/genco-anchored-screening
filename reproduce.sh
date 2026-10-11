@@ -14,9 +14,13 @@
 #                               git). Only the long stages above produce them; no results archive is available yet.
 #                               On a clean checkout without RUN_LONG=1 these two stages fail.
 #
-# Replay status: the default path was last replayed in a fresh copy of the repository in round 2 (2026-10-03). Later
-# additions were syntax- and import-checked in a simulated clean checkout on 2026-10-11 (74 files compile, 49 tests
-# pass, 15 skip for missing data); no full clean replay of the current script has been done.
+# Replay status: replayed from a fresh clone of commit 4c2987b on 2026-10-11 (macOS 27.0.1, Apple silicon, uv 0.12.7,
+# Python 3.12.14). setup, fetch (53 manifest entries ok, Texas case absent), checksums and tests (49 pass / 15 skip
+# with the fetched inputs only; 54 / 10 with the saved tables) ran unchanged; analysis (985 s) and figures (12 s) ran
+# to completion once the saved result tables AND the GOC 2000 test pool work/goc2000/data/case2000_goc/raw/ (read by
+# analysis_full_n1.py report) were present, with all 17 figures byte-identical to the committed ones. The first
+# `import engine` inside analysis installs Julia 1.13.1 through juliacall (200 MB download, about 5 min); if that
+# download fails, re-run the stage. analysis_embedding.py's tables are not bit-reproducible (unseeded PCA solver).
 #
 # Single stages:
 #   ./reproduce.sh setup      Python 3.12 environment via uv (Julia is installed by juliacall on first use)
