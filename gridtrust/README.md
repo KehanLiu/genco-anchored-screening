@@ -16,6 +16,8 @@ against that entry's analysis scripts and stored results when they are present.
 
 ## Install
 
+Python >= 3.10.
+
     pip install -e gridtrust            # from the repository root
     pip install -e "gridtrust[test]" && pytest gridtrust
 
@@ -40,7 +42,7 @@ cal_pred, cal_ac = np.random.default_rng(0).uniform(0.9, 1.1, (2, 500))
 width = calibrate(cal_pred, cal_ac, limit=1.0, alpha=0.05)
 
 # 4. staged decision; the Newton step only runs if a line is inside the band
-d = decide(predicted, width, refine=lambda: prob.refine(vm, va, steps=1), limit=1.0)
+d = decide(predicted, width, refine=lambda: prob.refine(vm, va, steps=1), limit=1.0, rated=prob.rated)
 print(d.stage, d.reason, d.needs_ac, d.mismatch_mw)
 ```
 
@@ -49,9 +51,10 @@ print(d.stage, d.reason, d.needs_ac, d.mismatch_mw)
 ## Notes
 
 - Units: per unit on `base_mva`, angles in radians, loadings as a share of the rating. `from_matpower` takes MATPOWER tables (MW, degrees).
-- The Newton solver has no step control and no generator Q limits. That is deliberate: it measures how good a start is. `solve()` reports `converged=False` instead of raising.
+- The Newton solver has no step control and no generator Q limits. That is deliberate: it measures how good a start is. `solve()` returns a dict; its key `"converged"` is `False` instead of raising.
 - `refine` uses the true network model, so its output is "surrogate plus physics". Trust it only when `result.selfcheck(threshold_mw)` holds; the threshold is yours to set from data (the entry uses 1 MW on IEEE 118).
 - The conformal guarantee is marginal: on average over calibration and test draws at most a share alpha of real overloads is not flagged, provided calibration and test states are exchangeable. It does not hold per state, and it breaks under distribution shift (e.g. calibrated on N-1/N-2, used on N-4). `calibrate` returns `inf` (everything goes to AC) when fewer than `1/alpha - 1` real overloads are available.
 - Split calibration and test by whole groups (e.g. outage sets), not by line reading.
+- Pass `rated=prob.rated` to `decide` wherever the branch metadata is available. Strict non-finite protection requires the explicit mask: without it, a NaN or infinite prediction next to finite ones is taken to mark an unrated line rather than a failed prediction on a rated one, and such a state can be accepted as secure; `decide` then warns once per process. Stage 1 only flags rated lines when the mask is given.
 
 MIT licence.

@@ -1,0 +1,61 @@
+[config] Converted v0 config -> v1 in memory (file on disk unchanged).
+Seed set to 0
+init weights work/goc500/pf_case500_goc_tiny/model/best_model_state_dict.pt; normalizer {'case500_goc': {'baseMVA_orig': tensor(100.), 'baseMVA': tensor(143.3860), 'vn_kv_max': tensor(345.)}}; resume from nothing
+GPU available: True (mps), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+`Trainer(limit_val_batches=1.0)` was configured so 100% of the batches will be used..
+Loaded normalizer stats from work/goc500/pf_case500_goc_tiny/model/normalizer_stats.pt
+./.venv/lib/python3.12/site-packages/gridfm_graphkit/datasets/hetero_powergrid_datamodule.py:235: UserWarning: Requested number of scenarios (250000) exceeds dataset size (14960). Using the full dataset instead.
+  warnings.warn(
+./.venv/lib/python3.12/site-packages/gridfm_graphkit/datasets/hetero_powergrid_datamodule.py:245: UserWarning: `data.scenarios` is ignored when `split_from_existing_files` is set; train/val/test scenario ids are loaded from the provided split files.
+  warnings.warn(
+split='train' len(split_indices)=8969
+split='val' len(split_indices)=995
+split='test' len(split_indices)=995
+Restoring normalizer for case500_goc from saved stats
+
+  | Name    | Type              | Params | Mode  | FLOPs
+--------------------------------------------------------------
+0 | model   | GNS_heterogeneous | 1.3 M  | train | 0    
+1 | loss_fn | MixedLoss         | 0      | train | 0    
+--------------------------------------------------------------
+1.3 M     Trainable params
+0         Non-trainable params
+1.3 M     Total params
+5.106     Total estimated model params size (MB)
+353       Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+creating train dataloader for rank  not distributed
+./.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:434: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=17` in the `DataLoader` to improve performance.
+./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:434: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=17` in the `DataLoader` to improve performance.
+./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:378: You have overridden `transfer_batch_to_device` in `LightningModule` but have passed in a `LightningDataModule`. It will use the implementation from `LightningModule` instance.
+./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:378: You have overridden `on_after_batch_transfer` in `LightningModule` but have passed in a `LightningDataModule`. It will use the implementation from `LightningModule` instance.
+Traceback (most recent call last):
+  File "./work/finetune/train.py", line 149, in <module>
+    main()
+  File "./work/finetune/train.py", line 140, in main
+    trainer.fit(model=model, datamodule=dm, ckpt_path=str(ckpt) if ckpt.exists() else None)
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 584, in fit
+    call._call_and_handle_interrupt(
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/call.py", line 49, in _call_and_handle_interrupt
+    return trainer_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 630, in _fit_impl
+    self._run(model, ckpt_path=ckpt_path, weights_only=weights_only)
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1079, in _run
+    results = self._run_stage()
+              ^^^^^^^^^^^^^^^^^
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/trainer.py", line 1123, in _run_stage
+    self.fit_loop.run()
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py", line 218, in run
+    self.on_advance_end()
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/loops/fit_loop.py", line 491, in on_advance_end
+    self.epoch_loop.update_lr_schedulers("epoch", update_plateau_schedulers=not self.restarting)
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 460, in update_lr_schedulers
+    self._update_learning_rates(interval=interval, update_plateau_schedulers=update_plateau_schedulers)
+  File "./.venv/lib/python3.12/site-packages/lightning/pytorch/loops/training_epoch_loop.py", line 495, in _update_learning_rates
+    raise MisconfigurationException(
+lightning.fabric.utilities.exceptions.MisconfigurationException: ReduceLROnPlateau conditioned on metric Validation loss which is not available. Available metrics are: ['Training Loss', 'Learning Rate']. Condition can be set using `monitor` key in lr scheduler dict

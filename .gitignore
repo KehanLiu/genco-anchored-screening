@@ -39,3 +39,21 @@ work/timing/*.npz
 work/**/*.npz
 work/**/ckpt/
 work/finetune/models/*/stats/*_scenario_splits.json
+# private process notes (reviews, plans, handoffs, drafts, study notes), intermediate summaries and dev-check outputs. They document how the project was run, not its results.
+reports/
+research_notes/
+work/*HANDOFF*.md
+work/handoffs/
+submission/POST_round*.md
+work/goc10000/hybrid_variants_summary.md
+work/fresh/logs/
+work/fresh/*_check_*/
+work/fresh/results_*_existing_dev.*
+work/fresh/results_n1_devcheck.*
+work/equiv/logs/
+work/*_run.out
+work/study/
+submission/POSTER.md
+# local tool session state
+.claude/
+.pytest_cache/

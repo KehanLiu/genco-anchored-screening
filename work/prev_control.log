@@ -1,0 +1,114 @@
+2026-10-04 06:25:48 === run case2000_goc: 2,494 scenarios in 16 load scenarios, 6 branches always out, 4 processes
+2026-10-04 06:25:55   worker 0: 20 scenarios done, 4 intact-grid solves
+2026-10-04 06:25:55 case2000_goc: 80 scenarios, 290,417 line readings, wall 7 s
+2026-10-04 06:25:55   intact-grid solves: 16 base states (16 Newton runs incl. retries) for 80 contingencies = 5.00 contingencies per base state; load scenarios with more than one distinct base state: 0 of 16; failed base states: 0 (0 scenarios); intact Newton iterations mean 3.31 max 6
+2026-10-04 06:25:55   checks: admittance formula vs stored (in-service branches) max 0.0e+00; own DC vs stored DC loading max 2.4e-11 points; prev start converged 80/80, max |V - V_ac stored| 3.2e-09 (0 > 1e-5)
+2026-10-04 06:26:03 === report case2000_goc: 80 scenarios, 290,417 line readings (prev file 290,417, GENCO file 9,053,733); max |ac - ac of GENCO file| 0.0e+00
+2026-10-04 06:26:03   4 of 80 scenarios have a real overload (5.0%); 5 overloaded line readings; base states 16 -> 5.00 contingencies per intact-grid AC solve; failed base states 0
+2026-10-04 06:26:03   Newton to convergence from pre-outage start: converged 80/80, iterations mean 3.08 median 3 max 4; from GENCO: converged 2,494/2,494, mean 3.20 median 3 max 5
+2026-10-04 06:26:03   bus mismatch MW max-norm, median / p99 / max: prev start 57.2 / 458 / 619, prev+1 0.548 / 20 / 30.6, prev+2 0.000126 / 0.21 / 0.377; GENCO start 246 / 536 / 803, GENCO+1 10.8 / 63.8 / 763, GENCO+2 0.0137 / 0.657 / 123
+2026-10-04 06:26:03   predictor   err median      p99      max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:26:03   genco           0.5905   11.662    57.80       0    20.0%          17.1%      1/4            1/5        20.00%  100.3%
+2026-10-04 06:26:03   genco1          0.0058    0.353     2.62       0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:26:03   genco2          0.0000    0.001     0.01       0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:26:03   prev0           0.0011    2.662   121.42       0     0.0%           0.0%      4/4            5/5       100.00%  143.0%
+2026-10-04 06:26:03   prev1           0.0001    0.067    10.95       0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:26:03   prev2           0.0000    0.000     0.18       0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:26:03   anch_genco      0.0020    1.212    44.26       0     3.8%           1.3%      2/4            2/5        40.00%  105.0%
+2026-10-04 06:26:03   anch_dc         0.0006    0.613    25.36       0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:26:03   dc              1.5907   25.281    57.97       0    48.8%          46.1%      0/4            0/5         0.00%        
+2026-10-04 06:26:03   dc1             3.0047   76.635   500.53       0   100.0%         100.0%      0/4            0/5         0.00%        
+2026-10-04 06:26:03 saved ./work/prev_control_summary_test.csv
+2026-10-04 06:26:03 NOTE: lines above are a 16-load-scenario smoke test (tag _test, files removed); full runs follow.
+2026-10-04 06:26:03 === run case2000_goc: 2,494 scenarios in 500 load scenarios, 6 branches always out, 4 processes
+2026-10-04 06:26:18   worker 0: 210 scenarios done, 42 intact-grid solves
+2026-10-04 06:26:26   worker 0: 419 scenarios done, 84 intact-grid solves
+2026-10-04 06:26:34   worker 0: 623 scenarios done, 125 intact-grid solves
+2026-10-04 06:26:36 case2000_goc: 2,494 scenarios, 9,053,733 line readings, wall 32 s
+2026-10-04 06:26:36   intact-grid solves: 500 base states (508 Newton runs incl. retries) for 2,494 contingencies = 4.99 contingencies per base state; load scenarios with more than one distinct base state: 0 of 500; failed base states: 0 (0 scenarios); intact Newton iterations mean 3.37 max 7
+2026-10-04 06:26:36   checks: admittance formula vs stored (in-service branches) max 0.0e+00; own DC vs stored DC loading max 6.5e-11 points; prev start converged 2,494/2,494, max |V - V_ac stored| 9.0e-09 (0 > 1e-5)
+2026-10-04 06:26:36 === run case10000_goc: 993 scenarios in 199 load scenarios, 0 branches always out, 4 processes
+2026-10-04 06:27:23   worker 0: 250 scenarios done, 50 intact-grid solves
+2026-10-04 06:27:27 case10000_goc: 993 scenarios, 13,098,314 line readings, wall 51 s
+2026-10-04 06:27:27   intact-grid solves: 199 base states (207 Newton runs incl. retries) for 993 contingencies = 4.99 contingencies per base state; load scenarios with more than one distinct base state: 0 of 199; failed base states: 0 (0 scenarios); intact Newton iterations mean 3.68 max 9
+2026-10-04 06:27:27   checks: admittance formula vs stored (in-service branches) max 0.0e+00; own DC vs stored DC loading max 6.5e-10 points; prev start converged 992/993, max |V - V_ac stored| 3.2e-09 (0 > 1e-5)
+2026-10-04 06:27:28 === run case500_goc: 14,992 scenarios in 3,000 load scenarios, 5 branches always out, 4 processes
+2026-10-04 06:27:38   worker 0: 210 scenarios done, 42 intact-grid solves
+2026-10-04 06:27:42   worker 0: 420 scenarios done, 84 intact-grid solves
+2026-10-04 06:27:45   worker 0: 630 scenarios done, 126 intact-grid solves
+2026-10-04 06:27:48   worker 0: 839 scenarios done, 168 intact-grid solves
+2026-10-04 06:27:52   worker 0: 1048 scenarios done, 210 intact-grid solves
+2026-10-04 06:27:55   worker 0: 1258 scenarios done, 252 intact-grid solves
+2026-10-04 06:27:58   worker 0: 1468 scenarios done, 294 intact-grid solves
+2026-10-04 06:28:02   worker 0: 1678 scenarios done, 336 intact-grid solves
+2026-10-04 06:28:05   worker 0: 1888 scenarios done, 378 intact-grid solves
+2026-10-04 06:28:09   worker 0: 2098 scenarios done, 420 intact-grid solves
+2026-10-04 06:28:12   worker 0: 2308 scenarios done, 462 intact-grid solves
+2026-10-04 06:28:15   worker 0: 2518 scenarios done, 504 intact-grid solves
+2026-10-04 06:28:19   worker 0: 2723 scenarios done, 545 intact-grid solves
+2026-10-04 06:28:22   worker 0: 2928 scenarios done, 586 intact-grid solves
+2026-10-04 06:28:25   worker 0: 3133 scenarios done, 627 intact-grid solves
+2026-10-04 06:28:28   worker 0: 3338 scenarios done, 668 intact-grid solves
+2026-10-04 06:28:31   worker 0: 3543 scenarios done, 709 intact-grid solves
+2026-10-04 06:28:35   worker 0: 3748 scenarios done, 750 intact-grid solves
+2026-10-04 06:28:37 case500_goc: 14,992 scenarios, 10,875,975 line readings, wall 69 s
+2026-10-04 06:28:37   intact-grid solves: 3,000 base states (3,034 Newton runs incl. retries) for 14,992 contingencies = 5.00 contingencies per base state; load scenarios with more than one distinct base state: 0 of 3000; failed base states: 0 (0 scenarios); intact Newton iterations mean 3.59 max 9
+2026-10-04 06:28:37   checks: admittance formula vs stored (in-service branches) max 0.0e+00; own DC vs stored DC loading max 2.7e-11 points; prev start converged 14,992/14,992, max |V - V_ac stored| 2.3e-08 (0 > 1e-5)
+2026-10-04 06:28:38 === report case500_goc: 14,992 scenarios, 10,875,975 line readings (prev file 10,875,975, GENCO file 10,875,975); max |ac - ac of GENCO file| 0.0e+00
+2026-10-04 06:28:38   1,876 of 14,992 scenarios have a real overload (12.5%); 2,621 overloaded line readings; base states 3,000 -> 5.00 contingencies per intact-grid AC solve; failed base states 0
+2026-10-04 06:28:38   Newton to convergence from pre-outage start: converged 14,992/14,992, iterations mean 3.24 median 3 max 7; from GENCO: converged 14,992/14,992, mean 3.01 median 3 max 7
+2026-10-04 06:28:38   bus mismatch MW max-norm, median / p99 / max: prev start 118 / 522 / 859, prev+1 1.88 / 34 / 119, prev+2 0.0028 / 1.14 / 5.33; GENCO start 435 / 807 / 1.47e+03, GENCO+1 3.65 / 17.7 / 50.6, GENCO+2 0.000304 / 0.0113 / 2.36
+2026-10-04 06:28:38   predictor   err median      p99      max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:28:38   genco           0.3253    6.497   134.11       0    25.0%          16.4%    278/1876       294/2621     11.22%  139.6%
+2026-10-04 06:28:38   genco1          0.0011    0.059    22.78       0    12.5%           0.1%      9/1876         9/2621      0.34%  100.6%
+2026-10-04 06:28:39   genco2          0.0000    0.000     8.83       0    12.5%           0.0%      0/1876         0/2621      0.00%        
+2026-10-04 06:28:39   prev0           0.0203   11.108   233.46       0     0.0%           0.0%   1876/1876      2621/2621    100.00%  307.6%
+2026-10-04 06:28:39   prev1           0.0013    0.312    66.90       0    12.4%           0.2%     39/1876        41/2621      1.56%  118.3%
+2026-10-04 06:28:39   prev2           0.0000    0.004    16.02       0    12.5%           0.0%      1/1876         1/2621      0.04%  100.3%
+2026-10-04 06:28:39   anch_genco      0.0499    2.663   136.22       0    14.4%           4.7%    325/1876       356/2621     13.58%  139.6%
+2026-10-04 06:28:39   anch_dc         0.0063    2.034   144.30       0    11.4%           0.7%    261/1876       289/2621     11.03%  229.9%
+2026-10-04 06:28:40   dc              1.0427   22.701   206.78       0    21.6%          14.2%    498/1876       578/2621     22.05%  229.9%
+2026-10-04 06:28:40   dc1             2.4994   47.303   359.77       0    88.1%          86.7%     42/1876        50/2621      1.91%  126.2%
+2026-10-04 06:28:40 === report case2000_goc: 2,494 scenarios, 9,053,733 line readings (prev file 9,053,733, GENCO file 9,053,733); max |ac - ac of GENCO file| 0.0e+00
+2026-10-04 06:28:40   152 of 2,494 scenarios have a real overload (6.1%); 369 overloaded line readings; base states 500 -> 4.99 contingencies per intact-grid AC solve; failed base states 0
+2026-10-04 06:28:40   Newton to convergence from pre-outage start: converged 2,494/2,494, iterations mean 3.09 median 3 max 6; from GENCO: converged 2,494/2,494, mean 3.20 median 3 max 5
+2026-10-04 06:28:40   bus mismatch MW max-norm, median / p99 / max: prev start 71.6 / 781 / 1.78e+03, prev+1 0.662 / 40.5 / 1.82e+03, prev+2 0.000315 / 1.07 / 408; GENCO start 246 / 536 / 803, GENCO+1 10.8 / 63.8 / 763, GENCO+2 0.0137 / 0.657 / 123
+2026-10-04 06:28:40   predictor   err median      p99      max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:28:40   genco           0.6571   11.715   286.23       0    16.6%          13.9%     63/152        111/369      30.08%  286.8%
+2026-10-04 06:28:41   genco1          0.0059    0.360   211.89       0     6.6%           0.6%      1/152          1/369       0.27%  100.2%
+2026-10-04 06:28:41   genco2          0.0000    0.002    31.27       0     6.1%           0.0%      0/152          0/369       0.00%        
+2026-10-04 06:28:41   prev0           0.0014    3.101   522.88       0     0.0%           0.0%    152/152        369/369     100.00%  547.3%
+2026-10-04 06:28:41   prev1           0.0002    0.091   426.29       0     6.1%           0.0%      2/152          2/369       0.54%  100.2%
+2026-10-04 06:28:41   prev2           0.0000    0.001    92.99       0     6.1%           0.0%      0/152          0/369       0.00%        
+2026-10-04 06:28:41   anch_genco      0.0024    1.404   285.76       0     5.5%           1.5%     49/152         99/369      26.83%  286.8%
+2026-10-04 06:28:41   anch_dc         0.0007    0.740   325.88       0     5.7%           0.5%     20/152         54/369      14.63%  400.5%
+2026-10-04 06:28:42   dc              1.7422   25.843   336.94       0    56.8%          54.7%     18/152         27/369       7.32%  400.5%
+2026-10-04 06:28:42   dc1             4.2174  119.422  1041.71       0   100.0%         100.0%      0/152          0/369       0.00%        
+2026-10-04 06:28:42 === report case10000_goc: 993 scenarios, 13,098,314 line readings (prev file 13,098,314, GENCO file 13,098,314); max |ac - ac of GENCO file| 0.0e+00
+2026-10-04 06:28:43   295 of 993 scenarios have a real overload (29.7%); 507 overloaded line readings; base states 199 -> 4.99 contingencies per intact-grid AC solve; failed base states 0
+2026-10-04 06:28:43   Newton to convergence from pre-outage start: converged 992/993, iterations mean 3.13 median 3 max 9; from GENCO: converged 993/993, mean 3.22 median 3 max 6
+2026-10-04 06:28:43   bus mismatch MW max-norm, median / p99 / max: prev start 79.2 / 734 / 1.51e+03, prev+1 1.08 / 53.4 / 1.31e+03, prev+2 0.000788 / 1.94 / 7.07e+05; GENCO start 256 / 588 / 4.69e+03, GENCO+1 12.8 / 68 / 473, GENCO+2 0.0506 / 2.51 / 105
+2026-10-04 06:28:43   predictor   err median      p99      max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:28:43   genco           0.5406    9.302  1031.67       0    98.5%          98.7%      6/295         10/507       1.97%  109.7%
+2026-10-04 06:28:43   genco1          0.0078    0.250   412.02       0    55.0%          37.0%      7/295          7/507       1.38%  100.7%
+2026-10-04 06:28:43   genco2          0.0000    0.001    44.83       0    29.8%           0.1%      0/295          0/507       0.00%        
+2026-10-04 06:28:43   prev0           0.0002    0.811   713.45       0     0.0%           0.0%    295/295        507/507     100.00%  797.4%
+2026-10-04 06:28:44   prev1           0.0000    0.034   591.55       0    29.7%           0.3%      2/295          2/507       0.39%  100.4%
+2026-10-04 06:28:44   prev2           0.0000    0.000 244202.08       0    29.7%           0.0%      0/295          0/507       0.00%        
+2026-10-04 06:28:44   anch_genco      0.0003    0.999  1029.14       0    23.7%          12.3%    146/295        221/507      43.59%  188.3%
+2026-10-04 06:28:44   anch_dc         0.0001    0.220   105.86       0    31.4%           4.2%     12/295         14/507       2.76%  122.1%
+2026-10-04 06:28:45   dc              0.9815   22.635   175.34       0   100.0%         100.0%      0/295          0/507       0.00%        
+2026-10-04 06:28:45   dc1            18.5015  487.755 11705.99       0   100.0%         100.0%      0/295          0/507       0.00%        
+2026-10-04 06:28:45 saved ./work/prev_control_summary.csv
+2026-10-10 15:17:52 === run case2000_goc: 2,496 scenarios in 500 load scenarios, 6 branches always out, 4 processes; data work/fresh/data2000/case2000_goc/raw, outputs *_prev_tiny_seed0_fresh.parquet
+2026-10-10 15:18:05   worker 0: 210 scenarios done, 42 intact-grid solves
+2026-10-10 15:18:13   worker 0: 420 scenarios done, 84 intact-grid solves
+2026-10-10 15:18:20   worker 0: 625 scenarios done, 125 intact-grid solves
+2026-10-10 15:18:21 case2000_goc: 2,496 scenarios, 9,061,072 line readings, wall 29 s
+2026-10-10 15:18:21   intact-grid solves: 500 base states (506 Newton runs incl. retries) for 2,496 contingencies = 4.99 contingencies per base state; load scenarios with more than one distinct base state: 0 of 500; failed base states: 0 (0 scenarios); intact Newton iterations mean 3.44 max 7
+2026-10-10 15:18:21   checks: admittance formula vs stored (in-service branches) max 0.0e+00; own DC vs stored DC loading max 1.2e-10 points; prev start converged 2,496/2,496, max |V - V_ac stored| 5.1e-09 (0 > 1e-5)
+2026-10-10 16:02:28 === run case10000_goc: 999 scenarios in 200 load scenarios, 0 branches always out, 4 processes; data work/fresh/data10000/case10000_goc/raw, outputs *_prev_tiny_seed0_fresh.parquet
+2026-10-10 16:03:11   worker 0: 250 scenarios done, 50 intact-grid solves
+2026-10-10 16:03:13 case10000_goc: 999 scenarios, 13,177,408 line readings, wall 45 s
+2026-10-10 16:03:13   intact-grid solves: 200 base states (213 Newton runs incl. retries) for 999 contingencies = 5.00 contingencies per base state; load scenarios with more than one distinct base state: 0 of 200; failed base states: 0 (0 scenarios); intact Newton iterations mean 3.53 max 7
+2026-10-10 16:03:13   checks: admittance formula vs stored (in-service branches) max 0.0e+00; own DC vs stored DC loading max 6.8e-10 points; prev start converged 999/999, max |V - V_ac stored| 3.3e-09 (0 > 1e-5)

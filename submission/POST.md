@@ -1,42 +1,54 @@
-# Let GENCO predict the change, not the state: one-step contingency screening, tested until it breaks
+# Let GENCO predict the change, not the state: contingency screening with the anchored change start and one Newton step
 
-**In one sentence:** start Newton from the operator's pre-outage AC solution plus GENCO's predicted voltage *change*, take one step, and the screen misses 2 of 6,986 overloaded lines on IEEE 118, 5 of 2,621 on GOC 500 and 0 of 369 on GOC 2000, where the classic one-step screen from the pre-outage solution alone misses 74, 41 and 2; it stops helping at 10,000 buses, fine-tuning does not change that, and on a laptop it does not pay in wall-clock time.
-
-This entry starts from the organisers' example ([discussion #1](https://huggingface.co/spaces/gridfm/genco-challenge/discussions/1)), reproduces it, and then asks what it would take to act on GENCO's verdict without checking most states. The answer changed twice as we added the baselines a practitioner would ask for. We report all of it, including the parts where GENCO loses.
+**In one sentence:** start Newton from the operator's pre-outage AC solution plus GENCO's predicted voltage *change*, take one step, and the screen misses 2, 5 and 0 overloaded lines on IEEE 118, GOC 500 and GOC 2000 (of 6,986, 2,621 and 369) where the classic one-step screen misses 74, 41 and 2, at 0.0% of secure scenarios flagged. It saves Newton iterations and AC solves, not seconds, and it stops helping at 10,000 buses.
 
 ![Which start makes one Newton step enough?](figures/starts.png)
 
-## The idea, and how we got there
+## In one table
+
+Scored against the full AC solution, released checkpoints. "Classic" is one Newton step from the pre-outage solution; "anchored" is one step from the anchored change start.
+
+| Setting | Classic | Anchored | Verdict |
+|---|---|---|---|
+| GOC 500: overloaded lines missed after one step | 41 of 2,621 | **5 of 2,621** | Anchored finds more |
+| GOC 2000 N-1: sent to AC / critical outages missed | 29.6% / 5 of 1,451 | **2.7%** / 14 of 1,451 | Far fewer AC calls, not at equal safety |
+| GOC 2000 N-1: estimated seconds per 1,000 outages | **6.5** | 19.4 | No wall-clock gain |
+| GOC 10000 (Small): lines missed / secure scenarios flagged | **2 / 0.3%** | 2 / 2.1% | Ties on misses, 7 times the false flags: stops helping |
+| Fresh pool, 76,512 outages, frozen policies: sent to AC / critical missed; measured ms per outage on a 4,800-outage sample | 27.94% / 2 of 1,510; 8.4 | **2.17%** / 1 of 1,510; 22.3 | Confirms the referral cut, not a speed gain |
+
+## The idea
+
+This entry starts from the organisers' example ([discussion #1](https://huggingface.co/spaces/gridfm/genco-challenge/discussions/1)): GENCO Tiny screens GOC 500 under up to five branch outages, against a DC baseline. We reproduce it (93.9% recall at 32.7% of scenarios flagged; the example reports 94.3% and 32.7%) and add the pre-outage baseline, one Newton step as the check, four grid sizes, a full N-1 study with costs, reactive limits, fine-tuning and every released checkpoint at 10,000 buses. The organisers described this workflow before we built it: a "safeguarded hybrid workflow" with "re-evaluation with a classical AC solver" (GENCO paper, [section 6](https://arxiv.org/abs/2608.09921)), conformal abstention (example post), and "classical solvers provide authoritative solutions for those few cases" ([IBM Research blog](https://research.ibm.com/blog/gridfm-neural-solver-power-grid)); full quotes in the appendix. We built and measured it: we keep the authoritative AC step, seed it, and count what it costs. We do not test GENCO as a fast surrogate; we use it to predict the *change* an outage causes.
 
 Contingency screening asks one question for thousands of grid states: *is any line overloaded?*
 
-1. **GENCO alone is not safe enough.** On the example's setup (GOC 500, up to five branches removed, released GENCO Tiny) we reproduce its result: 93.9% recall while flagging 32.7% of scenarios (the example reports 94.3% and 32.7%). The scenarios it lets through contain overloads up to 139.6%.
-2. **One Newton step from GENCO's voltages fixes that**: 12.5% of scenarios go to the full solver, exactly the share that really has an overload, and 9 of 2,621 overloaded lines are missed, the worst at 100.6%. From a flat start or DC angles the same step is useless (97% and 88% of scenarios flagged).
-3. **But flat and DC starts are the wrong baseline.** An operator always has the solved pre-outage state. One Newton step from *that* is classic single-iteration screening, and it does most of the job: it beats GENCO's start at 10,000 buses and ties it at 2,000.
-4. **Combine them.** The pre-outage solution is exact for the base case; GENCO knows how an outage moves voltages. Start = pre-outage AC voltages + [GENCO(after outage) − GENCO(before outage)]. GENCO's systematic bias cancels, and what remains is its estimate of the change. This start is better than either on three of four grids.
+- **GENCO alone is not safe enough.** On the example's setup it lets through overloads up to 139.6%.
+- **One Newton step from GENCO's voltages fixes that.** 9 of 2,621 overloaded lines missed on GOC 500, 12.5% of scenarios sent to the full solver, exactly the share that really has an overload. From a flat start or DC angles the same step is useless (97% and 88% flagged).
+- **But the right baseline is the pre-outage solution.** An operator always has it. One step from it is classic single-iteration screening; it ties GENCO's start at 2,000 buses and beats it at 10,000.
+- **GENCO's errors are systematic.** On Texas 2000, 97% of the errors above 3 points occur at one load level, on the same lines in every state.
+- **So subtract them.** Start = pre-outage AC voltages + [GENCO(after outage) − GENCO(before outage)]. The bias cancels; what survives is GENCO's estimate of the change. Two inferences (the pre-outage one is shared by all outages of a base case), one Newton step, no training.
 
-![Three stages](figures/workflow.png)
+![GENCO's error before and after the outage](figures/bias_cancels.png)
 
-## Results
+## Main result
 
-### 1. One Newton step from three starts
+Scenarios remove up to five branches at random (gridfm-datakit). A scenario goes to the full solver if any line loading after the step exceeds its limit.
 
-Scenarios remove up to five branches at random (gridfm-datakit). A scenario goes to the full solver if any line loading after the step exceeds its limit. Released checkpoints; fine-tuning is tested in section 6.
-
-| Grid (overloaded lines) | Pre-outage solution: missed / secure scenarios flagged | GENCO: missed / flagged | Pre-outage + GENCO's change: missed / flagged |
+| Grid (overloaded lines) | Pre-outage solution: missed / secure scenarios flagged | GENCO: missed / flagged | Anchored change start: missed / flagged |
 |---|---|---|---|
 | IEEE 118 (6,986) | 74 / 1.9% | 4 / 0.0% | **2 / 0.0%** |
 | GOC 500 (2,621) | 41 / 0.2% | 9 / 0.1% | **5 / 0.0%** |
 | GOC 2000 (369) | 2 / 0.0% | 1 / 0.6% | **0 / 0.0%** |
-| GOC 10000 (507) | **2 / 0.3%** | 7 / 37.0% | 5 / 3.2% |
 
-- The combined start begins much closer to the solution: median power mismatch 6 MW on GOC 500 and GOC 2000, against 72–118 MW for the pre-outage solution and 246–435 MW for GENCO alone. Newton then converges in 2.4–2.5 iterations instead of 3.1–3.2.
-- **At 10,000 buses it fails.** The released Tiny's raw error there is larger than the change an outage causes, so its predicted change carries little information (the sign of the loading change is right for 75% of moving lines, against 93–97% on the smaller grids). Two Newton steps from any of the three starts miss nothing.
-- Without a Newton step the combined prediction is not usable: it misses 14–44% of overloaded lines. The step is what finds the overloads; GENCO improves where it starts.
+![Where you start decides what one step finds](figures/start_step.png)
 
-### 2. A complete N-1 analysis, with costs
+- **The anchored change start begins much closer to the solution.** Median power mismatch is 6 MW on GOC 500 and GOC 2000, against 72–118 MW for the pre-outage solution and 246–435 MW for GENCO alone. Newton then converges in 2.4–2.5 iterations instead of 3.0–3.2.
+- **The mechanism is measurable.** GENCO's predicted change removes 85% of the median error of assuming no change on GOC 500 and 74% on GOC 2000 (appendix).
+- **The Newton step is essential.** Without it the anchored change alone misses 14–44% of overloaded lines. The step finds the overloads; GENCO improves where it starts.
 
-GOC 2000, 24 base cases, every non-islanding single-branch outage: 76,512 outages. Mismatch thresholds are set on 6 base cases and everything below is scored on the other 18 (57,384 outages, 1,451 of them critical).
+## What it costs and what it is worth
+
+GOC 2000, 24 base cases, every non-islanding single-branch outage: 76,512 outages. Mismatch thresholds are set on 6 base cases; the other 18 are scored (57,384 outages, 1,451 critical). Seconds are estimates from unit costs measured on this laptop: Newton iterations at 3.9 ms, GENCO inference batched on the GPU at 12.6 ms per state plus 2.5 ms to build its input graph.
 
 ![A complete N-1 analysis](figures/fulln1.png)
 
@@ -44,100 +56,139 @@ GOC 2000, 24 base cases, every non-islanding single-branch outage: 76,512 outage
 |---|---|---|---|---|
 | Full AC for every outage | 100% | 0 | 100% | 11.5 |
 | One step from the pre-outage solution (classic) | 29.6% | 5 of 1,451 | 57% | **6.5** |
-| GENCO alone | 6.6% | 780 (54%) | 7% | 13.5 |
-| One step from GENCO | 45.4% | 1 | 76% | 21.4 |
-| One step from pre-outage + GENCO's change | **2.7%** | 14 (13 of them ≤ 100.14%) | **37%** | 16.9 |
+| GENCO alone | 6.6% | 780 (54%) | 7% | 15.9 |
+| One step from GENCO | 45.4% | 1 | 76% | 23.8 |
+| One step from the anchored change start | **2.7%** | 14 (13 of them ≤ 100.14%) | **37%** | 19.4 |
 | DC sensitivities on the AC base case | 2.1% | 303 (21%) | 3% | 2.3 |
 
-- **The combined start needs the fewest Newton iterations** among workflows that miss under 1.5% of critical outages, and after one step its loading error is the smallest (99th percentile 0.006 points, against 0.032 from the pre-outage solution).
-- **It is not faster.** On this laptop one GENCO inference (12.6 ms batched on the GPU) costs as much as three Newton iterations (3.9 ms each). The classic screen wins on time; the combined workflow is slower than solving every outage outright. By these unit costs inference would have to fall to about 2 ms per state to break even.
-- Neither GENCO alone nor DC sensitivities alone is a usable screen: they miss 54% and 21% of critical outages.
+- **Fewest Newton iterations** among workflows that miss under 1.5% of critical outages (it misses 14, the classic screen 5). Solver-call arithmetic is in the appendix.
+- **No wall-clock gain.** One GENCO inference (12.6 ms batched on the GPU) costs as much as three Newton iterations (3.9 ms each), and building its input graph costs 2.5 ms more. The classic screen wins on time. Against the classic one-step screen the anchored start saves about 2.2 ms of Newton work per outage, less than the 2.5 ms the current graph builder costs, so with this builder even free inference would leave it slightly slower than the classic screen. Against full AC, the forward pass would need to cost about 4.8 ms or less, with the current 2.5 ms graph build added separately (7.2 ms together). These are unit-cost estimates, not measured end-to-end times, and the two screens do not miss the same outages (14 against 5 of 1,451), so the iteration saving is not a comparison at equal safety. A graph builder that reuses the static tensors across outages was not measured.
 
-### 3. Inside a production solver
+## Fresh operating points, frozen policies
 
-We fed each start to PowerModels' AC power flow (the solver gridfm-datakit uses) on 200 scenarios of GOC 2000 and 100 of GOC 10000.
+A fresh operating-point pool confirms the reduction in full-AC referrals, without a speed gain. Across the six registered bases plus an 18-base extension (76,512 outages; 1,510 critical), the anchored screen missed one critical outage versus two for the classical screen, while referring 2.17% versus 27.94% to AC. Both missed zero on the registered six. On the same 4,800-outage timing sample, both missed zero of 69 critical cases; measured throughput was about 22.3 ms per outage with GENCO on the laptop GPU in batches of 16, versus 8.4 ms for the classical screen and 13.7 ms for full AC. This is fresh operating-point confirmation on the same network and generation recipe; the lower maximum load and different stress mix limit comparison with the old miss rates. The policies (thresholds, cushions, a shrunk start and a mismatch gate) were frozen before the pool was generated; every variant is reported in the repository, none was selected on these results.
 
-| Start | GOC 2000: reaches the solution / iterations / ms | GOC 10000: reaches the solution / iterations / ms |
-|---|---|---|
-| Pre-outage solution (datakit's default) | 199 of 200 / 3.2 / 14.0 | 92 of 100 / 3.8 / 89 |
-| Flat | 20 of 200 / 7.5 / 26.1 | 0 of 100 |
-| DC angles | 46 of 200 / 6.8 / 26.0 | 0 of 100 |
-| GENCO Tiny | 200 of 200 / 4.3 / 17.9 | 100 of 100 / 4.7 / 111 |
+The same pool, scored state by state for the warm starts themselves (one Newton step, cutoff 1.001; missed critical states / secure states sent to AC). Two readings of the same files: the loading-only diagnostic (any line above the cutoff) and the complete frozen policy, which also refers a state when the post-step mismatch exceeds that start's threshold (0.5 MW for the pre-outage start, 5 MW for the anchored start, both calibrated on the old GOC 2000 N-1 study and transferred unchanged). Under the full policy both starts miss zero on GOC 2000 Tiny and GOC 10000 Tiny seed 0; the other anchored checkpoints on GOC 10000 miss 1, 1 and 4. The referral counts are not an equally tuned comparison: each start keeps its own residual threshold from the old N-1 calibration, transferred without matching safety on these multi-outage states, and a residual tolerance is not proportional to a loading tolerance, so the referral gap is not to be credited to GENCO alone.
 
-GENCO's start is as reliable as the pre-outage solution and far better than flat or DC starts, which mostly end at a different solution or none. It saves no solver time against the pre-outage start, so with inference included the chain is 2 to 4 times slower. Where no solved neighbouring state exists, GENCO gives the solver a start it can use; where one exists, it is not needed for speed.
-
-### 4. Generator reactive limits
-
-None of the above enforces generator reactive limits, and neither does GENCO's training data. With PV-to-PQ switching added to the reference solution, nearly every scenario has switched buses, yet the set of overloaded lines barely changes (GOC 500: 2,577 → 2,570).
-
-- The ranking of the three starts survives. Lines missed after one step on GOC 500: combined start 23, GENCO 28, pre-outage solution 54, of 2,570. The exact solution *without* limits misses 19, so that is the floor for any limit-blind method.
-- "Almost nothing missed" does not survive on GOC 500: the worst missed overload is 111%. Two Newton steps that include the switching logic bring it back to 5 missed, worst 100.5%.
-- **A finding we withdraw.** We had reported that GENCO finds 98.8% of voltage-limit violations on IEEE 118. Against the limit-enforced truth it finds 52–70%, and so does the exact no-limit solution. The no-limit formulation is the problem, not GENCO's fit to it. What stands, and gets stronger: 560 states violate a voltage limit while DC screening reports no overload at all.
-- No independent solver with limits was available to us, so the switching logic is validated by invariants only.
-
-### 5. A band with a stated miss rate, when no Newton step is taken
-
-For the case where only GENCO's own output is used, a conformal band decides which states to escalate: a line counts as "possibly overloaded" when the prediction is above `limit − b·σ`, with `b` calibrated on real overloads so that at most a share α is missed. Outage sweeps on IEEE 118 (2,375 states) and Texas 2000 (3,000 states); calibration and test never share an outage set.
-
-![What the guarantee costs](figures/cost.png)
-
-- **IEEE 118, α = 1%** (GENCO anchored on the base case, one band width): 31.9% of states go to AC, where 31.2% really have an overload; 1.0% of secure states are escalated needlessly; 0 of 792 held-out overloads missed (95% upper bound 0.38%). Over 100 random splits the measured miss rate is 9.9 / 5.0 / 1.9 / 1.0% for α = 10 / 5 / 2 / 1%.
-- **DC tuned the same way** escalates 81% of the secure states at α = 1% on IEEE 118.
-- **An honest tie:** on Texas 2000, at loads of 0.8 to 1.0, tuned DC does as well as GENCO (7.9% against 7.7% of states sent to AC).
-- **Where it breaks:** calibrated once and applied to shifted states, the promise holds for unseen load levels and higher reactive demand, and breaks for N-3 and N-4 outages (6.5% and 7.1% missed at α = 5%) and for reactive demand ×0.7 without anchoring (10.3%). Recalibrating on 100 states of the new distribution repairs α = 5%, not α = 1%.
-
-![Stress test](figures/stress.png)
-
-### 6. Does fine-tuning help?
-
-We fine-tuned the released Tiny checkpoints on new scenarios of the same kind (up to five branches removed), generated separately and checked to share no scenario with the test set: 8,969 scenarios for GOC 500, 2,248 for GOC 2000 and 1,347 for GOC 10000; 20,000, 6,000 and 20,000 steps at learning rate 1e-4, half an hour to two hours each on a laptop GPU. Same test scenarios as above.
-
-![Fine-tuning, before and after](figures/finetune.png)
-
-Lines missed after one Newton step (secure scenarios flagged in brackets):
-
-| Grid (overloaded lines) | Pre-outage solution | GENCO: released → fine-tuned | Pre-outage + GENCO's change: released → fine-tuned |
+| Fresh pool (states, critical) | Start | Loading-only: missed / secure referred | Full frozen policy: missed / secure referred |
 |---|---|---|---|
-| GOC 500 (2,621) | 41 (0.2%) | 9 → 10 (0.1% → 0.1%) | 5 → 5 (0.0% → 0.0%) |
-| GOC 2000 (369) | 2 (0.0%) | 1 → 1 (0.6% → 0.6%) | 0 → 0 (0.0% → 0.0%) |
-| GOC 10000 (507) | **2 (0.3%)** | 7 → 8 (37.0% → 42.1%) | 5 → 4 (3.2% → 3.2%) |
+| GOC 2000 Tiny (2,496, 140) | pre-outage | 3 / 0.0% | 0 / 54.1% |
+| GOC 2000 Tiny | anchored | **0 / 0.0%** | 0 / 0.8% |
+| GOC 10000 Tiny s0 (999, 231) | pre-outage | 0 / 1.0% | 0 / 60.6% |
+| GOC 10000 Tiny s0 | anchored | 0 / 2.5% | 0 / 8.1% |
+| GOC 10000 Tiny s1 / Small s0 / Small s1 | anchored | 2 / 2.3%, 1 / 2.3%, 4 / 1.3% | 1 / 8.6%, 1 / 7.9%, 4 / 4.7% |
 
-- **No. Fine-tuning does not rescue 10,000 buses.** The combined start still loses to the pre-outage solution alone (4 missed and 3.2% of secure scenarios flagged, against 2 and 0.3%). The validation loss moved from 0.0060 to 0.0057 and the raw error did not improve (median 0.54 → 0.56 points).
-- **Why the predicted change fails there.** On lines whose loading moves by more than one point, GENCO's predicted change removes 85% of the median error of assuming no change on GOC 500 (2.44 → 0.36 points), 74% on GOC 2000 (2.17 → 0.56) and 28% on GOC 10000 (2.22 → 1.60). Fine-tuning leaves all three where they were (0.29, 0.56 and 1.63).
-- **Where it has room, it improves the raw model and nothing after the step.** On GOC 500 the median raw error falls from 0.33 to 0.23 points, but the raw screen stays unusable (431 overloaded lines missed, 294 before) and after one Newton step nothing changes. A second seed gives 0.26 → 0.21 points and 3 lines missed from the combined start.
-- **Choosing the training scenarios does not matter either.** Adding 1,500 scenarios chosen at random, by largest mismatch after one step, or by closeness to a limit gives 9, 8 and 9 lines missed after one step from GENCO's start; training on with no new data gives 11.
-- One seed on GOC 10000, the Tiny model only, and a small training set. A larger model or far more data may behave differently; we did not test that.
+Two further frozen variants, a shrunk predicted change and a mismatch gate that picks the start with the smaller initial mismatch, lower the anchored start's false flags on GOC 10000 (to 0.4 to 0.9% loading-only) with zero to three misses depending on the checkpoint. The gains are mixed across checkpoints and have no demonstrated cost benefit, so none of them enters the headline; all are reported in the repository (`work/fresh/results_hybrid.md`).
 
-### 7. What else we learned about GENCO
+## Where it stops working
 
-- **Zero-shot transfer does not give a universal start.** The organisers' pretrained model, used without fine-tuning on IEEE 118, GOC 500, PEGASE 1354 and GOC 2000, is 2 to 9 times less accurate than DC and a worse Newton start than the pre-outage solution. Its predicted *change* still helps a little on the three smaller grids (lines missed after one step: 74 → 19, 12 → 3, 8 → 5) and hurts on GOC 2000.
-- **The embedding space does not warn of unfamiliar states.** Distance to the calibration set separates N-3 and N-4 states from the control with AUROC 0.68 and 0.79; counting the lines out gives 1.00.
-- **Ranking remedial actions.** For 1,922 redispatch actions on IEEE 118, raw GENCO ranks worse than AC base case plus DC sensitivities (Kendall τ 0.81 against 0.95); GENCO + one Newton step reproduces the AC ranking.
-- **The residual follows the dispatch, not the outage.** On Texas its rank correlation with the worst line error drops from 0.85 to 0.15 once the base case is subtracted.
-- **Errors are systematic.** On Texas, 97% of the errors above 3 points occur at one load level, on the same lines in every state. This is why predicting the change works better than predicting the state.
-- **Far out of distribution** (loads raised to 1.1–1.8 without re-dispatch) raw GENCO is worse than DC.
-
-## An operator workbench
-
-The staged workflow runs interactively on IEEE 118: pick a load level and an allowed miss rate, click lines out of service, and see which stage decided the state and why. Every verdict is checked against the AC solution on screen. English and Chinese.
-
-![Workbench](figures/workbench.gif)
+- **10,000 buses, every released checkpoint.** The bigger model helps on every diagnostic at about 2.2 times the Tiny inference, but ties the pre-outage start on missed lines while flagging 7 times more secure scenarios. No checkpoint beats the classic screen; table in the appendix.
+- **Fine-tuning does not change it.** On GOC 10000 the anchored change start goes from 5 to 4 missed at 3.2% flagged. On GOC 500 the raw error falls from 0.33 to 0.23 points, yet after one Newton step nothing changes (5 → 5).
+- **Reactive limits keep the ranking, not "almost nothing missed".** With PV-to-PQ switching in the reference solution, lines missed on GOC 500 are 23 (anchored change), 28 (GENCO) and 54 (pre-outage) of 2,570. A finding we withdraw: GENCO's 98.8% detection of voltage-limit violations on IEEE 118 becomes 52–70% against the limit-enforced truth.
 
 ## Limits of this work
 
-- **No speed claim.** On a laptop, with inference counted, every GENCO workflow is slower than the classic one-step screen. The savings we report are Newton iterations.
-- **Fine-tuning was small.** Sections 1 to 5 and 7 use released checkpoints. Section 6 fine-tunes the Tiny model for at most two hours per grid on a laptop, with one seed on the two larger grids; it shows no gain, which does not rule out a gain from a larger model or much more data.
-- The Newton step uses the true network model. Stage 2 measures GENCO plus physics.
-- GOC 500 is a near-replication of the example: its checkpoint and data are not published.
-- The larger grids use one checkpoint seed; GOC 10000 has 993 scenarios.
-- Overload means AC loading above 100.1%. The OPF dispatch parks lines at exactly 100%, so most of the remaining misses are lines between 100.1% and 100.6%.
-- Timings were taken on a laptop with a system process using one core; unit costs are indicative.
+- **No speed claim.** The savings we report are Newton iterations and AC solves.
+- **Fine-tuning was small**: at most two hours per grid on a laptop, Tiny only.
+- **The Newton step uses the true network model**: it measures GENCO plus physics.
+- **The mismatch after a step is a heuristic**, not a bound on loading error: a two-bus case in the `gridtrust` tests passes a 1 MW check with a true overload, and the 14 outages missed in the N-1 study left a median mismatch of 0.5 MW, below the 5 MW threshold. Misses are reported, never bounded.
+- **GOC 500 is a near-replication of the example**: its checkpoint and data are not published.
+- **Overload means AC loading above 100.1%**; the OPF dispatch parks lines at exactly 100%, so most remaining misses are between 100.1% and 100.6%.
+- **Timings were taken on a laptop** with a system process using one core; unit costs are indicative.
+
+A bounded robustness check of the anchored start against equivalent circuit encodings (parallel branch copies, split generators) is in the [appendix](#equivalent-circuit-representations-bounded-robustness-diagnostic): it greatly reduces GENCO's sensitivity for ordinary rewrites and fails for the extreme all-branch doubling on GOC 500.
+
+## An operator workbench
+
+The staged workflow runs interactively on IEEE 118: pick a load level and an allowed miss rate, click lines out of service, and see which stage decided the state and why, checked against the AC solution on screen. English and Chinese.
+
+![Workbench](figures/workbench.gif)
 
 ## Tools, code and data
 
-- **GENCO** checkpoints from `gridfm/genco-pf-datakit` (IEEE 118, GOC 500, GOC 2000, GOC 10000), `gridfm/genco-pf-contingency` (Texas 2000) and `gridfm/genco-pf-transfer` (pretrained model).
+- **GENCO** checkpoints from `gridfm/genco-pf-datakit` (IEEE 118, GOC 500, GOC 2000, GOC 10000 Tiny and Small), `gridfm/genco-pf-contingency` (Texas 2000) and `gridfm/genco-pf-transfer` (pretrained model).
 - **gridfm-graphkit** for the model and inference; **gridfm-datakit** for scenario generation and the AC, DC and OPF solves.
-- `gridtrust`: a small standalone package (numpy, scipy, pandas only) with the Newton refinement, the conformal band and the staged decision, 32 tests. A draft contribution to gridfm-graphkit is in `upstream/`.
-- Code, result tables and `reproduce.sh`: `<REPO_URL>` (MIT).
+- `gridtrust`: a small standalone package (numpy, scipy, pandas only) with the Newton refinement, the conformal band and the staged decision, 41 tests (with the rated-line mask passed, a non-finite prediction or loading on a rated line is never accepted as secure). A draft contribution to gridfm-graphkit is in `upstream/`.
+- Code, result tables and `reproduce.sh` (`setup`, `fetch`, `checksums`, `tests`, `analysis`, `figures`; long stages behind `RUN_LONG=1`): [github.com/KehanLiu/genco-anchored-screening](https://github.com/KehanLiu/genco-anchored-screening) (MIT).
 
-**Author:** `<NAME>`, independent. **Contact:** `<CONTACT_EMAIL>`. Entered privately; public data only.
+## What others have done
+
+One-step screening from the pre-outage solution is classical (Albuyeh, Bose and Heath, [IEEE Trans. PAS, 1982](https://doi.org/10.1109/TPAS.1982.317327); Chen and Bose's "1P-1Q", [1989](https://doi.org/10.1109/59.41683), [1990](https://doi.org/10.1109/59.65923); Stott, Alsac and Monticelli, [Proc. IEEE, 1987](https://doi.org/10.1109/PROC.1987.13931)), and gridfm-datakit seeds its post-outage power flow with the pre-outage point ([PR #67](https://github.com/gridfm/gridfm-datakit/pull/67)). Learned warm starts for Newton are an active line (Newton's Lantern, [Bose, Hilmarsson and Suri, 2026](https://arxiv.org/abs/2605.11102); Li, Pandey and Pileggi, [PSCC 2024](https://arxiv.org/abs/2304.06727); Kim et al., [October 2026](https://arxiv.org/abs/2610.05959); Rahman and Kekatos, [2026](https://arxiv.org/abs/2609.36510)), as is conformal N-k screening on GridFM (Alcántara and Chatzivasileiadis, [arXiv 2602.07995](https://arxiv.org/abs/2602.07995)); the appendix says how each differs. Ours starts from the pre-outage solution plus GENCO's predicted change, is scored by overloads missed and secure scenarios flagged, and is compared with the classical one-step screen.
+
+**Author:** Kehan Liu, independent. **Contact:** kehan_liu@outlook.com. Entered privately; public data only.
+
+## Appendix: full results
+
+### What the organisers envisioned
+
+GENCO paper, [section 6](https://arxiv.org/abs/2608.09921): "we envision a safeguarded hybrid workflow in which GENCO rapidly evaluates all scenarios, while power-balance residuals and violation checks identify critical cases for re-evaluation with a classical AC solver." Example post, [discussion #1](https://huggingface.co/spaces/gridfm/genco-challenge/discussions/1): "We plan to add conformal prediction so the classifier can quantify uncertainty and abstain when it cannot make a sufficiently reliable safety decision." [IBM Research blog](https://research.ibm.com/blog/gridfm-neural-solver-power-grid): "classical solvers provide authoritative solutions for those few cases". GENCO is presented as a fast surrogate for AC power flow; we do not test it in that role. The score is overloads missed, secure scenarios flagged and Newton iterations, never seconds: on our laptop one GENCO inference costs about three Newton iterations, and no GENCO workflow was faster than the classic screen.
+
+### Main result: the mechanism in detail
+
+The two 10,000-bus rows of the main-result table, scored as above:
+
+| Grid (overloaded lines) | Pre-outage solution: missed / secure scenarios flagged | GENCO: missed / flagged | Anchored change start: missed / flagged |
+|---|---|---|---|
+| GOC 10000 (507), Tiny | **2 / 0.3%** | 7 / 37.0% | 5 / 3.2% |
+| GOC 10000 (507), Small | **2 / 0.3%** | 6 / 28.2% | 2 / 2.1% |
+
+- **The mechanism is measurable.** On lines whose loading moves by more than one point, GENCO's predicted change removes 85% of the median error of assuming no change on GOC 500 (2.44 → 0.36 points) and 74% on GOC 2000 (2.17 → 0.56); the sign of the change is right for 93–97% of moving lines.
+- **At 10,000 buses it ties, with more false flags.** The predicted change removes only 28% (Tiny) to 35–39% (Small) of the no-change error, and no checkpoint beats the pre-outage start. Two Newton steps bring every start to 0–1 missed lines.
+
+### N-1 study: more detail
+
+- **Fewest Newton iterations** among workflows that miss under 1.5% of critical outages (it misses 14, the classic screen 5), and the smallest loading error after one step (99th percentile 0.006 points, against 0.032 from the pre-outage solution).
+- **In operator terms (derived):** 2.7% sent to AC is about one full AC solve per 37 outages; the classic screen's 29.6% is about one per 3. The [IBM Research blog](https://research.ibm.com/blog/gridfm-neural-solver-power-grid) notes that MISO "evaluates on the order of 10,000 contingencies every few minutes"; per such round that is about 270 full AC solves against about 2,960 (derived). These are solver calls, not seconds; on wall-clock time the classic screen still wins.
+- **Inside PowerModels' AC power flow** (the solver gridfm-datakit uses), GENCO's start is as reliable as the pre-outage solution (GOC 2000: 200 of 200 scenarios converge against 199; GOC 10000: 100 of 100 against 92) where flat and DC starts mostly fail (20 and 46 of 200; 0 of 100). It saves no solver time; with inference the chain is 2 to 4 times slower. Its place is where no solved neighbouring state exists.
+
+### 10,000 buses, every released checkpoint
+
+993 scenarios, 507 overloaded lines, GENCO on CPU.
+
+| Start | 1 step: missed / secure flagged | 2 steps: missed / flagged | No-change error removed | Sign agreement | GENCO ms per state |
+|---|---|---|---|---|---|
+| Pre-outage solution | **2 / 0.3%** | 0 / 0.0% | – | – | – |
+| Anchored change, Tiny seed 0 | 5 / 3.2% | 0 / 0.1% | 28% | 75.4% | 178 |
+| Anchored change, Tiny seed 1 | 3 / 2.9% | 1 / 0.0% | 31% | 77.3% | 197 |
+| Anchored change, Small seed 0 | 2 / 2.1% | 0 / 0.4% | 35% | 79.2% | 395 |
+| Anchored change, Small seed 1 | 3 / 1.1% | 0 / 0.3% | 39% | 81.4% | 402 |
+
+The bigger model helps on every diagnostic at about 2.2 times the Tiny inference, but ties the pre-outage start on missed lines while flagging 7 times more secure scenarios. Seeds agree on the verdict; one or two lines between checkpoints is seed noise.
+
+### Fine-tuning
+
+We fine-tuned the released Tiny checkpoints on new scenarios of the same kind (8,969 for GOC 500, 2,248 for GOC 2000, 1,347 for GOC 10000; half an hour to two hours each on a laptop GPU). On GOC 10000 the anchored change start goes from 5 to 4 missed at 3.2% flagged and the raw error does not improve (median 0.54 → 0.56 points). On GOC 500 the raw error falls from 0.33 to 0.23 points, yet after one Newton step nothing changes (5 → 5).
+
+![Fine-tuning, before and after](figures/finetune.png)
+
+### Reactive limits
+
+With PV-to-PQ switching in the reference solution, lines missed after one step on GOC 500 are 23 (anchored change), 28 (GENCO) and 54 (pre-outage) of 2,570; the exact no-limit solution, read with the same 100.1% cutoff, misses 19: the overloads that appear only once reactive limits bind, in states the no-limit solution calls secure. That is the gap between the two formulations, not a floor; a cutoff of 100% or 95% lowers it to 9 or 0 missed, at the price of sending 5.0% or 23.5% of secure states to AC instead of 0.2%. The worst missed overload is 111%; two Newton steps with the switching logic bring it back to 5 missed, worst 100.5%. A finding we withdraw: GENCO's 98.8% detection of voltage-limit violations on IEEE 118 becomes 52–70% against the limit-enforced truth, as does the exact no-limit solution.
+
+### Zero-shot transfer
+
+Zero-shot transfer gives no universal start. The organisers' pretrained model, without fine-tuning, is 2 to 9 times less accurate than DC on IEEE 118, GOC 500, PEGASE 1354 and GOC 2000. Its predicted change still helps a little on the three smaller grids (lines missed after one step: 74 → 19, 12 → 3, 8 → 5) and hurts on GOC 2000.
+
+### Embedding space
+
+The embedding space does not warn of unfamiliar states. Distance to the calibration set separates N-3 and N-4 states from the control with AUROC 0.68 and 0.79; counting the lines out gives 1.00.
+
+### A conformal band without a Newton step
+
+Without a Newton step, a conformal band buys a stated miss rate at a price. A line is "possibly overloaded" when GENCO's prediction exceeds `limit − b·σ`, with `b` calibrated so that the share of real overloads missed targets α. IEEE 118, α = 1%: 31.9% of states go to AC, 31.2% really have an overload, and none of the 792 held-out overloads sits in a state accepted without AC. The band targets α per overloaded line reading, with `b` set on pooled calibration readings: over 100 random splits by outage set, 9.9 / 5.0 / 1.9 / 1.0% of real overloads are not flagged themselves for α = 10 / 5 / 2 / 1% (empirical coverage at the target, not a guarantee); because any flagged line sends the whole state to AC, the share of overloads inside accepted states is lower, 4.4 / 2.0 / 0.23 / 0.05%. DC tuned the same way escalates 81% of secure states; on Texas 2000 it ties GENCO (7.9% against 7.7%). Under N-3 and N-4 outages the promise breaks (6.5% and 7.1% missed at α = 5%). Alcántara and Chatzivasileiadis ([arXiv 2602.07995](https://arxiv.org/abs/2602.07995)) screen N-k contingencies with conformal prediction on GridFM; ours adds the Newton step and the AC-call accounting.
+
+### Equivalent circuit representations (bounded robustness diagnostic)
+
+**Equivalent circuit representations.** On the two primary fresh-pool experiments, anchoring plus one Newton step greatly reduced GENCO's sensitivity to one-branch and non-slack-generator splitting. The median across states of the maximum line-loading difference was below 0.05 points of rating, and loading-only decisions agreed in 99.7–100% of states. Both rewrites passed our registered tolerances, although generator splitting on GOC 500 increased missed overloaded readings from four to six and produced rare large first-step errors. Splitting all eligible branches failed the criterion on all three GOC 500 checkpoints; the primary loading-only missed count rose from four to 65. Both GOC 2000 checkpoints passed, with missed counts zero→one and zero→zero. These are bounded robustness diagnostics before mismatch abstention, not representation invariance or a safety guarantee.
+
+Each rewrite preserves the admittance matrix (to order 1e-12, within 2e-12), injections, bus types and setpoints, and every copy of an outaged split branch is disabled together. For GOC 500 Tiny seed 0, the median across states of the largest bus-voltage drift of GENCO's raw prediction was about 26 degrees and 0.14 p.u. under all-branch doubling (maxima 52 degrees and 0.47 p.u.), which is where the one-step result also breaks (poorer initialization, large first-step errors, some runs exhausting the iteration budget or converging to a different solution). Pre-registered criterion, transformations and results: `work/equiv/SPEC.md`, `work/equiv/REPORT.md`.
+
+![Representation effects by stage](figures/equiv.png)
+
+### What others have done, in full
+
+Screening with one step from the pre-outage solution is classical: Albuyeh, Bose and Heath used "the first iteration of an AC power flow" ([IEEE Trans. PAS, 1982](https://doi.org/10.1109/TPAS.1982.317327)); Chen and Bose named the fast-decoupled form "1P-1Q" ([1989](https://doi.org/10.1109/59.41683), [1990](https://doi.org/10.1109/59.65923)); Stott, Alsac and Monticelli surveyed it ([Proc. IEEE, 1987](https://doi.org/10.1109/PROC.1987.13931)). Our pre-outage baseline is this method with a full Newton step. gridfm-datakit itself seeds the post-outage power flow with the pre-outage point when it generates data ([PR #67](https://github.com/gridfm/gridfm-datakit/pull/67)).
+
+Newton's Lantern ([Bose, Hilmarsson and Suri, 2026](https://arxiv.org/abs/2605.11102)) tunes GNN warm starts by reinforcement learning and runs Newton to convergence; no contingencies, no pre-outage baseline. Li, Pandey and Pileggi ([PSCC 2024](https://arxiv.org/abs/2304.06727)) compare a learned warm start with the pre-outage start under load-attack contingencies; absolute states, Newton to convergence. Kim et al. ([October 2026](https://arxiv.org/abs/2610.05959)) take one Newton update from calibrated or subspace-projected predictions of four models, gridfm-graphkit among them, on the 2,224-bus GB network, scored by power-balance residual. Rahman and Kekatos ([2026](https://arxiv.org/abs/2609.36510)) reuse a base-case surrogate for outages through a fixed-point iteration with compensation injections; no pre-outage anchor, no differencing, no Newton step.
+
+Ours starts from the pre-outage solution plus GENCO's predicted change, is scored by overloads missed and secure scenarios flagged, and is compared with the classical one-step screen.

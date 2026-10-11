@@ -36,5 +36,5 @@ train al_none_seed0 $M/pf_case500_goc_ft_seed0 splits_base 0 $STEPS
 evaluate al_none_seed0
 args=(released_seed0=work/goc500/lines_newton_tiny_seed0.parquet released_seed1=work/goc500/lines_newton_tiny_seed1.parquet)
 for t in ft_seed0 ft_seed1 al_none_seed0 al_random_seed0 al_mis1_seed0 al_nearlimit_seed0; do args+=($t=$R/lines_newton_500_$t.parquet); done
-$PY analysis_finetune.py --grid 500 $args > $L/summary500.log 2>&1
+$PY analysis/analysis_finetune.py --grid 500 $args > $L/summary500.log 2>&1
 date > $L/pipeline500.DONE

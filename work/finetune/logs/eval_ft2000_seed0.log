@@ -1,0 +1,23 @@
+case2000_goc: 2494 scenarios from ./work/goc2000/data/case2000_goc/raw, model ./work/finetune/models/pf_case2000_goc_ft2000_seed0, 3 procs
+23:09:33 worker 0: 0/832  it flat/dc/genco 6/6/3  dv 1.8e-12  mis genco 0/1/2 379.8/10.23/0.0140 MW
+23:09:37 worker 0: 41/832  it flat/dc/genco 6/6/3  dv 2.2e-13  mis genco 0/1/2 215.2/7.99/0.0060 MW
+23:09:42 worker 0: 82/832  it flat/dc/genco 6/6/3  dv 4.9e-12  mis genco 0/1/2 540.6/12.91/0.0053 MW
+23:09:46 worker 0: 123/832  it flat/dc/genco 6/6/4  dv 3.5e-13  mis genco 0/1/2 299.0/22.56/0.1062 MW
+23:09:51 worker 0: 164/832  it flat/dc/genco 6/6/3  dv 9.6e-11  mis genco 0/1/2 238.5/15.71/0.0442 MW
+23:09:56 worker 0: 205/832  it flat/dc/genco 7/7/3  dv 1.2e-11  mis genco 0/1/2 100.9/4.84/0.0023 MW
+23:10:00 worker 0: 246/832  it flat/dc/genco 6/6/3  dv 3.9e-10  mis genco 0/1/2 212.1/8.71/0.0178 MW
+23:10:05 worker 0: 287/832  it flat/dc/genco 7/6/3  dv 5.1e-14  mis genco 0/1/2 280.3/4.43/0.0034 MW
+23:10:10 worker 0: 328/832  it flat/dc/genco 7/7/4  dv 7.9e-11  mis genco 0/1/2 428.6/30.30/0.1465 MW
+23:10:15 worker 0: 369/832  it flat/dc/genco 6/6/3  dv 4.0e-10  mis genco 0/1/2 463.6/12.13/0.0067 MW
+23:10:21 worker 0: 410/832  it flat/dc/genco 8/7/3  dv 1.3e-10  mis genco 0/1/2 408.1/4.91/0.0031 MW
+23:10:26 worker 0: 451/832  it flat/dc/genco 8/7/3  dv 4.6e-14  mis genco 0/1/2 147.9/6.60/0.0059 MW
+23:10:33 worker 0: 492/832  it flat/dc/genco 7/6/4  dv 6.0e-14  mis genco 0/1/2 113.9/37.36/0.2646 MW
+23:10:38 worker 0: 533/832  it flat/dc/genco 8/8/3  dv 1.2e-10  mis genco 0/1/2 343.4/17.03/0.0473 MW
+23:10:44 worker 0: 574/832  it flat/dc/genco 30/9/3  dv nan  mis genco 0/1/2 476.4/10.39/0.0059 MW
+23:10:51 worker 0: 615/832  it flat/dc/genco 7/7/3  dv 1.0e-12  mis genco 0/1/2 429.2/16.47/0.0116 MW
+23:11:00 worker 0: 656/832  it flat/dc/genco 8/7/3  dv 7.9e-14  mis genco 0/1/2 147.8/2.88/0.0036 MW
+23:11:06 worker 0: 697/832  it flat/dc/genco 8/7/3  dv 7.1e-11  mis genco 0/1/2 348.9/2.49/0.0010 MW
+23:11:11 worker 0: 738/832  it flat/dc/genco 7/7/3  dv 5.9e-10  mis genco 0/1/2 536.6/20.65/0.0160 MW
+23:11:18 worker 0: 779/832  it flat/dc/genco 8/8/3  dv 4.1e-11  mis genco 0/1/2 184.5/10.95/0.0215 MW
+23:11:23 worker 0: 820/832  it flat/dc/genco 8/7/3  dv 8.0e-11  mis genco 0/1/2 406.9/4.68/0.0039 MW
+2494 scenarios, 9,053,733 line readings, wall 144s; Newton from GENCO converged 2494/2494, iterations mean 3.192; start mismatch median 311.5 MW; raw loading error p99 11.90 points

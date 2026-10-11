@@ -42,7 +42,7 @@ for s in ${=SEEDS}; do
   evaluate $tag
   a1+=($tag=$R/lines_newton_${G}_$tag.parquet); a2+=($tag=$R/lines_hybrid_${G}_$tag.parquet)
 done
-$PY analysis_finetune.py --grid $G $a1 > $L/summary$G.log 2>&1
-$PY analysis_finetune_hybrid.py $a2 > $L/summary_hybrid$G.log 2>&1
+$PY analysis/analysis_finetune.py --grid $G $a1 > $L/summary$G.log 2>&1
+$PY analysis/analysis_finetune_hybrid.py $a2 > $L/summary_hybrid$G.log 2>&1
 date > $L/pipeline$G.DONE
 qlog "pipeline$G: done, see $L/summary$G.log and $L/summary_hybrid$G.log"

@@ -1,0 +1,43 @@
+case10000_goc: 993 scenarios in 199 load scenarios, model ./work/finetune/models/pf_case10000_goc_ft10000_seed0, tag ft10000_seed0; pre-outage start from ./work/goc10000/lines_prev_tiny_seed0.parquet; 50 chunks of 4, 0 already done, 3 processes
+01:58:36 chunk 000008_000011_4: 20 scenarios in 7 s; 1/50 chunks, wall 14 s
+01:58:36 chunk 000004_000007_4: 20 scenarios in 7 s; 2/50 chunks, wall 14 s
+01:58:44 chunk 000012_000015_4: 20 scenarios in 7 s; 4/50 chunks, wall 21 s
+01:58:44 chunk 000020_000023_4: 20 scenarios in 7 s; 6/50 chunks, wall 22 s
+01:58:51 chunk 000028_000031_4: 20 scenarios in 8 s; 8/50 chunks, wall 29 s
+01:58:58 chunk 000036_000039_4: 20 scenarios in 7 s; 10/50 chunks, wall 35 s
+01:58:59 chunk 000044_000047_4: 20 scenarios in 7 s; 12/50 chunks, wall 36 s
+01:59:06 chunk 000056_000059_4: 20 scenarios in 7 s; 14/50 chunks, wall 43 s
+01:59:12 chunk 000060_000063_4: 20 scenarios in 7 s; 16/50 chunks, wall 50 s
+01:59:13 chunk 000068_000071_4: 20 scenarios in 7 s; 18/50 chunks, wall 50 s
+01:59:21 chunk 000080_000083_4: 20 scenarios in 7 s; 20/50 chunks, wall 58 s
+01:59:28 chunk 000084_000087_4: 20 scenarios in 7 s; 22/50 chunks, wall 65 s
+01:59:28 chunk 000092_000095_4: 20 scenarios in 7 s; 24/50 chunks, wall 65 s
+01:59:36 chunk 000096_000099_4: 20 scenarios in 8 s; 26/50 chunks, wall 73 s
+01:59:42 chunk 000108_000111_4: 20 scenarios in 7 s; 28/50 chunks, wall 80 s
+01:59:44 chunk 000116_000119_4: 20 scenarios in 7 s; 30/50 chunks, wall 81 s
+01:59:50 chunk 000124_000127_4: 20 scenarios in 7 s; 32/50 chunks, wall 87 s
+01:59:57 chunk 000137_000140_4: 20 scenarios in 8 s; 34/50 chunks, wall 95 s
+02:00:00 chunk 000141_000144_4: 20 scenarios in 7 s; 36/50 chunks, wall 97 s
+02:00:05 chunk 000149_000152_4: 20 scenarios in 7 s; 38/50 chunks, wall 103 s
+02:00:12 chunk 000157_000160_4: 20 scenarios in 7 s; 40/50 chunks, wall 109 s
+02:00:15 chunk 000165_000168_4: 20 scenarios in 8 s; 42/50 chunks, wall 112 s
+02:00:20 chunk 000173_000176_4: 20 scenarios in 7 s; 44/50 chunks, wall 117 s
+02:00:26 chunk 000181_000184_4: 20 scenarios in 7 s; 46/50 chunks, wall 124 s
+02:00:29 chunk 000189_000192_4: 20 scenarios in 7 s; 48/50 chunks, wall 127 s
+02:00:33 chunk 000193_000196_4: 20 scenarios in 7 s; 50/50 chunks, wall 131 s
+993 scenarios, 13,098,314 line readings, wall 134 s -> ./work/finetune/results/lines_hybrid_10000_ft10000_seed0.parquet
+  base states without a pre-outage solution: 0; max |V - V_ac stored| after convergence from the hybrid start 3.4e-09
+  start mismatch MW max-norm, median / p99: pre-outage 79.2 / 734, GENCO 247 / 548, hybrid 20 / 393;  after one step: pre-outage 1.08 / 53.4, GENCO 12 / 71.2, hybrid 0.366 / 70.3
+  start distance max|V - V_ac| p.u., median / p99: pre-outage 0.0396 / 0.49, GENCO 0.197 / 0.472, hybrid 0.0308 / 0.421
+  Newton to convergence: hybrid 992/993 converged, iterations mean 2.96; pre-outage 992/993 converged, iterations mean 3.13; GENCO 992/993 converged, iterations mean 3.23
+  predicted vs true change, bus angles moving > 0.1 deg: 1,121,391 readings, sign agreement 31.9%, correlation 0.289, slope (pred on true) 0.176
+  predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 58,551 readings, sign agreement 69.2%, correlation 0.496, slope (pred on true) 0.222
+  predicted vs true loading change, lines moving > 1 point: 110,560 readings (0.84% of all), sign agreement 75.0%, correlation 0.479; raw GENCO error on these lines median 2.58 points, true |change| median 2.22 points
+  genco   flagged  97.6%  secure flagged  97.3%  overloaded lines missed 6/507
+  genco1  flagged  58.5%  secure flagged  42.1%  overloaded lines missed 8/507
+  genco2  flagged  29.9%  secure flagged   0.3%  overloaded lines missed 0/507
+  prev1   flagged  29.7%  secure flagged   0.3%  overloaded lines missed 2/507
+  prev2   flagged  29.7%  secure flagged   0.0%  overloaded lines missed 0/507
+  hyb0    flagged  22.8%  secure flagged  12.2%  overloaded lines missed 228/507
+  hyb1    flagged  31.5%  secure flagged   3.2%  overloaded lines missed 4/507
+  hyb2    flagged  29.9%  secure flagged   0.3%  overloaded lines missed 0/507

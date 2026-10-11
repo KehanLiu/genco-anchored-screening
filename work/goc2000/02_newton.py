@@ -27,6 +27,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "analysis"))
 NET = f"case{HERE.name.removeprefix('goc')}_goc"  # work/goc2000 -> case2000_goc
 BASE = 100.0
 

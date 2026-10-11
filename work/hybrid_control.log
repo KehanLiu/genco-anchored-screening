@@ -1,0 +1,112 @@
+2026-10-04 06:31:11 === run case2000_goc: 16 load scenarios, 4 processes
+2026-10-04 06:31:19   worker 0: 20 scenarios done
+2026-10-04 06:31:19 case2000_goc: 80 scenarios, 290,417 line readings, wall 8 s; hybrid start converged 80/80, max |V - V_ac stored| 2.6e-09; base states without a pre-outage solution: 0
+2026-10-04 06:31:20 === report case2000_goc: 80 scenarios, 290,417 line readings (hybrid file 290,417); GENCO contingency loading re-run vs existing file max diff 0.0e+00; GENCO intact loading, tables without vs with the intact AC solution written in, max diff 0.0e+00
+2026-10-04 06:31:20   start mismatch MW max-norm, median / p99: prev 71.6 / 781, GENCO 246 / 536, hybrid 4.58 / 95;  after one step: prev 0.662 / 40.5, GENCO 10.8 / 63.8, hybrid 0.0174 / 1.9
+2026-10-04 06:31:20   start distance max|V - V_ac| p.u., median / p99: prev 0.0214 / 0.205, GENCO 0.221 / 0.49, hybrid 0.0051 / 0.0665
+2026-10-04 06:31:20   Newton to convergence: hybrid 80/80 converged, iterations mean 2.42 median 2 max 3; prev mean 3.09; GENCO mean 3.20
+2026-10-04 06:31:20   GENCO predicted change vs true change, bus angles moving > 0.1 deg: 18,140 readings, sign agreement 58.1%, correlation 0.547, slope (pred on true) 0.279
+2026-10-04 06:31:20   GENCO predicted change vs true change, PQ magnitudes moving > 0.001 p.u.: 2,770 readings, sign agreement 77.0%, correlation 0.750, slope (pred on true) 0.627
+2026-10-04 06:31:20   GENCO predicted loading change vs true change, lines moving > 1 point: 7,171 readings (2.47% of all), sign agreement 93.1%, correlation 0.926; raw GENCO error on these lines median 1.28 points, true |change| median 2.20 points
+2026-10-04 06:31:20   predictor err median      p99      max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:31:20   genco        0.5905   11.662    57.80      0    20.0%          17.1%      1/4            1/5        20.00%  100.3%
+2026-10-04 06:31:20   genco1       0.0058    0.353     2.62      0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:31:20   genco2       0.0000    0.001     0.01      0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:31:20   prev1        0.0001    0.067    10.95      0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:31:20   prev2        0.0000    0.000     0.18      0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:31:20   hyb0         0.0020    1.170    45.19      0     3.8%           1.3%      2/4            2/5        40.00%  105.0%
+2026-10-04 06:31:20   hyb1         0.0000    0.011     1.42      0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:31:20   hyb2         0.0000    0.000     0.01      0     5.0%           0.0%      0/4            0/5         0.00%        
+2026-10-04 06:31:20 saved ./work/hybrid_control_summary_test.csv
+2026-10-04 06:31:26 NOTE: lines above are a 16-load-scenario smoke test (files removed); full runs follow.
+2026-10-04 06:31:27 === run case2000_goc: 500 load scenarios, 4 processes
+2026-10-04 06:31:51   worker 0: 210 scenarios done
+2026-10-04 06:32:11   worker 0: 419 scenarios done
+2026-10-04 06:32:29   worker 0: 623 scenarios done
+2026-10-04 06:32:31 case2000_goc: 2,494 scenarios, 9,053,733 line readings, wall 64 s; hybrid start converged 2,494/2,494, max |V - V_ac stored| 9.1e-09; base states without a pre-outage solution: 0
+2026-10-04 06:32:31 === run case10000_goc: 199 load scenarios, 4 processes
+2026-10-04 06:34:10   worker 0: 250 scenarios done
+2026-10-04 06:34:16 case10000_goc: 993 scenarios, 13,098,314 line readings, wall 105 s; hybrid start converged 993/993, max |V - V_ac stored| 4.9e-09; base states without a pre-outage solution: 0
+2026-10-04 06:34:18 === run case500_goc: 3,000 load scenarios, 4 processes
+2026-10-04 06:34:45   worker 0: 210 scenarios done
+2026-10-04 06:34:52   worker 0: 420 scenarios done
+2026-10-04 06:34:59   worker 0: 630 scenarios done
+2026-10-04 06:35:06   worker 0: 839 scenarios done
+2026-10-04 06:35:12   worker 0: 1048 scenarios done
+2026-10-04 06:35:19   worker 0: 1258 scenarios done
+2026-10-04 06:35:25   worker 0: 1468 scenarios done
+2026-10-04 06:35:32   worker 0: 1678 scenarios done
+2026-10-04 06:35:39   worker 0: 1888 scenarios done
+2026-10-04 06:35:46   worker 0: 2098 scenarios done
+2026-10-04 06:35:53   worker 0: 2308 scenarios done
+2026-10-04 06:36:00   worker 0: 2518 scenarios done
+2026-10-04 06:36:06   worker 0: 2723 scenarios done
+2026-10-04 06:36:13   worker 0: 2928 scenarios done
+2026-10-04 06:36:20   worker 0: 3133 scenarios done
+2026-10-04 06:36:26   worker 0: 3338 scenarios done
+2026-10-04 06:36:33   worker 0: 3543 scenarios done
+2026-10-04 06:36:40   worker 0: 3748 scenarios done
+2026-10-04 06:36:42 case500_goc: 14,992 scenarios, 10,875,975 line readings, wall 143 s; hybrid start converged 14,992/14,992, max |V - V_ac stored| 2.6e-08; base states without a pre-outage solution: 0
+2026-10-04 06:36:43 === report case500_goc: 14,992 scenarios, 10,875,975 line readings (hybrid file 10,875,975); GENCO contingency loading re-run vs existing file max diff 0.0e+00; GENCO intact loading, tables without vs with the intact AC solution written in, max diff 0.0e+00
+2026-10-04 06:36:43   start mismatch MW max-norm, median / p99: prev 118 / 522, GENCO 435 / 807, hybrid 6.17 / 113;  after one step: prev 1.88 / 34, GENCO 3.65 / 17.7, hybrid 0.0423 / 3.7
+2026-10-04 06:36:43   start distance max|V - V_ac| p.u., median / p99: prev 0.0558 / 0.329, GENCO 0.0485 / 0.167, hybrid 0.012 / 0.124
+2026-10-04 06:36:43   Newton to convergence: hybrid 14,992/14,992 converged, iterations mean 2.41 median 2 max 7; prev mean 3.24; GENCO mean 3.01
+2026-10-04 06:36:43   GENCO predicted change vs true change, bus angles moving > 0.1 deg: 3,139,368 readings, sign agreement 63.4%, correlation 0.733, slope (pred on true) 0.672
+2026-10-04 06:36:43   GENCO predicted change vs true change, PQ magnitudes moving > 0.001 p.u.: 447,403 readings, sign agreement 98.5%, correlation 0.933, slope (pred on true) 0.745
+2026-10-04 06:36:43   GENCO predicted loading change vs true change, lines moving > 1 point: 1,101,370 readings (10.13% of all), sign agreement 96.6%, correlation 0.971; raw GENCO error on these lines median 0.68 points, true |change| median 2.44 points
+2026-10-04 06:36:43   predictor err median      p99      max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:36:44   genco        0.3253    6.497   134.11      0    25.0%          16.4%    278/1876       294/2621     11.22%  139.6%
+2026-10-04 06:36:44   genco1       0.0011    0.059    22.78      0    12.5%           0.1%      9/1876         9/2621      0.34%  100.6%
+2026-10-04 06:36:44   genco2       0.0000    0.000     8.83      0    12.5%           0.0%      0/1876         0/2621      0.00%        
+2026-10-04 06:36:44   prev1        0.0013    0.312    66.90      0    12.4%           0.2%     39/1876        41/2621      1.56%  118.3%
+2026-10-04 06:36:44   prev2        0.0000    0.004    16.02      0    12.5%           0.0%      1/1876         1/2621      0.04%  100.3%
+2026-10-04 06:36:44   hyb0         0.0499    2.607   136.32      0    14.4%           4.7%    326/1876       357/2621     13.62%  139.6%
+2026-10-04 06:36:45   hyb1         0.0001    0.020    23.20      0    12.5%           0.0%      5/1876         5/2621      0.19%  100.6%
+2026-10-04 06:36:45   hyb2         0.0000    0.000     9.01      0    12.5%           0.0%      1/1876         1/2621      0.04%  100.3%
+2026-10-04 06:36:46 === report case2000_goc: 2,494 scenarios, 9,053,733 line readings (hybrid file 9,053,733); GENCO contingency loading re-run vs existing file max diff 0.0e+00; GENCO intact loading, tables without vs with the intact AC solution written in, max diff 0.0e+00
+2026-10-04 06:36:46   start mismatch MW max-norm, median / p99: prev 71.6 / 781, GENCO 246 / 536, hybrid 6.15 / 133;  after one step: prev 0.662 / 40.5, GENCO 10.8 / 63.8, hybrid 0.0231 / 9.52
+2026-10-04 06:36:46   start distance max|V - V_ac| p.u., median / p99: prev 0.0256 / 0.363, GENCO 0.191 / 0.513, hybrid 0.00697 / 0.184
+2026-10-04 06:36:46   Newton to convergence: hybrid 2,494/2,494 converged, iterations mean 2.46 median 2 max 5; prev mean 3.09; GENCO mean 3.20
+2026-10-04 06:36:46   GENCO predicted change vs true change, bus angles moving > 0.1 deg: 757,605 readings, sign agreement 59.6%, correlation 0.454, slope (pred on true) 0.222
+2026-10-04 06:36:46   GENCO predicted change vs true change, PQ magnitudes moving > 0.001 p.u.: 114,296 readings, sign agreement 86.1%, correlation 0.733, slope (pred on true) 0.434
+2026-10-04 06:36:46   GENCO predicted loading change vs true change, lines moving > 1 point: 261,849 readings (2.89% of all), sign agreement 92.6%, correlation 0.880; raw GENCO error on these lines median 1.43 points, true |change| median 2.17 points
+2026-10-04 06:36:46   predictor err median      p99      max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:36:46   genco        0.6571   11.715   286.23      0    16.6%          13.9%     63/152        111/369      30.08%  286.8%
+2026-10-04 06:36:46   genco1       0.0059    0.360   211.89      0     6.6%           0.6%      1/152          1/369       0.27%  100.2%
+2026-10-04 06:36:46   genco2       0.0000    0.002    31.27      0     6.1%           0.0%      0/152          0/369       0.00%        
+2026-10-04 06:36:46   prev1        0.0002    0.091   426.29      0     6.1%           0.0%      2/152          2/369       0.54%  100.2%
+2026-10-04 06:36:46   prev2        0.0000    0.001    92.99      0     6.1%           0.0%      0/152          0/369       0.00%        
+2026-10-04 06:36:47   hyb0         0.0024    1.362   284.04      0     5.5%           1.5%     49/152         99/369      26.83%  286.8%
+2026-10-04 06:36:47   hyb1         0.0000    0.020   197.97      0     6.1%           0.0%      0/152          0/369       0.00%        
+2026-10-04 06:36:47   hyb2         0.0000    0.000    27.57      0     6.1%           0.0%      0/152          0/369       0.00%        
+2026-10-04 06:36:48 === report case10000_goc: 993 scenarios, 13,098,314 line readings (hybrid file 13,098,314); GENCO contingency loading re-run vs existing file max diff 0.0e+00; GENCO intact loading, tables without vs with the intact AC solution written in, max diff 0.0e+00
+2026-10-04 06:36:48   start mismatch MW max-norm, median / p99: prev 79.2 / 734, GENCO 256 / 588, hybrid 19.6 / 380;  after one step: prev 1.08 / 53.4, GENCO 12.8 / 68, hybrid 0.334 / 69.5
+2026-10-04 06:36:48   start distance max|V - V_ac| p.u., median / p99: prev 0.0396 / 0.49, GENCO 0.194 / 0.481, hybrid 0.0312 / 0.441
+2026-10-04 06:36:48   Newton to convergence: hybrid 993/993 converged, iterations mean 2.97 median 3 max 6; prev mean 3.13; GENCO mean 3.22
+2026-10-04 06:36:48   GENCO predicted change vs true change, bus angles moving > 0.1 deg: 1,121,391 readings, sign agreement 32.4%, correlation 0.289, slope (pred on true) 0.184
+2026-10-04 06:36:48   GENCO predicted change vs true change, PQ magnitudes moving > 0.001 p.u.: 58,551 readings, sign agreement 69.6%, correlation 0.515, slope (pred on true) 0.240
+2026-10-04 06:36:48   GENCO predicted loading change vs true change, lines moving > 1 point: 110,560 readings (0.84% of all), sign agreement 75.4%, correlation 0.492; raw GENCO error on these lines median 2.53 points, true |change| median 2.22 points
+2026-10-04 06:36:48   predictor err median      p99      max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:36:49   genco        0.5406    9.302  1031.67      0    98.5%          98.7%      6/295         10/507       1.97%  109.7%
+2026-10-04 06:36:49   genco1       0.0078    0.250   412.02      0    55.0%          37.0%      7/295          7/507       1.38%  100.7%
+2026-10-04 06:36:49   genco2       0.0000    0.001    44.83      0    29.8%           0.1%      0/295          0/507       0.00%        
+2026-10-04 06:36:49   prev1        0.0000    0.034   591.55      0    29.7%           0.3%      2/295          2/507       0.39%  100.4%
+2026-10-04 06:36:50   prev2        0.0000    0.000 244202.08      0    29.7%           0.0%      0/295          0/507       0.00%        
+2026-10-04 06:36:50   hyb0         0.0003    0.990  1034.37      0    23.7%          12.5%    147/295        222/507      43.79%  188.3%
+2026-10-04 06:36:50   hyb1         0.0000    0.055   406.93      0    31.4%           3.2%      5/295          5/507       0.99%  100.7%
+2026-10-04 06:36:50   hyb2         0.0000    0.001    43.84      0    29.8%           0.1%      0/295          0/507       0.00%        
+2026-10-04 06:36:50 saved ./work/hybrid_control_summary.csv
+2026-10-10 15:18:22 GENCO checkpoint tiny_seed0: ./work/goc2000/pf_case2000_goc_tiny
+2026-10-10 15:18:22 policy work/fresh/policy_frozen.json: shrunk start shyb with lambda_va 1.1058 lambda_vm 1.2655 (goc2000_tiny_seed0)
+2026-10-10 15:18:22 === run case2000_goc: 500 load scenarios, 4 processes; data work/fresh/data2000/case2000_goc/raw, outputs *_hybrid_tiny_seed0_fresh.parquet
+2026-10-10 15:18:47   worker 0: 210 scenarios done
+2026-10-10 15:19:06   worker 0: 420 scenarios done
+2026-10-10 15:19:25   worker 0: 625 scenarios done
+2026-10-10 15:19:26 case2000_goc (tiny_seed0): 2,496 scenarios, 9,061,072 line readings, wall 65 s; hybrid start converged 2,496/2,496, max |V - V_ac stored| 9.8e-09; base states without a pre-outage solution: 0; GENCO ms per contingency state (workers in parallel) mean 48 median 48
+2026-10-10 15:19:26   shrunk start shyb converged 2,496/2,496, max |V - V_ac stored| 8.6e-09; start mismatch MW median hyb 6.19 shyb 11.4
+2026-10-10 16:03:14 GENCO checkpoint tiny_seed0: ./work/goc10000/pf_case10000_goc_tiny
+2026-10-10 16:03:14 policy work/fresh/policy_frozen.json: shrunk start shyb with lambda_va 0.4936 lambda_vm 1.4044 (goc10000_tiny_seed0)
+2026-10-10 16:03:14 === run case10000_goc: 200 load scenarios, 4 processes; data work/fresh/data10000/case10000_goc/raw, outputs *_hybrid_tiny_seed0_fresh.parquet
+2026-10-10 16:05:00   worker 0: 250 scenarios done
+2026-10-10 16:05:02 case10000_goc (tiny_seed0): 999 scenarios, 13,177,408 line readings, wall 108 s; hybrid start converged 999/999, max |V - V_ac stored| 4.3e-09; base states without a pre-outage solution: 0; GENCO ms per contingency state (workers in parallel) mean 192 median 190
+2026-10-10 16:05:02   shrunk start shyb converged 999/999, max |V - V_ac stored| 8.0e-09; start mismatch MW median hyb 19.8 shyb 45.5

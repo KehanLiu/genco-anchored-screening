@@ -1,0 +1,27 @@
+### start run tiny seed 1 Fri Oct  9 15:50:36 CEST 2026
+2026-10-09 15:50:36 GENCO checkpoint tiny_seed1: ./work/goc10000/pf_case10000_goc_tiny_seed1
+2026-10-09 15:50:36 === run case10000_goc: 199 load scenarios, 4 processes
+2026-10-09 15:52:08   worker 0: 250 scenarios done
+2026-10-09 15:52:09 case10000_goc (tiny_seed1): 993 scenarios, 13,098,314 line readings, wall 93 s; hybrid start converged 993/993, max |V - V_ac stored| 4.9e-09; base states without a pre-outage solution: 0; GENCO ms per contingency state (workers in parallel) mean 201 median 197
+### run exit 0 wall 93s Fri Oct  9 15:52:10 CEST 2026
+2026-10-09 15:52:10 WARNING case10000_goc: lines_newton_tiny_seed1.parquet not found, GENCO + step rows (genco, genco1, genco2) and the 'GENCO contingency loading re-run vs existing file' check use tiny_seed0 instead
+2026-10-09 15:52:11 === report case10000_goc (hybrid tiny_seed1, GENCO + step tiny_seed0): 993 scenarios, 13,098,314 line readings (hybrid file 13,098,314); GENCO contingency loading re-run vs existing file max diff 1.0e+01; GENCO intact loading, tables without vs with the intact AC solution written in, max diff 1.7e+00
+2026-10-09 15:52:11   start mismatch MW max-norm, median / p99: prev 79.2 / 734, GENCO 256 / 588, hybrid 18.5 / 388;  after one step: prev 1.08 / 53.4, GENCO 12.8 / 68, hybrid 0.348 / 76.8
+2026-10-09 15:52:11   start distance max|V - V_ac| p.u., median / p99: prev 0.0396 / 0.49, GENCO 0.2 / 0.502, hybrid 0.0309 / 0.463
+2026-10-09 15:52:11   Newton to convergence: hybrid 993/993 converged, iterations mean 2.95 median 3 max 6; prev mean 3.13; GENCO mean 3.22
+2026-10-09 15:52:11   GENCO ms per contingency state (workers in parallel, indicative): mean 201 median 197
+2026-10-09 15:52:11   GENCO predicted change vs true change, bus angles moving > 0.1 deg: 1,121,391 readings, sign agreement 35.1%, correlation 0.265, slope (pred on true) 0.173
+2026-10-09 15:52:11   GENCO predicted change vs true change, PQ magnitudes moving > 0.001 p.u.: 58,551 readings, sign agreement 72.2%, correlation 0.439, slope (pred on true) 0.202
+2026-10-09 15:52:11   GENCO predicted loading change vs true change, lines moving > 1 point: 110,560 readings (0.84% of all), sign agreement 77.3%, correlation 0.565; raw GENCO error on these lines median 2.53 points, true |change| median 2.22 points
+2026-10-09 15:52:11   predictor err median      p99      max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-09 15:52:12   genco        0.5406    9.302  1031.67      0    98.5%          98.7%      6/295         10/507       1.97%  109.7%
+2026-10-09 15:52:12   genco1       0.0078    0.250   412.02      0    55.0%          37.0%      7/295          7/507       1.38%  100.7%
+2026-10-09 15:52:12   genco2       0.0000    0.001    44.83      0    29.8%           0.1%      0/295          0/507       0.00%        
+2026-10-09 15:52:12   prev1        0.0000    0.034   591.55      0    29.7%           0.3%      2/295          2/507       0.39%  100.4%
+2026-10-09 15:52:12   prev2        0.0000    0.000 244202.08      0    29.7%           0.0%      0/295          0/507       0.00%        
+2026-10-09 15:52:13   hyb0         0.0003    0.979   473.31      0    26.1%          14.6%    138/295        207/507      40.83%  184.1%
+2026-10-09 15:52:13   hyb1         0.0000    0.057   441.24      0    31.4%           2.9%      3/295          3/507       0.59%  100.7%
+2026-10-09 15:52:13   hyb2         0.0000    0.001    46.35      0    29.6%           0.0%      1/295          1/507       0.20%  100.4%
+2026-10-09 15:52:13 saved ./work/hybrid_control_summary_tiny_seed1.csv
+### report exit 0 Fri Oct  9 15:52:13 CEST 2026
+ALL_DONE_HYBRID

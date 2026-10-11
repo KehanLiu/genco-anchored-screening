@@ -1,0 +1,39 @@
+# FRESH pool for case500_goc, registered for the equivalent-circuit pilot (seed 2026, hours 6000-6499 only; test pool seed 0 hours 0-2999, fine-tune pool seed 1234 hours 3000-5999). work/fresh/POLICY_LOG.md A4
+#   work/fresh/chain10000.sh runs it after the GOC 10000 pool: 00_datagen_skip.py work/fresh/datagen500.yaml 6000
+network:
+  name: case500_goc
+  source: file
+  network_dir: work/goc500/net
+load:
+  generator: agg_load_profile
+  agg_profile: default
+  scenarios: 6500
+  sigma: 0.2
+  change_reactive_power: true
+  global_range: 0.4
+  max_scaling_factor: 4.0
+  step_size: 0.1
+  start_scaling_factor: 1.0
+topology_perturbation:
+  type: random
+  k: 5
+  n_topology_variants: 5
+  elements: [branch]
+generation_perturbation:
+  type: cost_permutation
+  sigma: 1.0
+admittance_perturbation:
+  type: random_perturbation
+  sigma: 0.2
+settings:
+  num_processes: 4
+  data_dir: work/fresh/data500
+  large_chunk_size: 500
+  overwrite: true
+  mode: pf
+  include_dc_res: true
+  enable_solver_logs: false
+  pf_fast: true
+  dcpf_fast: true
+  max_iter: 200
+  seed: 2026

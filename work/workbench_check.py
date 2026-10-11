@@ -1,7 +1,7 @@
 """Checks of the workbench's staged verdict (GENCO band -> one Newton step -> full AC) on IEEE 118.
 
     .venv/bin/python work/workbench_check.py --mismatch      # in-process: mismatch after one Newton step on 600 states
-    .venv/bin/python work/workbench_check.py                 # against a running server.py: ~200 random N-1/N-2 states
+    .venv/bin/python work/workbench_check.py                 # against a running workbench/server.py: ~200 random N-1/N-2 states
 
 Both print to stdout; redirect to work/workbench_check.log.
 """

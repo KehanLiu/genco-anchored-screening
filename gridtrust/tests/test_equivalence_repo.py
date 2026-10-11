@@ -26,14 +26,15 @@ SCENARIO = 7
 # ----------------------------------------------------------------- conformal
 @pytest.fixture(scope="module")
 def sweep():
-    if not (SWEEP.exists() and (ROOT / "analysis_conformal.py").exists()):
-        pytest.skip("repository sweep / analysis_conformal.py not present")
+    if not (SWEEP.exists() and (ROOT / "analysis" / "analysis_conformal.py").exists()):
+        pytest.skip("repository sweep / analysis/analysis_conformal.py not present")
     pytest.importorskip("pyarrow")
-    sys.path.insert(0, str(ROOT))
+    sys.path[:0] = [str(ROOT), str(ROOT / "analysis")]
     try:
         import analysis_conformal as ac
     finally:
         sys.path.remove(str(ROOT))
+        sys.path.remove(str(ROOT / "analysis"))
     data, _, n_states = ac.load(SWEEP)
     fit, cal_keys, test_keys = ac.split_keys(n_states.index, 0)
     cal, test = data[data.outages.isin(fit | cal_keys)], data[data.outages.isin(test_keys)]
@@ -114,11 +115,11 @@ def test_newton_matches_saved_results(scenario):
 def test_newton_matches_analysis_class(scenario):
     """Against analysis_warmstart.Problem itself (built by 02_newton.make_problem), one and two steps from a perturbed start."""
     prob, bus, branch = scenario
-    if "juliacall" in sys.modules or not (ROOT / "analysis_warmstart.py").exists():
-        pytest.skip("analysis_warmstart.py not present")
+    if "juliacall" in sys.modules or not (ROOT / "analysis" / "analysis_warmstart.py").exists():
+        pytest.skip("analysis/analysis_warmstart.py not present")
     pytest.importorskip("gridfm_datakit")
     stub = "engine" not in sys.modules
-    sys.path.insert(0, str(ROOT))
+    sys.path[:0] = [str(ROOT), str(ROOT / "analysis")]
     try:
         if stub:
             sys.modules["engine"] = types.ModuleType("engine")  # the real one starts Julia; Problem does not use it
@@ -128,6 +129,7 @@ def test_newton_matches_analysis_class(scenario):
         ref = mod.make_problem(bus, branch)
     finally:
         sys.path.remove(str(ROOT))
+        sys.path.remove(str(ROOT / "analysis"))
         if stub:
             sys.modules.pop("engine", None)
             sys.modules.pop("analysis_warmstart", None)

@@ -90,7 +90,8 @@ print(f"band alone: {band['ac_calls']:.1%} of states to AC ({band['wasted']:.1%}
 # ---- the staged decision per state
 stages, wrong = {1: 0, 2: 0, 3: 0}, 0
 for row in test:
-    d = decide(row["anchored"], width, refine=lambda: row["prob"].refine(row["vm"], row["va"]), limit=LIMIT, sigma=row["sigma"])
+    d = decide(row["anchored"], width, refine=lambda: row["prob"].refine(row["vm"], row["va"]), limit=LIMIT, sigma=row["sigma"],
+               rated=row["prob"].rated)
     stages[d.stage] += 1
     wrong += (not d.needs_ac) and bool(np.nanmax(row["actual"]) > LIMIT)
 insecure = sum(bool(np.nanmax(row["actual"]) > LIMIT) for row in test)

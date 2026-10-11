@@ -1,4 +1,4 @@
-# Operator workbench (server.py + web/ + engine.py) as a container; laid out for a Hugging Face
+# Operator workbench (workbench/server.py + workbench/web/ + engine.py) as a container; laid out for a Hugging Face
 # Docker Space (non-root uid 1000, writable HOME, app on port 7860).
 #
 #   docker build -t genco-workbench .
@@ -105,8 +105,8 @@ RUN mkdir -p /home/user/.cache/matplotlib /home/user/.cache/huggingface work
 
 # Julia environment + PGLib case. Depends only on the Python environment, so it stays cached
 # when the application code changes.
-COPY --chown=user:user docker/entrypoint.py docker/entrypoint.py
-RUN python docker/entrypoint.py julia
+COPY --chown=user:user workbench/docker/entrypoint.py workbench/docker/entrypoint.py
+RUN python workbench/docker/entrypoint.py julia
 # From here on nothing may reach for a Julia registry.
 ENV PYTHON_JULIAPKG_OFFLINE=yes \
     JULIA_PKG_OFFLINE=true
@@ -122,17 +122,19 @@ COPY --chown=user:user run_pretrained.py ./
 RUN if [ "$FETCH_CHECKPOINT" = "1" ]; then \
         GENCO_REPO=$GENCO_REPO GENCO_REVISION=$GENCO_REVISION GENCO_MODEL_SHA256=$GENCO_MODEL_SHA256 \
         GENCO_STATS_SHA256=$GENCO_STATS_SHA256 GEO_SHA256=$GEO_SHA256 HF_HUB_DISABLE_TELEMETRY=1 \
-        python docker/entrypoint.py fetch; \
+        python workbench/docker/entrypoint.py fetch; \
     fi
 
 # Application.
-COPY --chown=user:user LICENSE server.py engine.py analysis_warmstart.py analysis_conformal.py ./
-COPY --chown=user:user web/ web/
+COPY --chown=user:user LICENSE engine.py ./
+COPY --chown=user:user workbench/server.py workbench/
+COPY --chown=user:user workbench/web/ workbench/web/
+COPY --chown=user:user analysis/analysis_warmstart.py analysis/analysis_conformal.py analysis/
 COPY --chown=user:user work/workbench_conformal_case118_ieee_base.json work/
 
 # Smoke test: Julia, the checkpoint, AC-OPF, AC/DC power flow, GENCO and the staged check, offline settings on.
 ARG WARMUP=1
-RUN if [ "$WARMUP" = "1" ]; then HF_HUB_OFFLINE=1 python docker/entrypoint.py warmup; fi
+RUN if [ "$WARMUP" = "1" ]; then HF_HUB_OFFLINE=1 python workbench/docker/entrypoint.py warmup; fi
 
 ENV HF_HUB_OFFLINE=1
 EXPOSE 7860
@@ -140,4 +142,4 @@ EXPOSE 7860
 HEALTHCHECK --interval=30s --timeout=20s --start-period=300s --retries=3 \
     CMD python -c "import os, urllib.request; urllib.request.urlopen('http://127.0.0.1:%s/api/grid' % (os.environ.get('PORT') or 7860), timeout=15).read(1)" || exit 1
 
-CMD ["python", "docker/entrypoint.py", "serve"]
+CMD ["python", "workbench/docker/entrypoint.py", "serve"]

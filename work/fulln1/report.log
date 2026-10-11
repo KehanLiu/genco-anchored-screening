@@ -1,0 +1,244 @@
+2026-10-04 07:05:10 === run case2000_goc_pilot: 2 base cases x 240 single-branch outages (of 3,639 branches: 6 always out, 445 bridges skipped) = 480 contingencies, 4 processes
+2026-10-04 07:05:44   4/4 chunks, 480 new contingencies, wall 34 s (70.7 ms wall per contingency, last chunk 11 s)
+2026-10-04 07:05:44 run finished: 480 contingencies computed in 34 s wall
+2026-10-04 07:05:57 === run case2000_goc: 24 base cases x 3,188 single-branch outages (of 3,639 branches: 6 always out, 445 bridges skipped) = 76,512 contingencies, 4 processes
+2026-10-04 07:06:57   20/648 chunks, 2,362 new contingencies, wall 60 s (25.3 ms wall per contingency, last chunk 11 s)
+2026-10-04 07:07:49   40/648 chunks, 4,724 new contingencies, wall 112 s (23.7 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:08:41   60/648 chunks, 7,086 new contingencies, wall 164 s (23.2 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:09:32   80/648 chunks, 9,446 new contingencies, wall 215 s (22.7 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:10:22   100/648 chunks, 11,808 new contingencies, wall 265 s (22.4 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:11:12   120/648 chunks, 14,170 new contingencies, wall 315 s (22.2 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:12:02   140/648 chunks, 16,532 new contingencies, wall 365 s (22.1 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:12:55   160/648 chunks, 18,892 new contingencies, wall 418 s (22.1 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:13:46   180/648 chunks, 21,254 new contingencies, wall 469 s (22.0 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:14:36   200/648 chunks, 23,616 new contingencies, wall 519 s (22.0 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:15:27   220/648 chunks, 25,978 new contingencies, wall 570 s (21.9 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:16:17   240/648 chunks, 28,338 new contingencies, wall 620 s (21.9 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:17:07   260/648 chunks, 30,700 new contingencies, wall 670 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:17:58   280/648 chunks, 33,062 new contingencies, wall 721 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:18:48   300/648 chunks, 35,424 new contingencies, wall 771 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:19:39   320/648 chunks, 37,784 new contingencies, wall 822 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:20:31   340/648 chunks, 40,146 new contingencies, wall 874 s (21.8 ms wall per contingency, last chunk 11 s)
+2026-10-04 07:21:24   360/648 chunks, 42,508 new contingencies, wall 927 s (21.8 ms wall per contingency, last chunk 11 s)
+2026-10-04 07:22:17   380/648 chunks, 44,870 new contingencies, wall 980 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:23:07   400/648 chunks, 47,230 new contingencies, wall 1030 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:23:57   420/648 chunks, 49,592 new contingencies, wall 1080 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:24:49   440/648 chunks, 51,954 new contingencies, wall 1132 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:25:41   460/648 chunks, 54,315 new contingencies, wall 1184 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:26:32   480/648 chunks, 56,676 new contingencies, wall 1235 s (21.8 ms wall per contingency, last chunk 11 s)
+2026-10-04 07:27:21   500/648 chunks, 59,038 new contingencies, wall 1284 s (21.8 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:28:12   520/648 chunks, 61,400 new contingencies, wall 1335 s (21.7 ms wall per contingency, last chunk 11 s)
+2026-10-04 07:29:02   540/648 chunks, 63,760 new contingencies, wall 1385 s (21.7 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:29:53   560/648 chunks, 66,122 new contingencies, wall 1436 s (21.7 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:30:44   580/648 chunks, 68,484 new contingencies, wall 1487 s (21.7 ms wall per contingency, last chunk 11 s)
+2026-10-04 07:31:36   600/648 chunks, 70,846 new contingencies, wall 1539 s (21.7 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:32:26   620/648 chunks, 73,206 new contingencies, wall 1589 s (21.7 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:33:17   640/648 chunks, 75,568 new contingencies, wall 1640 s (21.7 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:33:37   648/648 chunks, 76,512 new contingencies, wall 1660 s (21.7 ms wall per contingency, last chunk 10 s)
+2026-10-04 07:33:37 run finished: 76,512 contingencies computed in 1660 s wall
+2026-10-04 07:33:51 === timing case2000_goc (INDICATIVE; single process, pid 65440): torch 2.13.0, 6 CPU threads, mps True; 41 contingencies
+2026-10-04 07:33:56   contingency branch table (pandas copy)              0.645 ms median (min 0.613, p90 0.658, n 40)
+2026-10-04 07:33:56   Newton problem build (Ybus from tables)             0.906 ms median (min 0.896, p90 0.920, n 40)
+2026-10-04 07:33:56   Newton iteration (full solve / iterations)          3.929 ms median (min 3.876, p90 3.982, n 40)
+2026-10-04 07:33:56   single Newton step (newton(max_it=1))               3.901 ms median (min 3.791, p90 3.954, n 40)
+2026-10-04 07:33:56   line loadings from V                                0.037 ms median (min 0.036, p90 0.039, n 40)
+2026-10-04 07:33:56   bus mismatch from V                                 0.013 ms median (min 0.012, p90 0.014, n 40)
+2026-10-04 07:33:56   DC solve incl. matrix assembly                      1.956 ms median (min 1.851, p90 2.006, n 40)
+2026-10-04 07:33:56   DC factorisation + solve only                       1.078 ms median (min 1.027, p90 1.124, n 40)
+2026-10-04 07:33:56   GENCO graph build + normalise + transforms          2.455 ms median (min 2.304, p90 2.602, n 40)
+2026-10-04 07:33:56   GENCO end-to-end genco.solve (cpu, batch 1)        38.818 ms median (min 38.392, p90 39.235, n 40)
+2026-10-04 07:33:57   GENCO Tiny forward cpu batch  1                       34.048 ms/state median (min 33.865, n 21)
+2026-10-04 07:34:07   GENCO Tiny forward cpu batch 16                       20.258 ms/state median (min 20.184, n 21)
+2026-10-04 07:34:08   GENCO Tiny forward mps batch  1                       26.779 ms/state median (min 26.604, n 21)
+2026-10-04 07:34:14   GENCO Tiny forward mps batch 16                       12.593 ms/state median (min 12.565, n 21)
+2026-10-04 07:34:14 saved ./work/fulln1/timing_2000.json
+2026-10-04 07:34:24 === report case2000_goc: 76,512 contingencies in 648 chunks (expected 76,512: 24 base cases x 3,188 non-islanding single-branch outages; 3,639 branches, 6 never in service, 445 bridges)
+2026-10-04 07:34:24   base cases = 24 load scenarios of the stored datakit table, evenly spaced over the ranking of the 500 load scenarios by total load; dispatch, setpoints and perturbed admittances of the first stored scenario of each; removed branches restored; intact grid solved by Newton
+2026-10-04 07:34:24   total load 29,322 .. 40,798 MW; intact-grid Newton iterations max 6; admittance formula check max 0.0e+00; base cases with an overload already in the intact grid: 0 of 24 (lines: 0, worst 100.0%)
+2026-10-04 07:34:24   calibration bases (rank by load) [2, 6, 10, 14, 18, 22], load_scenario_idx [435, 75, 431, 231, 86, 115]; test bases: the other 18
+2026-10-04 07:34:24   ground truth: converged 76,448/76,512 (from the pre-outage start 76,448; rescued by another start 0; no solution from any start 64); solutions from different starts differ by > 1e-5 p.u. in 0 contingencies
+2026-10-04 07:34:24   contingencies with a real overload: 1,749 (2.3%); overloaded line readings 4,512; worst loading 803.6%; lowest bus voltage 0.679 p.u.
+2026-10-04 07:34:24   Newton to convergence, iterations mean / median / max, converged:  prev 2.918 / 3 / 7, 76,448;  genco 3.214 / 3 / 6, 76,448;  hyb 2.212 / 2 / 6, 76,448
+2026-10-04 07:34:24   bus mismatch MW (max-norm) median / p99 / max:  prev start 31.7 / 561 / 2.02e+03, after one step 0.193 / 17.9 / 2.17e+03;  genco start 297 / 507 / 4.41e+03, after one step 9.53 / 45.9 / 1.45e+03;  hyb start 2.56 / 93.7 / 4.41e+03, after one step 0.00318 / 3.22 / 1.63e+03
+2026-10-04 07:34:24   N-1 LOADING ACCURACY, points of rating, 277,659,136 line readings (histogram resolution 0.001 point; quantiles are upper bin edges)
+2026-10-04 07:34:24     predictor                            median      p99    p99.9       max   NaN | per contingency worst line: median      p99 | lines: missed    false
+2026-10-04 07:34:24     pre-outage loading as is (0 steps)    0.001    1.072    8.737    770.21     0 |                            15.257    67.92 |                       
+2026-10-04 07:34:24     pre-outage start + 1 Newton step      0.001    0.032    0.316    514.60     0 |                             0.072     6.43 |           213      921
+2026-10-04 07:34:24     GENCO start + 1 Newton step           0.007    0.414    1.379    341.36     0 |                             0.772     3.62 |            96     3264
+2026-10-04 07:34:24     hybrid start + 1 Newton step          0.001    0.006    0.086    356.15     0 |                             0.002     1.21 |            99      519
+2026-10-04 07:34:24     GENCO raw                             0.668   12.404   25.798    469.73     0 |                            26.773    66.84 |          2910     3325
+2026-10-04 07:34:24     hybrid start (0 steps)                0.001    0.582    3.388    468.73     0 |                             1.611    38.80 |                       
+2026-10-04 07:34:24     DC anchored on base AC                0.001    0.253    2.400    389.33     0 |                             4.005    28.99 |          1174      409
+2026-10-04 07:34:24   MISMATCH THRESHOLD (MW, max-norm after the step), chosen on the 6 calibration bases (19,128 contingencies, 362 critical): largest value of the grid with no critical contingency accepted
+2026-10-04 07:34:24     W1 (prev): tau = 0.5 MW;  tau: share sent to AC / missed on calibration  0.01: 97.7%/0  0.02: 95.2%/0  0.05: 85.3%/0  0.1: 68.2%/0  0.2: 49.5%/0  0.5: 29.9%/0  1: 18.3%/1  2: 11.2%/2  5: 5.6%/2  10: 3.0%/3  20: 2.1%/3  50: 1.9%/3  100: 1.9%/3  200: 1.9%/3  500: 1.9%/3  inf: 1.9%/3
+2026-10-04 07:34:24     W3 (genco): tau = 10 MW;  tau: share sent to AC / missed on calibration  0.01: 100.0%/0  0.02: 100.0%/0  0.05: 100.0%/0  0.1: 100.0%/0  0.2: 100.0%/0  0.5: 100.0%/0  1: 100.0%/0  2: 84.2%/0  5: 67.3%/0  10: 50.9%/0  20: 1.9%/1  50: 1.9%/1  100: 1.9%/1  200: 1.9%/1  500: 1.9%/1  inf: 1.9%/1
+2026-10-04 07:34:24     W4 (hyb): tau = 5 MW;  tau: share sent to AC / missed on calibration  0.01: 32.0%/0  0.02: 24.2%/0  0.05: 16.3%/0  0.1: 11.8%/0  0.2: 8.1%/0  0.5: 4.7%/0  1: 3.3%/0  2: 2.6%/0  5: 2.1%/0  10: 1.9%/1  20: 1.9%/1  50: 1.9%/1  100: 1.9%/1  200: 1.9%/1  500: 1.9%/1  inf: 1.9%/1
+2026-10-04 07:34:24   UNIT COSTS (indicative, single process, see [load] lines of the timing run): Newton iteration 3.93 ms (single step call 3.90); GENCO Tiny forward cpu batch 1 34.05 ms (6 threads), mps batch 16 12.59 ms/state; graph build + normalise 2.46 ms per state (needed before any forward); DC solve 1.96 ms incl. assembly (1.08 factor+solve only); common to all workflows and not counted: problem build 0.91 ms, loadings 0.04 ms
+2026-10-04 07:34:24   WORKFLOWS on the test bases: 18 base cases, 57,384 contingencies, 1,451 critical (2.5%; 47 without a solution), 3,504 overloaded line readings; W0 = 168,652 Newton iterations (2.939 per contingency)
+2026-10-04 07:34:24     workflow                             to AC secure->AC  missed cont.   share  CP95 up  missed lines   share   worst  Newton it   vs W0 GENCO inf      DC | s per 1,000 contingencies:  cpu b1  mps b16 +prep cpu +prep mps
+2026-10-04 07:34:25     W0 full AC, every contingency       100.0%    100.00%      0/1451     0.00%    0.21%      0/3504     0.00%            168,652  100.0%         0       0 |                               11.55    11.55     11.55     11.55
+2026-10-04 07:34:25     W1 1 Newton step from pre-outage     29.6%     27.79%      5/1451     0.34%    0.72%      5/3504     0.14%  100.1%     95,475   56.6%         0       0 |                                6.54     6.54      6.54      6.54
+2026-10-04 07:34:25     W2 GENCO only                         6.6%      5.54%    780/1451    53.76%   55.94%   1480/3504    42.24%  456.6%     12,575    7.5%    57,384       0 |                               34.91    13.45     37.36     15.91
+2026-10-04 07:34:25     W3 GENCO start + 1 step              45.4%     44.03%      1/1451     0.07%    0.33%      1/3504     0.03%  101.2%    128,372   76.1%    57,384       0 |                               42.84    21.38     45.29     23.84
+2026-10-04 07:34:25     W4 hybrid start + 1 step              2.7%      0.23%     14/1451     0.96%    1.50%     14/3504     0.40%  101.2%     63,057   37.4%    57,402       0 |                               38.38    16.91     40.83     19.37
+2026-10-04 07:34:25     W5 DC anchored on base AC             2.1%      0.15%    303/1451    20.88%   22.71%    770/3504    21.97%  456.6%      5,372    3.2%         0  57,402 |                                2.32     2.32      2.32      2.32
+2026-10-04 07:34:25   WORKFLOWS on the calibration bases: 6 base cases, 19,128 contingencies, 362 critical (1.9%; 17 without a solution), 1,008 overloaded line readings; W0 = 56,379 Newton iterations (2.947 per contingency)
+2026-10-04 07:34:25     workflow                             to AC secure->AC  missed cont.   share  CP95 up  missed lines   share   worst  Newton it   vs W0 GENCO inf      DC | s per 1,000 contingencies:  cpu b1  mps b16 +prep cpu +prep mps
+2026-10-04 07:34:25     W0 full AC, every contingency       100.0%    100.00%      0/362      0.00%    0.82%      0/1008     0.00%             56,379  100.0%         0       0 |                               11.58    11.58     11.58     11.58
+2026-10-04 07:34:25     W1 1 Newton step from pre-outage     29.9%     28.59%      0/362      0.00%    0.82%      0/1008     0.00%             31,996   56.8%         0       0 |                                6.57     6.57      6.57      6.57
+2026-10-04 07:34:25     W2 GENCO only                         1.2%      0.13%    150/362     41.44%   45.87%    380/1008    37.70%  438.5%      1,195    2.1%    19,128       0 |                               34.29    12.84     36.75     15.29
+2026-10-04 07:34:25     W3 GENCO start + 1 step              50.9%     49.97%      0/362      0.00%    0.82%      0/1008     0.00%             39,680   70.4%    19,128       0 |                               42.20    20.74     44.65     23.20
+2026-10-04 07:34:25     W4 hybrid start + 1 step              2.1%      0.20%      0/362      0.00%    0.82%      0/1008     0.00%             20,861   37.0%    19,134       0 |                               38.34    16.88     40.80     19.34
+2026-10-04 07:34:25     W5 DC anchored on base AC             1.8%      0.15%     44/362     12.15%   15.35%    217/1008    21.53%  430.3%      1,638    2.9%         0  19,134 |                                2.29     2.29      2.29      2.29
+2026-10-04 07:34:25   WORKFLOWS on the all bases: 24 base cases, 76,512 contingencies, 1,813 critical (2.4%; 64 without a solution), 4,512 overloaded line readings; W0 = 225,031 Newton iterations (2.941 per contingency)
+2026-10-04 07:34:25     workflow                             to AC secure->AC  missed cont.   share  CP95 up  missed lines   share   worst  Newton it   vs W0 GENCO inf      DC | s per 1,000 contingencies:  cpu b1  mps b16 +prep cpu +prep mps
+2026-10-04 07:34:25     W0 full AC, every contingency       100.0%    100.00%      0/1813     0.00%    0.17%      0/4512     0.00%            225,031  100.0%         0       0 |                               11.55    11.55     11.55     11.55
+2026-10-04 07:34:25     W1 1 Newton step from pre-outage     29.7%     27.99%      5/1813     0.28%    0.58%      5/4512     0.11%  100.1%    127,471   56.6%         0       0 |                                6.55     6.55      6.55      6.55
+2026-10-04 07:34:25     W2 GENCO only                         5.2%      4.18%    930/1813    51.30%   53.25%   1860/4512    41.22%  456.6%     13,770    6.1%    76,512       0 |                               34.75    13.30     37.21     15.76
+2026-10-04 07:34:25     W3 GENCO start + 1 step              46.8%     45.52%      1/1813     0.06%    0.26%      1/4512     0.02%  101.2%    168,052   74.7%    76,512       0 |                               42.68    21.22     45.13     23.68
+2026-10-04 07:34:25     W4 hybrid start + 1 step              2.6%      0.22%     14/1813     0.77%    1.20%     14/4512     0.31%  101.2%     83,918   37.3%    76,536       0 |                               38.37    16.91     40.82     19.36
+2026-10-04 07:34:25     W5 DC anchored on base AC             2.1%      0.15%    347/1813    19.14%   20.72%    987/4512    21.88%  456.6%      7,010    3.1%         0  76,536 |                                2.32     2.32      2.32      2.32
+2026-10-04 07:34:25   sensitivity on the test bases (for information; tau was fixed on calibration): tau -> Newton iterations vs W0 / missed contingencies
+2026-10-04 07:34:25     W1: 0.01: 99.2%/0  0.02: 98.3%/0  0.05: 93.5%/0  0.1: 82.6%/1  0.2: 70.0%/2  0.5: 56.6%/5  1: 48.9%/13  2: 44.2%/35  5: 39.8%/87  10: 37.6%/114  20: 36.9%/121  50: 36.7%/124  100: 36.7%/124  200: 36.7%/124  500: 36.7%/124  inf: 36.7%/124
+2026-10-04 07:34:25     W3: 0.01: 113.3%/0  0.02: 113.3%/0  0.05: 113.3%/0  0.1: 113.3%/0  0.2: 113.3%/0  0.5: 113.3%/0  1: 113.3%/0  2: 113.3%/0  5: 105.8%/0  10: 76.1%/1  20: 65.0%/4  50: 42.7%/7  100: 42.7%/7  200: 42.7%/7  500: 42.7%/7  inf: 42.7%/7
+2026-10-04 07:34:25     W4: 0.01: 54.5%/0  0.02: 51.6%/0  0.05: 47.4%/1  0.1: 44.4%/2  0.2: 41.8%/4  0.5: 39.5%/7  1: 38.4%/11  2: 37.8%/13  5: 37.4%/14  10: 37.3%/14  20: 37.2%/17  50: 37.2%/17  100: 37.2%/17  200: 37.2%/17  500: 37.2%/17  inf: 37.2%/17
+2026-10-04 07:34:25 saved ./work/fulln1/contingencies.parquet (76,512 rows) and ./work/fulln1/summary.csv
+2026-10-10 15:22:18 === run case2000_goc_fresh: 6 base cases x 3,188 single-branch outages (of 3,639 branches: 6 always out, 445 bridges skipped) = 19,128 contingencies, 4 processes; data work/fresh/data2000/case2000_goc/raw; policy work/fresh/policy_frozen.json: fourth start shyb with lambda va 1.1058 vm 1.2655
+2026-10-10 15:23:37   20/162 chunks, 2,362 new contingencies, wall 79 s (33.4 ms wall per contingency, last chunk 14 s)
+2026-10-10 15:24:45   40/162 chunks, 4,724 new contingencies, wall 147 s (31.1 ms wall per contingency, last chunk 14 s)
+2026-10-10 15:25:55   60/162 chunks, 7,086 new contingencies, wall 216 s (30.5 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:26:57   80/162 chunks, 9,446 new contingencies, wall 279 s (29.5 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:28:10   100/162 chunks, 11,808 new contingencies, wall 352 s (29.8 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:29:23   120/162 chunks, 14,170 new contingencies, wall 424 s (29.9 ms wall per contingency, last chunk 17 s)
+2026-10-10 15:30:33   140/162 chunks, 16,532 new contingencies, wall 495 s (29.9 ms wall per contingency, last chunk 17 s)
+2026-10-10 15:31:48   160/162 chunks, 18,892 new contingencies, wall 569 s (30.1 ms wall per contingency, last chunk 14 s)
+2026-10-10 15:31:59   162/162 chunks, 19,128 new contingencies, wall 580 s (30.3 ms wall per contingency, last chunk 15 s)
+2026-10-10 15:31:59 run finished: 19,128 contingencies computed in 581 s wall
+2026-10-10 15:32:07 === timing case2000_goc_fresh (INDICATIVE; single process, pid 96331): torch 2.13.0, 6 CPU threads, mps True; 41 contingencies; data work/fresh/data2000/case2000_goc/raw
+2026-10-10 15:32:13   contingency branch table (pandas copy)              0.805 ms median (min 0.697, p90 0.864, n 40)
+2026-10-10 15:32:13   Newton problem build (Ybus from tables)             1.019 ms median (min 0.969, p90 1.081, n 40)
+2026-10-10 15:32:13   Newton iteration (full solve / iterations)          4.287 ms median (min 4.148, p90 4.384, n 40)
+2026-10-10 15:32:13   single Newton step (newton(max_it=1))               4.298 ms median (min 4.150, p90 4.424, n 40)
+2026-10-10 15:32:13   line loadings from V                                0.040 ms median (min 0.039, p90 0.041, n 40)
+2026-10-10 15:32:13   bus mismatch from V                                 0.014 ms median (min 0.013, p90 0.015, n 40)
+2026-10-10 15:32:13   DC solve incl. matrix assembly                      2.208 ms median (min 2.103, p90 2.334, n 40)
+2026-10-10 15:32:13   DC factorisation + solve only                       1.145 ms median (min 1.111, p90 1.270, n 40)
+2026-10-10 15:32:13   GENCO graph build + normalise + transforms          3.596 ms median (min 3.220, p90 3.893, n 40)
+2026-10-10 15:32:13   GENCO end-to-end genco.solve (cpu, batch 1)        52.657 ms median (min 49.339, p90 59.050, n 40)
+2026-10-10 15:32:14   GENCO Tiny forward cpu batch  1                       44.492 ms/state median (min 43.156, n 21)
+2026-10-10 15:32:29   GENCO Tiny forward cpu batch 16                       24.763 ms/state median (min 24.129, n 21)
+2026-10-10 15:32:31   GENCO Tiny forward mps batch  1                       29.970 ms/state median (min 27.825, n 21)
+2026-10-10 15:32:38   GENCO Tiny forward mps batch 16                       13.464 ms/state median (min 13.209, n 21)
+2026-10-10 15:32:39 saved ./work/fulln1/timing_2000_fresh.json
+2026-10-10 15:32:50 === run case2000_goc_fresh: 24 base cases x 3,188 single-branch outages (of 3,639 branches: 6 always out, 445 bridges skipped) = 76,512 contingencies, 4 processes; data work/fresh/data2000/case2000_goc/raw; policy work/fresh/policy_frozen.json: fourth start shyb with lambda va 1.1058 vm 1.2655
+2026-10-10 15:34:15   20/648 chunks, 2,362 new contingencies, wall 85 s (35.9 ms wall per contingency, last chunk 14 s)
+2026-10-10 15:35:24   40/648 chunks, 4,724 new contingencies, wall 154 s (32.6 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:36:03   60/648 chunks, 6,022 new contingencies, wall 193 s (32.1 ms wall per contingency, last chunk 0 s)
+2026-10-10 15:36:12   80/648 chunks, 6,258 new contingencies, wall 202 s (32.3 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:37:23   100/648 chunks, 8,620 new contingencies, wall 273 s (31.7 ms wall per contingency, last chunk 16 s)
+2026-10-10 15:38:33   120/648 chunks, 10,982 new contingencies, wall 343 s (31.2 ms wall per contingency, last chunk 14 s)
+2026-10-10 15:39:47   140/648 chunks, 13,344 new contingencies, wall 417 s (31.2 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:40:54   160/648 chunks, 15,586 new contingencies, wall 484 s (31.1 ms wall per contingency, last chunk 0 s)
+2026-10-10 15:40:54   180/648 chunks, 15,586 new contingencies, wall 484 s (31.1 ms wall per contingency, last chunk 0 s)
+2026-10-10 15:41:50   200/648 chunks, 17,240 new contingencies, wall 540 s (31.3 ms wall per contingency, last chunk 16 s)
+2026-10-10 15:43:07   220/648 chunks, 19,602 new contingencies, wall 618 s (31.5 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:44:21   240/648 chunks, 21,962 new contingencies, wall 691 s (31.5 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:45:33   260/648 chunks, 24,324 new contingencies, wall 764 s (31.4 ms wall per contingency, last chunk 14 s)
+2026-10-10 15:46:00   280/648 chunks, 25,150 new contingencies, wall 790 s (31.4 ms wall per contingency, last chunk 0 s)
+2026-10-10 15:46:20   300/648 chunks, 25,860 new contingencies, wall 810 s (31.3 ms wall per contingency, last chunk 15 s)
+2026-10-10 15:47:25   320/648 chunks, 28,220 new contingencies, wall 875 s (31.0 ms wall per contingency, last chunk 12 s)
+2026-10-10 15:48:37   340/648 chunks, 30,582 new contingencies, wall 947 s (31.0 ms wall per contingency, last chunk 15 s)
+2026-10-10 15:49:43   360/648 chunks, 32,944 new contingencies, wall 1013 s (30.7 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:50:36   380/648 chunks, 34,714 new contingencies, wall 1067 s (30.7 ms wall per contingency, last chunk 0 s)
+2026-10-10 15:50:36   400/648 chunks, 34,714 new contingencies, wall 1067 s (30.7 ms wall per contingency, last chunk 0 s)
+2026-10-10 15:51:39   420/648 chunks, 36,840 new contingencies, wall 1130 s (30.7 ms wall per contingency, last chunk 15 s)
+2026-10-10 15:52:40   440/648 chunks, 39,202 new contingencies, wall 1190 s (30.4 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:53:49   460/648 chunks, 41,563 new contingencies, wall 1259 s (30.3 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:55:01   480/648 chunks, 43,924 new contingencies, wall 1331 s (30.3 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:55:07   500/648 chunks, 44,278 new contingencies, wall 1337 s (30.2 ms wall per contingency, last chunk 0 s)
+2026-10-10 15:55:48   520/648 chunks, 45,460 new contingencies, wall 1378 s (30.3 ms wall per contingency, last chunk 17 s)
+2026-10-10 15:56:54   540/648 chunks, 47,820 new contingencies, wall 1444 s (30.2 ms wall per contingency, last chunk 14 s)
+2026-10-10 15:57:55   560/648 chunks, 50,182 new contingencies, wall 1505 s (30.0 ms wall per contingency, last chunk 13 s)
+2026-10-10 15:59:06   580/648 chunks, 52,544 new contingencies, wall 1576 s (30.0 ms wall per contingency, last chunk 16 s)
+2026-10-10 15:59:46   600/648 chunks, 53,842 new contingencies, wall 1617 s (30.0 ms wall per contingency, last chunk 0 s)
+2026-10-10 15:59:53   620/648 chunks, 54,078 new contingencies, wall 1623 s (30.0 ms wall per contingency, last chunk 13 s)
+2026-10-10 16:01:02   640/648 chunks, 56,440 new contingencies, wall 1692 s (30.0 ms wall per contingency, last chunk 13 s)
+2026-10-10 16:01:31   648/648 chunks, 57,384 new contingencies, wall 1721 s (30.0 ms wall per contingency, last chunk 12 s)
+2026-10-10 16:01:31 run finished: 57,384 contingencies computed in 1721 s wall
+2026-10-10 16:15:36 === timing case2000_goc_fresh (INDICATIVE; single process, pid 3895): torch 2.13.0, 6 CPU threads, mps True; 41 contingencies; data work/fresh/data2000/case2000_goc/raw
+2026-10-10 16:15:40   contingency branch table (pandas copy)              0.614 ms median (min 0.600, p90 0.627, n 40)
+2026-10-10 16:15:40   Newton problem build (Ybus from tables)             0.878 ms median (min 0.840, p90 0.898, n 40)
+2026-10-10 16:15:40   Newton iteration (full solve / iterations)          3.814 ms median (min 3.782, p90 3.848, n 40)
+2026-10-10 16:15:40   single Newton step (newton(max_it=1))               3.818 ms median (min 3.789, p90 3.854, n 40)
+2026-10-10 16:15:40   line loadings from V                                0.036 ms median (min 0.035, p90 0.037, n 40)
+2026-10-10 16:15:40   bus mismatch from V                                 0.013 ms median (min 0.012, p90 0.014, n 40)
+2026-10-10 16:15:40   DC solve incl. matrix assembly                      1.846 ms median (min 1.808, p90 1.903, n 40)
+2026-10-10 16:15:40   DC factorisation + solve only                       1.081 ms median (min 1.019, p90 1.133, n 40)
+2026-10-10 16:15:40   GENCO graph build + normalise + transforms          2.402 ms median (min 2.300, p90 2.468, n 40)
+2026-10-10 16:15:40   GENCO end-to-end genco.solve (cpu, batch 1)        38.154 ms median (min 37.607, p90 38.514, n 40)
+2026-10-10 16:15:41   GENCO Tiny forward cpu batch  1                       34.264 ms/state median (min 33.806, n 21)
+2026-10-10 16:15:51   GENCO Tiny forward cpu batch 16                       20.212 ms/state median (min 20.141, n 21)
+2026-10-10 16:15:52   GENCO Tiny forward mps batch  1                       27.313 ms/state median (min 27.116, n 21)
+2026-10-10 16:15:58   GENCO Tiny forward mps batch 16                       12.740 ms/state median (min 12.722, n 21)
+2026-10-10 16:15:59 saved ./work/fulln1/timing_2000_fresh.json
+2026-10-10 16:16:03 === e2e case2000_goc_fresh (single process, pid 3952): torch 2.13.0, 6 CPU threads (set explicitly), mps True; 24 bases (ranks [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]) x 200 outages, 3 repetitions, 5 warm-up outages per workflow and base; workflow order ['W0', 'W1', 'W4', 'W4s', 'gate', 'CF0.1', 'CF0.2', 'CF0.5', 'CF1'] + W4_mps16; gate c = 1.001, tau {'prev': 0.5, 'genco': 10.0, 'hyb': 5.0, 'shyb': 5.0}, tau1 [0.1, 0.2, 0.5, 1.0], lambda {'va': 1.1058, 'vm': 1.2655}; data work/fresh/data2000/case2000_goc/raw
+2026-10-10 16:16:03   excluded (per base, shared by all outages): model load, pre-outage AC solve, warm-up; the pre-outage GENCO inference is timed separately per base; outages sampled with rng seed [2026, rank]
+2026-10-10 16:18:23   W4_mps16 validated on block 0 of base rank 0: max |dVm| 3.6e-06 p.u., |dVa| 9.4e-06 rad vs genco.solve (cpu)
+2026-10-10 16:18:36   base rank 0 (load_scenario_idx 1997): 200 outages timed, pre-outage inference cpu b1 37.0 ms, mps b1 35.2 ms; 2,000 rows so far, wall 153 s
+2026-10-10 16:21:17   base rank 1 (load_scenario_idx 1828): 200 outages timed, pre-outage inference cpu b1 36.6 ms, mps b1 35.2 ms; 4,000 rows so far, wall 313 s
+2026-10-10 16:23:48   base rank 2 (load_scenario_idx 1974): 200 outages timed, pre-outage inference cpu b1 36.4 ms, mps b1 34.9 ms; 6,000 rows so far, wall 464 s
+2026-10-10 16:26:26   base rank 3 (load_scenario_idx 1635): 200 outages timed, pre-outage inference cpu b1 36.8 ms, mps b1 34.6 ms; 8,000 rows so far, wall 623 s
+2026-10-10 16:29:04   base rank 4 (load_scenario_idx 1586): 200 outages timed, pre-outage inference cpu b1 36.5 ms, mps b1 34.6 ms; 10,000 rows so far, wall 781 s
+2026-10-10 16:31:46   base rank 5 (load_scenario_idx 1524): 200 outages timed, pre-outage inference cpu b1 36.5 ms, mps b1 34.8 ms; 12,000 rows so far, wall 942 s
+2026-10-10 16:34:24   base rank 6 (load_scenario_idx 1585): 200 outages timed, pre-outage inference cpu b1 36.5 ms, mps b1 35.0 ms; 14,000 rows so far, wall 1101 s
+2026-10-10 16:37:03   base rank 7 (load_scenario_idx 1921): 200 outages timed, pre-outage inference cpu b1 36.5 ms, mps b1 35.1 ms; 16,000 rows so far, wall 1259 s
+2026-10-10 16:39:43   base rank 8 (load_scenario_idx 1945): 200 outages timed, pre-outage inference cpu b1 36.4 ms, mps b1 34.4 ms; 18,000 rows so far, wall 1420 s
+2026-10-10 16:42:21   base rank 9 (load_scenario_idx 1601): 200 outages timed, pre-outage inference cpu b1 37.0 ms, mps b1 34.9 ms; 20,000 rows so far, wall 1577 s
+2026-10-10 16:44:57   base rank 10 (load_scenario_idx 1904): 200 outages timed, pre-outage inference cpu b1 36.4 ms, mps b1 35.0 ms; 22,000 rows so far, wall 1734 s
+2026-10-10 16:47:38   base rank 11 (load_scenario_idx 1600): 200 outages timed, pre-outage inference cpu b1 36.8 ms, mps b1 34.5 ms; 24,000 rows so far, wall 1895 s
+2026-10-10 16:50:18   base rank 12 (load_scenario_idx 1625): 200 outages timed, pre-outage inference cpu b1 36.3 ms, mps b1 34.9 ms; 26,000 rows so far, wall 2055 s
+2026-10-10 16:53:02   base rank 13 (load_scenario_idx 1711): 200 outages timed, pre-outage inference cpu b1 36.6 ms, mps b1 35.2 ms; 28,000 rows so far, wall 2219 s
+2026-10-10 16:55:42   base rank 14 (load_scenario_idx 1666): 200 outages timed, pre-outage inference cpu b1 36.7 ms, mps b1 34.9 ms; 30,000 rows so far, wall 2378 s
+2026-10-10 16:58:23   base rank 15 (load_scenario_idx 1547): 200 outages timed, pre-outage inference cpu b1 36.9 ms, mps b1 35.3 ms; 32,000 rows so far, wall 2540 s
+2026-10-10 17:01:11   base rank 16 (load_scenario_idx 1574): 200 outages timed, pre-outage inference cpu b1 37.0 ms, mps b1 33.9 ms; 34,000 rows so far, wall 2708 s
+2026-10-10 17:04:02   base rank 17 (load_scenario_idx 1649): 200 outages timed, pre-outage inference cpu b1 36.3 ms, mps b1 38.7 ms; 36,000 rows so far, wall 2878 s
+2026-10-10 17:06:50   base rank 18 (load_scenario_idx 1928): 200 outages timed, pre-outage inference cpu b1 36.4 ms, mps b1 34.5 ms; 38,000 rows so far, wall 3047 s
+2026-10-10 17:09:45   base rank 19 (load_scenario_idx 1593): 200 outages timed, pre-outage inference cpu b1 37.4 ms, mps b1 35.9 ms; 40,000 rows so far, wall 3222 s
+2026-10-10 17:12:31   base rank 20 (load_scenario_idx 1643): 200 outages timed, pre-outage inference cpu b1 37.6 ms, mps b1 35.2 ms; 42,000 rows so far, wall 3388 s
+2026-10-10 17:15:25   base rank 21 (load_scenario_idx 1712): 200 outages timed, pre-outage inference cpu b1 37.0 ms, mps b1 36.4 ms; 44,000 rows so far, wall 3561 s
+2026-10-10 17:18:09   base rank 22 (load_scenario_idx 1716): 200 outages timed, pre-outage inference cpu b1 38.3 ms, mps b1 35.0 ms; 46,000 rows so far, wall 3726 s
+2026-10-10 17:21:00   base rank 23 (load_scenario_idx 1761): 200 outages timed, pre-outage inference cpu b1 37.3 ms, mps b1 35.1 ms; 48,000 rows so far, wall 3897 s
+2026-10-10 17:21:00   MEASURED END-TO-END ms per outage (min of 3 repetitions per outage; total = sum of the first pass, no min-taking; gate = sent to full AC)
+2026-10-10 17:21:00     workflow   gate         n  total s     mean   median      p90 mean it flagged restart failed  crit missed false
+2026-10-10 17:21:00     W0         all       4800    65.67    13.46    13.69    14.10    2.92    4800       0      4    69      0  4731
+2026-10-10 17:21:00     W0         flagged   4800    65.67    13.46    13.69    14.10    2.92    4800       0      4    69      0  4731
+2026-10-10 17:21:00     W1         all       4800    40.31     8.28     5.85    13.86    1.61    1313       0      4    69      0  1244
+2026-10-10 17:21:00     W1         flagged   1313    19.65    14.79    13.77    17.61    3.24    1313       0      4    69      0  1244
+2026-10-10 17:21:00     W1         cleared   3487    20.66     5.82     5.80     5.99    1.00       0       0      0     0      0     0
+2026-10-10 17:21:00     W4         all       4800   212.31    43.47    42.95    43.99    1.08      83       4      4    69      0    14
+2026-10-10 17:21:00     W4         flagged     83     5.33    63.50    51.14    56.55    5.88      83       4      4    69      0    14
+2026-10-10 17:21:00     W4         cleared   4717   206.97    43.11    42.94    43.87    1.00       0       0      0     0      0     0
+2026-10-10 17:21:00     W4_mps16   all       4800   107.11    22.16    21.70    22.16    1.08      83       4      4    69      0    14
+2026-10-10 17:21:00     W4_mps16   flagged     83     3.50    41.98    29.75    34.06    5.88      83       4      4    69      0    14
+2026-10-10 17:21:00     W4_mps16   cleared   4717   103.61    21.81    21.70    22.12    1.00       0       0      0     0      0     0
+2026-10-10 17:21:00     W4s        all       4800   212.68    43.37    42.87    43.39    1.08      84       4      4    69      0    15
+2026-10-10 17:21:00     W4s        flagged     84     5.33    63.03    51.03    55.46    5.85      84       4      4    69      0    15
+2026-10-10 17:21:00     W4s        cleared   4716   207.35    43.02    42.86    43.33    1.00       0       0      0     0      0     0
+2026-10-10 17:21:00     gate       all       4800   210.76    43.32    42.89    43.29    1.09      88       4      4    69      0    19
+2026-10-10 17:21:00     gate       flagged     88     5.56    62.64    51.14    55.97    5.70      88       4      4    69      0    19
+2026-10-10 17:21:00     gate       cleared   4712   205.20    42.96    42.88    43.25    1.00       0       0      0     0      0     0
+2026-10-10 17:21:00     CF0.1      all       4800   159.48    32.88    47.02    47.47    1.73      83       4      4    69      0    14
+2026-10-10 17:21:00     CF0.1      flagged     83     5.67    67.60    55.41    59.80    6.88      83       4      4    69      0    14
+2026-10-10 17:21:00     CF0.1      cleared   4717   153.81    32.27    47.01    47.44    1.64       0       0      0     0      0     0
+2026-10-10 17:21:00     CF0.2      all       4800   125.11    25.81     6.17    47.48    1.56      83       4      4    69      0    14
+2026-10-10 17:21:00     CF0.2      flagged     83     5.66    67.60    55.44    59.98    6.88      83       4      4    69      0    14
+2026-10-10 17:21:00     CF0.2      cleared   4717   119.45    25.08     6.16    47.45    1.46       0       0      0     0      0     0
+2026-10-10 17:21:00     CF0.5      all       4800    85.80    17.67     6.00    47.54    1.36      81       4      4    69      0    12
+2026-10-10 17:21:00     CF0.5      flagged     81     5.54    67.93    55.47    60.26    6.93      81       4      4    69      0    12
+2026-10-10 17:21:00     CF0.5      cleared   4719    80.26    16.81     5.99    47.49    1.26       0       0      0     0      0     0
+2026-10-10 17:21:00     CF1        all       4800    64.39    13.23     5.94    47.47    1.25      80       4      4    69      0    11
+2026-10-10 17:21:00     CF1        flagged     80     5.53    68.12    55.62    60.12    6.96      80       4      4    69      0    11
+2026-10-10 17:21:00     CF1        cleared   4720    58.86    12.30     5.94    47.40    1.15       0       0      0     0      0     0
+2026-10-10 17:21:00   W4_mps16 blocks: {'n_blocks': 312, 'n_partial': 24, 'block_sizes': [8, 16], 'outages': 4800, 'shared_ms_total_first': 84937.35139001365, 'wall_ms_total_first': 107112.48860412888, 'amortized_shared_ms_per_outage': 17.695281539586176, 'amortized_ms_per_outage': 22.31510179252685, 'shared_ms_per_full_block_median': 280.21410450310213}
+2026-10-10 17:21:00   pre-outage GENCO inference per base (cpu b1 / mps b1 ms): r0 37.0/35.2, r1 36.6/35.2, r2 36.4/34.9, r3 36.8/34.6, r4 36.5/34.6, r5 36.5/34.8, r6 36.5/35.0, r7 36.5/35.1, r8 36.4/34.4, r9 37.0/34.9, r10 36.4/35.0, r11 36.8/34.5, r12 36.3/34.9, r13 36.6/35.2, r14 36.7/34.9, r15 36.9/35.3, r16 37.0/33.9, r17 36.3/38.7, r18 36.4/34.5, r19 37.4/35.9, r20 37.6/35.2, r21 37.0/36.4, r22 38.3/35.0, r23 37.3/35.1
+2026-10-10 17:21:01 saved ./work/fulln1/e2e_2000_fresh.parquet (48,000 rows) and ./work/fulln1/e2e_2000_fresh.json

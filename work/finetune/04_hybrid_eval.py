@@ -9,7 +9,7 @@ plus ac (stored AC loading), ac_prev (pre-outage AC loading), genco_prev (this m
 Per scenario: start mismatch, mismatch after 1 / 2 steps and Newton iterations to convergence from the hybrid and the
 GENCO start (and the pre-outage start), start distances, pooled sums for "does the predicted change carry information".
 The loop is analysis_hybrid_start.worker with the model folder as a parameter; helpers are imported from
-analysis_prev_control.py (pre-outage state, admittances, Newton problem) - nothing under work/goc<N> is written.
+analysis/analysis_prev_control.py (pre-outage state, admittances, Newton problem) - nothing under work/goc<N> is written.
 
     work/texas/tmo 3600 .venv/bin/python -u work/finetune/04_hybrid_eval.py --grid 500 --procs 3 \
         [--model work/finetune/models/pf_case500_goc_ft_seed0] [--tag ft_seed0] [--limit N_LOAD_SCENARIOS]
@@ -33,6 +33,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "analysis"))
 RESULTS = HERE / "results"
 PREDICTORS = ["genco", "genco1", "genco2", "prev1", "prev2", "hyb0", "hyb1", "hyb2"]
 FLOATS = ["ac", "genco", "genco1", "genco2", "prev1", "prev2", "hyb0", "hyb1", "hyb2", "ac_prev", "genco_prev"]
@@ -78,7 +79,7 @@ def work(load_ids):
             h.update(np.ascontiguousarray(np.asarray(arr, dtype=np.float64)).tobytes())
         groups.setdefault((int(bus.load_scenario_idx.iloc[0]), h.hexdigest()), []).append((s, bus, gen, branch))
     for (load_idx, key), members in groups.items():
-        # ---- pre-outage state: removed branches back in service, solved with Newton (as analysis_prev_control.py)
+        # ---- pre-outage state: removed branches back in service, solved with Newton (as analysis/analysis_prev_control.py)
         s0, bus0, gen0, branch0 = members[0]
         bi = branch0.copy()
         bi["br_status"] = np.where(always_out, 0, 1).astype(branch0.br_status.dtype)
@@ -189,7 +190,7 @@ def change_stats(lines, st):
 
 
 def check(a, f_lines, f_states):
-    """Compare with the files of analysis_hybrid_start.py / 02_newton.py / analysis_prev_control.py (released Tiny seed0)."""
+    """Compare with the files of analysis/analysis_hybrid_start.py / 02_newton.py / analysis/analysis_prev_control.py (released Tiny seed0)."""
     import pandas as pd
     here = ROOT / "work" / f"goc{a.grid}"
     new = pd.read_parquet(f_lines)

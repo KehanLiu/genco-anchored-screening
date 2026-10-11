@@ -1,0 +1,215 @@
+2026-10-04 06:42:18 === run case118_ieee_test: 40 of 2,996 scenarios (8 of 600 load scenarios), 0 branches always out, 2 processes
+2026-10-04 06:42:18   zero-shot normaliser: baseMVA 114.57 (graphkit recipe on these scenarios gives 114.57), vn_kv_max 345; released per-grid checkpoint (base) uses baseMVA 137.93, vn_kv_max 345
+2026-10-04 06:42:26   case118_ieee: 40 scenarios, 7,325 line readings, wall 8 s; base states 8 (failed intact solves: 0); checks: stored AC solution mismatch max 9.7e-07 MW, admittance formula vs stored max 0.0e+00
+2026-10-04 06:42:27 === report case118_ieee_test: 40 scenarios, 7,325 line readings; zero-shot = pretrained Base, baseMVA 114.57; pg = per-grid Base checkpoint
+2026-10-04 06:42:27   30 of 40 scenarios have a real overload (75.0%); 60 overloaded line readings; branches removed per scenario: {1: 9, 2: 10, 3: 5, 4: 9, 5: 7}; base states 8 (failed 0)
+2026-10-04 06:42:27   Newton from     converged same sol.  it mean  med  max   start mismatch MW med / p99 / max      after 1 step             after 2 steps        start max|V-V_ac| med / p99
+2026-10-04 06:42:27   flat            40/40            40     4.00    4    4   1.09e+03 / 1.95e+03 / 1.95e+03     122 / 132 / 133          2.39 / 3.25 / 3.33       0.504 / 0.757
+2026-10-04 06:42:27   dc              40/40            40     4.00    4    4   1.14e+03 / 1.96e+03 / 1.96e+03     77.3 / 106 / 106         0.72 / 1.02 / 1.05       0.103 / 0.179
+2026-10-04 06:42:27   prev            40/40            40     3.02    3    4   61.3 / 204 / 217                   1.21 / 11.9 / 15.5       0.00081 / 0.133 / 0.171  0.0811 / 0.252
+2026-10-04 06:42:27   zs              40/40            40     3.52    4    4   68.9 / 84.1 / 84.1                 16 / 48.6 / 50           0.068 / 0.359 / 0.371    0.379 / 0.634
+2026-10-04 06:42:27   hybzs           40/40            40     2.95    3    3   27.8 / 133 / 152                   0.18 / 3.63 / 3.94       2.87e-05 / 0.0149 / 0.0186 0.0292 / 0.181
+2026-10-04 06:42:27   pg              40/40            40     2.30    2    3   21.1 / 98.4 / 113                  0.0397 / 0.624 / 0.646   2.52e-07 / 0.000116 / 0.000133 0.0103 / 0.0877
+2026-10-04 06:42:27   hybpg           40/40            40     2.15    2    3   5.48 / 35.4 / 37.9                 0.00451 / 0.468 / 0.595  3.54e-09 / 0.000101 / 0.000134 0.00416 / 0.0863
+2026-10-04 06:42:27   inference per scenario (1 thread, median): zs 24 ms, pg 22 ms; full Newton from flat 2.8 ms
+2026-10-04 06:42:27   delta zs: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 71.2%, correlation 0.576, slope (pred on true) 0.186
+2026-10-04 06:42:27   delta zs: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 92.8%, correlation 0.920, slope (pred on true) 0.812
+2026-10-04 06:42:27   delta zs: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 79.5%, correlation 0.717, slope 0.450; raw zs error on these lines median 6.02 points, true |change| median 3.36 points
+2026-10-04 06:42:27   delta pg: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 95.2%, correlation 0.932, slope (pred on true) 0.943
+2026-10-04 06:42:27   delta pg: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 99.1%, correlation 0.999, slope (pred on true) 1.000
+2026-10-04 06:42:27   delta pg: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 99.5%, correlation 0.989, slope 0.996; raw pg error on these lines median 0.17 points, true |change| median 3.36 points
+2026-10-04 06:42:27   predictor err median      p99       max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:42:27   zs            4.1689   58.453    110.62       0    60.0%          50.0%     11/30          24/60       40.00%  131.4%
+2026-10-04 06:42:27   zs0           4.2302   59.206    114.97       0    60.0%          50.0%     11/30          24/60       40.00%  131.4%
+2026-10-04 06:42:27   zs1           0.0610    3.061      7.94       0    67.5%          20.0%      5/30           8/60       13.33%  101.8%
+2026-10-04 06:42:27   zs2           0.0001    0.017      0.07       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   prev0         0.1270   22.579     65.30       0     0.0%           0.0%     30/30          60/60      100.00%  136.8%
+2026-10-04 06:42:27   prev1         0.0053    0.949      4.36       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:42:27   prev2         0.0000    0.004      0.08       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   anch_zs       0.2335   16.808     36.71       0    62.5%          30.0%      8/30          15/60       25.00%  101.8%
+2026-10-04 06:42:27   hybzs0        0.2215   16.357     48.95       0    60.0%          30.0%      9/30          16/60       26.67%  101.8%
+2026-10-04 06:42:27   hybzs1        0.0020    0.444      1.95       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   hybzs2        0.0000    0.001      0.01       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   pg            0.0904    4.247     16.42       0    87.5%          50.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   pg1           0.0000    0.025      0.19       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   pg2           0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   hybpg1        0.0000    0.016      0.14       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   hybpg2        0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   dc            1.5270   17.114     41.66       0    70.0%          30.0%      5/30           7/60       11.67%  104.0%
+2026-10-04 06:42:27   dc1           0.6544   11.706     29.98       0    67.5%          30.0%      6/30          11/60       18.33%  101.8%
+2026-10-04 06:42:27   dc2           0.0049    0.143      0.52       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:27   flat1         1.3504   20.365     62.63       0    85.0%          70.0%      3/30           5/60        8.33%  101.8%
+2026-10-04 06:42:27   flat2         0.0186    0.416      1.46       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:42:27 saved ./work/zeroshot/summary_test.csv
+2026-10-04 06:42:48 === run case118_ieee_b57: 40 of 2,996 scenarios (8 of 600 load scenarios), 0 branches always out, 2 processes
+2026-10-04 06:42:48   zero-shot normaliser: baseMVA 57.00 (graphkit recipe on these scenarios gives 114.57), vn_kv_max 345; released per-grid checkpoint (base) uses baseMVA 137.93, vn_kv_max 345
+2026-10-04 06:42:56   case118_ieee: 40 scenarios, 7,325 line readings, wall 8 s; base states 8 (failed intact solves: 0); checks: stored AC solution mismatch max 9.7e-07 MW, admittance formula vs stored max 0.0e+00
+2026-10-04 06:42:56 === report case118_ieee_b57: 40 scenarios, 7,325 line readings; zero-shot = pretrained Base, baseMVA 57.00; pg = per-grid Base checkpoint
+2026-10-04 06:42:56   30 of 40 scenarios have a real overload (75.0%); 60 overloaded line readings; branches removed per scenario: {1: 9, 2: 10, 3: 5, 4: 9, 5: 7}; base states 8 (failed 0)
+2026-10-04 06:42:56   Newton from     converged same sol.  it mean  med  max   start mismatch MW med / p99 / max      after 1 step             after 2 steps        start max|V-V_ac| med / p99
+2026-10-04 06:42:56   flat            40/40            40     4.00    4    4   1.09e+03 / 1.95e+03 / 1.95e+03     122 / 132 / 133          2.39 / 3.25 / 3.33       0.504 / 0.757
+2026-10-04 06:42:56   dc              40/40            40     4.00    4    4   1.14e+03 / 1.96e+03 / 1.96e+03     77.3 / 106 / 106         0.72 / 1.02 / 1.05       0.103 / 0.179
+2026-10-04 06:42:57   prev            40/40            40     3.02    3    4   61.3 / 204 / 217                   1.21 / 11.9 / 15.5       0.00081 / 0.133 / 0.171  0.0811 / 0.252
+2026-10-04 06:42:57   zs              40/40            40     3.55    4    4   67.4 / 91.5 / 95                   15.8 / 48.3 / 49.6       0.0691 / 0.342 / 0.355   0.378 / 0.622
+2026-10-04 06:42:57   hybzs           40/40            40     2.90    3    3   20.1 / 131 / 154                   0.158 / 4.06 / 4.07      2.43e-05 / 0.0165 / 0.0181 0.0317 / 0.167
+2026-10-04 06:42:57   pg              40/40            40     2.30    2    3   21.1 / 98.4 / 113                  0.0397 / 0.624 / 0.646   2.52e-07 / 0.000116 / 0.000133 0.0103 / 0.0877
+2026-10-04 06:42:57   hybpg           40/40            40     2.15    2    3   5.48 / 35.4 / 37.9                 0.00451 / 0.468 / 0.595  3.54e-09 / 0.000101 / 0.000134 0.00416 / 0.0863
+2026-10-04 06:42:57   inference per scenario (1 thread, median): zs 22 ms, pg 24 ms; full Newton from flat 2.8 ms
+2026-10-04 06:42:57   delta zs: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 73.1%, correlation 0.629, slope (pred on true) 0.209
+2026-10-04 06:42:57   delta zs: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 93.6%, correlation 0.925, slope (pred on true) 0.819
+2026-10-04 06:42:57   delta zs: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 80.5%, correlation 0.734, slope 0.458; raw zs error on these lines median 5.93 points, true |change| median 3.36 points
+2026-10-04 06:42:57   delta pg: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 95.2%, correlation 0.932, slope (pred on true) 0.943
+2026-10-04 06:42:57   delta pg: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 99.1%, correlation 0.999, slope (pred on true) 1.000
+2026-10-04 06:42:57   delta pg: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 99.5%, correlation 0.989, slope 0.996; raw pg error on these lines median 0.17 points, true |change| median 3.36 points
+2026-10-04 06:42:57   predictor err median      p99       max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:42:57   zs            4.0627   57.151    111.54       0    60.0%          40.0%     10/30          21/60       35.00%  131.4%
+2026-10-04 06:42:57   zs0           4.0974   58.160    114.65       0    60.0%          40.0%     10/30          21/60       35.00%  131.4%
+2026-10-04 06:42:57   zs1           0.0582    2.938      7.63       0    65.0%          10.0%      5/30           8/60       13.33%  101.8%
+2026-10-04 06:42:57   zs2           0.0001    0.017      0.07       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   prev0         0.1270   22.579     65.30       0     0.0%           0.0%     30/30          60/60      100.00%  136.8%
+2026-10-04 06:42:57   prev1         0.0053    0.949      4.36       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:42:57   prev2         0.0000    0.004      0.08       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   anch_zs       0.2026   16.208     45.10       0    60.0%          20.0%      8/30          15/60       25.00%  108.5%
+2026-10-04 06:42:57   hybzs0        0.1889   14.899     52.01       0    60.0%          20.0%      8/30          14/60       23.33%  108.5%
+2026-10-04 06:42:57   hybzs1        0.0012    0.409      1.89       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   hybzs2        0.0000    0.001      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   pg            0.0904    4.247     16.42       0    87.5%          50.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   pg1           0.0000    0.025      0.19       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   pg2           0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   hybpg1        0.0000    0.016      0.14       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   hybpg2        0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   dc            1.5270   17.114     41.66       0    70.0%          30.0%      5/30           7/60       11.67%  104.0%
+2026-10-04 06:42:57   dc1           0.6544   11.706     29.98       0    67.5%          30.0%      6/30          11/60       18.33%  101.8%
+2026-10-04 06:42:57   dc2           0.0049    0.143      0.52       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:42:57   flat1         1.3504   20.365     62.63       0    85.0%          70.0%      3/30           5/60        8.33%  101.8%
+2026-10-04 06:42:57   flat2         0.0186    0.416      1.46       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:42:57 saved ./work/zeroshot/summary_b57.csv
+2026-10-04 06:42:58 === run case118_ieee_b100: 40 of 2,996 scenarios (8 of 600 load scenarios), 0 branches always out, 2 processes
+2026-10-04 06:42:58   zero-shot normaliser: baseMVA 100.00 (graphkit recipe on these scenarios gives 114.57), vn_kv_max 345; released per-grid checkpoint (base) uses baseMVA 137.93, vn_kv_max 345
+2026-10-04 06:43:06   case118_ieee: 40 scenarios, 7,325 line readings, wall 8 s; base states 8 (failed intact solves: 0); checks: stored AC solution mismatch max 9.7e-07 MW, admittance formula vs stored max 0.0e+00
+2026-10-04 06:43:07 === report case118_ieee_b100: 40 scenarios, 7,325 line readings; zero-shot = pretrained Base, baseMVA 100.00; pg = per-grid Base checkpoint
+2026-10-04 06:43:07   30 of 40 scenarios have a real overload (75.0%); 60 overloaded line readings; branches removed per scenario: {1: 9, 2: 10, 3: 5, 4: 9, 5: 7}; base states 8 (failed 0)
+2026-10-04 06:43:07   Newton from     converged same sol.  it mean  med  max   start mismatch MW med / p99 / max      after 1 step             after 2 steps        start max|V-V_ac| med / p99
+2026-10-04 06:43:07   flat            40/40            40     4.00    4    4   1.09e+03 / 1.95e+03 / 1.95e+03     122 / 132 / 133          2.39 / 3.25 / 3.33       0.504 / 0.757
+2026-10-04 06:43:07   dc              40/40            40     4.00    4    4   1.14e+03 / 1.96e+03 / 1.96e+03     77.3 / 106 / 106         0.72 / 1.02 / 1.05       0.103 / 0.179
+2026-10-04 06:43:07   prev            40/40            40     3.02    3    4   61.3 / 204 / 217                   1.21 / 11.9 / 15.5       0.00081 / 0.133 / 0.171  0.0811 / 0.252
+2026-10-04 06:43:07   zs              40/40            40     3.52    4    4   67.4 / 86.6 / 86.6                 16 / 48.5 / 49.9         0.0682 / 0.359 / 0.371   0.383 / 0.634
+2026-10-04 06:43:07   hybzs           40/40            40     2.95    3    3   28.6 / 133 / 152                   0.16 / 3.66 / 3.95       2.49e-05 / 0.0149 / 0.0183 0.0315 / 0.175
+2026-10-04 06:43:07   pg              40/40            40     2.30    2    3   21.1 / 98.4 / 113                  0.0397 / 0.624 / 0.646   2.52e-07 / 0.000116 / 0.000133 0.0103 / 0.0877
+2026-10-04 06:43:07   hybpg           40/40            40     2.15    2    3   5.48 / 35.4 / 37.9                 0.00451 / 0.468 / 0.595  3.54e-09 / 0.000101 / 0.000134 0.00416 / 0.0863
+2026-10-04 06:43:07   inference per scenario (1 thread, median): zs 23 ms, pg 22 ms; full Newton from flat 2.8 ms
+2026-10-04 06:43:07   delta zs: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 70.7%, correlation 0.586, slope (pred on true) 0.189
+2026-10-04 06:43:07   delta zs: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 92.3%, correlation 0.923, slope (pred on true) 0.820
+2026-10-04 06:43:07   delta zs: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 78.8%, correlation 0.719, slope 0.444; raw zs error on these lines median 6.14 points, true |change| median 3.36 points
+2026-10-04 06:43:07   delta pg: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 95.2%, correlation 0.932, slope (pred on true) 0.943
+2026-10-04 06:43:07   delta pg: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 99.1%, correlation 0.999, slope (pred on true) 1.000
+2026-10-04 06:43:07   delta pg: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 99.5%, correlation 0.989, slope 0.996; raw pg error on these lines median 0.17 points, true |change| median 3.36 points
+2026-10-04 06:43:07   predictor err median      p99       max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:43:07   zs            4.1411   58.409    110.59       0    62.5%          50.0%     10/30          21/60       35.00%  131.4%
+2026-10-04 06:43:07   zs0           4.1794   59.192    114.92       0    62.5%          50.0%     10/30          21/60       35.00%  131.4%
+2026-10-04 06:43:07   zs1           0.0617    3.058      7.88       0    67.5%          20.0%      5/30           8/60       13.33%  101.8%
+2026-10-04 06:43:07   zs2           0.0001    0.017      0.07       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   prev0         0.1270   22.579     65.30       0     0.0%           0.0%     30/30          60/60      100.00%  136.8%
+2026-10-04 06:43:07   prev1         0.0053    0.949      4.36       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:43:07   prev2         0.0000    0.004      0.08       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   anch_zs       0.2321   16.837     39.73       0    60.0%          30.0%      9/30          17/60       28.33%  108.5%
+2026-10-04 06:43:07   hybzs0        0.2220   16.272     49.05       0    57.5%          30.0%     10/30          18/60       30.00%  108.5%
+2026-10-04 06:43:07   hybzs1        0.0018    0.409      1.91       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   hybzs2        0.0000    0.001      0.01       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   pg            0.0904    4.247     16.42       0    87.5%          50.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   pg1           0.0000    0.025      0.19       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   pg2           0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   hybpg1        0.0000    0.016      0.14       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   hybpg2        0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   dc            1.5270   17.114     41.66       0    70.0%          30.0%      5/30           7/60       11.67%  104.0%
+2026-10-04 06:43:07   dc1           0.6544   11.706     29.98       0    67.5%          30.0%      6/30          11/60       18.33%  101.8%
+2026-10-04 06:43:07   dc2           0.0049    0.143      0.52       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:07   flat1         1.3504   20.365     62.63       0    85.0%          70.0%      3/30           5/60        8.33%  101.8%
+2026-10-04 06:43:07   flat2         0.0186    0.416      1.46       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:43:07 saved ./work/zeroshot/summary_b100.csv
+2026-10-04 06:43:08 === run case118_ieee_b137.93: 40 of 2,996 scenarios (8 of 600 load scenarios), 0 branches always out, 2 processes
+2026-10-04 06:43:08   zero-shot normaliser: baseMVA 137.93 (graphkit recipe on these scenarios gives 114.57), vn_kv_max 345; released per-grid checkpoint (base) uses baseMVA 137.93, vn_kv_max 345
+2026-10-04 06:43:16   case118_ieee: 40 scenarios, 7,325 line readings, wall 8 s; base states 8 (failed intact solves: 0); checks: stored AC solution mismatch max 9.7e-07 MW, admittance formula vs stored max 0.0e+00
+2026-10-04 06:43:17 === report case118_ieee_b137.93: 40 scenarios, 7,325 line readings; zero-shot = pretrained Base, baseMVA 137.93; pg = per-grid Base checkpoint
+2026-10-04 06:43:17   30 of 40 scenarios have a real overload (75.0%); 60 overloaded line readings; branches removed per scenario: {1: 9, 2: 10, 3: 5, 4: 9, 5: 7}; base states 8 (failed 0)
+2026-10-04 06:43:17   Newton from     converged same sol.  it mean  med  max   start mismatch MW med / p99 / max      after 1 step             after 2 steps        start max|V-V_ac| med / p99
+2026-10-04 06:43:17   flat            40/40            40     4.00    4    4   1.09e+03 / 1.95e+03 / 1.95e+03     122 / 132 / 133          2.39 / 3.25 / 3.33       0.504 / 0.757
+2026-10-04 06:43:17   dc              40/40            40     4.00    4    4   1.14e+03 / 1.96e+03 / 1.96e+03     77.3 / 106 / 106         0.72 / 1.02 / 1.05       0.103 / 0.179
+2026-10-04 06:43:17   prev            40/40            40     3.02    3    4   61.3 / 204 / 217                   1.21 / 11.9 / 15.5       0.00081 / 0.133 / 0.171  0.0811 / 0.252
+2026-10-04 06:43:17   zs              40/40            40     3.55    4    4   68.3 / 109 / 114                   16.1 / 48.9 / 50.3       0.0689 / 0.374 / 0.382   0.378 / 0.637
+2026-10-04 06:43:17   hybzs           40/40            40     3.00    3    3   27.6 / 132 / 149                   0.204 / 3.53 / 3.8       3.2e-05 / 0.0149 / 0.0187 0.0306 / 0.19
+2026-10-04 06:43:17   pg              40/40            40     2.30    2    3   21.1 / 98.4 / 113                  0.0397 / 0.624 / 0.646   2.52e-07 / 0.000116 / 0.000133 0.0103 / 0.0877
+2026-10-04 06:43:17   hybpg           40/40            40     2.15    2    3   5.48 / 35.4 / 37.9                 0.00451 / 0.468 / 0.595  3.54e-09 / 0.000101 / 0.000134 0.00416 / 0.0863
+2026-10-04 06:43:17   inference per scenario (1 thread, median): zs 23 ms, pg 22 ms; full Newton from flat 2.8 ms
+2026-10-04 06:43:17   delta zs: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 71.5%, correlation 0.534, slope (pred on true) 0.174
+2026-10-04 06:43:17   delta zs: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 90.6%, correlation 0.912, slope (pred on true) 0.795
+2026-10-04 06:43:17   delta zs: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 78.0%, correlation 0.702, slope 0.454; raw zs error on these lines median 6.30 points, true |change| median 3.36 points
+2026-10-04 06:43:17   delta pg: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 95.2%, correlation 0.932, slope (pred on true) 0.943
+2026-10-04 06:43:17   delta pg: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 99.1%, correlation 0.999, slope (pred on true) 1.000
+2026-10-04 06:43:17   delta pg: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 99.5%, correlation 0.989, slope 0.996; raw pg error on these lines median 0.17 points, true |change| median 3.36 points
+2026-10-04 06:43:17   predictor err median      p99       max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:43:17   zs            4.4608   58.690    110.79       0    67.5%          50.0%      8/30          17/60       28.33%  131.4%
+2026-10-04 06:43:17   zs0           4.5186   59.580    115.02       0    67.5%          50.0%      8/30          17/60       28.33%  131.4%
+2026-10-04 06:43:17   zs1           0.0666    3.094      8.11       0    67.5%          20.0%      5/30           8/60       13.33%  101.8%
+2026-10-04 06:43:17   zs2           0.0001    0.017      0.08       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   prev0         0.1270   22.579     65.30       0     0.0%           0.0%     30/30          60/60      100.00%  136.8%
+2026-10-04 06:43:17   prev1         0.0053    0.949      4.36       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:43:17   prev2         0.0000    0.004      0.08       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   anch_zs       0.2534   16.696     41.86       0    57.5%          30.0%     10/30          19/60       31.67%  108.5%
+2026-10-04 06:43:17   hybzs0        0.2408   16.377     48.76       0    57.5%          30.0%     10/30          18/60       30.00%  108.5%
+2026-10-04 06:43:17   hybzs1        0.0022    0.467      2.08       0    72.5%           0.0%      1/30           1/60        1.67%  100.2%
+2026-10-04 06:43:17   hybzs2        0.0000    0.001      0.01       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   pg            0.0904    4.247     16.42       0    87.5%          50.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   pg1           0.0000    0.025      0.19       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   pg2           0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   hybpg1        0.0000    0.016      0.14       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   hybpg2        0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   dc            1.5270   17.114     41.66       0    70.0%          30.0%      5/30           7/60       11.67%  104.0%
+2026-10-04 06:43:17   dc1           0.6544   11.706     29.98       0    67.5%          30.0%      6/30          11/60       18.33%  101.8%
+2026-10-04 06:43:17   dc2           0.0049    0.143      0.52       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:17   flat1         1.3504   20.365     62.63       0    85.0%          70.0%      3/30           5/60        8.33%  101.8%
+2026-10-04 06:43:17   flat2         0.0186    0.416      1.46       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:43:17 saved ./work/zeroshot/summary_b137.93.csv
+2026-10-04 06:43:18 === run case118_ieee_b230: 40 of 2,996 scenarios (8 of 600 load scenarios), 0 branches always out, 2 processes
+2026-10-04 06:43:18   zero-shot normaliser: baseMVA 230.00 (graphkit recipe on these scenarios gives 114.57), vn_kv_max 345; released per-grid checkpoint (base) uses baseMVA 137.93, vn_kv_max 345
+2026-10-04 06:43:26   case118_ieee: 40 scenarios, 7,325 line readings, wall 8 s; base states 8 (failed intact solves: 0); checks: stored AC solution mismatch max 9.7e-07 MW, admittance formula vs stored max 0.0e+00
+2026-10-04 06:43:27 === report case118_ieee_b230: 40 scenarios, 7,325 line readings; zero-shot = pretrained Base, baseMVA 230.00; pg = per-grid Base checkpoint
+2026-10-04 06:43:27   30 of 40 scenarios have a real overload (75.0%); 60 overloaded line readings; branches removed per scenario: {1: 9, 2: 10, 3: 5, 4: 9, 5: 7}; base states 8 (failed 0)
+2026-10-04 06:43:27   Newton from     converged same sol.  it mean  med  max   start mismatch MW med / p99 / max      after 1 step             after 2 steps        start max|V-V_ac| med / p99
+2026-10-04 06:43:27   flat            40/40            40     4.00    4    4   1.09e+03 / 1.95e+03 / 1.95e+03     122 / 132 / 133          2.39 / 3.25 / 3.33       0.504 / 0.757
+2026-10-04 06:43:27   dc              40/40            40     4.00    4    4   1.14e+03 / 1.96e+03 / 1.96e+03     77.3 / 106 / 106         0.72 / 1.02 / 1.05       0.103 / 0.179
+2026-10-04 06:43:27   prev            40/40            40     3.02    3    4   61.3 / 204 / 217                   1.21 / 11.9 / 15.5       0.00081 / 0.133 / 0.171  0.0811 / 0.252
+2026-10-04 06:43:27   zs              40/40            40     3.62    4    4   89 / 253 / 260                     16.2 / 49.9 / 51.5       0.0758 / 0.418 / 0.418   0.384 / 0.645
+2026-10-04 06:43:27   hybzs           40/40            40     2.98    3    3   43.1 / 157 / 164                   0.3 / 3.51 / 3.61        0.000119 / 0.0155 / 0.0195 0.0394 / 0.172
+2026-10-04 06:43:27   pg              40/40            40     2.30    2    3   21.1 / 98.4 / 113                  0.0397 / 0.624 / 0.646   2.52e-07 / 0.000116 / 0.000133 0.0103 / 0.0877
+2026-10-04 06:43:27   hybpg           40/40            40     2.15    2    3   5.48 / 35.4 / 37.9                 0.00451 / 0.468 / 0.595  3.54e-09 / 0.000101 / 0.000134 0.00416 / 0.0863
+2026-10-04 06:43:27   inference per scenario (1 thread, median): zs 23 ms, pg 22 ms; full Newton from flat 2.7 ms
+2026-10-04 06:43:27   delta zs: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 68.2%, correlation 0.526, slope (pred on true) 0.169
+2026-10-04 06:43:27   delta zs: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 79.1%, correlation 0.799, slope (pred on true) 0.665
+2026-10-04 06:43:27   delta zs: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 76.1%, correlation 0.617, slope 0.464; raw zs error on these lines median 7.05 points, true |change| median 3.36 points
+2026-10-04 06:43:27   delta pg: predicted vs true change, bus angles moving > 0.1 deg: 2,915 readings, sign agreement 95.2%, correlation 0.932, slope (pred on true) 0.943
+2026-10-04 06:43:27   delta pg: predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 235 readings, sign agreement 99.1%, correlation 0.999, slope (pred on true) 1.000
+2026-10-04 06:43:27   delta pg: predicted loading change vs true change, lines moving > 1 point: 1,893 readings (25.84% of all), sign agreement 99.5%, correlation 0.989, slope 0.996; raw pg error on these lines median 0.17 points, true |change| median 3.36 points
+2026-10-04 06:43:27   predictor err median      p99       max     NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+2026-10-04 06:43:27   zs            4.9354   58.921    111.69       0    50.0%          40.0%     14/30          28/60       46.67%  131.4%
+2026-10-04 06:43:27   zs0           4.9903   60.092    115.04       0    50.0%          40.0%     14/30          28/60       46.67%  131.4%
+2026-10-04 06:43:27   zs1           0.0902    3.300      8.46       0    67.5%          20.0%      5/30           8/60       13.33%  101.8%
+2026-10-04 06:43:27   zs2           0.0002    0.020      0.08       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   prev0         0.1270   22.579     65.30       0     0.0%           0.0%     30/30          60/60      100.00%  136.8%
+2026-10-04 06:43:27   prev1         0.0053    0.949      4.36       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:43:27   prev2         0.0000    0.004      0.08       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   anch_zs       0.2558   18.150     55.00       0    62.5%          30.0%      8/30          15/60       25.00%  101.8%
+2026-10-04 06:43:27   hybzs0        0.2424   16.349     63.44       0    60.0%          40.0%     10/30          19/60       31.67%  119.2%
+2026-10-04 06:43:27   hybzs1        0.0026    0.430      2.03       0    75.0%          10.0%      1/30           1/60        1.67%  100.2%
+2026-10-04 06:43:27   hybzs2        0.0000    0.001      0.01       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   pg            0.0904    4.247     16.42       0    87.5%          50.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   pg1           0.0000    0.025      0.19       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   pg2           0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   hybpg1        0.0000    0.016      0.14       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   hybpg2        0.0000    0.000      0.00       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   dc            1.5270   17.114     41.66       0    70.0%          30.0%      5/30           7/60       11.67%  104.0%
+2026-10-04 06:43:27   dc1           0.6544   11.706     29.98       0    67.5%          30.0%      6/30          11/60       18.33%  101.8%
+2026-10-04 06:43:27   dc2           0.0049    0.143      0.52       0    75.0%           0.0%      0/30           0/60        0.00%        
+2026-10-04 06:43:27   flat1         1.3504   20.365     62.63       0    85.0%          70.0%      3/30           5/60        8.33%  101.8%
+2026-10-04 06:43:27   flat2         0.0186    0.416      1.46       0    72.5%          10.0%      2/30           2/60        3.33%  100.3%
+2026-10-04 06:43:27 saved ./work/zeroshot/summary_b230.csv

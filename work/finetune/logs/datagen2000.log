@@ -1,0 +1,13 @@
+Global random seed set to: 1234
+Finding upper limit u ......
+OPF did not converge for u=1.500. Using u=1.400 for upper limit
+./.venv/lib/python3.12/site-packages/gridfm_datakit/utils/param_handler.py:314: UserWarning: The following arguments are not used by the generation generator "cost_permutation": {'sigma': 1.0}
+  warnings.warn(
+min, max of ref_curve: 0.8400000000000002, 1.4000000000000004
+l, u: 0.8400000000000002, 1.4000000000000004
+cutting the load profile (original length: 8760, requested length: 1500)
+Skipping plot of scenarios for large networks (number of buses > 100)
+skipping load scenarios below 1000; large chunks kept: [(1000, 1500)]
+Processing scenarios:   0%|          | 0/1500 [00:00<?, ?it/s]Processing scenarios:   0%|          | 0/1500 [00:10<?, ?it/s]Processing scenarios:   8%|8         | 125/1500 [08:46<1:36:32,  4.21s/it]Processing scenarios:  33%|###3      | 500/1500 [08:50<17:40,  1.06s/it]  
+{'tqdm_log': 'work/finetune/data2000_all/case2000_goc/raw/tqdm.log', 'error_log': 'work/finetune/data2000_all/case2000_goc/raw/error.log', 'args_log': 'work/finetune/data2000_all/case2000_goc/raw/args.log', 'solver_log_dir': None, 'bus_data': 'work/finetune/data2000_all/case2000_goc/raw/bus_data.parquet', 'branch_data': 'work/finetune/data2000_all/case2000_goc/raw/branch_data.parquet', 'gen_data': 'work/finetune/data2000_all/case2000_goc/raw/gen_data.parquet', 'y_bus_data': 'work/finetune/data2000_all/case2000_goc/raw/y_bus_data.parquet', 'runtime_data': 'work/finetune/data2000_all/case2000_goc/raw/runtime_data.parquet', 'scenarios': 'work/finetune/data2000_all/case2000_goc/raw/scenarios_agg_load_profile.parquet', 'scenarios_plot': 'work/finetune/data2000_all/case2000_goc/raw/scenarios_agg_load_profile.html', 'scenarios_log': 'work/finetune/data2000_all/case2000_goc/raw/scenarios_agg_load_profile.log'}
+work/texas/tmo 20000 .venv/bin/python work/finetune/00_datagen_skip.py  1000  2092.54s user 41.93s system 377% cpu 9:25.28 total

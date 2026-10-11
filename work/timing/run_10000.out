@@ -1,0 +1,97 @@
+2026-10-04 06:00:40 === prep case10000_goc: 100 scenarios, seed 0; torch 2.13.0, 6 threads
+2026-10-04 06:00:51   GENCO tiny: 100 predictions, end-to-end 100.5 ms median (not a quiet-machine timing, see chain)
+2026-10-04 06:01:10   GENCO small: 100 predictions, end-to-end 191.5 ms median (not a quiet-machine timing, see chain)
+2026-10-04 06:01:10   saved ./work/timing/genco_pred_case10000_goc.npz
+2026-10-04 06:01:12 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 06:01:12 === solve case10000_goc: PowerModels._compute_ac_pf (NLsolve), 3 repetitions per start, interleaved, iteration cap 40
+2026-10-04 06:01:22 julia 1.13.1, Julia threads 1, BLAS threads 17, cpu apple-m1; single process
+2026-10-04 06:01:40 warm-up (2 scenarios, all starts, includes Julia compilation): 18.1 s
+2026-10-04 06:01:50   0/100 scenario 2 n_out 2: it default/flat/dc_qc/tiny_qc 3/40/40/4; ms 87.0/902.4/937.8/109.8; dv 1.1e-13; stored res0 2.8e-09
+2026-10-04 06:03:26   10/100 scenario 70 n_out 1: it default/flat/dc_qc/tiny_qc 3/40/40/4; ms 86.3/912.6/958.8/105.1; dv 2.0e-13; stored res0 5.9e-10
+2026-10-04 06:05:04   20/100 scenario 242 n_out 1: it default/flat/dc_qc/tiny_qc 3/40/40/4; ms 88.0/952.1/955.5/112.7; dv 2.5e-13; stored res0 1.7e-09
+2026-10-04 06:06:50   30/100 scenario 348 n_out 1: it default/flat/dc_qc/tiny_qc 4/40/40/4; ms 122.5/949.1/957.1/111.8; dv 1.2e-13; stored res0 1.9e-12
+2026-10-04 06:08:29   40/100 scenario 436 n_out 5: it default/flat/dc_qc/tiny_qc 4/40/40/4; ms 110.6/960.8/1048.7/109.7; dv 1.6e-13; stored res0 1.9e-12
+2026-10-04 06:10:06   50/100 scenario 510 n_out 2: it default/flat/dc_qc/tiny_qc 3/14/40/4; ms 88.2/334.3/960.1/116.6; dv 1.7e-13; stored res0 1.1e-09
+2026-10-04 06:11:51   60/100 scenario 609 n_out 1: it default/flat/dc_qc/tiny_qc 3/40/40/8; ms 91.9/944.6/975.5/181.4; dv 1.2e-13; stored res0 2.7e-09
+2026-10-04 06:13:31   70/100 scenario 693 n_out 1: it default/flat/dc_qc/tiny_qc 3/18/40/4; ms 90.1/419.1/953.8/112.4; dv 1.1e-13; stored res0 7.1e-10
+2026-10-04 06:15:13   80/100 scenario 787 n_out 1: it default/flat/dc_qc/tiny_qc 3/40/40/4; ms 84.8/879.3/975.3/108.7; dv 2.0e-13; stored res0 2.3e-09
+2026-10-04 06:17:02   90/100 scenario 904 n_out 2: it default/flat/dc_qc/tiny_qc 4/39/40/4; ms 106.9/835.5/971.1/111.4; dv 9.6e-14; stored res0 2.4e-12
+2026-10-04 06:18:37 measured 100 scenarios in 1016 s
+2026-10-04 06:18:37 saved ./work/timing/solver_starts_case10000_goc.parquet
+2026-10-04 06:18:37 --- case10000_goc: 100 scenarios; validation: stored AC solution in PowerModels' equations, residual max 9.46e-09 p.u. (median 6.82e-12); solve started from it: 0.00 iterations, max |dV| 0.0e+00; x0 written through the dict vs intended, max diff 0.0e+00
+2026-10-04 06:18:37     intact-grid solves (default start): converged 96/100, iterations mean 5.88; n_out==0 scenarios: 0, their |V_intact - V_stored| max nan
+2026-10-04 06:18:37     data dict (datakit _gfm_state, incl. numpy writes) 23.27 ms median; instantiate_pf_data 50.45 ms median; datakit stored runtime for these scenarios 275.8 ms median
+2026-10-04 06:18:37     start            conv  it mean  med  max    Jac ms med(min3)      p90 ms med(med3)   res0 med    max dV     same
+2026-10-04 06:18:37     default        94/100 (PM flag  94)     3.83    3   35   4.63        89.42   114.28        93.65   8.13e-01   1.1e+00   92/94 
+2026-10-04 06:18:37     flat_q0        25/100 (PM flag  25)    27.68   32   39  17.60       673.74   857.28       749.84   2.28e+02   2.2e+00    0/25 
+2026-10-04 06:18:37     dc_qc           0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:18:37     tiny_qc       100/100 (PM flag 100)     4.68    4    9   5.00       111.38   179.14       114.09   2.50e+00   2.1e-09  100/100
+2026-10-04 06:18:37     tiny_q0       100/100 (PM flag 100)     4.00    4    4   5.00       110.37   114.08       113.74   5.49e+00   2.1e-09  100/100
+2026-10-04 06:18:37     small_qc      100/100 (PM flag 100)     4.81    4   11   5.02       112.27   188.51       114.72   4.13e+00   2.1e-09  100/100
+2026-10-04 06:18:37     default_p      95/100 (PM flag  95)     3.40    3   29   4.26        87.29   110.77        90.24   8.13e-01   1.1e+00   92/95 
+2026-10-04 06:18:37     flat_q0_p      25/100 (PM flag  25)    27.68   32   39  17.60       661.65   896.75       747.39   2.28e+02   2.2e+00    0/25 
+2026-10-04 06:18:37     dc_qc_p         0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:18:37     tiny_qc_p     100/100 (PM flag 100)     3.25    3    4   4.25        88.11   111.86        90.34   2.50e+00   2.1e-09  100/100
+2026-10-04 06:18:37     small_qc_p    100/100 (PM flag 100)     3.08    3    4   4.08        86.99    92.27        89.98   4.13e+00   7.5e-09  100/100
+2026-10-04 06:18:37     default_nt     93/100 (PM flag  93)     4.57    5    6   5.57       128.13   135.86       133.10   8.13e-01   1.1e+00   92/93 
+2026-10-04 06:18:37     flat_q0_nt      0/100 (no convergence; start residual median 2.28e+02 p.u.)
+2026-10-04 06:18:37     tiny_qc_nt    100/100 (PM flag 100)     5.04    5    6   6.04       134.23   138.41       137.90   2.50e+00   2.1e-09  100/100
+2026-10-04 06:18:37     default_nt_p   94/100 (PM flag  94)     4.23    4    6   5.23       111.41   136.28       115.14   8.13e-01   1.1e+00   92/94 
+2026-10-04 06:18:37     flat_q0_nt_p    0/100 (no convergence; start residual median 2.28e+02 p.u.)
+2026-10-04 06:18:37     dc_qc_nt_p      0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:18:37     tiny_qc_nt_p  100/100 (PM flag 100)     4.42    4    7   5.42       112.88   135.85       115.31   2.50e+00   2.0e-09  100/100
+2026-10-04 06:18:58 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 06:18:58 === chain case10000_goc: torch 2.13.0, 6 CPU threads, mps True; 17 states
+2026-10-04 06:18:59   tiny  graph build + normalise + transforms                 cpu batch  1:     3.11 ms/state median (min 2.96, n 16) 
+2026-10-04 06:19:00   tiny  GENCO forward                                        cpu batch  1:   100.02 ms/state median (min 99.08, n 7) 
+2026-10-04 06:19:04   tiny  GENCO forward                                        cpu batch  4:    92.15 ms/state median (min 91.92, n 7) 
+2026-10-04 06:19:18   tiny  GENCO forward                                        cpu batch 16:    85.60 ms/state median (min 85.00, n 7) 
+2026-10-04 06:19:19   tiny  GENCO forward                                        mps batch  1:    63.69 ms/state median (min 63.28, n 7) 
+2026-10-04 06:19:21   tiny  GENCO forward                                        mps batch  4:    62.56 ms/state median (min 62.46, n 7) 
+2026-10-04 06:19:31   tiny  GENCO forward                                        mps batch 16:    61.43 ms/state median (min 61.39, n 7) 
+2026-10-04 06:19:40   tiny  GENCO end-to-end single state (graph+model+inverse+flows) cpu batch  1:   132.83 ms/state median (min 131.70, n 16) 
+2026-10-04 06:19:40   tiny  SciPy Newton problem build                           cpu batch  1:     2.37 ms/state median (min 2.35, n 16) 
+2026-10-04 06:19:40   tiny  SciPy one Newton step from GENCO                     cpu batch  1:    19.11 ms/state median (min 18.86, n 16) min of 3 per state
+2026-10-04 06:19:40   tiny  SciPy two Newton steps from GENCO                    cpu batch  1:    38.14 ms/state median (min 37.65, n 16) min of 3 per state
+2026-10-04 06:19:40   tiny  SciPy full Newton from GENCO                         cpu batch  1:    57.00 ms/state median (min 56.31, n 16) min of 3 per state; 3.18 iterations, converged 17/17
+2026-10-04 06:19:40   small graph build + normalise + transforms                 cpu batch  1:     3.62 ms/state median (min 3.50, n 16) 
+2026-10-04 06:19:42   small GENCO forward                                        cpu batch  1:   216.00 ms/state median (min 214.88, n 7) 
+2026-10-04 06:19:50   small GENCO forward                                        cpu batch  4:   190.30 ms/state median (min 190.08, n 7) 
+2026-10-04 06:20:20   small GENCO forward                                        cpu batch 16:   188.37 ms/state median (min 187.69, n 7) 
+2026-10-04 06:20:21   small GENCO forward                                        mps batch  1:   113.34 ms/state median (min 112.92, n 7) 
+2026-10-04 06:20:26   small GENCO forward                                        mps batch  4:   122.71 ms/state median (min 122.67, n 7) 
+2026-10-04 06:20:46   small GENCO forward                                        mps batch 16:   125.11 ms/state median (min 124.94, n 7) 
+2026-10-04 06:20:56   small GENCO end-to-end single state (graph+model+inverse+flows) cpu batch  1:   225.21 ms/state median (min 218.85, n 16) 
+2026-10-04 06:20:56   small SciPy Newton problem build                           cpu batch  1:     2.38 ms/state median (min 2.35, n 16) 
+2026-10-04 06:20:56   small SciPy one Newton step from GENCO                     cpu batch  1:    19.09 ms/state median (min 18.92, n 16) min of 3 per state
+2026-10-04 06:20:56   small SciPy two Newton steps from GENCO                    cpu batch  1:    38.17 ms/state median (min 37.79, n 16) min of 3 per state
+2026-10-04 06:20:56   small SciPy full Newton from GENCO                         cpu batch  1:    56.89 ms/state median (min 56.38, n 16) min of 3 per state; 3.06 iterations, converged 17/17
+2026-10-04 06:20:56 saved ./work/timing/chain_case10000_goc.csv
+2026-10-04 06:21:00 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 06:21:00 === chain case2000_goc: torch 2.13.0, 6 CPU threads, mps True; 17 states
+2026-10-04 06:21:01   tiny  graph build + normalise + transforms                 cpu batch  1:     2.12 ms/state median (min 2.05, n 16) 
+2026-10-04 06:21:01   tiny  GENCO forward                                        cpu batch  1:    33.87 ms/state median (min 33.17, n 7) 
+2026-10-04 06:21:02   tiny  GENCO forward                                        cpu batch  4:    22.46 ms/state median (min 22.38, n 7) 
+2026-10-04 06:21:05   tiny  GENCO forward                                        cpu batch 16:    20.24 ms/state median (min 20.16, n 7) 
+2026-10-04 06:21:06   tiny  GENCO forward                                        mps batch  1:    27.26 ms/state median (min 27.20, n 7) 
+2026-10-04 06:21:06   tiny  GENCO forward                                        mps batch  4:    14.76 ms/state median (min 14.74, n 7) 
+2026-10-04 06:21:08   tiny  GENCO forward                                        mps batch 16:    12.62 ms/state median (min 12.57, n 7) 
+2026-10-04 06:21:10   tiny  GENCO end-to-end single state (graph+model+inverse+flows) cpu batch  1:    38.32 ms/state median (min 38.00, n 16) 
+2026-10-04 06:21:10   tiny  SciPy Newton problem build                           cpu batch  1:     1.19 ms/state median (min 1.18, n 16) 
+2026-10-04 06:21:10   tiny  SciPy one Newton step from GENCO                     cpu batch  1:     4.07 ms/state median (min 4.02, n 16) min of 3 per state
+2026-10-04 06:21:10   tiny  SciPy two Newton steps from GENCO                    cpu batch  1:     8.07 ms/state median (min 8.02, n 16) min of 3 per state
+2026-10-04 06:21:10   tiny  SciPy full Newton from GENCO                         cpu batch  1:    12.05 ms/state median (min 11.93, n 16) min of 3 per state; 3.24 iterations, converged 17/17
+2026-10-04 06:21:11   small graph build + normalise + transforms                 cpu batch  1:     2.02 ms/state median (min 1.97, n 16) 
+2026-10-04 06:21:11   small GENCO forward                                        cpu batch  1:    54.76 ms/state median (min 54.60, n 7) 
+2026-10-04 06:21:13   small GENCO forward                                        cpu batch  4:    41.01 ms/state median (min 40.87, n 7) 
+2026-10-04 06:21:19   small GENCO forward                                        cpu batch 16:    39.95 ms/state median (min 39.92, n 7) 
+2026-10-04 06:21:20   small GENCO forward                                        mps batch  1:    38.17 ms/state median (min 38.09, n 7) 
+2026-10-04 06:21:21   small GENCO forward                                        mps batch  4:    25.89 ms/state median (min 25.77, n 7) 
+2026-10-04 06:21:25   small GENCO forward                                        mps batch 16:    24.80 ms/state median (min 24.77, n 7) 
+2026-10-04 06:21:27   small GENCO end-to-end single state (graph+model+inverse+flows) cpu batch  1:    59.41 ms/state median (min 59.25, n 16) 
+2026-10-04 06:21:27   small SciPy Newton problem build                           cpu batch  1:     1.20 ms/state median (min 1.18, n 16) 
+2026-10-04 06:21:27   small SciPy one Newton step from GENCO                     cpu batch  1:     4.08 ms/state median (min 4.05, n 16) min of 3 per state
+2026-10-04 06:21:27   small SciPy two Newton steps from GENCO                    cpu batch  1:     8.10 ms/state median (min 8.06, n 16) min of 3 per state
+2026-10-04 06:21:27   small SciPy full Newton from GENCO                         cpu batch  1:    12.09 ms/state median (min 11.91, n 16) min of 3 per state; 3.24 iterations, converged 17/17
+2026-10-04 06:21:27 saved ./work/timing/chain_case2000_goc.csv
+CHAIN_DONE 0

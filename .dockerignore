@@ -4,13 +4,17 @@
 
 !requirements.lock.txt
 !LICENSE
-!server.py
 !engine.py
-!analysis_warmstart.py
-!analysis_conformal.py
 !run_pretrained.py
-!web
-!docker
+!analysis
+analysis/*
+!analysis/analysis_warmstart.py
+!analysis/analysis_conformal.py
+!workbench
+workbench/*
+!workbench/server.py
+!workbench/web
+!workbench/docker
 !work
 work/*
 !work/workbench_conformal_case118_ieee_base.json

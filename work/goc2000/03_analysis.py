@@ -6,7 +6,7 @@ Reads lines_newton_<variant>_seed<S><tag>.parquet / states_newton_... (02_newton
   3. the example-post rule (t maximising scenario-level F-beta, beta = 3, on a calibration half; scored on the test half)
   4. Newton iterations / convergence, post-step mismatch, blow-ups, validation against the stored AC solution
   5. budget curve CSV budget_newton_<variant>_seed<S>.csv (test half, same layout as work/goc500/budget_newton_tiny_seed0.csv)
-Helpers (split, fbeta_threshold, evaluate) are imported from analysis_goc500.py / analysis_conformal.py unchanged.
+Helpers (split, fbeta_threshold, evaluate) are imported from analysis/analysis_goc500.py / analysis/analysis_conformal.py unchanged.
 
     .venv/bin/python work/goc2000/03_analysis.py --variant tiny --seed 0
 """
@@ -21,6 +21,7 @@ from scipy.stats import beta
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "analysis"))
 import analysis_conformal as ac  # noqa: E402
 import analysis_goc500 as g5  # noqa: E402
 

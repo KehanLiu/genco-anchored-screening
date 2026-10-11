@@ -1,0 +1,27 @@
+Generating power flow data from work/finetune/datagen500.yaml...
+Global random seed set to: 1234
+Finding upper limit u ....
+OPF did not converge for u=1.300. Using u=1.200 for upper limit
+./.venv/lib/python3.12/site-packages/gridfm_datakit/utils/param_handler.py:314: UserWarning: The following arguments are not used by the generation generator "cost_permutation": {'sigma': 1.0}
+  warnings.warn(
+min, max of ref_curve: 0.7200000000000001, 1.2000000000000002
+l, u: 0.7200000000000001, 1.2000000000000002
+cutting the load profile (original length: 8760, requested length: 6000)
+Skipping plot of scenarios for large networks (number of buses > 100)
+Processing scenarios:   0%|          | 0/6000 [00:00<?, ?it/s]Processing scenarios:   0%|          | 0/6000 [00:10<?, ?it/s]Processing scenarios:   2%|2         | 125/6000 [01:26<1:07:38,  1.45it/s]Processing scenarios:  10%|#         | 625/6000 [02:52<22:19,  4.01it/s]  Processing scenarios:  19%|#8        | 1125/6000 [04:18<16:46,  4.84it/s]Processing scenarios:  27%|##7       | 1625/6000 [05:28<12:58,  5.62it/s]Processing scenarios:  35%|###5      | 2125/6000 [06:37<10:30,  6.15it/s]Processing scenarios:  44%|####3     | 2625/6000 [08:00<09:13,  6.10it/s]Processing scenarios:  52%|#####2    | 3125/6000 [09:32<08:10,  5.87it/s]Processing scenarios:  60%|######    | 3625/6000 [11:01<06:50,  5.78it/s]Processing scenarios:  69%|######8   | 4125/6000 [12:27<05:24,  5.79it/s]Processing scenarios:  77%|#######7  | 4625/6000 [13:48<03:52,  5.92it/s]Processing scenarios:  85%|########5 | 5125/6000 [15:07<02:24,  6.04it/s]Processing scenarios:  94%|#########3| 5625/6000 [16:30<01:02,  6.02it/s]Processing scenarios: 100%|##########| 6000/6000 [16:31<00:00,  6.05it/s]
+
+Data generation complete!
+Generated files:
+  - tqdm_log: work/finetune/data500_all/case500_goc/raw/tqdm.log
+  - error_log: work/finetune/data500_all/case500_goc/raw/error.log
+  - args_log: work/finetune/data500_all/case500_goc/raw/args.log
+  - solver_log_dir: None
+  - bus_data: work/finetune/data500_all/case500_goc/raw/bus_data.parquet
+  - branch_data: work/finetune/data500_all/case500_goc/raw/branch_data.parquet
+  - gen_data: work/finetune/data500_all/case500_goc/raw/gen_data.parquet
+  - y_bus_data: work/finetune/data500_all/case500_goc/raw/y_bus_data.parquet
+  - runtime_data: work/finetune/data500_all/case500_goc/raw/runtime_data.parquet
+  - scenarios: work/finetune/data500_all/case500_goc/raw/scenarios_agg_load_profile.parquet
+  - scenarios_plot: work/finetune/data500_all/case500_goc/raw/scenarios_agg_load_profile.html
+  - scenarios_log: work/finetune/data500_all/case500_goc/raw/scenarios_agg_load_profile.log
+work/texas/tmo 14400 .venv/bin/gridfm_datakit generate   3862.27s user 49.84s system 384% cpu 16:56.54 total

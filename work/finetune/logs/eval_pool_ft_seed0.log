@@ -1,0 +1,7 @@
+case500_goc: 4996 scenarios from ./work/finetune/data500_ft/case500_goc/raw, model ./work/finetune/models/pf_case500_goc_ft_seed0, 4 procs
+18:45:59 worker 0: 0/1249  it flat/dc/genco 5/5/3  dv 3.3e-14  mis genco 0/1/2 204.9/0.64/0.0000 MW
+18:46:08 worker 0: 250/1249  it flat/dc/genco 5/5/3  dv 3.7e-11  mis genco 0/1/2 14.2/0.27/0.0000 MW
+18:46:16 worker 0: 500/1249  it flat/dc/genco 5/5/3  dv 3.6e-14  mis genco 0/1/2 404.4/2.36/0.0001 MW
+18:46:25 worker 0: 750/1249  it flat/dc/genco 5/5/3  dv 1.1e-11  mis genco 0/1/2 408.3/2.23/0.0001 MW
+18:46:34 worker 0: 1000/1249  it flat/dc/genco 5/5/3  dv 8.0e-12  mis genco 0/1/2 189.9/0.57/0.0000 MW
+4996 scenarios, 3,624,406 line readings, wall 49s; Newton from GENCO converged 4996/4996, iterations mean 2.944; start mismatch median 135.8 MW; raw loading error p99 5.74 points

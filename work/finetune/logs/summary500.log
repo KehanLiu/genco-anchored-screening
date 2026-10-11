@@ -1,0 +1,24 @@
+
+GOC 500, all: 14,992 scenarios; flagged = any predicted loading > 1.001; 'secure fl.' = secure scenarios flagged; missed = overloaded lines in unflagged scenarios; worst = highest AC loading among missed
+  model                    raw err med/p99/max (pt) | RAW: flagged   secure fl.  lines missed   worst | +1: flagged   secure fl.    missed   worst | +2: secure fl.  missed | Newton it  mis0 MW  mis1 MW
+  released_seed0                 0.325 / 6.50 / 134 |         3744   2146/13116      294/2621  139.6% |        1876      9/13116    9/2621  100.6% |        0/13116       0 |     3.005    435.2    3.650
+  released_seed1                0.261 / 4.91 / 1073 |         2491    945/13116      346/2621  139.6% |        1874      2/13116    4/2621  100.6% |        0/13116       0 |     2.974    132.4    1.281
+  ft_seed0                       0.227 / 5.20 / 134 |         2357    874/13116      431/2621  143.1% |        1874      8/13116   10/2621  100.6% |        0/13116       0 |     2.900     80.8    0.471
+  ft_seed1                       0.205 / 4.44 / 512 |         2848   1231/13116      286/2621  139.6% |        1867      2/13116   11/2621  100.6% |        0/13116       0 |     2.867     94.2    0.457
+  al_none_seed0                  0.235 / 5.40 / 172 |         2183    726/13116      456/2621  143.1% |        1876     11/13116   11/2621  100.6% |        0/13116       0 |     2.932     87.9    0.534
+  al_random_seed0                0.223 / 5.09 / 131 |         2740   1179/13116      347/2621  143.1% |        1870      3/13116    9/2621  100.6% |        0/13116       0 |     2.918     91.8    0.492
+  al_mis1_seed0                  0.239 / 5.19 / 105 |         2507    989/13116      389/2621  139.6% |        1874      6/13116    8/2621  100.6% |        0/13116       0 |     2.935     91.5    0.523
+  al_nearlimit_seed0             0.229 / 5.15 / 137 |         3097   1481/13116      292/2621  143.1% |        1873      6/13116    9/2621  100.6% |        0/13116       0 |     2.923     98.8    0.509
+
+GOC 500, n_out=1: 4,498 scenarios; flagged = any predicted loading > 1.001; 'secure fl.' = secure scenarios flagged; missed = overloaded lines in unflagged scenarios; worst = highest AC loading among missed
+  model                    raw err med/p99/max (pt) | RAW: flagged   secure fl.  lines missed   worst | +1: flagged   secure fl.    missed   worst | +2: secure fl.  missed | Newton it  mis0 MW  mis1 MW
+  released_seed0                  0.316 / 6.19 / 71 |          956     726/4228        41/343  123.0% |         269       2/4228     3/343  100.2% |         0/4228       0 |     3.002    436.3    3.653
+  released_seed1                  0.247 / 4.59 / 67 |          560     348/4228        60/343  115.1% |         271       2/4228     1/343  100.1% |         0/4228       0 |     2.963    132.8    1.278
+  ft_seed0                        0.217 / 4.87 / 65 |          523     314/4228        63/343  123.0% |         272       4/4228     2/343  100.2% |         0/4228       0 |     2.880     80.3    0.436
+  ft_seed1                        0.193 / 4.07 / 45 |          712     476/4228        36/343  120.5% |         268       1/4228     3/343  100.2% |         0/4228       0 |     2.835     93.5    0.420
+  al_none_seed0                   0.226 / 5.10 / 67 |          464     263/4228        73/343  125.5% |         271       4/4228     3/343  100.2% |         0/4228       0 |     2.918     86.4    0.502
+  al_random_seed0                 0.212 / 4.77 / 92 |          654     431/4228        49/343  123.0% |         268       0/4228     2/343  100.2% |         0/4228       0 |     2.896     90.6    0.460
+  al_mis1_seed0                  0.228 / 4.86 / 105 |          568     358/4228        64/343  123.0% |         272       3/4228     1/343  100.1% |         0/4228       0 |     2.914     91.0    0.495
+  al_nearlimit_seed0              0.218 / 4.85 / 76 |          761     523/4228        34/343  123.0% |         272       4/4228     2/343  100.2% |         0/4228       0 |     2.905     97.4    0.467
+
+scenarios with a broken Newton step: {'released_seed0': 0, 'released_seed1': 0, 'ft_seed0': 0, 'ft_seed1': 0, 'al_none_seed0': 0, 'al_random_seed0': 0, 'al_mis1_seed0': 0, 'al_nearlimit_seed0': 0}; not converged from GENCO: {'released_seed0': 0, 'released_seed1': 1, 'ft_seed0': 0, 'ft_seed1': 1, 'al_none_seed0': 0, 'al_random_seed0': 0, 'al_mis1_seed0': 0, 'al_nearlimit_seed0': 0}; saved ./work/finetune/results/summary_500.csv

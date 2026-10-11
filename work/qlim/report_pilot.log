@@ -1,0 +1,90 @@
+
+======================================================================================================================================================
+case500_goc: 150 scenarios, 108,807 rated line readings
+validation (a) limits disabled, DC-angle start vs stored AC solution: converged 150/150, max |V - V_stored| 7.4e-10 p.u. (0 scenarios > 1e-5), buses switched 0
+validation (b) invariants of the limit-enforced solutions (150 converged): power mismatch max 9.2e-07 MW; worst Q outside a limit at a regulating PV bus / fixed Q off its limit 9.9e-05 MVAr; worst voltage on the wrong side of the setpoint at a switched bus 9.9e-07 p.u.; PV buses with Qmin > Qmax: 0
+  same scenario solved from the pre-outage state and its bus types (150 scenarios): identical switched set in 150 (100.00%); max |dV| 1.2e-13 p.u., scenarios with |dV| > 1e-5: 0
+  solve mode: all-at-once 150, one-at-a-time fallback 0; outer iterations median 3 max 7; inner Newton iterations median 4; truth taken from the pre-outage path: 0
+stored (no-limit) solutions: 150 of 150 scenarios (100.0%) have a PV bus outside its Q limits; buses per scenario median 15 of 112 PV buses, max 33; worst excess 114 MVAr
+pre-outage states with limits: converged for 150/150 scenarios; switched buses median 0 (at Qmax 0, at Qmin 0)
+limit-enforced truth: NOT converged 0 of 150 (0.00%) reasons {}
+  scenarios with at least one PV->PQ switch: 150 of 150 (100.0%); switched buses per scenario median 17 mean 17.7 max 36 (at Qmax mean 4.6, at Qmin mean 13.1); share of PV buses switched 15.8%
+  reference bus Q outside its limits: 0 scenarios with limits (0 without) -- not enforced
+  voltage change: max |dVm| per scenario median 0.0012 p99 0.0276 max 0.0727 p.u.; lowest Vm: median 0.9613 -> 0.9613, min 0.9114 -> 0.9097; scenarios with a bus outside its voltage limits: 73 -> 85 (bus-states 139 -> 186)
+  line loading change |ac_qlim - ac|, points of rating: median 0.0003 / p99 0.210 / max 11.47; worst line per scenario median 0.410 / p99 7.83; readings changing by more than 1 point: 0.14%, more than 5: 0.006%
+  overloaded line readings: 17 without limits -> 18 with limits; appear 1, disappear 0; scenarios with an overload: 16 -> 16 (appear 0, disappear 0)
+  bus types after 2 switching steps from genco: scenarios with exactly the true switched set 28.7% (pre-outage types already right: 0.0%); wrong buses mean 2.55 max 22; 2 switching steps take 2.6 ms median
+  bus types after 2 switching steps from prev : scenarios with exactly the true switched set 54.0% (pre-outage types already right: 0.0%); wrong buses mean 1.16 max 12; 2 switching steps take 2.5 ms median
+  bus types after 2 switching steps from hyb  : scenarios with exactly the true switched set 58.0% (pre-outage types already right: 0.0%); wrong buses mean 1.08 max 12; 2 switching steps take 2.5 ms median
+  re-run vs earlier files: raw GENCO loading max diff 0.0e+00, GENCO + 1 plain step max diff 0.0e+00
+
+A. BEFORE: earlier predictors (no limits anywhere, pre-outage state without limits) against the no-limit truth, same scenarios
+  [no limits] 150 scenarios, 16 with an overload, 17 overloaded line readings
+  predictor err median      p99       max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+  genco         0.3350    7.096     43.17      0    18.7%          11.9%      4/16           4/17       23.53%  106.8%
+  dc            1.0493   22.537    175.74      0    16.7%          10.4%      5/16           6/17       35.29%  208.3%
+  genco1        0.0011    0.065      1.13      0    10.7%           0.0%      0/16           0/17        0.00%        
+  genco2        0.0000    0.000      0.00      0    10.7%           0.0%      0/16           0/17        0.00%        
+  prev1         0.0015    0.310     22.73      0    10.0%           0.0%      1/16           1/17        5.88%  100.1%
+  prev2         0.0000    0.003      0.44      0    10.7%           0.0%      0/16           0/17        0.00%        
+  hyb1          0.0001    0.017      1.13      0    10.7%           0.0%      0/16           0/17        0.00%        
+  hyb2          0.0000    0.000      0.00      0    10.7%           0.0%      0/16           0/17        0.00%        
+
+B. AFTER: against the limit-enforced truth. raw predictors and (i) plain Newton steps (no switching; pre-outage start solved with limits)
+  [Q limits] 150 scenarios, 16 with an overload, 18 overloaded line readings
+  predictor err median      p99       max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+  genco         0.3366    7.098     43.17      0    18.7%          11.9%      4/16           4/18       22.22%  106.2%
+  dc            1.0484   22.565    175.28      0    16.7%          10.4%      5/16           6/18       33.33%  207.9%
+  genco1        0.0021    0.221     11.50      0    10.7%           0.0%      0/16           0/18        0.00%        
+  genco2        0.0003    0.210     11.47      0    10.7%           0.0%      0/16           0/18        0.00%        
+  prev1         0.0024    0.435     23.19      0    10.0%           0.0%      1/16           2/18       11.11%  100.4%
+  prev2         0.0003    0.211     11.48      0    10.7%           0.0%      0/16           0/18        0.00%        
+  hyb1          0.0005    0.212     11.48      0    10.7%           0.0%      0/16           0/18        0.00%        
+  hyb2          0.0003    0.210     11.47      0    10.7%           0.0%      0/16           0/18        0.00%        
+
+C. AFTER: against the limit-enforced truth. (ii) Newton steps with switching (bus types of the limit-enforced pre-outage state, rule applied after each step)
+  [Q limits] 150 scenarios, 16 with an overload, 18 overloaded line readings
+  predictor err median      p99       max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+  genco1s       0.0021    0.221     11.50      0    10.7%           0.0%      0/16           0/18        0.00%        
+  genco2s       0.0001    0.045      3.52      0    10.7%           0.0%      0/16           0/18        0.00%        
+  prev1s        0.0024    0.435     23.19      0    10.0%           0.0%      1/16           2/18       11.11%  100.4%
+  prev2s        0.0000    0.052      3.52      0    10.7%           0.0%      0/16           0/18        0.00%        
+  hyb1s         0.0005    0.212     11.48      0    10.7%           0.0%      0/16           0/18        0.00%        
+  hyb2s         0.0000    0.044      3.52      0    10.7%           0.0%      0/16           0/18        0.00%        
+
+D. reference: the no-limit AC solution itself used as a predictor of the limit-enforced truth (the best any limit-blind method can do)
+  [Q limits] 150 scenarios, 16 with an overload, 18 overloaded line readings
+  predictor err median      p99       max    NaN  flagged secure flagged  missed scen.    missed lines   share   worst
+  ac            0.0003    0.210     11.47      0    10.7%           0.0%      0/16           0/18        0.00%        
+
+======================================================================================================================================================
+IEEE 118 voltage study: 61 states
+validation (a) limits disabled, flat start vs engine AC (PowerModels): max |V diff| 5.0e-06 p.u., buses switched 0; engine AC solution in this script's equations: mismatch max 2.3e-01 MW
+validation (b) invariants (61 converged): mismatch max 1.0e-06 MW, Q-limit excess max 9.9e-05 MVAr, wrong-side voltage max 5.3e-07 p.u.
+validation (b) independent solver: PowerModels compute_ac_pf on the final bus types (switched generators as fixed injections at their limit), 7 states with 3-19 switched buses (0 PowerModels failures): max |V diff| 8.2e-10 p.u., max loading diff 3.5e-07 points. This checks the solution for a given switched set; the switching decisions themselves are checked by the invariants only (no pandapower / MATPOWER installed).
+no-limit solutions with a PV bus outside its Q limits: 61 of 61 states; N-0 states with switched buses: 0 states
+limit-enforced truth: NOT converged 0 of 61 ; states with a switch 60 (98.4%), switched buses median 10 mean 10.4 max 21 (Qmax 564, Qmin 70 bus-states); one-at-a-time fallback 0; reference bus Q outside limits 1 states
+  line loading change: worst line per state median 0.949 / p99 19.91 / max 26.68 points; states with an overload 14 -> 14; overloaded lines 29 -> 30
+
+voltage-limit violations (case limits 0.94-1.06, tolerance 1e-4), 61 states with a limit-enforced solution:
+  without Q limits (PQ buses; PV buses sit on their setpoints): 20 bus-states in 16 states (26.2%); low 12, high 8; states with no DC overload: 9
+  with Q limits, PQ buses:          26 bus-states in 18 states; low 19, high 7
+  with Q limits, switched PV buses: 9 bus-states in 9 states (of 634 switched bus-states); low 3, high 6
+  with Q limits, all buses:         35 bus-states in 23 states (37.7%); states with no DC overload: 16; states violating only with limits 8, only without 1
+  |Vm change| from the limits: PQ buses median 0.00000 p99 0.01132 max 0.08729; switched PV buses median 0.00014 max 0.08543 p.u.
+
+  predictor                          buses scored     real  called    hit  missed  false+  recall  precis. states real st. unflagged |Vm err| p99      max
+  GENCO vs no-limit truth (before)   PQ                 20      21     19       1       2   95.0%    90.5%          16             0      0.00084  0.00219
+  GENCO                              PQ                 26      21     17       9       4   65.4%    81.0%          18             3      0.01132  0.08729
+  GENCO                              PQ + PV            35      21     17      18       4   48.6%    81.0%          23             8      0.01118  0.08729
+  GENCO + 1 plain step               PQ                 26      20     18       8       2   69.2%    90.0%          18             3      0.01131  0.08729
+  GENCO + 1 plain step               PQ + PV            35      20     18      17       2   51.4%    90.0%          23             8      0.01122  0.08729
+  GENCO + 1 step with switching      PQ                 26      20     18       8       2   69.2%    90.0%          18             3      0.01131  0.08729
+  GENCO + 1 step with switching      PQ + PV            35      20     18      17       2   51.4%    90.0%          23             8      0.01122  0.08729
+  GENCO + 2 steps with switching     PQ                 26      25     23       3       2   88.5%    92.0%          18             0      0.00333  0.01399
+  GENCO + 2 steps with switching     PQ + PV            35      35     32       3       3   91.4%    91.4%          23             0      0.00303  0.02272
+  no-limit AC solution               PQ                 26      20     18       8       2   69.2%    90.0%          18             3      0.01132  0.08729
+  no-limit AC solution               PQ + PV            35      20     18      17       2   51.4%    90.0%          23             8      0.01122  0.08729
+  (PV buses: GENCO and plain steps put them on the setpoint, so a violation at a switched PV bus can only be seen by a method that switches.)
+
+saved ./work/qlim/summary_pilot.csv

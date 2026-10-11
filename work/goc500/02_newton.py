@@ -26,6 +26,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "analysis"))
 NET = "case500_goc"
 BASE = 100.0
 

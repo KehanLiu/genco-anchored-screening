@@ -1,0 +1,44 @@
+[config] Converted v0 config -> v1 in memory (file on disk unchanged).
+Seed set to 0
+init weights work/goc500/pf_case500_goc_tiny/model/best_model_state_dict.pt; normalizer {'case500_goc': {'baseMVA_orig': tensor(100.), 'baseMVA': tensor(143.3860), 'vn_kv_max': tensor(345.)}}; resume from nothing
+GPU available: True (mps), used: True
+TPU available: False, using: 0 TPU cores
+💡 Tip: For seamless cloud logging and experiment tracking, try installing [litlogger](https://pypi.org/project/litlogger/) to enable LitLogger, which logs metrics and artifacts automatically to the Lightning Experiments platform.
+`Trainer(limit_val_batches=1.0)` was configured so 100% of the batches will be used..
+Loaded normalizer stats from work/goc500/pf_case500_goc_tiny/model/normalizer_stats.pt
+./.venv/lib/python3.12/site-packages/gridfm_graphkit/datasets/hetero_powergrid_datamodule.py:235: UserWarning: Requested number of scenarios (250000) exceeds dataset size (14960). Using the full dataset instead.
+  warnings.warn(
+./.venv/lib/python3.12/site-packages/gridfm_graphkit/datasets/hetero_powergrid_datamodule.py:245: UserWarning: `data.scenarios` is ignored when `split_from_existing_files` is set; train/val/test scenario ids are loaded from the provided split files.
+  warnings.warn(
+split='train' len(split_indices)=8969
+split='val' len(split_indices)=995
+split='test' len(split_indices)=995
+Restoring normalizer for case500_goc from saved stats
+
+  | Name    | Type              | Params | Mode  | FLOPs
+--------------------------------------------------------------
+0 | model   | GNS_heterogeneous | 1.3 M  | train | 0    
+1 | loss_fn | MixedLoss         | 0      | train | 0    
+--------------------------------------------------------------
+1.3 M     Trainable params
+0         Non-trainable params
+1.3 M     Total params
+5.106     Total estimated model params size (MB)
+353       Modules in train mode
+0         Modules in eval mode
+0         Total Flops
+creating train dataloader for rank  not distributed
+./.venv/lib/python3.12/site-packages/lightning/pytorch/utilities/_pytree.py:21: `isinstance(treespec, LeafSpec)` is deprecated, use `isinstance(treespec, TreeSpec) and treespec.is_leaf()` instead.
+./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:434: The 'train_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=17` in the `DataLoader` to improve performance.
+./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:434: The 'val_dataloader' does not have many workers which may be a bottleneck. Consider increasing the value of the `num_workers` argument` to `num_workers=17` in the `DataLoader` to improve performance.
+./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:378: You have overridden `transfer_batch_to_device` in `LightningModule` but have passed in a `LightningDataModule`. It will use the implementation from `LightningModule` instance.
+./.venv/lib/python3.12/site-packages/lightning/pytorch/trainer/connectors/data_connector.py:378: You have overridden `on_after_batch_transfer` in `LightningModule` but have passed in a `LightningDataModule`. It will use the implementation from `LightningModule` instance.
+16:17:19 step 1000: train loss 0.0038432, val loss 0.004057 *, 0.158 s/step (999 steps), lr 0.0005
+16:19:49 step 2000: train loss 0.0027313, val loss 0.0027264 *, 0.151 s/step (999 steps), lr 0.0005
+16:22:23 step 3000: train loss 0.031832, val loss 0.041734, 0.154 s/step (999 steps), lr 0.0005
+16:25:08 step 4000: train loss 0.024921, val loss 0.020889, 0.165 s/step (999 steps), lr 0.0005
+16:28:51 step 5000: train loss 0.016374, val loss 0.01566, 0.223 s/step (999 steps), lr 0.0005
+16:33:11 step 6000: train loss 0.012533, val loss 0.013315, 0.261 s/step (999 steps), lr 0.0005
+16:37:55 step 7000: train loss 0.010336, val loss 0.010794, 0.284 s/step (999 steps), lr 0.0005
+16:41:48 step 8000: train loss 0.0090333, val loss 0.0097513, 0.234 s/step (999 steps), lr 0.0005
+[rank: 0] Received SIGTERM: 15

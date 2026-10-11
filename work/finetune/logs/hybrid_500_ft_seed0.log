@@ -1,0 +1,41 @@
+case500_goc: 14,992 scenarios in 3,000 load scenarios, model ./work/finetune/models/pf_case500_goc_ft_seed0, tag ft_seed0; pre-outage start from ./work/goc500/lines_prev_tiny_seed0.parquet; 150 chunks of 20, 0 already done, 3 processes
+17:53:49 chunk 000040_000059_20: 100 scenarios in 4 s; 1/150 chunks, wall 20 s
+17:53:56 chunk 000120_000139_20: 99 scenarios in 3 s; 7/150 chunks, wall 27 s
+17:54:02 chunk 000280_000299_20: 100 scenarios in 3 s; 14/150 chunks, wall 33 s
+17:54:09 chunk 000400_000419_20: 100 scenarios in 3 s; 21/150 chunks, wall 40 s
+17:54:18 chunk 000540_000559_20: 100 scenarios in 3 s; 28/150 chunks, wall 49 s
+17:54:24 chunk 000680_000699_20: 100 scenarios in 3 s; 35/150 chunks, wall 55 s
+17:54:31 chunk 000820_000839_20: 100 scenarios in 3 s; 42/150 chunks, wall 62 s
+17:54:40 chunk 000960_000979_20: 100 scenarios in 3 s; 49/150 chunks, wall 71 s
+17:54:46 chunk 001100_001119_20: 100 scenarios in 3 s; 56/150 chunks, wall 78 s
+17:54:54 chunk 001240_001259_20: 100 scenarios in 3 s; 63/150 chunks, wall 85 s
+17:55:02 chunk 001380_001399_20: 100 scenarios in 3 s; 70/150 chunks, wall 93 s
+17:55:09 chunk 001520_001539_20: 100 scenarios in 3 s; 77/150 chunks, wall 100 s
+17:55:16 chunk 001660_001679_20: 99 scenarios in 3 s; 84/150 chunks, wall 108 s
+17:55:25 chunk 001800_001819_20: 100 scenarios in 3 s; 91/150 chunks, wall 116 s
+17:55:31 chunk 001940_001959_20: 99 scenarios in 3 s; 98/150 chunks, wall 123 s
+17:55:39 chunk 002080_002099_20: 100 scenarios in 3 s; 105/150 chunks, wall 131 s
+17:55:47 chunk 002220_002239_20: 100 scenarios in 3 s; 112/150 chunks, wall 138 s
+17:55:54 chunk 002360_002379_20: 100 scenarios in 3 s; 119/150 chunks, wall 145 s
+17:56:02 chunk 002500_002519_20: 100 scenarios in 3 s; 126/150 chunks, wall 153 s
+17:56:09 chunk 002640_002659_20: 100 scenarios in 3 s; 133/150 chunks, wall 160 s
+17:56:16 chunk 002780_002799_20: 99 scenarios in 3 s; 140/150 chunks, wall 167 s
+17:56:24 chunk 002920_002939_20: 100 scenarios in 3 s; 147/150 chunks, wall 175 s
+17:56:27 chunk 002980_002999_20: 100 scenarios in 3 s; 150/150 chunks, wall 178 s
+14,992 scenarios, 10,875,975 line readings, wall 182 s -> ./work/finetune/results/lines_hybrid_500_ft_seed0.parquet
+  base states without a pre-outage solution: 0; max |V - V_ac stored| after convergence from the hybrid start 1.2e-08
+  start mismatch MW max-norm, median / p99: pre-outage 118 / 522, GENCO 80.8 / 367, hybrid 4.91 / 75.2;  after one step: pre-outage 1.88 / 34, GENCO 0.471 / 6.69, hybrid 0.0241 / 2.95
+  start distance max|V - V_ac| p.u., median / p99: pre-outage 0.0558 / 0.329, GENCO 0.0386 / 0.191, hybrid 0.00887 / 0.121
+  Newton to convergence: hybrid 14,992/14,992 converged, iterations mean 2.33; pre-outage 14,992/14,992 converged, iterations mean 3.24; GENCO 14,992/14,992 converged, iterations mean 2.90
+  predicted vs true change, bus angles moving > 0.1 deg: 3,139,368 readings, sign agreement 68.1%, correlation 0.750, slope (pred on true) 0.593
+  predicted vs true change, PQ magnitudes moving > 0.001 p.u.: 447,403 readings, sign agreement 98.4%, correlation 0.932, slope (pred on true) 0.747
+  predicted vs true loading change, lines moving > 1 point: 1,101,370 readings (10.13% of all), sign agreement 97.3%, correlation 0.975; raw GENCO error on these lines median 0.51 points, true |change| median 2.44 points
+  genco   flagged  15.7%  secure flagged   6.7%  overloaded lines missed 431/2621
+  genco1  flagged  12.5%  secure flagged   0.1%  overloaded lines missed 10/2621
+  genco2  flagged  12.5%  secure flagged   0.0%  overloaded lines missed 0/2621
+  prev1   flagged  12.4%  secure flagged   0.2%  overloaded lines missed 41/2621
+  prev2   flagged  12.5%  secure flagged   0.0%  overloaded lines missed 1/2621
+  hyb0    flagged  13.8%  secure flagged   3.9%  overloaded lines missed 347/2621
+  hyb1    flagged  12.5%  secure flagged   0.0%  overloaded lines missed 5/2621
+  hyb2    flagged  12.5%  secure flagged   0.0%  overloaded lines missed 0/2621
+rc=0

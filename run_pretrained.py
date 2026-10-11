@@ -21,14 +21,27 @@ import yaml
 from huggingface_hub import hf_hub_download, list_repo_files
 
 HIDDEN_SIZE = {"tiny": 12, "small": 24, "base": 48}
+# Hugging Face commit shas of the copies used for the write-up (recorded 2026-10-10, the same values stand in
+# reproduce.sh); HF_REV_<NAME> overrides. Repositories without an entry read HF_REV_DEFAULT, or "main".
+REVISIONS = {
+    "gridfm/genco-pf-datakit": os.environ.get("HF_REV_DATAKIT", "7014f145635f26fa29e9e003f0dc33f689d615da"),
+    "gridfm/pf_small_case118_ieee": os.environ.get("HF_REV_PF_SMALL_CASE118_IEEE", "3f5a6e266f759be15e3777bf4d70133ff40e6fa7"),
+}
 TABLES = ("bus_data.parquet", "gen_data.parquet", "branch_data.parquet")
 WORK = Path(__file__).parent / "work"
+
+
+def revision(repo_id):
+    rev = REVISIONS.get(repo_id) or os.environ.get("HF_REV_DEFAULT", "main")
+    if repo_id not in REVISIONS:
+        print(f"note: no pinned revision for {repo_id}, reading {rev}", file=sys.stderr)
+    return rev
 
 
 def place(repo_id, filename, dest, repo_type=None):
     dest.parent.mkdir(parents=True, exist_ok=True)
     if not dest.exists():
-        shutil.copyfile(hf_hub_download(repo_id, filename, repo_type=repo_type), dest)
+        shutil.copyfile(hf_hub_download(repo_id, filename, repo_type=repo_type, revision=revision(repo_id)), dest)
     return dest
 
 
@@ -85,7 +98,7 @@ def prepare(network, variant, seed, accelerator):
     work = WORK / (f"pf_{network}_{variant}" + (f"_seed{seed}" if seed else ""))
     raw = work / "data" / network / "raw"
     data_repo = f"gridfm/pf_small_{network}"
-    remote_files = list_repo_files(data_repo, repo_type="dataset")
+    remote_files = list_repo_files(data_repo, repo_type="dataset", revision=revision(data_repo))
     for table in TABLES:
         prefix = f"{table}/scenario_partition=0/"
         for remote in (f for f in remote_files if f.startswith(prefix)):

@@ -1,4 +1,4 @@
-"""The safeguarded hybrid workflow (analysis_hybrid.py) on Texas-2k.
+"""The safeguarded hybrid workflow (analysis/analysis_hybrid.py) on Texas-2k.
 
 Same rule search, held-out calibration on whole outage sets and DC baseline as on IEEE 118; only the
 state sweep differs: Texas has ~3,200 branches, so single and double outages are sampled instead of
@@ -18,6 +18,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "analysis"))
 sys.path.insert(0, str(HERE))
 
 import engine  # noqa: E402  (loads Julia before torch)

@@ -1,0 +1,17 @@
+case500_goc: 14992 scenarios from ./work/goc500/data/case500_goc/raw, model ./work/finetune/models/pf_case500_goc_al_nearlimit_seed0, 4 procs
+21:29:57 worker 0: 0/3748  it flat/dc/genco 5/5/3  dv 3.3e-11  mis genco 0/1/2 158.7/10.49/0.0036 MW
+21:30:06 worker 0: 250/3748  it flat/dc/genco 5/5/3  dv 7.2e-14  mis genco 0/1/2 205.5/0.89/0.0000 MW
+21:30:15 worker 0: 500/3748  it flat/dc/genco 5/5/3  dv 1.0e-13  mis genco 0/1/2 33.1/0.37/0.0000 MW
+21:30:23 worker 0: 750/3748  it flat/dc/genco 5/5/3  dv 1.4e-14  mis genco 0/1/2 126.0/0.92/0.0000 MW
+21:30:32 worker 0: 1000/3748  it flat/dc/genco 5/5/3  dv 6.5e-11  mis genco 0/1/2 170.2/0.56/0.0001 MW
+21:30:40 worker 0: 1250/3748  it flat/dc/genco 5/5/3  dv 1.5e-14  mis genco 0/1/2 207.0/0.58/0.0000 MW
+21:30:49 worker 0: 1500/3748  it flat/dc/genco 5/5/3  dv 7.6e-13  mis genco 0/1/2 47.0/0.35/0.0000 MW
+21:30:58 worker 0: 1750/3748  it flat/dc/genco 5/5/3  dv 4.1e-14  mis genco 0/1/2 25.3/0.49/0.0000 MW
+21:31:06 worker 0: 2000/3748  it flat/dc/genco 5/5/3  dv 2.5e-10  mis genco 0/1/2 94.9/0.29/0.0000 MW
+21:31:15 worker 0: 2250/3748  it flat/dc/genco 5/5/3  dv 4.0e-14  mis genco 0/1/2 38.0/3.57/0.0005 MW
+21:31:24 worker 0: 2500/3748  it flat/dc/genco 5/5/3  dv 1.7e-11  mis genco 0/1/2 179.7/0.60/0.0000 MW
+21:31:32 worker 0: 2750/3748  it flat/dc/genco 5/5/3  dv 5.5e-10  mis genco 0/1/2 24.9/1.05/0.0002 MW
+21:31:41 worker 0: 3000/3748  it flat/dc/genco 5/5/3  dv 3.1e-14  mis genco 0/1/2 63.3/1.34/0.0008 MW
+21:31:50 worker 0: 3250/3748  it flat/dc/genco 5/5/3  dv 2.9e-13  mis genco 0/1/2 80.9/0.09/0.0001 MW
+21:31:59 worker 0: 3500/3748  it flat/dc/genco 5/5/3  dv 6.1e-13  mis genco 0/1/2 123.6/0.26/0.0000 MW
+14992 scenarios, 10,875,975 line readings, wall 165s; Newton from GENCO converged 14992/14992, iterations mean 2.923; start mismatch median 98.8 MW; raw loading error p99 5.15 points

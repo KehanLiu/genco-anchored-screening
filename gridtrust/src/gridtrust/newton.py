@@ -40,7 +40,11 @@ class RefineResult:
     V: np.ndarray = field(repr=False, default=None)  # complex voltages
 
     def selfcheck(self, threshold_mw: float) -> bool:
-        """True if the corrected state can be trusted: the remaining mismatch is at most the threshold."""
+        """True if the steps went through and the remaining bus mismatch is at most the threshold.
+
+        This is a heuristic acceptance rule, not a bound on the loading error: a small residual mismatch
+        does not certify that the corrected loadings are close to the converged solution (see
+        tests/test_staged.py::test_selfcheck_is_not_a_loading_certificate)."""
         return bool(self.ok and self.mismatch_mw <= threshold_mw)
 
 

@@ -1,0 +1,12 @@
+
+GOC 10000, all: 993 scenarios; flagged = any predicted loading > 1.001; 'secure fl.' = secure scenarios flagged; missed = overloaded lines in unflagged scenarios; worst = highest AC loading among missed
+  model                    raw err med/p99/max (pt) | RAW: flagged   secure fl.  lines missed   worst | +1: flagged   secure fl.    missed   worst | +2: secure fl.  missed | Newton it  mis0 MW  mis1 MW
+  released                      0.541 / 9.30 / 1032 |          978      689/698        10/507  109.7% |         546      258/698     7/507  100.7% |          1/698       0 |     3.219    256.0   12.835
+  ft10000_seed0                  0.561 / 9.43 / 983 |          969      679/698         6/507  101.1% |         581      294/698     8/507  100.7% |          2/698       0 |     3.228    247.1   12.048
+
+GOC 10000, n_out=1: 357 scenarios; flagged = any predicted loading > 1.001; 'secure fl.' = secure scenarios flagged; missed = overloaded lines in unflagged scenarios; worst = highest AC loading among missed
+  model                    raw err med/p99/max (pt) | RAW: flagged   secure fl.  lines missed   worst | +1: flagged   secure fl.    missed   worst | +2: secure fl.  missed | Newton it  mis0 MW  mis1 MW
+  released                      0.536 / 9.14 / 1032 |          352      299/304          0/75         |         157      105/304      1/75  100.7% |          0/304       0 |     3.160    254.6   12.165
+  ft10000_seed0                  0.558 / 9.28 / 983 |          347      294/304          0/75         |         182      130/304      1/75  100.7% |          1/304       0 |     3.171    247.1   11.458
+
+scenarios with a broken Newton step: {'released': 0, 'ft10000_seed0': 0}; not converged from GENCO: {'released': 0, 'ft10000_seed0': 1}; saved ./work/finetune/results/summary_10000.csv

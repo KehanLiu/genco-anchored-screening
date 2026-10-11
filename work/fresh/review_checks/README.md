@@ -1,0 +1,3 @@
+# review_checks
+
+Outputs of the independent reviewer's re-analysis, kept here as regression checks for the scorers. `batch3_hybrid_tau_reanalysis.csv` is the re-analysis of the hybrid / shrunk-start tables under the complete frozen policy (loading cushion plus the per-start mismatch tau); `work/fresh/score_fresh_hybrid.py` compares its full-policy rows against it (`--recheck-csv`) and fails on any difference. `screening_results.json` holds the re-analysis of the N-1 screening policies on the development test split; `work/fresh/score_fresh_n1.py --existing-dev-data` reproduces those numbers as a scorer check. Neither file is a fresh result; they only confirm that the scorers compute what the review computed.

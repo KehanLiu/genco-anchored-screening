@@ -1,0 +1,14 @@
+
+GOC 2000, all: 2,494 scenarios; flagged = any predicted loading > 1.001; 'secure fl.' = secure scenarios flagged; missed = overloaded lines in unflagged scenarios; worst = highest AC loading among missed
+  model                    raw err med/p99/max (pt) | RAW: flagged   secure fl.  lines missed   worst | +1: flagged   secure fl.    missed   worst | +2: secure fl.  missed | Newton it  mis0 MW  mis1 MW
+  released                      0.657 / 11.72 / 286 |          415     326/2342       111/369  286.8% |         165      14/2342     1/369  100.2% |         0/2342       0 |     3.199    245.9   10.758
+  ft2000_seed0                  0.678 / 11.90 / 283 |          751     650/2342       100/369  286.8% |         164      13/2342     1/369  100.2% |         0/2342       0 |     3.192    311.5   12.363
+  ft2000_seed1                  0.672 / 11.89 / 284 |          948     836/2342        81/369  286.8% |         164      13/2342     1/369  100.2% |         0/2342       0 |     3.198    297.5   12.521
+
+GOC 2000, n_out=1: 616 scenarios; flagged = any predicted loading > 1.001; 'secure fl.' = secure scenarios flagged; missed = overloaded lines in unflagged scenarios; worst = highest AC loading among missed
+  model                    raw err med/p99/max (pt) | RAW: flagged   secure fl.  lines missed   worst | +1: flagged   secure fl.    missed   worst | +2: secure fl.  missed | Newton it  mis0 MW  mis1 MW
+  released                      0.657 / 11.67 / 238 |          103       96/602          7/31  123.3% |          19        5/602      0/31         |          0/602       0 |     3.192    257.9   10.545
+  ft2000_seed0                  0.675 / 11.79 / 244 |          181      172/602          5/31  102.0% |          19        5/602      0/31         |          0/602       0 |     3.182    315.7   13.063
+  ft2000_seed1                  0.671 / 11.79 / 240 |          217      208/602          5/31  102.0% |          19        5/602      0/31         |          0/602       0 |     3.187    309.0   12.964
+
+scenarios with a broken Newton step: {'released': 0, 'ft2000_seed0': 0, 'ft2000_seed1': 0}; not converged from GENCO: {'released': 0, 'ft2000_seed0': 0, 'ft2000_seed1': 0}; saved ./work/finetune/results/summary_2000.csv

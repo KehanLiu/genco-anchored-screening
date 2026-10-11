@@ -1,0 +1,244 @@
+2026-10-04 05:35:16 === prep case2000_goc: 200 scenarios, seed 0; torch 2.13.0, 6 threads
+2026-10-04 05:35:24   GENCO tiny: 200 predictions, end-to-end 38.4 ms median (not a quiet-machine timing, see chain)
+2026-10-04 05:35:36   GENCO small: 200 predictions, end-to-end 59.7 ms median (not a quiet-machine timing, see chain)
+2026-10-04 05:35:36   saved ./work/timing/genco_pred_case2000_goc.npz
+2026-10-04 05:35:39 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 05:35:39 === solve case2000_goc: PowerModels._compute_ac_pf (NLsolve), 3 repetitions per start, interleaved, iteration cap 100
+2026-10-04 05:35:49 julia 1.13.1, Julia threads 1, BLAS threads 17, cpu apple-m1; single process
+2026-10-04 05:35:53 warm-up (2 scenarios, all starts, includes Julia compilation): 3.4 s
+2026-10-04 05:35:55   0/6 scenario 6 n_out 5: it default/flat/dc_qc/tiny_qc 3/8/8/6; ms 13.4/33.1/33.1/14.4; dv 5.0e-14; stored res0 1.3e-09
+2026-10-04 05:35:57   1/6 scenario 12 n_out 1: it default/flat/dc_qc/tiny_qc 3/6/100/4; ms 13.4/27.1/24.8/18.5; dv 2.8e-10; stored res0 8.8e-13
+2026-10-04 05:35:58   2/6 scenario 19 n_out 5: it default/flat/dc_qc/tiny_qc 3/6/6/3; ms 13.9/24.8/24.8/13.4; dv 2.6e-10; stored res0 1.2e-09
+2026-10-04 05:35:59   3/6 scenario 36 n_out 3: it default/flat/dc_qc/tiny_qc 3/6/6/3; ms 13.4/24.7/25.0/13.5; dv 9.1e-13; stored res0 6.3e-12
+2026-10-04 05:36:00   4/6 scenario 38 n_out 4: it default/flat/dc_qc/tiny_qc 3/6/6/3; ms 13.5/24.9/24.9/13.4; dv 1.3e-12; stored res0 7.5e-11
+2026-10-04 05:36:01   5/6 scenario 40 n_out 3: it default/flat/dc_qc/tiny_qc 3/7/6/3; ms 13.5/28.5/24.9/13.4; dv 4.7e-13; stored res0 1.3e-11
+2026-10-04 05:36:01 measured 6 scenarios in 8 s
+2026-10-04 05:36:01 saved ./work/timing/solver_starts_case2000_goc_test.parquet
+2026-10-04 05:36:01 --- case2000_goc: 6 scenarios; validation: stored AC solution in PowerModels' equations, residual max 1.26e-09 p.u. (median 4.36e-11); solve started from it: 0.00 iterations, max |dV| 0.0e+00; x0 written through the dict vs intended, max diff 0.0e+00
+2026-10-04 05:36:01     intact-grid solves (default start): converged 6/6, iterations mean 3.83; n_out==0 scenarios: 0, their |V_intact - V_stored| max nan
+2026-10-04 05:36:01     data dict (datakit _gfm_state, incl. numpy writes) 3.40 ms median; instantiate_pf_data 6.06 ms median; datakit stored runtime for these scenarios 17.7 ms median
+2026-10-04 05:36:01     start            conv  it mean  med  max    Jac ms med(min3)      p90 ms med(med3)   res0 med    max dV     same
+2026-10-04 05:36:01     default         6/6       3.00    3    3   4.00        13.45    13.70        14.05   5.70e-01   2.8e-10    6/6  
+2026-10-04 05:36:01     flat_q0         6/6       6.50    6    8   7.50        26.00    30.84        27.32   9.85e+01   1.1e+00    3/6  
+2026-10-04 05:36:01     flat_qc         5/6       8.20    6   15   8.60        25.45    49.84        25.50   9.03e+01   1.1e+00    3/5  
+2026-10-04 05:36:01     dc_q0           6/6      11.50    6   37   9.67        24.84    27.61        25.27   9.83e+01   1.1e+00    4/6  
+2026-10-04 05:36:01     dc_qc           5/6       6.40    6    8   7.40        24.88    29.89        25.33   9.02e+01   1.1e+00    3/5  
+2026-10-04 05:36:01     tiny_qc         6/6       3.67    3    6   4.67        13.47    16.44        19.45   1.96e+00   1.1e+00    5/6  
+2026-10-04 05:36:01     tiny_q0         6/6       3.67    3    6   4.67        13.48    16.65        16.16   9.08e+00   1.1e+00    5/6  
+2026-10-04 05:36:01     small_qc        6/6       3.67    3    6   4.67        13.54    15.81        16.19   1.76e+00   1.1e+00    5/6  
+2026-10-04 05:36:01     default_nt      6/6       3.83    4    5   4.83        16.99    19.01        17.18   5.70e-01   3.2e-10    6/6  
+2026-10-04 05:36:01     flat_q0_nt      6/6       7.50    8    8   8.50        30.47    32.30        30.64   9.85e+01   3.2e-10    6/6  
+2026-10-04 05:36:01     dc_qc_nt        6/6       7.83    8    8   8.83        31.93    32.36        32.51   9.02e+01   5.5e-10    6/6  
+2026-10-04 05:36:01     tiny_qc_nt      6/6       4.50    4    5   5.50        18.82    20.83        19.09   1.96e+00   2.6e-10    6/6  
+2026-10-04 05:36:25 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 05:36:25 === solve case2000_goc: PowerModels._compute_ac_pf (NLsolve), 3 repetitions per start, interleaved, iteration cap 100
+2026-10-04 05:36:34 julia 1.13.1, Julia threads 1, BLAS threads 17, cpu apple-m1; single process
+2026-10-04 05:36:38 warm-up (2 scenarios, all starts, includes Julia compilation): 3.4 s
+2026-10-04 05:36:40   0/200 scenario 6 n_out 5: it default/flat/dc_qc/tiny_qc 3/8/8/6; ms 13.8/32.5/32.5/13.6; dv 5.0e-14; stored res0 1.3e-09
+2026-10-04 05:37:25   20/200 scenario 200 n_out 4: it default/flat/dc_qc/tiny_qc 3/100/100/37; ms 14.0/371.1/359.8/127.0; dv 1.1e-10; stored res0 8.2e-10
+2026-10-04 05:39:04   40/200 scenario 566 n_out 4: it default/flat/dc_qc/tiny_qc 3/100/100/47; ms 13.6/377.5/351.8/53.0; dv 8.4e-11; stored res0 9.9e-10
+2026-10-04 05:40:56   60/200 scenario 892 n_out 5: it default/flat/dc_qc/tiny_qc 3/100/100/32; ms 13.9/362.4/375.6/112.3; dv 2.3e-10; stored res0 7.2e-09
+2026-10-04 05:42:50   80/200 scenario 1122 n_out 5: it default/flat/dc_qc/tiny_qc 3/100/100/35; ms 13.9/368.3/364.5/135.7; dv 1.2e-10; stored res0 9.6e-13
+2026-10-04 05:44:39   100/200 scenario 1376 n_out 1: it default/flat/dc_qc/tiny_qc 3/100/100/33; ms 13.9/366.9/368.1/116.9; dv 4.6e-13; stored res0 2.7e-11
+2026-10-04 05:46:25   120/200 scenario 1612 n_out 2: it default/flat/dc_qc/tiny_qc 3/7/7/6; ms 14.4/30.1/30.5/60.9; dv 6.7e-12; stored res0 8.0e-11
+2026-10-04 05:47:36   140/200 scenario 1848 n_out 3: it default/flat/dc_qc/tiny_qc 3/100/100/37; ms 14.1/367.3/365.1/131.5; dv 5.5e-11; stored res0 4.2e-10
+2026-10-04 05:49:08   160/200 scenario 2056 n_out 1: it default/flat/dc_qc/tiny_qc 3/7/6/4; ms 14.1/30.3/26.3/20.0; dv 6.6e-14; stored res0 1.2e-12
+2026-10-04 05:50:40   180/200 scenario 2289 n_out 2: it default/flat/dc_qc/tiny_qc 3/6/5/3; ms 14.4/26.3/22.2/14.0; dv 1.8e-13; stored res0 6.3e-12
+2026-10-04 05:51:23 measured 200 scenarios in 885 s
+2026-10-04 05:51:23 saved ./work/timing/solver_starts_case2000_goc.parquet
+2026-10-04 05:51:23 --- case2000_goc: 200 scenarios; validation: stored AC solution in PowerModels' equations, residual max 7.63e-09 p.u. (median 3.77e-11); solve started from it: 0.00 iterations, max |dV| 0.0e+00; x0 written through the dict vs intended, max diff 0.0e+00
+2026-10-04 05:51:23     intact-grid solves (default start): converged 200/200, iterations mean 3.56; n_out==0 scenarios: 0, their |V_intact - V_stored| max nan
+2026-10-04 05:51:23     data dict (datakit _gfm_state, incl. numpy writes) 3.44 ms median; instantiate_pf_data 6.28 ms median; datakit stored runtime for these scenarios 18.6 ms median
+2026-10-04 05:51:23     start            conv  it mean  med  max    Jac ms med(min3)      p90 ms med(med3)   res0 med    max dV     same
+2026-10-04 05:51:23     default       200/200     3.08    3    4   4.08        13.99    17.66        14.28   7.72e-01   1.1e+00  199/200
+2026-10-04 05:51:23     flat_q0        73/200     7.33    7   14   7.89        28.78    39.97        29.43   1.09e+02   1.1e+00   20/73 
+2026-10-04 05:51:23     flat_qc        43/200     9.26    6   98   7.72        26.33    37.81        26.81   9.89e+01   1.1e+00   21/43 
+2026-10-04 05:51:23     dc_q0          59/200     7.58    6   37   7.95        26.33    33.75        26.79   1.08e+02   2.1e+00   39/59 
+2026-10-04 05:51:23     dc_qc          57/200     7.25    6   32   7.58        26.26    36.51        26.61   9.92e+01   1.1e+00   27/57 
+2026-10-04 05:51:23     tiny_qc       197/200    23.29   27   62  12.89        48.40   146.75       112.91   2.33e+00   1.1e+00  170/197
+2026-10-04 05:51:23     tiny_q0       197/200     3.79    3   24   4.55        14.22    18.30        14.51   7.38e+00   1.1e+00  180/197
+2026-10-04 05:51:23     small_qc      199/200     3.61    3   24   4.43        14.01    18.07        14.26   1.95e+00   1.1e+00  188/199
+2026-10-04 05:51:23     default_nt    200/200     3.98    4    7   4.99        17.64    21.75        17.92   7.72e-01   1.1e+00  199/200
+2026-10-04 05:51:23     flat_q0_nt    179/200     8.94    9   16   9.94        37.27    41.61        37.60   1.09e+02   1.7e-09  179/179
+2026-10-04 05:51:23     dc_qc_nt      165/200     9.31    9   16  10.31        37.68    45.64        37.90   9.92e+01   2.0e-09  165/165
+2026-10-04 05:51:23     tiny_qc_nt    184/200     4.47    4    6   5.47        17.94    21.95        18.18   2.33e+00   2.5e-09  184/184
+2026-10-04 05:54:04 NOTE: everything above this line is superseded. Those runs reused one PowerFlowData across starts without resetting its internal voltage state; PowerModels' Jacobian reads that state, so each solve depended on the previous one (see script docstring, suffix _p). Old parquet moved to work/timing/superseded/. Runs below reset or prime that state before every solve.
+2026-10-04 05:54:06 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 05:54:06 === solve case2000_goc: PowerModels._compute_ac_pf (NLsolve), 3 repetitions per start, interleaved, iteration cap 60
+2026-10-04 05:54:15 julia 1.13.1, Julia threads 1, BLAS threads 17, cpu apple-m1; single process
+2026-10-04 05:54:18 warm-up (2 scenarios, all starts, includes Julia compilation): 3.0 s
+2026-10-04 05:54:20   0/200 scenario 6 n_out 5: it default/flat/dc_qc/tiny_qc 3/8/7/4; ms 13.9/33.0/28.8/17.3; dv 4.0e-14; stored res0 1.3e-09
+2026-10-04 05:54:49   20/200 scenario 200 n_out 4: it default/flat/dc_qc/tiny_qc 3/60/7/4; ms 13.6/227.1/29.1/17.7; dv 3.9e-14; stored res0 8.2e-10
+2026-10-04 05:55:25   40/200 scenario 566 n_out 4: it default/flat/dc_qc/tiny_qc 3/60/60/4; ms 13.7/228.2/226.5/17.6; dv 8.7e-14; stored res0 9.9e-10
+2026-10-04 05:56:02   60/200 scenario 892 n_out 5: it default/flat/dc_qc/tiny_qc 3/60/60/4; ms 13.7/221.7/274.8/17.6; dv 3.7e-14; stored res0 7.2e-09
+2026-10-04 05:56:40   80/200 scenario 1122 n_out 5: it default/flat/dc_qc/tiny_qc 4/60/60/4; ms 18.0/270.3/220.2/17.7; dv 6.3e-14; stored res0 9.6e-13
+2026-10-04 05:57:16   100/200 scenario 1376 n_out 1: it default/flat/dc_qc/tiny_qc 3/60/60/4; ms 14.1/274.4/223.7/18.0; dv 4.6e-14; stored res0 2.7e-11
+2026-10-04 05:57:53   120/200 scenario 1612 n_out 2: it default/flat/dc_qc/tiny_qc 3/60/7/4; ms 14.0/220.9/29.7/17.9; dv 6.4e-14; stored res0 8.0e-11
+2026-10-04 05:58:26   140/200 scenario 1848 n_out 3: it default/flat/dc_qc/tiny_qc 3/60/60/4; ms 14.3/230.2/275.7/17.8; dv 3.3e-14; stored res0 4.2e-10
+2026-10-04 05:59:02   160/200 scenario 2056 n_out 1: it default/flat/dc_qc/tiny_qc 3/6/6/4; ms 14.0/25.6/25.8/17.9; dv 6.4e-14; stored res0 1.2e-12
+2026-10-04 05:59:36   180/200 scenario 2289 n_out 2: it default/flat/dc_qc/tiny_qc 3/5/5/3; ms 14.1/21.9/21.9/14.0; dv 6.7e-14; stored res0 6.3e-12
+2026-10-04 06:00:05 measured 200 scenarios in 347 s
+2026-10-04 06:00:05 saved ./work/timing/solver_starts_case2000_goc.parquet
+2026-10-04 06:00:06 --- case2000_goc: 200 scenarios; validation: stored AC solution in PowerModels' equations, residual max 7.63e-09 p.u. (median 3.77e-11); solve started from it: 0.00 iterations, max |dV| 0.0e+00; x0 written through the dict vs intended, max diff 0.0e+00
+2026-10-04 06:00:06     intact-grid solves (default start): converged 199/200, iterations mean 3.69; n_out==0 scenarios: 0, their |V_intact - V_stored| max nan
+2026-10-04 06:00:06     data dict (datakit _gfm_state, incl. numpy writes) 3.42 ms median; instantiate_pf_data 6.24 ms median; datakit stored runtime for these scenarios 18.6 ms median
+2026-10-04 06:00:06     start            conv  it mean  med  max    Jac ms med(min3)      p90 ms med(med3)   res0 med    max dV     same
+2026-10-04 06:00:06     default       199/200 (PM flag 199)     3.23    3    4   4.23        13.96    17.83        14.28   7.72e-01   4.2e-13  199/199
+2026-10-04 06:00:06     flat_q0        62/200 (PM flag  62)     7.47    6   37   7.74        26.14    42.16        26.39   1.09e+02   1.1e+00   20/62 
+2026-10-04 06:00:06     dc_qc          85/200 (PM flag  85)     6.79    6   19   7.52        26.01    33.64        26.38   9.92e+01   1.7e+00   46/85 
+2026-10-04 06:00:06     tiny_qc       200/200 (PM flag 200)     4.33    4   10   4.92        17.87    25.08        18.10   2.33e+00   1.7e-09  200/200
+2026-10-04 06:00:06     tiny_q0       200/200 (PM flag 200)     3.90    4    4   4.90        17.82    18.15        18.06   7.38e+00   6.2e-09  200/200
+2026-10-04 06:00:06     small_qc      200/200 (PM flag 200)     4.17    4    9   4.87        17.79    18.43        17.99   1.95e+00   1.8e-09  200/200
+2026-10-04 06:00:06     default_p     199/200 (PM flag 199)     3.06    3    4   4.06        13.87    14.51        14.08   7.72e-01   3.0e-09  199/199
+2026-10-04 06:00:06     flat_q0_p      62/200 (PM flag  62)     7.47    6   37   7.74        26.03    42.21        26.52   1.09e+02   1.1e+00   20/62 
+2026-10-04 06:00:06     dc_qc_p        84/200 (PM flag  84)     6.87    6   29   7.50        25.95    33.64        26.19   9.92e+01   2.2e+00   48/84 
+2026-10-04 06:00:06     tiny_qc_p     200/200 (PM flag 200)     3.16    3    4   4.16        13.91    17.79        14.15   2.33e+00   1.7e-09  200/200
+2026-10-04 06:00:06     small_qc_p    200/200 (PM flag 200)     3.15    3    4   4.16        13.87    17.67        14.07   1.95e+00   1.7e-09  200/200
+2026-10-04 06:00:06     default_nt    199/200 (PM flag 199)     4.32    4    6   5.32        17.64    21.69        17.94   7.72e-01   4.1e-09  199/199
+2026-10-04 06:00:06     flat_q0_nt     50/200 (PM flag  50)    10.58   10   16  11.58        43.94    49.13        44.40   1.09e+02   2.4e-09   50/50 
+2026-10-04 06:00:06     tiny_qc_nt    200/200 (PM flag 200)     4.95    5    6   5.95        21.41    21.89        21.73   2.33e+00   4.9e-09  200/200
+2026-10-04 06:00:06     default_nt_p  199/200 (PM flag 199)     3.94    4    7   4.94        17.49    21.44        17.71   7.72e-01   4.1e-09  199/199
+2026-10-04 06:00:06     flat_q0_nt_p   50/200 (PM flag  50)    10.58   10   16  11.58        43.60    49.34        44.07   1.09e+02   2.4e-09   50/50 
+2026-10-04 06:00:06     dc_qc_nt_p    116/200 (PM flag 116)    10.49   10   21  11.49        41.36    52.42        41.69   9.92e+01   2.2e+00  115/116
+2026-10-04 06:00:06     tiny_qc_nt_p  200/200 (PM flag 200)     4.36    4    5   5.36        17.74    21.69        18.02   2.33e+00   8.0e-09  200/200
+2026-10-04 06:00:40 === prep case10000_goc: 100 scenarios, seed 0; torch 2.13.0, 6 threads
+2026-10-04 06:00:51   GENCO tiny: 100 predictions, end-to-end 100.5 ms median (not a quiet-machine timing, see chain)
+2026-10-04 06:01:10   GENCO small: 100 predictions, end-to-end 191.5 ms median (not a quiet-machine timing, see chain)
+2026-10-04 06:01:10   saved ./work/timing/genco_pred_case10000_goc.npz
+2026-10-04 06:01:12 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 06:01:12 === solve case10000_goc: PowerModels._compute_ac_pf (NLsolve), 3 repetitions per start, interleaved, iteration cap 40
+2026-10-04 06:01:22 julia 1.13.1, Julia threads 1, BLAS threads 17, cpu apple-m1; single process
+2026-10-04 06:01:40 warm-up (2 scenarios, all starts, includes Julia compilation): 18.1 s
+2026-10-04 06:01:50   0/100 scenario 2 n_out 2: it default/flat/dc_qc/tiny_qc 3/40/40/4; ms 87.0/902.4/937.8/109.8; dv 1.1e-13; stored res0 2.8e-09
+2026-10-04 06:03:26   10/100 scenario 70 n_out 1: it default/flat/dc_qc/tiny_qc 3/40/40/4; ms 86.3/912.6/958.8/105.1; dv 2.0e-13; stored res0 5.9e-10
+2026-10-04 06:05:04   20/100 scenario 242 n_out 1: it default/flat/dc_qc/tiny_qc 3/40/40/4; ms 88.0/952.1/955.5/112.7; dv 2.5e-13; stored res0 1.7e-09
+2026-10-04 06:06:50   30/100 scenario 348 n_out 1: it default/flat/dc_qc/tiny_qc 4/40/40/4; ms 122.5/949.1/957.1/111.8; dv 1.2e-13; stored res0 1.9e-12
+2026-10-04 06:08:29   40/100 scenario 436 n_out 5: it default/flat/dc_qc/tiny_qc 4/40/40/4; ms 110.6/960.8/1048.7/109.7; dv 1.6e-13; stored res0 1.9e-12
+2026-10-04 06:10:06   50/100 scenario 510 n_out 2: it default/flat/dc_qc/tiny_qc 3/14/40/4; ms 88.2/334.3/960.1/116.6; dv 1.7e-13; stored res0 1.1e-09
+2026-10-04 06:11:51   60/100 scenario 609 n_out 1: it default/flat/dc_qc/tiny_qc 3/40/40/8; ms 91.9/944.6/975.5/181.4; dv 1.2e-13; stored res0 2.7e-09
+2026-10-04 06:13:31   70/100 scenario 693 n_out 1: it default/flat/dc_qc/tiny_qc 3/18/40/4; ms 90.1/419.1/953.8/112.4; dv 1.1e-13; stored res0 7.1e-10
+2026-10-04 06:15:13   80/100 scenario 787 n_out 1: it default/flat/dc_qc/tiny_qc 3/40/40/4; ms 84.8/879.3/975.3/108.7; dv 2.0e-13; stored res0 2.3e-09
+2026-10-04 06:17:02   90/100 scenario 904 n_out 2: it default/flat/dc_qc/tiny_qc 4/39/40/4; ms 106.9/835.5/971.1/111.4; dv 9.6e-14; stored res0 2.4e-12
+2026-10-04 06:18:37 measured 100 scenarios in 1016 s
+2026-10-04 06:18:37 saved ./work/timing/solver_starts_case10000_goc.parquet
+2026-10-04 06:18:37 --- case10000_goc: 100 scenarios; validation: stored AC solution in PowerModels' equations, residual max 9.46e-09 p.u. (median 6.82e-12); solve started from it: 0.00 iterations, max |dV| 0.0e+00; x0 written through the dict vs intended, max diff 0.0e+00
+2026-10-04 06:18:37     intact-grid solves (default start): converged 96/100, iterations mean 5.88; n_out==0 scenarios: 0, their |V_intact - V_stored| max nan
+2026-10-04 06:18:37     data dict (datakit _gfm_state, incl. numpy writes) 23.27 ms median; instantiate_pf_data 50.45 ms median; datakit stored runtime for these scenarios 275.8 ms median
+2026-10-04 06:18:37     start            conv  it mean  med  max    Jac ms med(min3)      p90 ms med(med3)   res0 med    max dV     same
+2026-10-04 06:18:37     default        94/100 (PM flag  94)     3.83    3   35   4.63        89.42   114.28        93.65   8.13e-01   1.1e+00   92/94 
+2026-10-04 06:18:37     flat_q0        25/100 (PM flag  25)    27.68   32   39  17.60       673.74   857.28       749.84   2.28e+02   2.2e+00    0/25 
+2026-10-04 06:18:37     dc_qc           0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:18:37     tiny_qc       100/100 (PM flag 100)     4.68    4    9   5.00       111.38   179.14       114.09   2.50e+00   2.1e-09  100/100
+2026-10-04 06:18:37     tiny_q0       100/100 (PM flag 100)     4.00    4    4   5.00       110.37   114.08       113.74   5.49e+00   2.1e-09  100/100
+2026-10-04 06:18:37     small_qc      100/100 (PM flag 100)     4.81    4   11   5.02       112.27   188.51       114.72   4.13e+00   2.1e-09  100/100
+2026-10-04 06:18:37     default_p      95/100 (PM flag  95)     3.40    3   29   4.26        87.29   110.77        90.24   8.13e-01   1.1e+00   92/95 
+2026-10-04 06:18:37     flat_q0_p      25/100 (PM flag  25)    27.68   32   39  17.60       661.65   896.75       747.39   2.28e+02   2.2e+00    0/25 
+2026-10-04 06:18:37     dc_qc_p         0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:18:37     tiny_qc_p     100/100 (PM flag 100)     3.25    3    4   4.25        88.11   111.86        90.34   2.50e+00   2.1e-09  100/100
+2026-10-04 06:18:37     small_qc_p    100/100 (PM flag 100)     3.08    3    4   4.08        86.99    92.27        89.98   4.13e+00   7.5e-09  100/100
+2026-10-04 06:18:37     default_nt     93/100 (PM flag  93)     4.57    5    6   5.57       128.13   135.86       133.10   8.13e-01   1.1e+00   92/93 
+2026-10-04 06:18:37     flat_q0_nt      0/100 (no convergence; start residual median 2.28e+02 p.u.)
+2026-10-04 06:18:37     tiny_qc_nt    100/100 (PM flag 100)     5.04    5    6   6.04       134.23   138.41       137.90   2.50e+00   2.1e-09  100/100
+2026-10-04 06:18:37     default_nt_p   94/100 (PM flag  94)     4.23    4    6   5.23       111.41   136.28       115.14   8.13e-01   1.1e+00   92/94 
+2026-10-04 06:18:37     flat_q0_nt_p    0/100 (no convergence; start residual median 2.28e+02 p.u.)
+2026-10-04 06:18:37     dc_qc_nt_p      0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:18:37     tiny_qc_nt_p  100/100 (PM flag 100)     4.42    4    7   5.42       112.88   135.85       115.31   2.50e+00   2.0e-09  100/100
+2026-10-04 06:18:58 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 06:18:58 === chain case10000_goc: torch 2.13.0, 6 CPU threads, mps True; 17 states
+2026-10-04 06:18:59   tiny  graph build + normalise + transforms                 cpu batch  1:     3.11 ms/state median (min 2.96, n 16) 
+2026-10-04 06:19:00   tiny  GENCO forward                                        cpu batch  1:   100.02 ms/state median (min 99.08, n 7) 
+2026-10-04 06:19:04   tiny  GENCO forward                                        cpu batch  4:    92.15 ms/state median (min 91.92, n 7) 
+2026-10-04 06:19:18   tiny  GENCO forward                                        cpu batch 16:    85.60 ms/state median (min 85.00, n 7) 
+2026-10-04 06:19:19   tiny  GENCO forward                                        mps batch  1:    63.69 ms/state median (min 63.28, n 7) 
+2026-10-04 06:19:21   tiny  GENCO forward                                        mps batch  4:    62.56 ms/state median (min 62.46, n 7) 
+2026-10-04 06:19:31   tiny  GENCO forward                                        mps batch 16:    61.43 ms/state median (min 61.39, n 7) 
+2026-10-04 06:19:40   tiny  GENCO end-to-end single state (graph+model+inverse+flows) cpu batch  1:   132.83 ms/state median (min 131.70, n 16) 
+2026-10-04 06:19:40   tiny  SciPy Newton problem build                           cpu batch  1:     2.37 ms/state median (min 2.35, n 16) 
+2026-10-04 06:19:40   tiny  SciPy one Newton step from GENCO                     cpu batch  1:    19.11 ms/state median (min 18.86, n 16) min of 3 per state
+2026-10-04 06:19:40   tiny  SciPy two Newton steps from GENCO                    cpu batch  1:    38.14 ms/state median (min 37.65, n 16) min of 3 per state
+2026-10-04 06:19:40   tiny  SciPy full Newton from GENCO                         cpu batch  1:    57.00 ms/state median (min 56.31, n 16) min of 3 per state; 3.18 iterations, converged 17/17
+2026-10-04 06:19:40   small graph build + normalise + transforms                 cpu batch  1:     3.62 ms/state median (min 3.50, n 16) 
+2026-10-04 06:19:42   small GENCO forward                                        cpu batch  1:   216.00 ms/state median (min 214.88, n 7) 
+2026-10-04 06:19:50   small GENCO forward                                        cpu batch  4:   190.30 ms/state median (min 190.08, n 7) 
+2026-10-04 06:20:20   small GENCO forward                                        cpu batch 16:   188.37 ms/state median (min 187.69, n 7) 
+2026-10-04 06:20:21   small GENCO forward                                        mps batch  1:   113.34 ms/state median (min 112.92, n 7) 
+2026-10-04 06:20:26   small GENCO forward                                        mps batch  4:   122.71 ms/state median (min 122.67, n 7) 
+2026-10-04 06:20:46   small GENCO forward                                        mps batch 16:   125.11 ms/state median (min 124.94, n 7) 
+2026-10-04 06:20:56   small GENCO end-to-end single state (graph+model+inverse+flows) cpu batch  1:   225.21 ms/state median (min 218.85, n 16) 
+2026-10-04 06:20:56   small SciPy Newton problem build                           cpu batch  1:     2.38 ms/state median (min 2.35, n 16) 
+2026-10-04 06:20:56   small SciPy one Newton step from GENCO                     cpu batch  1:    19.09 ms/state median (min 18.92, n 16) min of 3 per state
+2026-10-04 06:20:56   small SciPy two Newton steps from GENCO                    cpu batch  1:    38.17 ms/state median (min 37.79, n 16) min of 3 per state
+2026-10-04 06:20:56   small SciPy full Newton from GENCO                         cpu batch  1:    56.89 ms/state median (min 56.38, n 16) min of 3 per state; 3.06 iterations, converged 17/17
+2026-10-04 06:20:56 saved ./work/timing/chain_case10000_goc.csv
+2026-10-04 06:21:00 machine: Apple M5 Pro, 18 cores (6 + 12 by performance level), 64 GB, macOS 27.0
+2026-10-04 06:21:00 === chain case2000_goc: torch 2.13.0, 6 CPU threads, mps True; 17 states
+2026-10-04 06:21:01   tiny  graph build + normalise + transforms                 cpu batch  1:     2.12 ms/state median (min 2.05, n 16) 
+2026-10-04 06:21:01   tiny  GENCO forward                                        cpu batch  1:    33.87 ms/state median (min 33.17, n 7) 
+2026-10-04 06:21:02   tiny  GENCO forward                                        cpu batch  4:    22.46 ms/state median (min 22.38, n 7) 
+2026-10-04 06:21:05   tiny  GENCO forward                                        cpu batch 16:    20.24 ms/state median (min 20.16, n 7) 
+2026-10-04 06:21:06   tiny  GENCO forward                                        mps batch  1:    27.26 ms/state median (min 27.20, n 7) 
+2026-10-04 06:21:06   tiny  GENCO forward                                        mps batch  4:    14.76 ms/state median (min 14.74, n 7) 
+2026-10-04 06:21:08   tiny  GENCO forward                                        mps batch 16:    12.62 ms/state median (min 12.57, n 7) 
+2026-10-04 06:21:10   tiny  GENCO end-to-end single state (graph+model+inverse+flows) cpu batch  1:    38.32 ms/state median (min 38.00, n 16) 
+2026-10-04 06:21:10   tiny  SciPy Newton problem build                           cpu batch  1:     1.19 ms/state median (min 1.18, n 16) 
+2026-10-04 06:21:10   tiny  SciPy one Newton step from GENCO                     cpu batch  1:     4.07 ms/state median (min 4.02, n 16) min of 3 per state
+2026-10-04 06:21:10   tiny  SciPy two Newton steps from GENCO                    cpu batch  1:     8.07 ms/state median (min 8.02, n 16) min of 3 per state
+2026-10-04 06:21:10   tiny  SciPy full Newton from GENCO                         cpu batch  1:    12.05 ms/state median (min 11.93, n 16) min of 3 per state; 3.24 iterations, converged 17/17
+2026-10-04 06:21:11   small graph build + normalise + transforms                 cpu batch  1:     2.02 ms/state median (min 1.97, n 16) 
+2026-10-04 06:21:11   small GENCO forward                                        cpu batch  1:    54.76 ms/state median (min 54.60, n 7) 
+2026-10-04 06:21:13   small GENCO forward                                        cpu batch  4:    41.01 ms/state median (min 40.87, n 7) 
+2026-10-04 06:21:19   small GENCO forward                                        cpu batch 16:    39.95 ms/state median (min 39.92, n 7) 
+2026-10-04 06:21:20   small GENCO forward                                        mps batch  1:    38.17 ms/state median (min 38.09, n 7) 
+2026-10-04 06:21:21   small GENCO forward                                        mps batch  4:    25.89 ms/state median (min 25.77, n 7) 
+2026-10-04 06:21:25   small GENCO forward                                        mps batch 16:    24.80 ms/state median (min 24.77, n 7) 
+2026-10-04 06:21:27   small GENCO end-to-end single state (graph+model+inverse+flows) cpu batch  1:    59.41 ms/state median (min 59.25, n 16) 
+2026-10-04 06:21:27   small SciPy Newton problem build                           cpu batch  1:     1.20 ms/state median (min 1.18, n 16) 
+2026-10-04 06:21:27   small SciPy one Newton step from GENCO                     cpu batch  1:     4.08 ms/state median (min 4.05, n 16) min of 3 per state
+2026-10-04 06:21:27   small SciPy two Newton steps from GENCO                    cpu batch  1:     8.10 ms/state median (min 8.06, n 16) min of 3 per state
+2026-10-04 06:21:27   small SciPy full Newton from GENCO                         cpu batch  1:    12.09 ms/state median (min 11.91, n 16) min of 3 per state; 3.24 iterations, converged 17/17
+2026-10-04 06:21:27 saved ./work/timing/chain_case2000_goc.csv
+2026-10-04 06:21:38 --- case2000_goc: 200 scenarios; validation: stored AC solution in PowerModels' equations, residual max 7.63e-09 p.u. (median 3.77e-11); solve started from it: 0.00 iterations, max |dV| 0.0e+00; x0 written through the dict vs intended, max diff 0.0e+00
+2026-10-04 06:21:38     intact-grid solves (default start): converged 199/200, iterations mean 3.69; n_out==0 scenarios: 0, their |V_intact - V_stored| max nan
+2026-10-04 06:21:38     data dict (datakit _gfm_state, incl. numpy writes) 3.42 ms median; instantiate_pf_data 6.24 ms median; datakit stored runtime for these scenarios 18.6 ms median
+2026-10-04 06:21:38     start            conv  it mean  med  max    Jac ms med(min3)      p90 ms med(med3)   res0 med    max dV     same
+2026-10-04 06:21:38     default       199/200 (PM flag 199)     3.23    3    4   4.23        13.96    17.83        14.28   7.72e-01   4.2e-13  199/199
+2026-10-04 06:21:38     flat_q0        62/200 (PM flag  62)     7.47    6   37   7.74        26.14    42.16        26.39   1.09e+02   1.1e+00   20/62 
+2026-10-04 06:21:38     dc_qc          85/200 (PM flag  85)     6.79    6   19   7.52        26.01    33.64        26.38   9.92e+01   1.7e+00   46/85 
+2026-10-04 06:21:38     tiny_qc       200/200 (PM flag 200)     4.33    4   10   4.92        17.87    25.08        18.10   2.33e+00   1.7e-09  200/200
+2026-10-04 06:21:38     tiny_q0       200/200 (PM flag 200)     3.90    4    4   4.90        17.82    18.15        18.06   7.38e+00   6.2e-09  200/200
+2026-10-04 06:21:38     small_qc      200/200 (PM flag 200)     4.17    4    9   4.87        17.79    18.43        17.99   1.95e+00   1.8e-09  200/200
+2026-10-04 06:21:38     default_p     199/200 (PM flag 199)     3.06    3    4   4.06        13.87    14.51        14.08   7.72e-01   3.0e-09  199/199
+2026-10-04 06:21:38     flat_q0_p      62/200 (PM flag  62)     7.47    6   37   7.74        26.03    42.21        26.52   1.09e+02   1.1e+00   20/62 
+2026-10-04 06:21:38     dc_qc_p        84/200 (PM flag  84)     6.87    6   29   7.50        25.95    33.64        26.19   9.92e+01   2.2e+00   48/84 
+2026-10-04 06:21:38     tiny_qc_p     200/200 (PM flag 200)     3.16    3    4   4.16        13.91    17.79        14.15   2.33e+00   1.7e-09  200/200
+2026-10-04 06:21:38     small_qc_p    200/200 (PM flag 200)     3.15    3    4   4.16        13.87    17.67        14.07   1.95e+00   1.7e-09  200/200
+2026-10-04 06:21:38     default_nt    199/200 (PM flag 199)     4.32    4    6   5.32        17.64    21.69        17.94   7.72e-01   4.1e-09  199/199
+2026-10-04 06:21:38     flat_q0_nt     50/200 (PM flag  50)    10.58   10   16  11.58        43.94    49.13        44.40   1.09e+02   2.4e-09   50/50 
+2026-10-04 06:21:38     tiny_qc_nt    200/200 (PM flag 200)     4.95    5    6   5.95        21.41    21.89        21.73   2.33e+00   4.9e-09  200/200
+2026-10-04 06:21:38     default_nt_p  199/200 (PM flag 199)     3.94    4    7   4.94        17.49    21.44        17.71   7.72e-01   4.1e-09  199/199
+2026-10-04 06:21:38     flat_q0_nt_p   50/200 (PM flag  50)    10.58   10   16  11.58        43.60    49.34        44.07   1.09e+02   2.4e-09   50/50 
+2026-10-04 06:21:38     dc_qc_nt_p    116/200 (PM flag 116)    10.49   10   21  11.49        41.36    52.42        41.69   9.92e+01   2.2e+00  115/116
+2026-10-04 06:21:38     tiny_qc_nt_p  200/200 (PM flag 200)     4.36    4    5   5.36        17.74    21.69        18.02   2.33e+00   8.0e-09  200/200
+2026-10-04 06:21:38 --- case10000_goc: 100 scenarios; validation: stored AC solution in PowerModels' equations, residual max 9.46e-09 p.u. (median 6.82e-12); solve started from it: 0.00 iterations, max |dV| 0.0e+00; x0 written through the dict vs intended, max diff 0.0e+00
+2026-10-04 06:21:38     intact-grid solves (default start): converged 96/100, iterations mean 5.88; n_out==0 scenarios: 0, their |V_intact - V_stored| max nan
+2026-10-04 06:21:38     data dict (datakit _gfm_state, incl. numpy writes) 23.27 ms median; instantiate_pf_data 50.45 ms median; datakit stored runtime for these scenarios 275.8 ms median
+2026-10-04 06:21:38     start            conv  it mean  med  max    Jac ms med(min3)      p90 ms med(med3)   res0 med    max dV     same
+2026-10-04 06:21:38     default        94/100 (PM flag  94)     3.83    3   35   4.63        89.42   114.28        93.65   8.13e-01   1.1e+00   92/94 
+2026-10-04 06:21:38     flat_q0        25/100 (PM flag  25)    27.68   32   39  17.60       673.74   857.28       749.84   2.28e+02   2.2e+00    0/25 
+2026-10-04 06:21:38     dc_qc           0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:21:38     tiny_qc       100/100 (PM flag 100)     4.68    4    9   5.00       111.38   179.14       114.09   2.50e+00   2.1e-09  100/100
+2026-10-04 06:21:38     tiny_q0       100/100 (PM flag 100)     4.00    4    4   5.00       110.37   114.08       113.74   5.49e+00   2.1e-09  100/100
+2026-10-04 06:21:38     small_qc      100/100 (PM flag 100)     4.81    4   11   5.02       112.27   188.51       114.72   4.13e+00   2.1e-09  100/100
+2026-10-04 06:21:38     default_p      95/100 (PM flag  95)     3.40    3   29   4.26        87.29   110.77        90.24   8.13e-01   1.1e+00   92/95 
+2026-10-04 06:21:38     flat_q0_p      25/100 (PM flag  25)    27.68   32   39  17.60       661.65   896.75       747.39   2.28e+02   2.2e+00    0/25 
+2026-10-04 06:21:38     dc_qc_p         0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:21:38     tiny_qc_p     100/100 (PM flag 100)     3.25    3    4   4.25        88.11   111.86        90.34   2.50e+00   2.1e-09  100/100
+2026-10-04 06:21:38     small_qc_p    100/100 (PM flag 100)     3.08    3    4   4.08        86.99    92.27        89.98   4.13e+00   7.5e-09  100/100
+2026-10-04 06:21:38     default_nt     93/100 (PM flag  93)     4.57    5    6   5.57       128.13   135.86       133.10   8.13e-01   1.1e+00   92/93 
+2026-10-04 06:21:38     flat_q0_nt      0/100 (no convergence; start residual median 2.28e+02 p.u.)
+2026-10-04 06:21:38     tiny_qc_nt    100/100 (PM flag 100)     5.04    5    6   6.04       134.23   138.41       137.90   2.50e+00   2.1e-09  100/100
+2026-10-04 06:21:38     default_nt_p   94/100 (PM flag  94)     4.23    4    6   5.23       111.41   136.28       115.14   8.13e-01   1.1e+00   92/94 
+2026-10-04 06:21:38     flat_q0_nt_p    0/100 (no convergence; start residual median 2.28e+02 p.u.)
+2026-10-04 06:21:38     dc_qc_nt_p      0/100 (no convergence; start residual median 1.12e+02 p.u.)
+2026-10-04 06:21:38     tiny_qc_nt_p  100/100 (PM flag 100)     4.42    4    7   5.42       112.88   135.85       115.31   2.50e+00   2.0e-09  100/100
+2026-10-04 06:21:38 saved ./work/timing/summary.csv

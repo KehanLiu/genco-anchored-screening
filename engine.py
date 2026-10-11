@@ -26,6 +26,7 @@ from gridfm_datakit.utils.column_names import (
 import json
 import time
 import urllib.request
+import sys
 from pathlib import Path
 
 import networkx as nx
@@ -51,7 +52,7 @@ LOAD_SCALE = {"min": 0.6, "max": 1.2, "step": 0.01, "default": 1.0}
 DISPATCH_MARGIN = 0.95
 # Loading above which a line counts as overloaded; just over 100% to absorb solver tolerance.
 OVERLOAD = 1.001
-# How far GENCO's verdict can be trusted, from analysis_hybrid.py and analysis_residual.py
+# How far GENCO's verdict can be trusted, from analysis/analysis_hybrid.py and analysis/analysis_residual.py
 # (IEEE 118, base model; the thresholds were picked on the same 1,635 states they were scored on).
 # A line GENCO puts inside the band is too close to call; outside it GENCO's call is taken as is.
 UNCERTAIN_BAND = (0.98, 1.02)
@@ -59,7 +60,7 @@ UNCERTAIN_BAND = (0.98, 1.02)
 RESIDUAL_MEDIUM, RESIDUAL_LOW = 0.25, 0.5
 
 # ---- staged check (GENCO -> one Newton step -> full AC), only computed when solve() gets an alpha ----
-# Stage 1 is the conformal band of analysis_conformal.py: surrogate "genco_d" (AC loading of the N-0
+# Stage 1 is the conformal band of analysis/analysis_conformal.py: surrogate "genco_d" (AC loading of the N-0
 # state of the same dispatch + GENCO's predicted change), sigma "shift". The allowed miss rates:
 STAGE_ALPHAS = (0.05, 0.02, 0.01)
 STAGE_ALPHA_DEFAULT = 0.01
@@ -177,9 +178,9 @@ def records(frame):
 def conformal_band(network, variant):
     """Band widths of stage 1, {"widths": {alpha: b}, "sigma_floor": ...}, or None without a sweep.
 
-    Calibrated as in analysis_conformal.py (label-conditional split conformal, surrogate genco_d,
+    Calibrated as in analysis/analysis_conformal.py (label-conditional split conformal, surrogate genco_d,
     sigma "shift") on the fit + calibration outage sets of the canonical split (seed 0) of the
-    sweep written by analysis_hybrid.py, so the widths are the ones in work/conformal_*.log and
+    sweep written by analysis/analysis_hybrid.py, so the widths are the ones in work/conformal_*.log and
     the test half of that split stays untouched. Cached in a small JSON next to the sweep.
     """
     cache = WORK / f"workbench_conformal_{network}_{variant}.json"
@@ -187,6 +188,8 @@ def conformal_band(network, variant):
     if cache.exists():
         band = json.loads(cache.read_text())
     elif sweep.exists():
+        if str(Path(__file__).resolve().parent / "analysis") not in sys.path:
+            sys.path.insert(0, str(Path(__file__).resolve().parent / "analysis"))
         import analysis_conformal as conformal
 
         data, _, n_states = conformal.load(sweep)
