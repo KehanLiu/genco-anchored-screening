@@ -14,7 +14,7 @@
 #                               git). Only the long stages above produce them; no results archive is available yet.
 #                               On a clean checkout without RUN_LONG=1 these two stages fail.
 #
-# Replay status: replayed from a fresh clone of commit 4c2987b on 2026-10-11 (macOS 27.0.1, Apple silicon, uv 0.12.7,
+# Replay status: replayed from a fresh clone on 2026-10-11, setup to tests again on 2026-10-19 (macOS 27.0.1, Apple silicon, uv 0.12.7,
 # Python 3.12.14). setup, fetch (53 manifest entries ok, Texas case absent), checksums and tests (49 pass / 15 skip
 # with the fetched inputs only; 54 / 10 with the saved tables) ran unchanged; analysis (985 s) and figures (12 s) ran
 # to completion once the saved result tables AND the GOC 2000 test pool work/goc2000/data/case2000_goc/raw/ (read by
