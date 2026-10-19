@@ -2,7 +2,7 @@
 
 Checks that a false outage mapping, an equivalence maximum above 1e-9 and an identity control that does not reproduce o = t
 raise PipelineAbort, and that `report` on such data writes no summary / criterion file, while clean data still produces both.
-Stored-frame regressions (independent batch-5 review probe): one NaN equivalence cell among passing
+Stored-frame regressions (from an audit probe): one NaN equivalence cell among passing
 rows, and one non-finite `none`-control reading whose counterpart is finite, must abort too (pandas maxima skip NaN); the copied CLI
 must exit 2 on both without writing a CSV."""
 import argparse
@@ -98,7 +98,7 @@ def test_report_clean_identity_writes_csv(tmp_path, monkeypatch):
     assert (tmp_path / "summary_goc500_tiny_ok.csv").exists() and (tmp_path / "criterion_goc500_tiny_ok.csv").exists()
 
 
-# ---- stored-frame regressions for the two report-time holes found by the batch-5 review -------------------------------------------
+# ---- stored-frame regressions for the two report-time holes found by an audit probe ----------------------------------------------
 
 def _write(tmp_path, L, S, tag):
     stem = rq.out_stem("500", "tiny", 0, "none", tag)
@@ -124,7 +124,7 @@ def test_equivalence_cells_check_fails_on_nonfinite_or_large_cell():
 
 
 def test_report_aborts_partial_nan_equivalence_cell(tmp_path, monkeypatch):
-    """Reviewer case partial_nan_eq: one eq_c_ybus = NaN among otherwise zero rows was reduced away by S[c].max()."""
+    """Audit case partial_nan_eq: one eq_c_ybus = NaN among otherwise zero rows was reduced away by S[c].max()."""
     monkeypatch.setattr(rq, "RESULTS", tmp_path)
     L, S = _synthetic()
     S.loc[0, "eq_c_ybus"] = np.nan
@@ -149,7 +149,7 @@ def test_identity_patterns_check():
 
 @pytest.mark.parametrize("kind", ["mismatch", "pair"])
 def test_report_aborts_identity_nonfinite(tmp_path, monkeypatch, kind):
-    """Reviewer case identity_nan_mismatch: one none-control hyb1_t = NaN with a finite hyb1_o was reported as identity 0 -> OK."""
+    """Audit case identity_nan_mismatch: one none-control hyb1_t = NaN with a finite hyb1_o was reported as identity 0 -> OK."""
     monkeypatch.setattr(rq, "RESULTS", tmp_path)
     L, S = _synthetic()
     sel = (L.state == 1) & (L.line == 0)
@@ -162,7 +162,7 @@ def test_report_aborts_identity_nonfinite(tmp_path, monkeypatch, kind):
 
 @pytest.mark.parametrize("case", ["partial_nan_eq", "identity_nan_mismatch", "clean"])
 def test_cli_report_exit_code_on_stored_frames(tmp_path, case):
-    """The reviewer's probe: a copy of the runner CLI on synthetic parquets must exit 2 with no CSV (or 0 with both CSVs when clean)."""
+    """Audit probe: a copy of the runner CLI on synthetic parquets must exit 2 with no CSV (or 0 with both CSVs when clean)."""
     root = Path(rq.ROOT)
     (tmp_path / "results").mkdir()
     shutil.copyfile(Path(rq.__file__), tmp_path / "run_equiv.py")

@@ -5,7 +5,7 @@
   2. The worst GOC 500 `split_gen` state (first-step |t-o| about 4,505 points) and its Newton outcome.
   3. Exploratory 5 MW mismatch-gate rescore (NOT the registered criterion): a state is referred when its loading-only flag fires
      OR its post-step mismatch `mis1_hyb_r` is > 5 MW or non-finite; the 5 MW threshold is the old GOC 2000 N-1 threshold transferred
-     unchanged. Reproduces the independent batch-4 review's table (section 3).
+     unchanged. Reproduces the internal audit's table (REPORT.md section 3).
 Columns used: lines parquet `ac`, `hyb1_o`, `hyb1_t`; states parquet `conv_hyb_t`, `it_hyb_t`, `dv_hyb_t`, `mis0_hyb_t`, `mis1_hyb_o`, `mis1_hyb_t`."""
 import sys
 from pathlib import Path

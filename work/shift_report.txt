@@ -41,7 +41,7 @@ TEXAS 2000 (calibrated on hybrid_texas_n2x450.parquet, 224 real overloads; 100 f
   genco_d+global at alpha<=2% sends 100% to AC (known). Recalibrating on 50-100 Texas states is useless: too few overloads.
 
 CAVEATS
-  * Small test sets mislead. A first draw with only 80 outage sets (kept in work/shift_draw1/) showed the CONTROL "broken"
+  * Small test sets mislead. A first draw with only 80 outage sets (not kept in this repository) showed the CONTROL "broken"
     (17.6% miss at alpha 10%, 10.3% at alpha 1%) because 6 of 80 sets contained branch 103, GENCO's hard outage (2 of 475
     sets in calibration): 51 of its 58 misses. The guarantee is marginal over outage sets; a batch dominated by a few
     hard outages can miss far more than alpha. That draw is not used for the conclusions above.

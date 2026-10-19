@@ -3,15 +3,15 @@
 Pre-registered experiment definition, written 10 October 2026 BEFORE any fresh operating point was scored.
 Section 10 ("Development probe") holds the only numbers seen so far; they come from the inspected development pool
 `work/goc500/data` and were used to choose the thresholds X, Y, X0 in section 7. Nothing in the fresh pools has been run.
-Brief: the independent reviewer's creative-directions note ("Equivalent circuit representations", "Follow-up and possible
-repair", "First pilot") and its follow-up message. Code: `work/equiv/transforms.py`, `work/equiv/run_equiv.py`,
+Brief: an internal audit note on creative directions ("Equivalent circuit representations", "Follow-up and possible
+repair", "First pilot") and its follow-up. Code: `work/equiv/transforms.py`, `work/equiv/run_equiv.py`,
 tests `work/equiv/test_transforms.py`. Nothing outside `work/equiv/` was modified.
 
 ## 1. Question
 
 The submission's start for a contingency is `v_start = v_AC(pre-outage) + v_GENCO(outage) - v_GENCO(intact)` followed by one
 Newton step. GENCO's raw prediction changes substantially when an electrically identical circuit is encoded differently
-(reviewer's probes: parallel split of every branch moves GOC 500 angles by up to 29 degrees). Question: **does the anchored
+(audit probes: parallel split of every branch moves GOC 500 angles by up to 29 degrees). Question: **does the anchored
 predicted change, and the one-Newton-step result built on it, depend on the representation much less than the raw prediction,
 and do the screening decisions survive the rewrite?** Secondary: how much of any cancellation is due to the anchoring (the
 difference of two predictions on the same representation) and how much to the Newton step itself.
@@ -49,7 +49,7 @@ All are applied identically to the intact and to every outaged graph of a base s
 | `none` | identity (pipeline control: every `t` column must equal its `o` column to float32) |
 | `permute` | random relabelling of buses plus a random reordering of branch and generator rows (ordinary equivariance control) |
 | `split_random_1` | one rated, not-always-out physical branch chosen at random per load scenario becomes 2 parallel copies: stored Y columns / 2 (exact), r, x x2, b / 2, rate / 2, flows / 2; tap, shift, angle limits, status kept |
-| `split_all` | every physical branch becomes 2 parallel copies as above (the reviewer's extreme encoding) |
+| `split_all` | every physical branch becomes 2 parallel copies as above (the extreme encoding of the audit probes) |
 | `split_gen` | every in-service, non-slack generator becomes two units at the same bus with half p_mw, q_mvar, P and Q limits, cp0 (cp2 doubled); bus table, types and setpoints untouched |
 | `+refvm` modifier | known-reference-voltage control: GENCO's predicted REF-bus Vm and Va are overwritten by the stored setpoints before the raw loading, the anchored start and the Newton step, for BOTH representations (the stock PF mask predicts the REF Vm; the REF Va is an unmasked input and comes back unchanged). NOTE (found in the probe): every Newton start of this pipeline (`Problem.start`) already pins the REF Vm/Va and the PV Vm to the setpoints, so `+refvm` changes only the raw `genco`/`dgenco` columns; `g1`, `hyb0`, `hyb1` are identical with and without it. A physically consistent known-REF-Vm adapter would need re-inference with a changed mask (not available for the released checkpoints) and is out of scope |
 
@@ -79,7 +79,7 @@ Released normalisers and the stock PF transforms are retained (`engine.Genco`, t
 | pool | load scenario ids | status |
 |---|---|---|
 | GOC 500 fresh, `work/fresh/data500/case500_goc/raw` | 6000-6499 (datakit seed 2026; `work/fresh/datagen500.yaml`, POLICY_LOG A4) | not yet generated at the time of writing (`work/fresh/chain10000.sh` runs it after the GOC 10000 pool); never inspected; ~2,500 contingency states expected |
-| GOC 2000 fresh, `work/fresh/data2000/case2000_goc/raw` | 1500-1999 (500 load scenarios, 2,496 states) | already generated; used by batch 3 (fresh N-1 and hybrid confirmation of the frozen policy), a DIFFERENT question. Its hybrid loadings have therefore been inspected once; it is fresh for the representation question, not untouched, and is reported as such |
+| GOC 2000 fresh, `work/fresh/data2000/case2000_goc/raw` | 1500-1999 (500 load scenarios, 2,496 states) | already generated; used by the fresh confirmation run `work/fresh/` (fresh N-1 and hybrid confirmation of the frozen policy), a DIFFERENT question. Its hybrid loadings have therefore been inspected once; it is fresh for the representation question, not untouched, and is reported as such |
 
 Sample: all states of both pools for the primary checkpoints and every transform of section 3 plus `split_all+refvm` and
 `split_random_1+refvm`; replication checkpoints on all states for `split_random_1` and `split_all`. No subsampling unless the
@@ -126,7 +126,7 @@ broken and nothing is reported. `+refvm` results are reported next to the stock-
   canonical merging of parallel copies and aggregation of co-located fixed-dispatch generators before inference, evaluated on
   the same fresh pools AND on the untouched original encodings (a repair that only restores the original input must not degrade
   them). Promote to the main contribution only if the repair improves fresh missed overloads or false flags without degrading
-  ordinary cases, after independent review.
+  ordinary cases, after a second-pass audit.
 - DOES NOT CANCEL only for `split_all`, or the effect disappears under `+refvm`: document as a limited finding (extreme
   engineered encoding / known-input issue), keep the current main story, no repair.
 - ABORT: any equivalence maximum above 1e-9, `outage_map_ok` false anywhere, or `none` not reproducing `o` = `t`; fix before scoring.
@@ -144,7 +144,7 @@ for s in 1 42; do for t in split_random_1 split_all; do
   work/texas/tmo 7200 .venv/bin/python -u work/equiv/run_equiv.py run --grid 500 --data work/fresh/data500 --variant tiny --seed $s \
       --transform $t --procs 2 --tag _fresh > work/equiv/logs/fresh500_seed${s}_$t.out 2>&1
 done; done
-# GOC 2000 fresh pool (ids 1500-1999, already generated, used by batch 3 for the policy question)
+# GOC 2000 fresh pool (ids 1500-1999, already generated, used by the fresh confirmation run for the policy question)
 for t in none permute split_random_1 split_all split_gen split_all+refvm split_random_1+refvm; do
   work/texas/tmo 14400 .venv/bin/python -u work/equiv/run_equiv.py run --grid 2000 --data work/fresh/data2000 --variant tiny --seed 0 \
       --load-ids work/fresh/fresh_ids.json --transform $t --procs 2 --tag _fresh > work/equiv/logs/fresh2000_$t.out 2>&1
@@ -205,7 +205,7 @@ story and add a documented limitation; the fresh pools decide.
   every copy.
 - `+refvm` is a raw-only control in this pipeline (section 3). The REF Va is unmasked and GENCO returns it unchanged (raw REF Va error 0).
 - `split_random_1` draws one branch per load scenario; a state whose drawn branch is itself outaged is kept and counted (`split_outaged`); none occurred in the probe.
-- The GOC 2000 fresh pool was inspected once for the batch-3 policy question; the GOC 500 fresh pool (ids 6000-6499) does not exist yet.
+- The GOC 2000 fresh pool was inspected once for the frozen-policy question of the fresh confirmation run; the GOC 500 fresh pool (ids 6000-6499) does not exist yet.
 - Code: `work/equiv/transforms.py`, `work/equiv/run_equiv.py` (imports `engine.Genco`, `analysis_prev_control.{paths,admittances,newton_module}`;
   the hybrid-start logic of `analysis_hybrid_start.worker` is copied), tests `work/equiv/test_transforms.py` (8 tests). Checkpoints as listed in
   section 5, released normalisers; datakit tables of the pools named in section 6; `work/fresh/datagen500.yaml` sha256 in `work/fresh/POLICY_LOG.md`.

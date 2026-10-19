@@ -46,7 +46,7 @@ def test_adaptive_band_anchor_and_no_refine():
 
 
 def test_selfcheck_is_not_a_loading_certificate():
-    """Two-bus counterexample (independent review, 2026-10-10): one Newton step from a poor start leaves 0.95 MW of
+    """Two-bus counterexample (internal audit, 2026-10-10): one Newton step from a poor start leaves 0.95 MW of
     mismatch, below the 1 MW threshold, while the one-step loading is 0.98 against a true 1.02. Stage 2 accepts the
     state; a second step finds the overload. The mismatch check is an acceptance heuristic, not a bound."""
     from gridtrust.newton import PowerFlowProblem
@@ -65,7 +65,7 @@ def test_selfcheck_is_not_a_loading_certificate():
 
 
 def test_all_nan_prediction_is_not_secure():
-    """Review finding (2026-10-10): `flag` leaves NaN unflagged, so an all-NaN prediction used to pass stage 1."""
+    """Regression (2026-10-10): `flag` leaves NaN unflagged, so an all-NaN prediction used to pass stage 1."""
     d = decide(np.array([np.nan, np.nan]), width=0.02, limit=1.0, refine=refined([0.5, 0.5], 0.1))
     assert (d.stage, d.decided_by, d.reason, d.needs_ac, d.verdict) == (3, "ac", "invalid", True, "needs_ac")
     assert d.invalid.tolist() == [0, 1]
@@ -124,7 +124,7 @@ def test_nan_start_fails_mismatch_and_finite_checks():
 
 
 def test_stage1_flags_only_rated_lines_with_explicit_mask():
-    """Review finding (batch 2, section 5): an unrated line with a finite prediction above the limit must not
+    """Regression: an unrated line with a finite prediction above the limit must not
     escalate the state when the explicit mask excludes it. Without a mask the legacy behaviour is unchanged."""
     d = decide(np.array([0.5, 1.2]), width=0.02, limit=1.0, rated=np.array([True, False]))
     assert (d.stage, d.reason, d.needs_ac) == (1, "band_clear", False) and d.flagged.tolist() == []
@@ -137,7 +137,7 @@ def test_stage1_flags_only_rated_lines_with_explicit_mask():
 
 
 def test_fallback_without_mask_warns_once_and_keeps_legacy_verdict():
-    """Review finding (batch 2, section 5): with rated=None a non-finite prediction next to finite ones passes as an
+    """Regression: with rated=None a non-finite prediction next to finite ones passes as an
     unrated line (band_clear; a partial inf plus an infinite post-step loading even gives newton_clear). The verdict
     is kept for backward compatibility, but the fallback warns once per process; the explicit mask refuses both."""
     import warnings

@@ -2,6 +2,8 @@
 __pycache__/
 *.pyc
 .DS_Store
+.pytest_cache/
+.claude/
 # checkpoints, downloaded data and bulky intermediate results stay local; see README for how to rebuild them
 work/**/*.pt
 work/**/*.ckpt
@@ -15,17 +17,6 @@ work/texas/ref/
 work/texas/pf_*/
 work/pf_*/
 work/pretrained/
-work/goc500/net/
-work/goc500/pf_*/
-# German grid experiments are built on data that must not be republished
-germany/
-work/germany/
-# bulky result tables: regenerate with reproduce.sh (or fetch from the results archive linked in the README)
-work/**/*.parquet
-work/**/mlruns/
-work/**/out/predictions*
-# internal working notes
-work/PROGRESS.md
 work/geo/
 work/goc*/net/
 work/goc*/pf_*/
@@ -35,25 +26,24 @@ work/finetune/data*/
 work/zeroshot/data/
 work/fulln1/chunks_*/
 work/timing/superseded/
-work/timing/*.npz
+work/finetune/models/*/stats/*_scenario_splits.json
+# bulky result tables: regenerate with reproduce.sh
+work/**/*.parquet
 work/**/*.npz
 work/**/ckpt/
-work/finetune/models/*/stats/*_scenario_splits.json
-# private process notes (reviews, plans, handoffs, drafts, study notes), intermediate summaries and dev-check outputs. They document how the project was run, not its results.
-reports/
-research_notes/
-work/*HANDOFF*.md
-work/handoffs/
-submission/POST_round*.md
-work/goc10000/hybrid_variants_summary.md
-work/fresh/logs/
+work/**/out/predictions*
+# run-state markers written by the pipelines (a stale marker makes a fresh run skip its stage)
+work/**/*.DONE
+work/**/DONE
+work/**/ALL_DONE
+work/**/*.done
+# local notes, drafts, scratch and run logs that are not results
+*.local.md
+notes/
+drafts/
+work/*_run.out
 work/fresh/*_check_*/
 work/fresh/results_*_existing_dev.*
-work/fresh/results_n1_devcheck.*
-work/equiv/logs/
-work/*_run.out
+work/fresh/results_n1_devcheck*
+work/goc10000/hybrid_variants_summary.md
 work/study/
-submission/POSTER.md
-# local tool session state
-.claude/
-.pytest_cache/

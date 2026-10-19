@@ -440,7 +440,7 @@ def timing(a):
 # ----------------------------------------------------------------------------- measured end-to-end cost (single process)
 def e2e(a):
     """Measured wall time of the COMPLETE per-outage sequence of each screening workflow (work/fresh/README.md section 4,
-    reporting as asked by the independent batch-2 review, section 2).
+    reporting as recommended by an internal audit).
 
     Workload (frozen, written to the json): per base case (ranks of --bases, default the policy's n1_base_ranks) a pre-registered
     sample of outages (numpy default_rng([2026, rank]).choice(cand, n, replace=False), sorted by branch id; the sample of a base does

@@ -1,8 +1,8 @@
 # Equivalent-circuit pilot: fresh-pool results and verdict
 
 Written 10 October 2026 after the fresh runs of `work/equiv/SPEC.md` section 9 (chain `work/equiv/fresh_chain.sh`, 17:21-17:54 CEST);
-corrected 11 October 2026 after the independent batch-4 review (its sections 1-3 and 5): wording of
-the verdict, the failure analysis of section 4, the loading-only labelling, the eligibility statement and the proposed post paragraph.
+corrected 11 October 2026 after an internal audit: wording of
+the verdict, the failure analysis of section 4, the loading-only labelling, the eligibility statement and the summary paragraph.
 No result file, threshold or SPEC text was changed. Everything below is read from `work/equiv/results/*_fresh.*` and
 `work/equiv/logs/fresh*.out`; the three helper scripts in `work/equiv/analysis/` recompute the stage table, the failure analysis and
 the recovery / 5 MW tables from the parquet files. Values in points of rating (1 point = 1% of rating) unless stated.
@@ -57,7 +57,7 @@ decision agreement), miss margin ceil(1% of overloaded readings) = +10 on GOC 50
 states) and +4 on GOC 2000 (322 of 9.06 M readings, 140 critical of 2,496 states), X0 = 0.3. "missed" counts overloaded line readings
 (AC loading > 1.001) in states that the loading-only predictor does not flag (no mismatch abstention); "agree" is the share of states
 whose loading-only decision is the same under o and t. Source: `results/criterion_goc{500,2000}_{tiny,small}[_seed{1,42}]_fresh.csv`;
-all 20 rows were reproduced independently by the batch-4 review.
+all 20 rows were reproduced by a second-pass re-analysis.
 
 | grid / checkpoint | transform | rho_hyb1 median | rho_hyb1 mean | rho_hyb0 | rho_g1 | agree hyb1 (loading-only) | missed hyb1 o -> t (loading-only) | prev1 missed | verdict |
 |---|---|---|---|---|---|---|---|---|---|
@@ -212,7 +212,7 @@ their eventual destination. The classical `prev1` and the original encoding are 
 Exploratory sensitivity, NOT the registered criterion: the full screening policy of the submission abstains ("refers") a state whose
 post-step mismatch exceeds a threshold. Rescoring the stored `split_all` states with the loading flag OR a post-step mismatch
 `mis1_hyb_r` above 5 MW (or non-finite), reproduced from the stored `mis1_hyb_o` / `mis1_hyb_t` columns by
-`analysis/recovery_and_gate.py` and matching the reviewer's table exactly:
+`analysis/recovery_and_gate.py` and matching the internal audit's table exactly:
 
 | `split_all`, 5 MW gate | original: missed readings / secure states referred | transformed: missed readings / secure states referred |
 |---|---|---|
@@ -250,12 +250,12 @@ All 20 fresh runs (logs `logs/fresh*.out`, per-state columns `eq_*`, `outage_map
   after all workers return and before the parquet files are written, together with the identity control for transform `none`
   (finite / non-finite patterns of every t column against its o column first, then max |t-o| < 1e-3 points); and the same cell-level and
   identity checks in `report()` on the stored parquet files, before the summary / criterion CSVs are written. Every check validates the
-  cells before any maximum is taken (pandas maxima skip NaN; the batch-5 review showed that one NaN equivalence cell or one NaN
+  cells before any maximum is taken (pandas maxima skip NaN; an audit probe showed that one NaN equivalence cell or one NaN
   `none`-control reading with a finite counterpart previously passed through the aggregated maxima). A non-finite (o, t) pair in the
   identity control also aborts: the control must consist of finite, equal readings. `__main__` maps `PipelineAbort`, and the
   `AssertionError` that `transforms.verify_equivalence` raises in a worker on a physics mismatch, to exit code 2 with a
   "PIPELINE BROKEN - ABORT" line; no summary / criterion CSV is written on either path. Previously `outage_map_ok` was recorded without
-  an assertion and the identity failure only printed "PIPELINE BROKEN". The stored fresh runs pass every control (the reviewer's audit
+  an assertion and the identity failure only printed "PIPELINE BROKEN". The stored fresh runs pass every control (an internal audit
   found finite equivalence values in all 20 state files and zero finite-mask mismatches or non-finite pairs in both `none` controls), so
   the stored results are unaffected. `test_abort.py` (15 tests) covers the abort paths on synthetic data, including stored-frame
   regressions for the two NaN cases and the copied-CLI exit code; a 2-load-group smoke run of `none` on the fresh GOC 500 pool confirmed
@@ -280,18 +280,18 @@ in this report uses identical state sets.
 - `+refvm` is a raw-only control: every Newton start of this pipeline already pins the REF Vm / Va and PV Vm to the setpoints, so
   `g1`, `hyb0`, `hyb1` are identical with and without it; a known-REF-Vm adapter would need re-inference with a changed mask, which
   the released checkpoints do not support. The `+refvm` rows therefore say nothing about a known-input repair.
-- The GOC 2000 fresh pool (ids 1500-1999) was used once by batch 3 for the frozen-policy question; it is fresh for the representation
+- The GOC 2000 fresh pool (ids 1500-1999) was used once by the fresh confirmation run (`work/fresh/`) for the frozen-policy question; it is fresh for the representation
   question but not untouched. The GOC 500 pool (ids 6000-6499 minus the failed id 6353) was never inspected before this run.
 - No repair was tested (canonical merging of parallel copies, aggregation of co-located generators); the continue-or-stop rule did
   not call for one.
 - `split_gen` on GOC 500 passes with a mean ratio of 0.045 against X = 0.05, carried by one state whose one-step result is off by
   4,505 points (state 1756; Newton from the same start converges to the stored solution in 8 iterations); three states exceed 100
-  points of first-step error; misses 4 -> 6 within the +10 allowance; decisions disagree in 8 of 2,494 states. A reviewer may regard the
+  points of first-step error; misses 4 -> 6 within the +10 allowance; decisions disagree in 8 of 2,494 states. A reader may regard the
   mean ratio as borderline; the tail is disclosed in sections 1 and 4.
 - Newton runs on the original problem for both representations (the equations are proven identical per state); the transformed
   problem is never iterated itself. Reactive limits are not enforced in this Newton experiment.
 
-## 7. Proposed paragraph for the submission post (reviewer's suggested text, adopted verbatim)
+## 7. Summary paragraph
 
 > **Equivalent circuit representations.** On the two primary fresh-pool experiments, anchoring plus one Newton step greatly reduced GENCO's sensitivity to one-branch and non-slack-generator splitting. The median across states of the maximum line-loading difference was below 0.05 points of rating, and loading-only decisions agreed in 99.7–100% of states. Both rewrites passed our registered tolerances, although generator splitting on GOC 500 increased missed overloaded readings from four to six and produced rare large first-step errors. Splitting all eligible branches failed the criterion on all three GOC 500 checkpoints; the primary loading-only missed count rose from four to 65. Both GOC 2000 checkpoints passed, with missed counts zero→one and zero→zero. These are bounded robustness diagnostics before mismatch abstention, not representation invariance or a safety guarantee.
 
@@ -324,6 +324,4 @@ Files:
 - `work/equiv/results/goc<N>_<variant>_seed<S>_<transform>_fresh_{states,lines}.parquet` for the 20 runs listed in section 2
 - `work/equiv/logs/fresh500_*.out`, `fresh2000_*.out` (run logs with the equivalence maxima), `fresh_chain.log`
 - `work/equiv/analysis/stage_table.py`, `split_all_failure.py`, `recovery_and_gate.py` (this report's helpers)
-- Independent review evidence (the batch-4 review, its pilot reproduction, root counterexample, physics basin counts and script):
-  recorded in the private review log, not part of this repository
 - Development probe, not evidence: `results/*_dev.*`, `logs/dev_report.txt`

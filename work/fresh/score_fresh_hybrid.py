@@ -20,7 +20,7 @@ Two decision rules are scored for every grid / checkpoint / start / cushion c (p
                           mis1_hyb / mis1_shyb (states_hybrid); for gate / sgate the tau of the start chosen per state applies
                           (prev 0.5, hyb / shyb 5 MW); a non-finite or missing mis1 counts as above tau (referred).
                           added_referrals = secure referrals under the full policy minus loading-only.
-The independent batch-3 review (section 1) found that the original scorer ignored tau; the full-policy
+An internal audit found that the original scorer ignored tau; the full-policy
 rows are verified against work/fresh/review_checks/batch3_hybrid_tau_reanalysis.csv when it exists (the run fails on any difference).
 Writes work/fresh/results_hybrid.md and .csv (or results_hybrid_existing_dev.* with --existing-dev-data).
 """
@@ -221,7 +221,7 @@ def main():
                f"Table B: {LABEL_FULL}. tau (MW) = {pol['tau_mw']}; the post-step mismatch is the stored mis1_prev / mis1_hyb / mis1_shyb; "
                "for gate / sgate the tau of the start chosen per state applies; a non-finite or missing mis1 counts as above tau (referred); "
                "added_referrals = secure referrals under the full policy minus loading-only (same c, same start). "
-               "Review finding (independent batch-3 review, section 1): the original scorer decided on loading only, although "
+               "Audit finding: the original scorer decided on loading only, although "
                "policy_frozen.json specifies one step with the chosen start's tau.\n\n")
     tables, notes, missing_all = [], [], []
     for grid, ckpts in pol["checkpoints"].items():

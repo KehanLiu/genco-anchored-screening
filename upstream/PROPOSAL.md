@@ -17,12 +17,12 @@ All numbers are from released checkpoints, no training. Source file in brackets.
 
 **One Newton step removes the error tail of the prediction.**
 
-- GOC 500, N-1 to N-5, 14,992 scenarios, GENCO Tiny: the 99th percentile of the loading error falls from 6.5 to 0.06 points of rating [`submission/POST.md`]. Median / p99 / max: GENCO 0.325 / 6.50 / 134, after one step 0.001 / 0.06 / 22.8, after two steps 0.000 / 0.00 / 8.8 [`work/PROGRESS.md`].
+- GOC 500, N-1 to N-5, 14,992 scenarios, GENCO Tiny: the 99th percentile of the loading error falls from 6.5 to 0.06 points of rating [`submission/POST.md`]. Median / p99 / max: GENCO 0.325 / 6.50 / 134, after one step 0.001 / 0.06 / 22.8, after two steps 0.000 / 0.00 / 8.8 [`work/goc500/logs/analysis_newton_seed0.log`].
 - IEEE 118 (366 states): p99 1.69 → 0.01, max 34.5 → 3.3 points. Texas 2000 (305 states): p99 1.93 → 0.01, max 16.4 → 0.3 points [`work/onestep_conformal.log`].
 - As a screen on GOC 500, "GENCO + one Newton step, threshold = the limit" sends 12.5% of scenarios to AC (12.5% really have an overload), 0.1% of the secure ones, and misses 9 of 2,621 overloaded lines, the worst at 100.6%. Two steps miss none [`submission/POST.md`].
 - The step only pays off from the model's prediction. On GOC 500, DC + one step sends 88.1% to AC and a flat start + one step 97.3% [`submission/POST.md`]. On IEEE 118 the p99 error after one step is 10.38 points from DC and 20.37 from a flat start [`work/onestep_conformal.log`].
 - Scale: on GOC 2000 one step gives 6.6% sent / 0.6% secure sent / 1 of 369 lines missed. On GOC 10000 one step is not enough (55.0% / 37.0% / 7 of 507); two steps give 29.8% / 0.1% / 0 [`submission/POST.md`]. Hence `k` is a knob, not a constant.
-- The mismatch catches divergence: with checkpoint seed 1 on GOC 500, one scenario's loading error after the step was 14,684 points and its mismatch 9e4 MW [`work/PROGRESS.md`].
+- The mismatch catches divergence: with checkpoint seed 1 on GOC 500, one scenario's loading error after the step was 14,684 points and its mismatch 9e4 MW [`work/goc500/logs/analysis_newton_seed1.log`].
 - Cost: on 10,000 buses one Newton step took 19 ms against 62 ms for GENCO Tiny inference; the step is "about a fifth of a full AC solve in the same code" [`submission/POST.md`]. Indicative only.
 
 **A conformal band puts a number on the misses when no step is taken.**

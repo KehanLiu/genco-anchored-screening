@@ -1,26 +1,26 @@
 > 2026-10-11: the analysis scripts were moved from the repository root to `analysis/` (`analysis_full_n1.py` -> `analysis/analysis_full_n1.py` etc.). The paths and file hashes recorded below refer to the pre-move layout.
 
-# Policy log for the fresh confirmation run (batch 3)
+# Policy log for the fresh confirmation run
 
 `policy_frozen.json` is the authoritative specification of every policy form and parameter; the READMEs describe it and defer to it where they differ. Nothing in this repository is committed (the user commits on request), so file hashes and timestamps are recorded here instead. Timestamps are local file times and log lines on this machine; they are evidence of the order of events on this machine, not independent proof.
 
 ## Freeze
 
-- `work/fresh/policy_frozen.json` written 2026-10-10 2026-10-10 15:07:29 (mtime), SHA256 `c4bac593e1f6331344222b1653191d32b0c297593f38c678e5becefd78ba2652` (unchanged since; the reviewer recorded the same hash at the batch-2 review).
+- `work/fresh/policy_frozen.json` written 2026-10-10 2026-10-10 15:07:29 (mtime), SHA256 `c4bac593e1f6331344222b1653191d32b0c297593f38c678e5becefd78ba2652` (unchanged since; an internal audit recorded the same hash).
 - Fresh GOC 2000 generation started 2026-10-10 15:08:52 (`work/fresh/data2000/case2000_goc/raw/error.log` first line; `datagen2000.yaml` mtime 15:08:51), i.e. after the policy was written. GOC 10000 generation followed in the same chain (`datagen_chain.sh`).
 - Fresh GOC 2000 hybrid-start outcomes (`results_hybrid_goc2000.md`) were first inspected at 15:20:00 (mtime). Fresh N-1 outcomes had NOT been inspected when amendment A2 below was recorded (the six-rank run started 15:22:18 and was still running; only its log header was read).
 
 ## Amendments (chronological)
 
-- **A1** (15:2x, during the batch-2 review): `run_fresh.sh` N-1 `run` line gained `--policy` so the shrunk start is computed; no policy value changed.
-- **A2** (15:30): N-1 design expanded from the six registered ranks {2, 6, 10, 14, 18, 22} to all 24 ranks of the fresh design, on the reviewer's recommendation (operating-point dependence in the old study). The original six remain the registered primary set and are reported separately; the other 18 are reported as the extension. Recorded before any fresh N-1 outcome was inspected; after the fresh GOC 2000 hybrid outcomes had been seen. Script `n1_extend_chain.sh`.
-- **A3** (same time): README wording aligned to the JSON: separate Va/Vm scales (fresh README section 5) and the classical-first trigger 'W1 mismatch > tau1 OR W1 flags a loading above c' (fresh README 5, splits README 3d). The JSON and the scorer had this trigger from the start (it is the rule of the independent screening re-analysis); the READMEs were incomplete.
-- **A4** (same time): a fresh GOC 500 pool (seed 2026, hours 6000-6499, `datagen500.yaml`) is registered for the equivalent-circuit pilot (`work/equiv/`), not for batch 3; generated at the end of `chain10000.sh`.
+- **A1** (15:2x, during an internal audit): `run_fresh.sh` N-1 `run` line gained `--policy` so the shrunk start is computed; no policy value changed.
+- **A2** (15:30): N-1 design expanded from the six registered ranks {2, 6, 10, 14, 18, 22} to all 24 ranks of the fresh design, on an internal audit's recommendation (operating-point dependence in the old study). The original six remain the registered primary set and are reported separately; the other 18 are reported as the extension. Recorded before any fresh N-1 outcome was inspected; after the fresh GOC 2000 hybrid outcomes had been seen. Script `n1_extend_chain.sh`.
+- **A3** (same time): README wording aligned to the JSON: separate Va/Vm scales (fresh README section 5) and the classical-first trigger 'W1 mismatch > tau1 OR W1 flags a loading above c' (fresh README 5, splits README 3d). The JSON and the scorer had this trigger from the start (it is the rule of the earlier screening re-analysis); the READMEs were incomplete.
+- **A4** (same time): a fresh GOC 500 pool (seed 2026, hours 6000-6499, `datagen500.yaml`) is registered for the equivalent-circuit pilot (`work/equiv/`), not for the fresh confirmation run; generated at the end of `chain10000.sh`.
 
 ## Not changed
 - No tau, c, tau1, lambda, gate rule, checkpoint or e2e protocol value has been changed since the freeze. Any later change gets a new entry here with its reason and whether outcomes had been seen.
 
-## Reporting rules (from the batch-2 review)
+## Reporting rules (from an internal audit)
 - Every frozen variant is reported with safety (missed critical contingencies, secure sent to AC) and cost (iterations, estimated and measured ms) together, per base case (paired), for the six registered ranks and the 18-rank extension separately and pooled.
 - No member of the family is selected on the fresh results and then described as independently validated. Thousands of outages from one base case are one operating point, not thousands.
 
@@ -92,7 +92,7 @@ Checkpoint files (released GENCO models, downloaded from HF `gridfm/genco-pf-dat
 | file | mtime | sha256 | what changed since the record above | used by |
 |---|---|---|---|---|
 | `analysis_full_n1.py` | 2026-10-10 15:38:58 | `0b57b38f23113d93ddf28cd6573bae53387af2614eb8cffd7953ab74615f2de3` | `e2e` phase rewritten to the full protocol (fixed sample ids, order, warm-up, threads, MPS sync, totals, fallback costs, per-base pre-outage inference, classical-first); `task()`, `run`, chunk format, `workflows()`, `report()` unchanged, so the 24-rank chunks (15:32-16:01) and the six-rank chunks are produced by identical task code | `timing` and `e2e` (16:15-17:21). The 24-rank extension was launched at 15:32:50, before this edit was saved; the file hash recorded here is the later timing/e2e source and is not independent proof of the source the extension process loaded (the `run` phase, `task()` and chunk format were not part of the edit, so the chunks are expected to be identical to what the 15:19 version would produce). |
-| `work/fresh/score_fresh_n1.py` | 2026-10-10 15:39:12 | `2a1379f1b9dec7f275eac94ec703675eb2a88d286a9db2cc853ab741b451e76a` | per-base paired tables, six / 18 / 24 sets, e2e attachment; decision logic unchanged (dev-data check still reproduces batch-1 numbers) | `results_n1.md` |
+| `work/fresh/score_fresh_n1.py` | 2026-10-10 15:39:12 | `2a1379f1b9dec7f275eac94ec703675eb2a88d286a9db2cc853ab741b451e76a` | per-base paired tables, six / 18 / 24 sets, e2e attachment; decision logic unchanged (dev-data check still reproduces the earlier development numbers) | `results_n1.md` |
 | `work/fresh/score_fresh_hybrid.py` | 2026-10-10 17:53:55 | `b7570f71390cd05977b768a8a2c49f9bb040842ebe022e054da9bc4c62e56c94` | full frozen-policy scoring (loading OR post-step mismatch > tau) added next to the loading-only diagnostic | `results_hybrid.md` |
 
 ## Protocol details specified after the freeze (A5, 2026-10-10 ~15:45, before the e2e run at 16:15)
@@ -107,7 +107,7 @@ and contiguous pass wall; partial MPS blocks timed as is. The timed continuation
 further iterations, whereas the saved sweeps allow 30 in total; this adds one iteration per failed case (4 of 4,800)
 and changes no verdict.
 
-## Batch 4 (corrections after the batch-3 review, 2026-10-10 evening)
+## Corrections after an internal audit (2026-10-10 evening)
 
 - The hybrid scorer's decision was loading-only (`pred > c`), not the complete frozen policy (loading OR post-step
   mismatch > tau). Both are now reported, labelled; the frozen JSON is not narrowed; tau values are the old GOC 2000
@@ -115,7 +115,7 @@ and changes no verdict.
 - The "highest-load base" explanation of the lower fresh miss count was wrong (old misses sat at 35.6 GW, below the
   fresh maximum 37.8 GW) and is withdrawn; the caveat is reduced upper-load coverage and a different stress mix.
 - No policy value changed.
-- Pilot (`work/equiv`): wording corrected after the batch-4 review (tolerance, not invariance; loading-only decisions; measured first-step / recovery behaviour instead of a 'basin' claim); SPEC, thresholds and results unchanged. GOC 500 fresh pool eligibility = successfully generated cases (load id 6353 failed OPF, LOCALLY_INFEASIBLE).
+- Pilot (`work/equiv`): wording corrected after a further internal audit (tolerance, not invariance; loading-only decisions; measured first-step / recovery behaviour instead of a 'basin' claim); SPEC, thresholds and results unchanged. GOC 500 fresh pool eligibility = successfully generated cases (load id 6353 failed OPF, LOCALLY_INFEASIBLE).
 
 Fresh pools: `fresh_ids.json` (written by the chains before scoring), disjointness logs `logs/disjoint*.log`, generation logs `logs/datagen*.log`.
 

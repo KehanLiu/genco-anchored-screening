@@ -2,7 +2,7 @@
 
 `policy_splits.json` fixes which load scenarios (GOC 500 / 2000 / 10000 hybrid-start files) and which base cases
 (GOC 2000 full N-1) may be used to *select* a policy and which to *report* it. Written 2026-10-10 after the
-independent review proposed four new policies (shrink the predicted change, mismatch gate, loading cushion,
+an internal audit proposed four new policies (shrink the predicted change, mismatch gate, loading cushion,
 classical-first) and evaluated them on existing files.
 
 Rules

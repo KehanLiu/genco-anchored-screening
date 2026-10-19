@@ -1,7 +1,7 @@
 {
  "written": "2026-10-10",
  "purpose": "Frozen splits for selecting and testing NEW screening policies (shrinkage of the predicted change, mismatch gate, loading cushion, classical-first). Select on 'calibration', report on 'test'. Never re-split.",
- "rule": "Policies whose form was chosen after looking at results are NOT validated by those results, with or without a fitted parameter (the parameter-free mismatch gate included). The independent review's 2026-10-10 reanalysis looked at the N-1 TEST split (fulln1) and at the whole GOC hybrid files; these splits are for development only. Confirmation of any of the four forms needs fresh operating points (work/fresh/README.md) with the complete policy frozen beforehand.",
+ "rule": "Policies whose form was chosen after looking at results are NOT validated by those results, with or without a fitted parameter (the parameter-free mismatch gate included). An internal audit's 2026-10-10 reanalysis looked at the N-1 TEST split (fulln1) and at the whole GOC hybrid files; these splits are for development only. Confirmation of any of the four forms needs fresh operating points (work/fresh/README.md) with the complete policy frozen beforehand.",
  "goc_hybrid": {
   "500": {
    "unit": "load_idx (load scenario; all contingencies of one load scenario stay together)",
@@ -3013,7 +3013,7 @@
     2998,
     2999
    ],
-   "note": "Same split as the independent review's physics re-analysis script. The shrinkage lambda in that script was fitted on 'calibration' and scored on 'test'; the mismatch gate was scored on ALL states, so its form was assessed on these results and they cannot validate it; development use only."
+   "note": "Same split as an internal audit's physics re-analysis script. The shrinkage lambda in that script was fitted on 'calibration' and scored on 'test'; the mismatch gate was scored on ALL states, so its form was assessed on these results and they cannot validate it; development use only."
   },
   "2000": {
    "unit": "load_idx (load scenario; all contingencies of one load scenario stay together)",
@@ -3525,7 +3525,7 @@
     497,
     499
    ],
-   "note": "Same split as the independent review's physics re-analysis script. The shrinkage lambda in that script was fitted on 'calibration' and scored on 'test'; the mismatch gate was scored on ALL states, so its form was assessed on these results and they cannot validate it; development use only."
+   "note": "Same split as an internal audit's physics re-analysis script. The shrinkage lambda in that script was fitted on 'calibration' and scored on 'test'; the mismatch gate was scored on ALL states, so its form was assessed on these results and they cannot validate it; development use only."
   },
   "10000": {
    "unit": "load_idx (load scenario; all contingencies of one load scenario stay together)",
@@ -3736,7 +3736,7 @@
     194,
     197
    ],
-   "note": "Same split as the independent review's physics re-analysis script. The shrinkage lambda in that script was fitted on 'calibration' and scored on 'test'; the mismatch gate was scored on ALL states, so its form was assessed on these results and they cannot validate it; development use only."
+   "note": "Same split as an internal audit's physics re-analysis script. The shrinkage lambda in that script was fitted on 'calibration' and scored on 'test'; the mismatch gate was scored on ALL states, so its form was assessed on these results and they cannot validate it; development use only."
   }
  },
  "fulln1_goc2000": {
