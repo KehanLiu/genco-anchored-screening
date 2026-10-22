@@ -1,5 +1,6 @@
 #!/bin/zsh
 cd "$(dirname "$0")/../.."
+set -e; set -u; set -o pipefail   # fail fast: the first failed command ends the chain with its status; every marker below is reached only on success
 PY=.venv/bin/python; T=work/texas/tmo; F=work/fresh; L=$F/logs
 until [ -f $L/datagen10000.DONE ]; do sleep 30; done
 $PY work/finetune/01_split.py --net case10000_goc --all $F/data10000 --test work/goc10000/data --out $F/data10000_check_test --first 500 --pool_from 700 > $L/disjoint10000_test.log 2>&1
@@ -18,4 +19,5 @@ done
 unset GOC_DATA
 echo HYBRID10000_DONE >> $L/hybrid_10000_small_seed1.log
 # GOC 500 pool for the equivalent-circuit pilot (POLICY_LOG.md A4)
-( time $T 14400 $PY $F/../finetune/00_datagen_skip.py $F/datagen500.yaml 6000 ) > $L/datagen500.log 2>&1 && date > $L/datagen500.DONE
+( time $T 14400 $PY $F/../finetune/00_datagen_skip.py $F/datagen500.yaml 6000 ) > $L/datagen500.log 2>&1
+date > $L/datagen500.DONE

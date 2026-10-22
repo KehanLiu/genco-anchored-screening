@@ -424,7 +424,9 @@ fresh() {
     # re-fitted here: the fresh data only produce the reported numbers. The six chain scripts below are the ones that ran on
     # 2026-10-10 (run_fresh.sh is the earlier, never executed draft; it refuses to start without FRESH_IDS_FROZEN=1 and is
     # not called). They were launched in the background and wait for each other's markers; run one after another in this
-    # order every wait loop passes at once. The markers are gitignored run-state files, removed first so that a stale one
+    # order every wait loop passes at once. Each chain runs under set -e and exits non-zero at its first failed command,
+    # so this stage (set -eu) stops there; the markers (*.DONE files, the *_DONE log lines) are written only after the
+    # command they certify succeeded. The markers are gitignored run-state files, removed first so that a stale one
     # cannot let a later chain start on a failed generation. Wall times from work/fresh/logs/ (AC power, caffeinate).
     #   datagen_chain.sh     fresh pools through work/finetune/00_datagen_skip.py (datakit seed 2026, hours never used by the
     #                        test pool, seed 0, nor the fine-tune pool, seed 1234): GOC 2000 hours 1500..1999, 2,496 states,
@@ -481,8 +483,12 @@ equiv() {
     # work/equiv/results/goc<N>_<variant>_seed<S>_<transform>_fresh_{lines,states}.parquet; the summary and criterion CSVs
     # come from `run_equiv.py report` in the analysis stage. The development probe of SPEC.md section 10 (--tag _dev on the
     # inspected pool work/goc500/data, --limit 20) is not rerun.
-    for f in work/fresh/data500/case500_goc/raw/branch_data.parquet work/fresh/data2000/case2000_goc/raw/branch_data.parquet \
-             work/fresh/fresh_ids.json work/fresh/logs/quiet_chain.log; do
+    # The datakit pools are partitioned parquet DIRECTORIES (branch_data.parquet/scenario_partition=N/...), so they are
+    # tested with -e, not -f; fresh_ids.json and the chain log are plain files.
+    for d in work/fresh/data500/case500_goc/raw/branch_data.parquet work/fresh/data2000/case2000_goc/raw/branch_data.parquet; do
+        [ -e $d ] || { echo "equiv: $d is missing; run ./reproduce.sh fresh first" >&2; exit 1; }
+    done
+    for f in work/fresh/fresh_ids.json work/fresh/logs/quiet_chain.log; do
         [ -f $f ] || { echo "equiv: $f is missing; run ./reproduce.sh fresh first" >&2; exit 1; }
     done
     grep -q E2E_DONE work/fresh/logs/quiet_chain.log || { echo "equiv: the fresh stage did not finish (no E2E_DONE in work/fresh/logs/quiet_chain.log)" >&2; exit 1; }

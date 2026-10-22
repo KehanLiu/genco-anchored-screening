@@ -4,4 +4,4 @@ use POSIX ":sys_wait_h";
 my $t = shift; my $pid = fork();
 if ($pid == 0) { setpgrp(0,0); exec @ARGV or die "exec: $!"; }
 local $SIG{ALRM} = sub { print STDERR "\n*** TIMEOUT after ${t}s: @ARGV\n"; kill 'TERM', -$pid; sleep 3; kill 'KILL', -$pid; exit 124; };
-alarm $t; waitpid($pid, 0); exit($? >> 8);
+alarm $t; waitpid($pid, 0); exit(($? & 127) ? 128 + ($? & 127) : ($? >> 8));   # a child killed by a signal is a failure too (128+signal), not 0

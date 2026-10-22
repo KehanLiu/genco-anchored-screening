@@ -1,5 +1,6 @@
 #!/bin/zsh
 cd "$(dirname "$0")/../.."
+set -e; set -u; set -o pipefail   # fail fast: the first failed command ends the chain with its status; every marker below is reached only on success
 PY=.venv/bin/python; T=work/texas/tmo; F=work/fresh; L=$F/logs
 $PY work/finetune/01_split.py --net case2000_goc --all $F/data2000 --test work/goc2000/data --out $F/data2000_check_test --first 1500 --pool_from 2000 > $L/disjoint2000_test.log 2>&1
 $PY work/finetune/01_split.py --net case2000_goc --all $F/data2000 --test work/finetune/data2000_all --out $F/data2000_check_ft --first 1500 --pool_from 2000 > $L/disjoint2000_ft.log 2>&1

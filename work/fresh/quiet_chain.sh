@@ -1,6 +1,7 @@
 #!/bin/zsh
 # Runs only when the machine is quiet: after the 24-rank N-1 extension, the GOC 10000 runs and the GOC 500 pool.
 cd "$(dirname "$0")/../.."
+set -e; set -u; set -o pipefail   # fail fast: the first failed command ends the chain with its status; every marker below is reached only on success
 PY=.venv/bin/python; T=work/texas/tmo; F=work/fresh; L=$F/logs
 until grep -q N1_EXTEND_DONE $L/fulln1_run_24.log 2>/dev/null && [ -f $L/datagen500.DONE ]; do sleep 60; done
 sleep 30

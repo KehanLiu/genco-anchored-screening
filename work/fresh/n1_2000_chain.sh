@@ -1,5 +1,6 @@
 #!/bin/zsh
 cd "$(dirname "$0")/../.."
+set -e; set -u; set -o pipefail   # fail fast: the first failed command ends the chain with its status; every marker below is reached only on success
 PY=.venv/bin/python; T=work/texas/tmo; F=work/fresh; L=$F/logs
 export GOC_DATA=$F/data2000
 $T 9000 $PY -u analysis/analysis_full_n1.py run    --grid 2000 --procs 4 --bases 2 6 10 14 18 22 --tag _fresh --policy $F/policy_frozen.json > $L/fulln1_run.log 2>&1

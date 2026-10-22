@@ -1,6 +1,7 @@
 #!/bin/zsh
 # Equivalent-circuit pilot, fresh pools (SPEC.md section 9). Starts after the fresh end-to-end timing benchmark so timing is not disturbed.
 cd "$(dirname "$0")/../.."
+set -e; set -u; set -o pipefail   # fail fast: the first failed command ends the chain with its status; every marker below is reached only on success
 PY=.venv/bin/python; T=work/texas/tmo; E=work/equiv; L=$E/logs
 until grep -q E2E_DONE work/fresh/logs/quiet_chain.log 2>/dev/null; do sleep 60; done
 echo "equiv fresh chain start $(date)" > $L/fresh_chain.log

@@ -1,6 +1,7 @@
 #!/bin/zsh
 # Extension registered in POLICY_LOG.md A2 before any fresh N-1 outcome was inspected: all 24 design ranks of the fresh pool.
 cd "$(dirname "$0")/../.."
+set -e; set -u; set -o pipefail   # fail fast: the first failed command ends the chain with its status; every marker below is reached only on success
 PY=.venv/bin/python; T=work/texas/tmo; F=work/fresh; L=$F/logs
 until grep -q N1_RUN_DONE $L/fulln1_timing.log 2>/dev/null; do sleep 20; done
 export GOC_DATA=$F/data2000
