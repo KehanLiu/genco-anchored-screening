@@ -1,0 +1,17 @@
+network,variant,item,device,batch,ms_per_state,n,note
+case10000_goc,tiny,graph build + normalise + transforms (from pandas tables),cpu,1,3.0914375001884764,64,median
+case10000_goc,tiny,GENCO forward,cpu,1,99.14112499973271,5,ok
+case10000_goc,tiny,GENCO forward,cpu,4,91.80666675001703,5,ok
+case10000_goc,tiny,GENCO forward,cpu,16,86.07948181247593,5,ok
+case10000_goc,tiny,GENCO forward,cpu,64,84.80187759374758,5,ok
+case10000_goc,tiny,GENCO forward,mps,1,64.17916700047499,5,ok
+case10000_goc,tiny,GENCO forward,mps,4,63.66804175013385,5,ok
+case10000_goc,tiny,GENCO forward,mps,16,61.69518487502046,5,ok
+case10000_goc,tiny,GENCO forward,mps,64,65.59715103128383,5,ok
+case10000_goc,tiny,GENCO end-to-end single state (graph build + model + inverse + flows),cpu,1,133.9395830000285,39,median
+case10000_goc,tiny,Newton problem build (Ybus from stored admittances),cpu,1,2.416249997622799,39,median
+case10000_goc,tiny,one Newton step from GENCO (SciPy),cpu,1,19.171292002283735,39,median
+case10000_goc,tiny,full Newton from flat (SciPy),cpu,1,662.7992499998072,39,median; 30.00 iterations; converged 0/40 (not converged = stopped at 30 iterations)
+case10000_goc,tiny,full Newton from GENCO (SciPy),cpu,1,57.152624998707324,39,median; 3.15 iterations; converged 40/40
+case10000_goc,tiny,"datakit PowerModels AC power flow (stored runtime, pf_fast)",cpu,1,278.9280414581299,993,"median, measured during generation under load; mean 378.7, p90 825.4"
+case10000_goc,tiny,"datakit PowerModels DC power flow (stored runtime, dcpf_fast)",cpu,1,56.59890174865723,993,"median, measured during generation under load; mean 81.1, p90 155.5"

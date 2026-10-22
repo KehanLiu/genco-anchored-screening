@@ -1,0 +1,123 @@
+{
+ "frozen_on": "2026-10-10",
+ "frozen_before_any_fresh_data_existed": true,
+ "purpose": "Complete screening policies, fixed before the fresh confirmation run (work/fresh/README.md). Fresh data only produce the reported numbers; nothing here is re-fitted or extended afterwards.",
+ "datakit_seed": 2026,
+ "fresh_pools": {
+  "2000": {
+   "yaml": "work/fresh/datagen2000.yaml",
+   "skip": 1500,
+   "scenarios": 2000,
+   "hours": "1500-1999"
+  },
+  "10000": {
+   "yaml": "work/fresh/datagen10000.yaml",
+   "skip": 500,
+   "scenarios": 700,
+   "hours": "500-699"
+  }
+ },
+ "n1_base_ranks": [
+  2,
+  6,
+  10,
+  14,
+  18,
+  22
+ ],
+ "n1_base_ranks_note": "design() ranks of the fresh GOC 2000 pool (24 ranks evenly spaced by total load), the same six ranks that formed the old calibration set; all six are TEST here",
+ "truth_cutoff": 1.001,
+ "tau_mw": {
+  "prev": 0.5,
+  "genco": 10.0,
+  "hyb": 5.0,
+  "shyb": 5.0
+ },
+ "tau_note": "mismatch thresholds from work/fulln1/report.log lines 93-95, chosen on the six old calibration bases; shyb (shrunk anchored start) inherits hyb's 5 MW; none re-fitted",
+ "loading_cushion_c": [
+  1.0,
+  1.0005,
+  1.001
+ ],
+ "loading_cushion_note": "decision cutoff for the classical one-step screen (W1) and the anchored screens (W4, shrunk W4); truth stays 1.001; all three reported, none selected",
+ "classical_first_tau1_mw": [
+  0.1,
+  0.2,
+  0.5,
+  1.0
+ ],
+ "classical_first_note": "W1 first; GENCO (anchored start, one step, tau 5 MW, cutoff c) only where W1's one-step mismatch exceeds tau1 or W1 flags; all four reported",
+ "mismatch_gate": {
+  "rule": "per outage, evaluate the initial bus mismatch mis0 of the pre-outage start and of the anchored change start; take the start with the smaller mis0 (tie or NaN -> pre-outage), then one Newton step with that start's tau",
+  "cost": "one GENCO inference plus one extra mismatch evaluation per outage"
+ },
+ "shrinkage": {
+  "form": "start = pre-outage AC voltages + lambda_va*(GENCO(after)-GENCO(before)) on Va and lambda_vm*(...) on Vm, then one Newton step",
+  "objective": "lambda = sum(dy_true*dy_pred)/sum(dy_pred^2) over mover readings of the CALIBRATION load scenarios of work/splits/policy_splits.json (Va: non-reference buses with true |dVa|>0.1 deg; Vm: PQ buses with true |dVm|>0.001 p.u.), from the sufficient statistics {va,vm}_stp/_spp stored in work/goc<N>/states_hybrid_<ckpt>.parquet; clipped to [0.25, 1.5]. Proxy only: the reported outcome is misses / secure flagged / iterations after one Newton step, never SSE.",
+  "amendment": "work/splits/README.md 3a said one lambda for Va and Vm from the Va movers; the calibration fit gives lambda_vm > 1 on every checkpoint, so Va and Vm get their own scale. Amended 2026-10-10 before any fresh data existed.",
+  "lambda": {
+   "goc500_tiny_seed0": {
+    "va": 0.7956,
+    "vm": 1.1753,
+    "va_fit": 0.7956,
+    "vm_fit": 1.1753,
+    "calibration_states": 7495
+   },
+   "goc2000_tiny_seed0": {
+    "va": 1.1058,
+    "vm": 1.2655,
+    "va_fit": 1.1058,
+    "vm_fit": 1.2655,
+    "calibration_states": 1248
+   },
+   "goc10000_tiny_seed0": {
+    "va": 0.4936,
+    "vm": 1.4044,
+    "va_fit": 0.4936,
+    "vm_fit": 1.4044,
+    "calibration_states": 494
+   },
+   "goc10000_tiny_seed1": {
+    "va": 0.4094,
+    "vm": 1.2314,
+    "va_fit": 0.4094,
+    "vm_fit": 1.2314,
+    "calibration_states": 494
+   },
+   "goc10000_small_seed0": {
+    "va": 0.6059,
+    "vm": 1.3874,
+    "va_fit": 0.6059,
+    "vm_fit": 1.3874,
+    "calibration_states": 494
+   },
+   "goc10000_small_seed1": {
+    "va": 0.7635,
+    "vm": 1.3996,
+    "va_fit": 0.7635,
+    "vm_fit": 1.3996,
+    "calibration_states": 494
+   }
+  }
+ },
+ "checkpoints": {
+  "10000": [
+   "tiny_seed0",
+   "tiny_seed1",
+   "small_seed0",
+   "small_seed1"
+  ],
+  "2000": [
+   "tiny_seed0"
+  ]
+ },
+ "e2e_timing": {
+  "sample_outages_per_base": 200,
+  "procs": 1,
+  "cpu_batch": 1,
+  "mps_batch": 16,
+  "repetitions": 3,
+  "report": "median and p90 per workflow and per gate outcome; excluded: model load, pre-outage AC solve, pre-outage inference"
+ },
+ "reporting": "per policy one table: misses (critical contingencies cleared as secure), secure contingencies sent to AC, share to AC, Newton iterations vs full AC, measured end-to-end ms per outage; no new form or threshold after the run"
+}

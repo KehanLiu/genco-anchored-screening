@@ -3,24 +3,45 @@
 #
 #   ./reproduce.sh                  no argument: print this usage and exit 1
 #   ./reproduce.sh all              default path: setup, fetch, tests, analysis, figures - under an hour, mostly downloads
-#   RUN_LONG=1 ./reproduce.sh all   recompute every result table first (sweeps, controls, finetune): about two days of
-#                                   laptop time; a wall-time estimate and the log it was read from stand next to every
-#                                   long command
+#                                   (analysis and figures fail on a clean checkout, see the next block)
+#   RUN_LONG=1 ./reproduce.sh all   recompute every result table first (sweeps, controls, finetune, fresh, equiv): about
+#                                   two days of laptop time for the first three, about 3 h 25 min more for fresh and
+#                                   equiv; a wall-time estimate and the log it was read from stand next to every long
+#                                   command
 #
 # What runs from a clean checkout and what does not:
-#   setup, fetch, tests         need only this repository, the network, and the Texas case file (see below).
-#   sweeps, controls, finetune  [long] need the fetched inputs only; they recompute every result table from scratch.
-#   analysis, figures           need the SAVED RESULT TABLES (work/**/*.parquet, work/**/*.csv, work/**/*.log; not in
-#                               git). Only the long stages above produce them; no results archive is available yet.
-#                               On a clean checkout without RUN_LONG=1 these two stages fail.
+#   setup, fetch, checksums, tests
+#                               need only this repository, the network and uv; the Texas case file (see below) only for
+#                               its manifest row. `python scripts/headline_numbers.py --check` (what CI runs, with
+#                               `python -m pytest gridtrust/tests -q`) needs nothing beyond the clone either: it is a
+#                               regression check of the numbers it registers against the small tables committed in
+#                               results/ and results/headline_numbers_expected.csv; it does not parse the write-up.
+#   sweeps, controls, finetune, fresh, equiv
+#                               [long] need the fetched inputs only; they recompute every result table from scratch.
+#   analysis, figures           need the SAVED RESULT TABLES - work/**/*.parquet and the chunk folders work/fulln1/chunks_*/,
+#                               none of which is in git (the small *.csv, *.log and *.md next to them are) - AND two folders
+#                               of raw datakit tables that are not in git either: the GOC 2000 test pool
+#                               work/goc2000/data/case2000_goc/raw/ (read by analysis_full_n1.py report) and the fresh
+#                               GOC 2000 pool work/fresh/data2000/case2000_goc/raw/ (read by work/fresh/score_fresh_n1.py,
+#                               whose design() ranks the base cases from it). Only the long stages produce them: sweeps
+#                               writes the test pool, fresh writes the fresh pool. NO RESULTS ARCHIVE EXISTS; the replay
+#                               below copied these files in from the working copy that produced the write-up. On a clean
+#                               checkout without RUN_LONG=1 these two stages fail.
 #
 # Replay status: replayed from a fresh clone on 2026-10-11, setup to tests again on 2026-10-19 (macOS 27.0.1, Apple silicon, uv 0.12.7,
 # Python 3.12.14). setup, fetch (53 manifest entries ok, Texas case absent), checksums and tests (49 pass / 15 skip
 # with the fetched inputs only; 54 / 10 with the saved tables) ran unchanged; analysis (985 s) and figures (12 s) ran
-# to completion once the saved result tables AND the GOC 2000 test pool work/goc2000/data/case2000_goc/raw/ (read by
-# analysis_full_n1.py report) were present, with all 17 figures byte-identical to the committed ones. The first
-# `import engine` inside analysis installs Julia 1.13.1 through juliacall (200 MB download, about 5 min); if that
-# download fails, re-run the stage. analysis_embedding.py's tables are not bit-reproducible (unseeded PCA solver).
+# to completion ONLY AFTER the saved result tables (work/**/*.parquet, work/fulln1/chunks_*/) AND the GOC 2000 test pool
+# work/goc2000/data/case2000_goc/raw/ (read by analysis_full_n1.py report) had been copied into the clone from the working
+# copy that produced the write-up (there is no archive to download them from); with those present all 17 figures were
+# byte-identical to the committed ones. The analysis stage of that replay was its 2026-10-11 version, without the fresh
+# scorers and the equiv reports appended to it on 2026-10-22: the two scorers were run by hand in the same replay, with
+# the commands now in the stage, and regenerated work/fresh/results_n1.md and results_hybrid.md identically (they also
+# need the fresh pool work/fresh/data2000/case2000_goc/raw/ copied in); `run_equiv.py report` has not been replayed from
+# a clone. The fresh and equiv stages were added on 2026-10-22 from the chain scripts that produced the write-up's
+# tables on 2026-10-10; they were checked with `sh -n` and the scripts' `--help`, not rerun. The first `import engine`
+# inside analysis installs Julia 1.13.1 through juliacall (200 MB download, about 5 min); if that download fails,
+# re-run the stage. analysis_embedding.py's tables are not bit-reproducible (unseeded PCA solver).
 #
 # Single stages:
 #   ./reproduce.sh setup      Python 3.12 environment via uv (Julia is installed by juliacall on first use)
@@ -32,10 +53,19 @@
 #   ./reproduce.sh sweeps     [long] grid states with AC, DC and GENCO: datakit generation, GENCO + Newton sweeps
 #   ./reproduce.sh controls   [long] pre-outage start, hybrid start, full N-1, solver timing, reactive limits, zero-shot
 #   ./reproduce.sh finetune   [long] fine-tuning on GOC 500, 2000 and 10000 (AC power + caffeinate required, see below)
-#   ./reproduce.sh analysis   every table of the write-up, from the saved result tables (minutes)
+#   ./reproduce.sh fresh      [long] fresh operating points under the frozen policies (work/fresh/): the fresh GOC 2000,
+#                             10000 and 500 pools, the registered six-base full N-1 and its 18-base extension, the
+#                             hybrid-start runs, unit-cost timing and the measured end-to-end sample; about 2 h 50 min
+#                             sequential, AC power + caffeinate, about 15 GB RAM; after sweeps and finetune (needs the
+#                             test and fine-tune pools for the disjointness proofs)
+#   ./reproduce.sh equiv      [long] equivalent-circuit pilot runs (work/equiv/SPEC.md) on the fresh GOC 500 and 2000
+#                             pools: 33 min; after fresh
+#   ./reproduce.sh analysis   every table of the write-up, from the saved result tables (minutes); includes the
+#                             frozen-policy scorers of work/fresh and the `run_equiv.py report` summaries of work/equiv
 #   ./reproduce.sh figures    figures/*.png from the saved results
 #   ./reproduce.sh checksums  verify the sha256 of every fetched input that is present (fetch runs it too)
-#   ./reproduce.sh all        the default path (setup, fetch, tests, analysis, figures), plus the three long stages when RUN_LONG=1
+#   ./reproduce.sh all        the default path (setup, fetch, tests, analysis, figures), plus the five long stages in the
+#                             order sweeps, controls, finetune, fresh, equiv when RUN_LONG=1
 #
 # Not downloaded by this script: the Texas 2000 case file. Place Texas2k_case1_2016summerpeak.m in work/texas/ first
 # (README, "Data"); its sha256 is in the manifest below. Wall times below were read from the logs in work/
@@ -62,7 +92,7 @@ HF=https://huggingface.co
 #                   failure), every other manifest entry still reports absent without failing.
 #   not verified    the remaining files of the dataset repository (y_bus, runtime, logs) are not downloaded; the
 #                   Python packages are pinned by requirements.lock.txt, not hashed.
-#   A clean-checkout replay of the fetch and checksums stages has not been performed; checksums was run on the working copy.
+#   The fetch and checksums stages were replayed from a fresh clone on 2026-10-11 and 2026-10-19 (replay status above).
 # ---------------------------------------------------------------------------------------------------------------------
 PGLIB_TAG=v23.07                                                   # = commit dc6be4b2f85ca0e776952ec22cbd4c22396ea5a3
 PGLIB=https://raw.githubusercontent.com/power-grid-lib/pglib-opf/$PGLIB_TAG
@@ -387,6 +417,79 @@ finetune() {
     zsh work/finetune/20_pipeline10000.sh 20000 mps 0.0001
 }
 
+fresh() {
+    guard
+    # Fresh operating points under the frozen policies (work/fresh/README.md, POLICY_LOG.md). work/fresh/policy_frozen.json was
+    # written on 2026-10-10 at 15:07, before any fresh pool existed (its sha256 is in POLICY_LOG.md), and nothing in it is
+    # re-fitted here: the fresh data only produce the reported numbers. The six chain scripts below are the ones that ran on
+    # 2026-10-10 (run_fresh.sh is the earlier, never executed draft; it refuses to start without FRESH_IDS_FROZEN=1 and is
+    # not called). They were launched in the background and wait for each other's markers; run one after another in this
+    # order every wait loop passes at once. The markers are gitignored run-state files, removed first so that a stale one
+    # cannot let a later chain start on a failed generation. Wall times from work/fresh/logs/ (AC power, caffeinate).
+    #   datagen_chain.sh     fresh pools through work/finetune/00_datagen_skip.py (datakit seed 2026, hours never used by the
+    #                        test pool, seed 0, nor the fine-tune pool, seed 1234): GOC 2000 hours 1500..1999, 2,496 states,
+    #                        8 min 21 s (datagen2000.log); GOC 10000 hours 500..699, 999 states, 44 min 52 s and about 15 GB
+    #                        RAM (datagen10000.log)
+    #   hybrid2000_chain.sh  disjointness proofs of the GOC 2000 pool against the test pool work/goc2000/data (sweeps) and
+    #                        the fine-tune pool work/finetune/data2000_all (finetune) with 01_split.py, fresh_ids.json, then
+    #                        the pre-outage start (29 s) and the anchored start with Tiny seed 0 (65 s) on all fresh states
+    #   n1_2000_chain.sh     the REGISTERED full N-1: the six design ranks 2 6 10 14 18 22 of policy_frozen.json
+    #                        n1_base_ranks (the same six ranks as the old calibration set, all TEST here), 19,128
+    #                        contingencies, 581 s wall with 4 processes (fulln1_run.log), then the unit-cost timing pass
+    #   n1_extend_chain.sh   the 18-rank EXTENSION (POLICY_LOG.md A2, registered before any fresh N-1 outcome was
+    #                        inspected): --bases 0..23 resumes from the chunks of the six and adds 57,384 contingencies,
+    #                        1,721 s wall (fulln1_run_24.log). The original run overlapped it with the GOC 10000 generation,
+    #                        so that log's per-contingency wall time is not a quiet-machine number. The scorer reports the
+    #                        six, the 18 and all 24 separately.
+    #   chain10000.sh        disjointness proofs and fresh_ids.json for GOC 10000, the pre-outage start (45 s) and the four
+    #                        released checkpoints Tiny seed 0 / 1, Small seed 0 / 1 (108 / 107 / 176 / 172 s), then the
+    #                        fresh GOC 500 pool, hours 6000..6499, 2 min (POLICY_LOG.md A4; used only by the equiv stage)
+    #   quiet_chain.sh       quiet machine: keeps the timing taken under load as work/fulln1/timing_2000_fresh_under_load.json,
+    #                        redoes the unit-cost timing (1 min, fulln1_timing_quiet.log) and runs the measured end-to-end
+    #                        phase on all 24 bases, 200 outages each, single process (3,897 s, fulln1_e2e.log; the numbers
+    #                        are timings, run nothing else)
+    # Sequential total about 2 h 50 min; the original run overlapped the chains (15:08 to 17:21 on 2026-10-10). The chunk
+    # folder work/fulln1/chunks_2000_fresh/ is resumable. Scoring with the frozen policy (score_fresh_n1.py,
+    # score_fresh_hybrid.py) is part of the analysis stage.
+    for n in 2000 10000; do
+        for d in work/goc$n/data work/finetune/data${n}_all; do
+            [ -d $d/case${n}_goc/raw ] || { echo "fresh: $d/case${n}_goc/raw is missing (run ./reproduce.sh sweeps and finetune first)" >&2; exit 1; }
+        done
+    done
+    mkdir -p work/fresh/logs
+    rm -f work/fresh/logs/datagen2000.DONE work/fresh/logs/datagen10000.DONE work/fresh/logs/datagen500.DONE
+    zsh work/fresh/datagen_chain.sh
+    for n in 2000 10000; do
+        [ -f work/fresh/logs/datagen$n.DONE ] || { echo "fresh: GOC $n generation failed, see work/fresh/logs/datagen$n.log" >&2; exit 1; }
+    done
+    zsh work/fresh/hybrid2000_chain.sh
+    zsh work/fresh/n1_2000_chain.sh
+    zsh work/fresh/n1_extend_chain.sh
+    zsh work/fresh/chain10000.sh
+    [ -f work/fresh/logs/datagen500.DONE ] || { echo "fresh: GOC 500 generation failed, see work/fresh/logs/datagen500.log" >&2; exit 1; }
+    zsh work/fresh/quiet_chain.sh
+}
+
+equiv() {
+    # Equivalent-circuit pilot (work/equiv/SPEC.md, pre-registered on 2026-10-10 before any fresh pool was scored; verdict
+    # in REPORT.md). Needs the fresh GOC 500 and GOC 2000 pools and work/fresh/fresh_ids.json from the fresh stage; the
+    # chain waits for that stage's E2E_DONE marker in work/fresh/logs/quiet_chain.log (so the timing benchmark is never
+    # disturbed), which is checked here first so that it cannot wait forever. 20 runs of run_equiv.py with 4 processes:
+    # the seven transforms of SPEC.md section 3 with Tiny seed 0 on each pool, split_random_1 and split_all with Tiny
+    # seeds 1 and 42 (GOC 500) and Small seed 0 (GOC 2000); 64-67 s per GOC 500 run, 124-226 s per GOC 2000 run, 33 min
+    # in all (work/equiv/logs/fresh_chain.log, 17:21 to 17:54; per-run lines in logs/fresh*.out). Outputs
+    # work/equiv/results/goc<N>_<variant>_seed<S>_<transform>_fresh_{lines,states}.parquet; the summary and criterion CSVs
+    # come from `run_equiv.py report` in the analysis stage. The development probe of SPEC.md section 10 (--tag _dev on the
+    # inspected pool work/goc500/data, --limit 20) is not rerun.
+    for f in work/fresh/data500/case500_goc/raw/branch_data.parquet work/fresh/data2000/case2000_goc/raw/branch_data.parquet \
+             work/fresh/fresh_ids.json work/fresh/logs/quiet_chain.log; do
+        [ -f $f ] || { echo "equiv: $f is missing; run ./reproduce.sh fresh first" >&2; exit 1; }
+    done
+    grep -q E2E_DONE work/fresh/logs/quiet_chain.log || { echo "equiv: the fresh stage did not finish (no E2E_DONE in work/fresh/logs/quiet_chain.log)" >&2; exit 1; }
+    mkdir -p work/equiv/logs
+    zsh work/equiv/fresh_chain.sh
+}
+
 analysis() {
     for sweep in work/hybrid_case118_ieee_base work/hybrid_case118_ieee_base_seed1 work/hybrid_case118_ieee_base_seed42 work/texas/out/hybrid_texas_n2x450; do
         $PY analysis/analysis_conformal.py $sweep.parquet
@@ -429,6 +532,22 @@ analysis() {
     $PY analysis/analysis_embedding.py report
     $PY analysis/analysis_remedial.py report
     $PY work/verify_round1.py
+    # fresh pool, frozen policy (work/fresh/results_n1.md, results_n1*.csv, results_hybrid.md, results_hybrid.csv): the six
+    # registered ranks, the 18-rank extension and all 24 reported separately. score_fresh_n1.py reads
+    # work/fulln1/chunks_2000_fresh/, timing_2000_fresh.json, e2e_2000_fresh.parquet and the fresh pool
+    # work/fresh/data2000/case2000_goc/raw/ (its design() ranks the bases from it); score_fresh_hybrid.py reads
+    # work/goc{2000,10000}/{lines,states}_{prev,hybrid}_*_fresh.parquet and fails on any difference from the independent
+    # re-analysis in work/fresh/review_checks/. Appended 2026-10-22; in the 2026-10-11 replay both were run by hand with
+    # these commands (replay status above).
+    $PY work/fresh/score_fresh_n1.py --policy work/fresh/policy_frozen.json
+    $PY work/fresh/score_fresh_hybrid.py --policy work/fresh/policy_frozen.json --tag _fresh
+    # equivalent-circuit pilot: summary_*.csv and criterion_*.csv in work/equiv/results/ from the fresh parquet files, with the
+    # pre-registered thresholds (defaults --x 0.05 --y 0.98 --miss-margin 0.01 --x0 0.3); figures reads the criterion CSVs.
+    # Appended 2026-10-22, not part of the replay.
+    for ck in "500 tiny 0" "500 tiny 1" "500 tiny 42" "2000 tiny 0" "2000 small 0"; do
+        set -- $ck
+        $PY work/equiv/run_equiv.py report --grid $1 --variant $2 --seed $3 --tag _fresh
+    done
 }
 
 figures() {
@@ -436,10 +555,10 @@ figures() {
 }
 
 case "${1:-}" in
-    setup|fetch|tests|sweeps|controls|finetune|analysis|figures|checksums) "$1" ;;
+    setup|fetch|tests|sweeps|controls|finetune|fresh|equiv|analysis|figures|checksums) "$1" ;;
     all)
         setup; fetch; tests
-        if [ "${RUN_LONG:-0}" = 1 ]; then sweeps; controls; finetune; fi
+        if [ "${RUN_LONG:-0}" = 1 ]; then sweeps; controls; finetune; fresh; equiv; fi
         analysis; figures ;;
     *) awk 'NR > 1 && !/^#/ { exit } NR > 1 { print }' "$0"; exit 1 ;;
 esac

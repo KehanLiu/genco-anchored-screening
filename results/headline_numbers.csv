@@ -1,0 +1,275 @@
+claim,post,value,shown,matches_post,method,source,note
+main_118_overloads,"6,986",6986,"6,986",True,read,zeroshot/summary.csv,network==case118_ieee kind==screen overloads
+main_118_prev_missed,74,74,74,True,read,zeroshot/summary.csv,name==prev1 overloads_missed
+main_118_prev_flagged,1.9%,0.018711019,1.9%,True,read,zeroshot/summary.csv,name==prev1 secure_flagged
+main_118_genco_missed,4,4,4,True,read,zeroshot/summary.csv,name==pg1 overloads_missed
+main_118_genco_flagged,0.0%,0,0.0%,True,read,zeroshot/summary.csv,name==pg1 secure_flagged
+main_118_anch_missed,2,2,2,True,read,zeroshot/summary.csv,name==hybpg1 overloads_missed
+main_118_anch_flagged,0.0%,0,0.0%,True,read,zeroshot/summary.csv,name==hybpg1 secure_flagged
+main_500_overloads,"2,621",2621,"2,621",True,read,hybrid_start/hybrid_control_summary.csv,network==case500_goc overloads
+main_500_prev_missed,41,41,41,True,read,hybrid_start/hybrid_control_summary.csv,network==case500_goc predictor==prev1 overloads_missed
+main_500_prev_flagged,0.2%,0.0016010979,0.2%,True,read,hybrid_start/hybrid_control_summary.csv,network==case500_goc predictor==prev1 secure_flagged
+main_500_genco_missed,9,9,9,True,read,hybrid_start/hybrid_control_summary.csv,network==case500_goc predictor==genco1 overloads_missed
+main_500_genco_flagged,0.1%,0.00068618481,0.1%,True,read,hybrid_start/hybrid_control_summary.csv,network==case500_goc predictor==genco1 secure_flagged
+main_500_anch_missed,5,5,5,True,read,hybrid_start/hybrid_control_summary.csv,network==case500_goc predictor==hyb1 overloads_missed
+main_500_anch_flagged,0.0%,7.6242757e-05,0.0%,True,read,hybrid_start/hybrid_control_summary.csv,network==case500_goc predictor==hyb1 secure_flagged
+main_2000_overloads,369,369,369,True,read,hybrid_start/hybrid_control_summary.csv,network==case2000_goc overloads
+main_2000_prev_missed,2,2,2,True,read,hybrid_start/hybrid_control_summary.csv,network==case2000_goc predictor==prev1 overloads_missed
+main_2000_prev_flagged,0.0%,0.00042698548,0.0%,True,read,hybrid_start/hybrid_control_summary.csv,network==case2000_goc predictor==prev1 secure_flagged
+main_2000_genco_missed,1,1,1,True,read,hybrid_start/hybrid_control_summary.csv,network==case2000_goc predictor==genco1 overloads_missed
+main_2000_genco_flagged,0.6%,0.0059777968,0.6%,True,read,hybrid_start/hybrid_control_summary.csv,network==case2000_goc predictor==genco1 secure_flagged
+main_2000_anch_missed,0,0,0,True,read,hybrid_start/hybrid_control_summary.csv,network==case2000_goc predictor==hyb1 overloads_missed
+main_2000_anch_flagged,0.0%,0,0.0%,True,read,hybrid_start/hybrid_control_summary.csv,network==case2000_goc predictor==hyb1 secure_flagged
+main_10000_overloads,507,507,507,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc overloads
+main_10000_prev_missed,2,2,2,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==prev1 overloads_missed
+main_10000_prev_flagged,0.3%,0.0028653295,0.3%,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==prev1 secure_flagged
+main_10000_genco_missed,7,7,7,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==genco1 overloads_missed
+main_10000_genco_flagged,37.0%,0.36962751,37.0%,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==genco1 secure_flagged
+main_10000_anch_missed,5,5,5,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==hyb1 overloads_missed
+main_10000_anch_flagged,3.2%,0.031518625,3.2%,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==hyb1 secure_flagged
+main_10000small_prev_missed,2,2,2,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==prev1 overloads_missed
+main_10000small_prev_flagged,0.3%,0.0028653295,0.3%,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==prev1 secure_flagged
+main_10000small_genco_missed,6,6,6,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==genco1 overloads_missed
+main_10000small_genco_flagged,28.2%,0.28223496,28.2%,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==genco1 secure_flagged
+main_10000small_anch_missed,2,2,2,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==hyb1 overloads_missed
+main_10000small_anch_flagged,2.1%,0.021489971,2.1%,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==hyb1 secure_flagged
+nostep_500_missed_share,14%–44%,0.13620755,14%,True,read,hybrid_start/hybrid_control_summary.csv,network==case500_goc predictor==hyb0 missed_share
+nostep_2000_missed_share,14%–44%,0.26829268,27%,True,read,hybrid_start/hybrid_control_summary.csv,network==case2000_goc predictor==hyb0 missed_share
+nostep_10000_missed_share,14%–44%,0.43786982,44%,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==hyb0 missed_share
+ckpt_scenarios,993,993,993,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc scenarios
+ckpt_prev1_missed,2,2,2,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==prev1 overloads_missed
+ckpt_prev1_flagged,0.3%,0.0028653295,0.3%,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==prev1 secure_flagged
+ckpt_prev2_missed,0,0,0,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==prev2 overloads_missed
+ckpt_prev2_flagged,0.0%,0,0.0%,True,read,hybrid_start/hybrid_control_summary.csv,network==case10000_goc predictor==prev2 secure_flagged
+ckpt_tiny_seed0_hyb1_missed,5,5,5,True,read,hybrid_start/hybrid_control_summary.csv,predictor==hyb1 overloads_missed
+ckpt_tiny_seed0_hyb1_flagged,3.2%,0.031518625,3.2%,True,read,hybrid_start/hybrid_control_summary.csv,predictor==hyb1 secure_flagged
+ckpt_tiny_seed0_hyb2_missed,0,0,0,True,read,hybrid_start/hybrid_control_summary.csv,predictor==hyb2 overloads_missed
+ckpt_tiny_seed0_hyb2_flagged,0.1%,0.0014326648,0.1%,True,read,hybrid_start/hybrid_control_summary.csv,predictor==hyb2 secure_flagged
+ckpt_tiny_seed0_nochange_removed,28%,0.27928776,28%,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==tiny_seed0 removed_share = 1 - change_err_median_pp / nochange_err_median_pp
+ckpt_tiny_seed0_sign_agreement,75.4%,0.7535275,75.4%,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==tiny_seed0 sign_agreement
+ckpt_tiny_seed0_genco_ms,178,177.87404,178,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==tiny_seed0 genco_ms_per_state_median
+ckpt_tiny_seed1_hyb1_missed,3,3,3,True,read,hybrid_start/hybrid_control_summary_tiny_seed1.csv,predictor==hyb1 overloads_missed
+ckpt_tiny_seed1_hyb1_flagged,2.9%,0.028653295,2.9%,True,read,hybrid_start/hybrid_control_summary_tiny_seed1.csv,predictor==hyb1 secure_flagged
+ckpt_tiny_seed1_hyb2_missed,1,1,1,True,read,hybrid_start/hybrid_control_summary_tiny_seed1.csv,predictor==hyb2 overloads_missed
+ckpt_tiny_seed1_hyb2_flagged,0.0%,0,0.0%,True,read,hybrid_start/hybrid_control_summary_tiny_seed1.csv,predictor==hyb2 secure_flagged
+ckpt_tiny_seed1_nochange_removed,31%,0.3149022,31%,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==tiny_seed1 removed_share = 1 - change_err_median_pp / nochange_err_median_pp
+ckpt_tiny_seed1_sign_agreement,77.3%,0.77343524,77.3%,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==tiny_seed1 sign_agreement
+ckpt_tiny_seed1_genco_ms,197,196.79904,197,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==tiny_seed1 genco_ms_per_state_median
+ckpt_small_seed0_hyb1_missed,2,2,2,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==hyb1 overloads_missed
+ckpt_small_seed0_hyb1_flagged,2.1%,0.021489971,2.1%,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==hyb1 secure_flagged
+ckpt_small_seed0_hyb2_missed,0,0,0,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==hyb2 overloads_missed
+ckpt_small_seed0_hyb2_flagged,0.4%,0.0042979943,0.4%,True,read,hybrid_start/hybrid_control_summary_small_seed0.csv,predictor==hyb2 secure_flagged
+ckpt_small_seed0_nochange_removed,35%,0.35218102,35%,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==small_seed0 removed_share = 1 - change_err_median_pp / nochange_err_median_pp
+ckpt_small_seed0_sign_agreement,79.2%,0.79228473,79.2%,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==small_seed0 sign_agreement
+ckpt_small_seed0_genco_ms,395,394.81512,395,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==small_seed0 genco_ms_per_state_median
+ckpt_small_seed1_hyb1_missed,3,3,3,True,read,hybrid_start/hybrid_control_summary_small_seed1.csv,predictor==hyb1 overloads_missed
+ckpt_small_seed1_hyb1_flagged,1.1%,0.011461318,1.1%,True,read,hybrid_start/hybrid_control_summary_small_seed1.csv,predictor==hyb1 secure_flagged
+ckpt_small_seed1_hyb2_missed,0,0,0,True,read,hybrid_start/hybrid_control_summary_small_seed1.csv,predictor==hyb2 overloads_missed
+ckpt_small_seed1_hyb2_flagged,0.3%,0.0028653295,0.3%,True,read,hybrid_start/hybrid_control_summary_small_seed1.csv,predictor==hyb2 secure_flagged
+ckpt_small_seed1_nochange_removed,39%,0.39291763,39%,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==small_seed1 removed_share = 1 - change_err_median_pp / nochange_err_median_pp
+ckpt_small_seed1_sign_agreement,81.4%,0.81370297,81.4%,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==small_seed1 sign_agreement
+ckpt_small_seed1_genco_ms,402,401.64454,402,True,derived,derived/change_mechanism.csv,grid==10000 checkpoint==small_seed1 genco_ms_per_state_median
+mech_500_nochange_err,2.44,2.441348,2.44,True,derived,derived/change_mechanism.csv,grid==500 nochange_err_median_pp
+mech_500_change_err,0.36,0.3594078,0.36,True,derived,derived/change_mechanism.csv,grid==500 change_err_median_pp
+mech_500_removed,85%,0.8527831,85%,True,derived,derived/change_mechanism.csv,grid==500 removed_share
+mech_2000_nochange_err,2.17,2.171454,2.17,True,derived,derived/change_mechanism.csv,grid==2000 nochange_err_median_pp
+mech_2000_change_err,0.56,0.56443214,0.56,True,derived,derived/change_mechanism.csv,grid==2000 change_err_median_pp
+mech_2000_removed,74%,0.7400672,74%,True,derived,derived/change_mechanism.csv,grid==2000 removed_share
+mech_500_sign_agreement,93%–97%,0.96618121,97%,True,read,finetune/summary_hybrid_500.csv,subset==all model==released chg_sign
+mismatch_500_anch_mw,6,6.1724716,6,True,read,finetune/summary_hybrid_500.csv,"subset==all model==released mis0_hyb (median start mismatch, MW)"
+mismatch_500_prev_mw,72–118,117.90465,118,True,read,finetune/summary_hybrid_500.csv,mis0_prev
+mismatch_500_genco_mw,246–435,435.21302,435,True,read,finetune/summary_hybrid_500.csv,mis0_genco
+iterations_500_anch,2.4–2.5,2.4125534,2.4,True,read,finetune/summary_hybrid_500.csv,it_hyb (mean Newton iterations to convergence)
+iterations_500_prev,3.0–3.2,3.2358591,3.2,True,read,finetune/summary_hybrid_500.csv,it_prev
+iterations_500_genco,3.0–3.2,3.0051361,3.0,True,read,finetune/summary_hybrid_500.csv,it_genco
+mech_2000_sign_agreement,93%–97%,0.92614064,93%,True,read,finetune/summary_hybrid_2000.csv,subset==all model==released chg_sign
+mismatch_2000_anch_mw,6,6.145723,6,True,read,finetune/summary_hybrid_2000.csv,"subset==all model==released mis0_hyb (median start mismatch, MW)"
+mismatch_2000_prev_mw,72–118,71.597705,72,True,read,finetune/summary_hybrid_2000.csv,mis0_prev
+mismatch_2000_genco_mw,246–435,245.87142,246,True,read,finetune/summary_hybrid_2000.csv,mis0_genco
+iterations_2000_anch,2.4–2.5,2.4627105,2.5,True,read,finetune/summary_hybrid_2000.csv,it_hyb (mean Newton iterations to convergence)
+iterations_2000_prev,3.0–3.2,3.0890136,3.1,True,read,finetune/summary_hybrid_2000.csv,it_prev
+iterations_2000_genco,3.0–3.2,3.1988773,3.2,True,read,finetune/summary_hybrid_2000.csv,it_genco
+example_recall,93.9%,0.93903743,93.9%,True,derived,derived/goc500_example_rule.csv,"surrogate==genco rule=='F3, t tuned on test' recall"
+example_flagged,32.7%,0.32670758,32.7%,True,derived,derived/goc500_example_rule.csv,flagged_share
+n1_outages_total,"76,512",76512,"76,512",True,read,fulln1/summary.csv,kind==workflow bases==all item==W0 contingencies
+n1_outages_scored,"57,384",57384,"57,384",True,read,fulln1/summary.csv,bases==test item==W0 contingencies
+n1_critical_scored,"1,451",1451,"1,451",True,read,fulln1/summary.csv,bases==test item==W0 critical
+n1_ms_per_iteration,3.9,3.9285693,3.9,True,read,fulln1/timing_2000.json,ms_iter_full
+n1_ms_forward_b16,12.6,12.592937,12.6,True,read,fulln1/timing_2000.json,ms_forward_mps_b16
+n1_ms_prep,2.5,2.455146,2.5,True,read,fulln1/timing_2000.json,ms_prep
+n1_W0_sent_to_ac,100%,1,100%,True,recomputed,fulln1/summary.csv,bases==test item==W0 sent_to_ac / contingencies
+n1_W0_missed,0,0,0,True,read,fulln1/summary.csv,item==W0 missed_contingencies
+n1_W0_iterations_vs_w0,100%,1,100%,True,recomputed,fulln1/summary.csv,item==W0 newton_iterations / W0 newton_iterations
+n1_W0_s_per_1000,11.5,11.546094,11.5,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,(newton_iterations*ms_iter_full + dc_solves*ms_dc_full + genco_inferences*(ms_forward_mps_b16+ms_prep)) / contingencies
+n1_W1_sent_to_ac,29.6%,0.29607556,29.6%,True,recomputed,fulln1/summary.csv,bases==test item==W1 sent_to_ac / contingencies
+n1_W1_missed,5,5,5,True,read,fulln1/summary.csv,item==W1 missed_contingencies
+n1_W1_iterations_vs_w0,57%,0.56610654,57%,True,recomputed,fulln1/summary.csv,item==W1 newton_iterations / W0 newton_iterations
+n1_W1_s_per_1000,6.5,6.5363195,6.5,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,(newton_iterations*ms_iter_full + dc_solves*ms_dc_full + genco_inferences*(ms_forward_mps_b16+ms_prep)) / contingencies
+n1_W2_sent_to_ac,6.6%,0.065662903,6.6%,True,recomputed,fulln1/summary.csv,bases==test item==W2 sent_to_ac / contingencies
+n1_W2_missed,780,780,780,True,read,fulln1/summary.csv,item==W2 missed_contingencies
+n1_W2_iterations_vs_w0,7%,0.07456182,7%,True,recomputed,fulln1/summary.csv,item==W2 newton_iterations / W0 newton_iterations
+n1_W2_s_per_1000,15.9,15.908981,15.9,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,(newton_iterations*ms_iter_full + dc_solves*ms_dc_full + genco_inferences*(ms_forward_mps_b16+ms_prep)) / contingencies
+n1_W3_sent_to_ac,45.4%,0.45439495,45.4%,True,recomputed,fulln1/summary.csv,bases==test item==W3 sent_to_ac / contingencies
+n1_W3_missed,1,1,1,True,read,fulln1/summary.csv,item==W3 missed_contingencies
+n1_W3_iterations_vs_w0,76%,0.761165,76%,True,recomputed,fulln1/summary.csv,item==W3 newton_iterations / W0 newton_iterations
+n1_W3_s_per_1000,23.8,23.836566,23.8,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,(newton_iterations*ms_iter_full + dc_solves*ms_dc_full + genco_inferences*(ms_forward_mps_b16+ms_prep)) / contingencies
+n1_W4_sent_to_ac,2.7%,0.027237558,2.7%,True,recomputed,fulln1/summary.csv,bases==test item==W4 sent_to_ac / contingencies
+n1_W4_missed,14,14,14,True,read,fulln1/summary.csv,item==W4 missed_contingencies
+n1_W4_iterations_vs_w0,37%,0.37388824,37%,True,recomputed,fulln1/summary.csv,item==W4 newton_iterations / W0 newton_iterations
+n1_W4_s_per_1000,19.4,19.369753,19.4,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,(newton_iterations*ms_iter_full + dc_solves*ms_dc_full + genco_inferences*(ms_forward_mps_b16+ms_prep)) / contingencies
+n1_W5_sent_to_ac,2.1%,0.021486826,2.1%,True,recomputed,fulln1/summary.csv,bases==test item==W5 sent_to_ac / contingencies
+n1_W5_missed,303,303,303,True,read,fulln1/summary.csv,item==W5 missed_contingencies
+n1_W5_iterations_vs_w0,3%,0.031852572,3%,True,recomputed,fulln1/summary.csv,item==W5 newton_iterations / W0 newton_iterations
+n1_W5_s_per_1000,2.3,2.324803,2.3,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,(newton_iterations*ms_iter_full + dc_solves*ms_dc_full + genco_inferences*(ms_forward_mps_b16+ms_prep)) / contingencies
+n1_W2_missed_share,54%,0.5375603,54%,True,recomputed,fulln1/summary.csv,item==W2 missed_contingencies / critical
+n1_W5_missed_share,21%,0.2088215,21%,True,recomputed,fulln1/summary.csv,item==W5 missed_contingencies / critical
+n1_W1_tau_mw,0.5,0.5,0.5,True,read,fulln1/summary.csv,item==W1 tau_mw
+n1_W4_tau_mw,5,5,5,True,read,fulln1/summary.csv,item==W4 tau_mw
+n1_p99_err_anch,0.006,0.006,0.006,True,read,fulln1/summary.csv,kind==n1_accuracy item==hyb1 err_p99_pp
+n1_p99_err_prev,0.032,0.032,0.032,True,read,fulln1/summary.csv,kind==n1_accuracy item==prev1 err_p99_pp
+n1_saving_vs_classic_ms,2.2,2.2193706,2.2,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,(W1 - W4 newton_iterations) / contingencies * ms_iter_full
+n1_breakeven_forward_ms,4.8,4.7739994,4.8,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,(W0 - W4 newton_iterations) / contingencies * ms_iter_full - ms_prep
+n1_breakeven_forward_plus_prep_ms,7.2,7.2291454,7.2,True,recomputed,fulln1/summary.csv + fulln1/timing_2000.json,previous + ms_prep
+n1_W4_missed_rows,14,14,14,True,derived,derived/fulln1_w4_missed.csv,"rows (test bases, W4_missed)"
+n1_W4_missed_below_10014,13,13,13,True,derived,derived/fulln1_w4_missed.csv,worst_loading <= 1.0014
+n1_W4_missed_median_mismatch_mw,0.5,0.47201961,0.5,True,derived,derived/fulln1_w4_missed.csv,median mis1_hyb
+pm_case2000_tiny_qc_same_solution,200,200,200,True,read,timing/summary.csv,kind=='PowerModels solve' network==case2000_goc item==tiny_qc same_solution
+pm_case2000_default_same_solution,199,199,199,True,read,timing/summary.csv,kind=='PowerModels solve' network==case2000_goc item==default same_solution
+pm_case2000_flat_q0_same_solution,20,20,20,True,read,timing/summary.csv,kind=='PowerModels solve' network==case2000_goc item==flat_q0 same_solution
+pm_case2000_dc_qc_same_solution,46,46,46,True,read,timing/summary.csv,kind=='PowerModels solve' network==case2000_goc item==dc_qc same_solution
+pm_case10000_tiny_qc_same_solution,100,100,100,True,read,timing/summary.csv,kind=='PowerModels solve' network==case10000_goc item==tiny_qc same_solution
+pm_case10000_default_same_solution,92,92,92,True,read,timing/summary.csv,kind=='PowerModels solve' network==case10000_goc item==default same_solution
+pm_case10000_flat_q0_same_solution,0,0,0,True,read,timing/summary.csv,kind=='PowerModels solve' network==case10000_goc item==flat_q0 same_solution
+pm_case10000_dc_qc_same_solution,0,0,0,True,read,timing/summary.csv,kind=='PowerModels solve' network==case10000_goc item==dc_qc same_solution
+fresh_classic_outages,"76,512",76512,"76,512",True,recomputed,fresh/results_n1_per_base.csv,policy==W1 c==1.001 sum contingencies over 24 bases
+fresh_classic_critical,"1,510",1510,"1,510",True,recomputed,fresh/results_n1_per_base.csv,sum critical
+fresh_classic_missed,2,2,2,True,recomputed,fresh/results_n1_per_base.csv,sum missed
+fresh_classic_sent_to_ac,27.94%,0.27938101,27.94%,True,recomputed,fresh/results_n1_per_base.csv,sum sent_to_ac / sum contingencies
+fresh_classic_missed_registered6,0,0,0,True,recomputed,fresh/results_n1_per_base.csv,registered==R sum missed
+fresh_anch_outages,"76,512",76512,"76,512",True,recomputed,fresh/results_n1_per_base.csv,policy==W4 c==1.001 sum contingencies over 24 bases
+fresh_anch_critical,"1,510",1510,"1,510",True,recomputed,fresh/results_n1_per_base.csv,sum critical
+fresh_anch_missed,1,1,1,True,recomputed,fresh/results_n1_per_base.csv,sum missed
+fresh_anch_sent_to_ac,2.17%,0.021669803,2.17%,True,recomputed,fresh/results_n1_per_base.csv,sum sent_to_ac / sum contingencies
+fresh_anch_missed_registered6,0,0,0,True,recomputed,fresh/results_n1_per_base.csv,registered==R sum missed
+fresh_timing_fullac_n,"4,800",4800,"4,800",True,read,fulln1/e2e_2000_fresh.json,summary workflow==W0 gate==all n
+fresh_timing_fullac_critical,69,69,69,True,read,fulln1/e2e_2000_fresh.json,critical
+fresh_timing_fullac_missed,0,0,0,True,read,fulln1/e2e_2000_fresh.json,missed
+fresh_timing_fullac_ms_per_outage,13.7,13.681161,13.7,True,recomputed,fulln1/e2e_2000_fresh.json,ms_total_first / n
+fresh_timing_classic_n,"4,800",4800,"4,800",True,read,fulln1/e2e_2000_fresh.json,summary workflow==W1 gate==all n
+fresh_timing_classic_critical,69,69,69,True,read,fulln1/e2e_2000_fresh.json,critical
+fresh_timing_classic_missed,0,0,0,True,read,fulln1/e2e_2000_fresh.json,missed
+fresh_timing_classic_ms_per_outage,8.4,8.3978053,8.4,True,recomputed,fulln1/e2e_2000_fresh.json,ms_total_first / n
+fresh_timing_anch_n,"4,800",4800,"4,800",True,read,fulln1/e2e_2000_fresh.json,summary workflow==W4_mps16 gate==all n
+fresh_timing_anch_critical,69,69,69,True,read,fulln1/e2e_2000_fresh.json,critical
+fresh_timing_anch_missed,0,0,0,True,read,fulln1/e2e_2000_fresh.json,missed
+fresh_timing_anch_ms_per_outage,22.3,22.315102,22.3,True,recomputed,fulln1/e2e_2000_fresh.json,ms_total_first / n
+fresh_timing_bases,24,24,24,True,read,fulln1/e2e_2000_fresh.json,len(bases)
+fresh_iterations_anch,1.08,1.084375,1.08,True,read,fulln1/e2e_2000_fresh.json,summary W4 gate==all iterations_mean
+fresh_iterations_fullac,2.92,2.9202083,2.92,True,read,fulln1/e2e_2000_fresh.json,W0 iterations_mean
+fresh_iterations_classic,1.61,1.61375,1.61,True,read,fulln1/e2e_2000_fresh.json,W1 iterations_mean
+fresh_ms_per_iteration,3.81,3.8143266,3.81,True,read,fulln1/timing_2000_fresh.json,ms_iter_full
+fresh_ms_forward_b16,12.74,12.740352,12.74,True,read,fulln1/timing_2000_fresh.json,ms_forward_mps_b16
+fresh_ms_prep,2.40,2.4020835,2.40,True,read,fulln1/timing_2000_fresh.json,ms_prep
+fresh_ms_preoutage_share,0.18,0.18400592,0.18,True,recomputed,fulln1/e2e_2000_fresh.json,sum base_inference ms_cpu_b1 / sum n_sample
+fresh_saved_iterations_vs_fullac,1.84,1.8358333,1.84,True,recomputed,fulln1/e2e_2000_fresh.json,W0 - W4 iterations_mean
+fresh_saved_ms_vs_fullac,7.0,7.0024679,7.0,True,recomputed,fulln1/e2e_2000_fresh.json + fulln1/timing_2000_fresh.json,(W0 - W4 iterations_mean) * ms_iter_full
+fresh_saved_iterations_vs_classic,0.53,0.529375,0.53,True,recomputed,fulln1/e2e_2000_fresh.json,W1 - W4 iterations_mean
+fresh_saved_ms_vs_classic,2.0,2.0192091,2.0,True,recomputed,fulln1/e2e_2000_fresh.json + fulln1/timing_2000_fresh.json,(W1 - W4 iterations_mean) * ms_iter_full
+fresh_breakeven_forward_ms,4.4,4.4163785,4.4,True,recomputed,fulln1/e2e_2000_fresh.json + fulln1/timing_2000_fresh.json,saved ms vs full AC - ms_prep - pre-outage share
+fresh_small_vs_tiny_ms_ratio,2.2,2.1836446,2.2,True,recomputed,timing/goc10000_timing_small.csv + timing/goc10000_timing.csv,item=='GENCO forward' device==cpu batch==16: small ms_per_state / tiny ms_per_state
+freshws_2000_states,"2,496",2496,"2,496",True,read,fresh/results_hybrid.csv,grid==2000 states
+freshws_2000_critical,140,140,140,True,read,fresh/results_hybrid.csv,grid==2000 critical_states
+freshws_10000_states,999,999,999,True,read,fresh/results_hybrid.csv,grid==10000 states
+freshws_10000_critical,231,231,231,True,read,fresh/results_hybrid.csv,grid==10000 critical_states
+freshws_2000_tiny_seed0_prev1_loading_only_missed,3,3,3,True,read,fresh/results_hybrid.csv,grid==2000 checkpoint==tiny_seed0 start==prev1 policy==loading_only c==1.001 missed_critical_states
+freshws_2000_tiny_seed0_prev1_loading_only_flagged,0.0%,0,0.0%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_2000_tiny_seed0_prev1_full_policy_missed,0,0,0,True,read,fresh/results_hybrid.csv,grid==2000 checkpoint==tiny_seed0 start==prev1 policy==full_policy c==1.001 missed_critical_states
+freshws_2000_tiny_seed0_prev1_full_policy_flagged,54.1%,0.54074703,54.1%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_2000_tiny_seed0_hyb1_loading_only_missed,0,0,0,True,read,fresh/results_hybrid.csv,grid==2000 checkpoint==tiny_seed0 start==hyb1 policy==loading_only c==1.001 missed_critical_states
+freshws_2000_tiny_seed0_hyb1_loading_only_flagged,0.0%,0,0.0%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_2000_tiny_seed0_hyb1_full_policy_missed,0,0,0,True,read,fresh/results_hybrid.csv,grid==2000 checkpoint==tiny_seed0 start==hyb1 policy==full_policy c==1.001 missed_critical_states
+freshws_2000_tiny_seed0_hyb1_full_policy_flagged,0.8%,0.0076400679,0.8%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_tiny_seed0_prev1_loading_only_missed,0,0,0,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==tiny_seed0 start==prev1 policy==loading_only c==1.001 missed_critical_states
+freshws_10000_tiny_seed0_prev1_loading_only_flagged,1.0%,0.010416667,1.0%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_tiny_seed0_prev1_full_policy_missed,0,0,0,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==tiny_seed0 start==prev1 policy==full_policy c==1.001 missed_critical_states
+freshws_10000_tiny_seed0_prev1_full_policy_flagged,60.5%,0.60546875,60.5%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_tiny_seed0_hyb1_loading_only_missed,0,0,0,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==tiny_seed0 start==hyb1 policy==loading_only c==1.001 missed_critical_states
+freshws_10000_tiny_seed0_hyb1_loading_only_flagged,2.5%,0.024739583,2.5%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_tiny_seed0_hyb1_full_policy_missed,0,0,0,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==tiny_seed0 start==hyb1 policy==full_policy c==1.001 missed_critical_states
+freshws_10000_tiny_seed0_hyb1_full_policy_flagged,8.1%,0.080729167,8.1%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_tiny_seed1_hyb1_loading_only_missed,2,2,2,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==tiny_seed1 start==hyb1 policy==loading_only c==1.001 missed_critical_states
+freshws_10000_tiny_seed1_hyb1_loading_only_flagged,2.3%,0.0234375,2.3%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_tiny_seed1_hyb1_full_policy_missed,1,1,1,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==tiny_seed1 start==hyb1 policy==full_policy c==1.001 missed_critical_states
+freshws_10000_tiny_seed1_hyb1_full_policy_flagged,8.6%,0.0859375,8.6%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_small_seed0_hyb1_loading_only_missed,1,1,1,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==small_seed0 start==hyb1 policy==loading_only c==1.001 missed_critical_states
+freshws_10000_small_seed0_hyb1_loading_only_flagged,2.3%,0.0234375,2.3%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_small_seed0_hyb1_full_policy_missed,1,1,1,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==small_seed0 start==hyb1 policy==full_policy c==1.001 missed_critical_states
+freshws_10000_small_seed0_hyb1_full_policy_flagged,7.9%,0.079427083,7.9%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_small_seed1_hyb1_loading_only_missed,4,4,4,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==small_seed1 start==hyb1 policy==loading_only c==1.001 missed_critical_states
+freshws_10000_small_seed1_hyb1_loading_only_flagged,1.3%,0.013020833,1.3%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_10000_small_seed1_hyb1_full_policy_missed,4,4,4,True,read,fresh/results_hybrid.csv,grid==10000 checkpoint==small_seed1 start==hyb1 policy==full_policy c==1.001 missed_critical_states
+freshws_10000_small_seed1_hyb1_full_policy_flagged,4.7%,0.046875,4.7%,True,recomputed,fresh/results_hybrid.csv,secure_flagged / secure_states
+freshws_variants_flagged_min,0.4%,0.00390625,0.4%,True,recomputed,fresh/results_hybrid.csv,"grid==10000 policy==loading_only start in {shyb1,sgate}: min secure_flagged/secure_states"
+freshws_variants_flagged_max,0.9%,0.0091145833,0.9%,True,recomputed,fresh/results_hybrid.csv,same rows: max
+freshws_variants_missed_min,0,0,0,True,recomputed,fresh/results_hybrid.csv,same rows: min missed_critical_states
+freshws_variants_missed_max,3,3,3,True,recomputed,fresh/results_hybrid.csv,same rows: max missed_critical_states
+fresh_tau_prev_mw,0.5,0.5,0.5,True,read,fresh/policy_frozen.json,tau_mw.prev
+fresh_tau_hyb_mw,5,5,5,True,read,fresh/policy_frozen.json,tau_mw.hyb
+ft_10000_released_missed,5,5,5,True,read,finetune/summary_hybrid_10000.csv,subset==all model==released predictor==hyb1 missed
+ft_10000_released_flagged,3.2%,0.031518625,3.2%,True,recomputed,finetune/summary_hybrid_10000.csv,secure_flagged / secure
+ft_10000_ft10000_seed0_missed,4,4,4,True,read,finetune/summary_hybrid_10000.csv,subset==all model==ft10000_seed0 predictor==hyb1 missed
+ft_10000_ft10000_seed0_flagged,3.2%,0.031518625,3.2%,True,recomputed,finetune/summary_hybrid_10000.csv,secure_flagged / secure
+ft_10000_released_raw_err,0.54,0.54058135,0.54,True,read,finetune/summary_10000.csv,model==released subset==all err_median
+ft_10000_ft_raw_err,0.56,0.56055486,0.56,True,read,finetune/summary_10000.csv,model==ft10000_seed0 err_median
+ft_500_released_raw_err,0.33,0.325346,0.33,True,read,finetune/summary_500.csv,model==released_seed0 subset==all err_median
+ft_500_ft_raw_err,0.23,0.22728741,0.23,True,read,finetune/summary_500.csv,model==ft_seed0 err_median
+ft_500_released_missed,5,5,5,True,read,finetune/summary_hybrid_500.csv,model==released predictor==hyb1 missed
+ft_500_ft_seed0_missed,5,5,5,True,read,finetune/summary_hybrid_500.csv,model==ft_seed0 predictor==hyb1 missed
+ft_500_train_scenarios,"8,969",8969,"8,969",True,derived,derived/finetune_scenario_counts.csv,grid==500 train
+ft_2000_train_scenarios,"2,248",2248,"2,248",True,derived,derived/finetune_scenario_counts.csv,grid==2000 train
+ft_10000_train_scenarios,"1,347",1347,"1,347",True,derived,derived/finetune_scenario_counts.csv,grid==10000 train
+qlim_hyb1s_missed,23,23,23,True,read,qlim/summary.csv,network==case500_goc truth=='Q limits' variant==switching predictor==hyb1s overloads_missed
+qlim_genco1s_missed,28,28,28,True,read,qlim/summary.csv,network==case500_goc truth=='Q limits' variant==switching predictor==genco1s overloads_missed
+qlim_prev1s_missed,54,54,54,True,read,qlim/summary.csv,network==case500_goc truth=='Q limits' variant==switching predictor==prev1s overloads_missed
+qlim_overloads,"2,570",2570,"2,570",True,read,qlim/summary.csv,overloads
+qlim_hyb1s_worst_missed,111%,1.1126854,111%,True,read,qlim/summary.csv,predictor==hyb1s worst_missed_loading
+qlim_hyb2s_missed,5,5,5,True,read,qlim/summary.csv,predictor==hyb2s overloads_missed
+qlim_hyb2s_worst_missed,100.5%,1.0052338,100.5%,True,read,qlim/summary.csv,predictor==hyb2s worst_missed_loading
+qlim_nolimit_ac_missed,19,19,19,True,read,qlim/summary.csv,variant=='no-limit AC' predictor==ac overloads_missed
+qlim_nolimit_ac_secure_flagged,0.2%,0.0020572996,0.2%,True,read,qlim/summary.csv,secure_flagged
+qlim_cutoff100_missed,9,9,9,True,read,qlim/batch2_results.json,qlimits.sweep cutoff==1.0 missed_readings_in_accepted_states
+qlim_cutoff100_secure_sent,4.9%,0.049451387,4.9%,True,read,qlim/batch2_results.json,cutoff==1.0 secure_sent_percent
+qlim_cutoff95_missed,0,0,0,True,read,qlim/batch2_results.json,cutoff==0.95 missed_readings_in_accepted_states
+qlim_cutoff95_secure_sent,23.5%,0.23483694,23.5%,True,read,qlim/batch2_results.json,cutoff==0.95 secure_sent_percent
+qlim_v118_detection_before,98.8%,0.98838897,98.8%,True,read,qlim/summary.csv,network==case118_ieee variant==voltage truth=='no limits' recall
+qlim_v118_detection_pq,70%,0.69627193,70%,True,read,qlim/summary.csv,truth=='Q limits' predictor==GENCO buses==PQ recall
+qlim_v118_detection_pqpv,52%,0.51963993,52%,True,read,qlim/summary.csv,buses=='PQ + PV' recall
+conf_118_a1_ac_calls,31.9%,0.31932773,31.9%,True,derived,derived/conformal_case118_seed0.csv,"seed 0, surrogate==genco_d sigma==global alpha==0.01 ac_calls"
+conf_118_states_with_overload,31.2%,0.31242105,31.2%,True,derived,derived/conformal_case118_seed0.csv,states_with_real_overload_share
+conf_118_a1_missed,0,0,0,True,derived,derived/conformal_case118_seed0.csv,missed
+conf_118_a1_real,792,792,792,True,derived,derived/conformal_case118_seed0.csv,real (held-out overloads)
+conf_118_dc_secure_escalated,81%,0.81418093,81%,True,derived,derived/conformal_case118_seed0.csv,surrogate==dc_d sigma==shift alpha==0.01 wasted
+conf_118_splits_a10_line_missed,9.9%,0.098945824,9.9%,True,recomputed,conformal/conformal_case118_ieee_base_splits.csv,surrogate==genco_d sigma==global alpha==0.1: mean line_missed_share over 100 splits
+conf_118_splits_a10_state_missed,4.4%,0.043798941,4.4%,True,recomputed,conformal/conformal_case118_ieee_base_splits.csv,mean missed_share
+conf_118_splits_a5_line_missed,5.0%,0.049552945,5.0%,True,recomputed,conformal/conformal_case118_ieee_base_splits.csv,surrogate==genco_d sigma==global alpha==0.05: mean line_missed_share over 100 splits
+conf_118_splits_a5_state_missed,2.0%,0.020117501,2.0%,True,recomputed,conformal/conformal_case118_ieee_base_splits.csv,mean missed_share
+conf_118_splits_a2_line_missed,1.9%,0.018864381,1.9%,True,recomputed,conformal/conformal_case118_ieee_base_splits.csv,surrogate==genco_d sigma==global alpha==0.02: mean line_missed_share over 100 splits
+conf_118_splits_a2_state_missed,0.23%,0.0023035457,0.23%,True,recomputed,conformal/conformal_case118_ieee_base_splits.csv,mean missed_share
+conf_118_splits_a1_line_missed,1.0%,0.0097606509,1.0%,True,recomputed,conformal/conformal_case118_ieee_base_splits.csv,surrogate==genco_d sigma==global alpha==0.01: mean line_missed_share over 100 splits
+conf_118_splits_a1_state_missed,0.05%,0.00051674383,0.05%,True,recomputed,conformal/conformal_case118_ieee_base_splits.csv,mean missed_share
+conf_texas_dc_ac_calls,7.9%,0.079073333,7.9%,True,recomputed,conformal/conformal_texas_n2x450_splits.csv,surrogate==dc_d sigma==shift alpha==0.02 mean ac_calls
+conf_texas_genco_ac_calls,7.7%,0.076513333,7.7%,True,recomputed,conformal/conformal_texas_n2x450_splits.csv,surrogate==genco sigma==shift alpha==0.02 mean ac_calls
+conf_118_n3_line_missed,6.5%,0.065096953,6.5%,True,read,conformal/shift_case118_fixed.csv,shift==n3 surrogate==genco_d sigma==shift alpha==0.05 line_missed_share
+conf_118_n4_line_missed,7.1%,0.070835639,7.1%,True,read,conformal/shift_case118_fixed.csv,shift==n4 surrogate==genco_d sigma==shift alpha==0.05 line_missed_share
+emb_auroc_n3,0.68,0.68355582,0.68,True,read,embedding/embedding_auroc.csv,score=='L11.mean|knn5' n3
+emb_auroc_n4,0.79,0.79308797,0.79,True,read,embedding/embedding_auroc.csv,n4
+emb_auroc_nout_n3,1.00,1,1.00,True,read,embedding/embedding_auroc.csv,score==n_out n3
+emb_auroc_nout_n4,1.00,1,1.00,True,read,embedding/embedding_auroc.csv,score==n_out n4
+zs_err_ratio_min,2–9,2.928257,2.9,True,recomputed,zeroshot/summary.csv,min over grids of err_median_pp[zs] / err_median_pp[dc] (kind==screen)
+zs_err_ratio_max,2–9,8.8496446,8.8,True,recomputed,zeroshot/summary.csv,max of the same
+zs_case118_prev1_missed,74,74,74,True,read,zeroshot/summary.csv,network==case118_ieee name==prev1 overloads_missed
+zs_case118_hybzs1_missed,19,19,19,True,read,zeroshot/summary.csv,network==case118_ieee name==hybzs1 overloads_missed
+zs_case500_prev1_missed,12,12,12,True,read,zeroshot/summary.csv,network==case500_goc name==prev1 overloads_missed
+zs_case500_hybzs1_missed,3,3,3,True,read,zeroshot/summary.csv,network==case500_goc name==hybzs1 overloads_missed
+zs_case1354_prev1_missed,8,8,8,True,read,zeroshot/summary.csv,network==case1354_pegase name==prev1 overloads_missed
+zs_case1354_hybzs1_missed,5,5,5,True,read,zeroshot/summary.csv,network==case1354_pegase name==hybzs1 overloads_missed

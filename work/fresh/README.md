@@ -1,6 +1,6 @@
 # Fresh operating points for the new screening policies
 
-Written 2026-10-10 (investigation only; nothing here has been run). Companion of `work/splits/README.md`, which
+Written 2026-10-10 as the plan; the run happened the same day through the chain scripts (`datagen_chain.sh`, `hybrid2000_chain.sh`, `n1_2000_chain.sh`, `n1_extend_chain.sh`, `chain10000.sh`, `quiet_chain.sh`; see `POLICY_LOG.md` and `../../reproduce.sh fresh`), not through the draft `run_fresh.sh`, which was never executed. The section 3 estimate below excludes the 18-base extension and the e2e phase; the sequential total was about 2 h 50 min. Companion of `work/splits/README.md`, which
 freezes the calibration/test split of the *existing* files and states that those files are for development only.
 This file gives the recipe for the confirmation run on operating points that no analysis has ever scored, the
 inventory of what has been scored (`used_ids.json`), the measured runtimes behind the cost estimate, and the list of

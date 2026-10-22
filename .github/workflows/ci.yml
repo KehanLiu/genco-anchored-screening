@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  headline-numbers:
+    name: registered number check, its tests and gridtrust tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install gridtrust (numpy, scipy, pandas) and pytest
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e gridtrust pytest
+      - name: Registered number check (274 claims recomputed from results/, compared with their registered write-up values and with headline_numbers_expected.csv)
+        run: python scripts/headline_numbers.py --check
+      - name: Tests of the check itself (a changed table value, an absent table, an empty cell, a removed claim, a changed expected row each fail)
+        run: python -m pytest tests -q
+      - name: gridtrust tests (the repo-equivalence tests skip without the saved result tables)
+        run: python -m pytest gridtrust/tests -q

@@ -1,0 +1,139 @@
+network,kind,item,n,converged,pm_flag_converged,it_mean,it_median,it_max,jac_evals_mean,ms_median,ms_p90,ms_median_of_median3,start_residual_pu_median,max_dv_vs_stored,same_solution,note
+case2000_goc,PowerModels solve,default,200.0,199.0,199.0,3.2311557788944723,3.0,4.0,4.231155778894473,13.955,17.8254828,14.283709,0.7715153771403693,4.1883328408137933e-13,199.0,
+case2000_goc,PowerModels solve,flat_q0,200.0,62.0,62.0,7.467741935483871,6.0,37.0,7.741935483870968,26.138083,42.1589506,26.3851665,108.53374287337104,1.079115880949043,20.0,
+case2000_goc,PowerModels solve,dc_qc,200.0,85.0,85.0,6.788235294117647,6.0,19.0,7.517647058823529,26.012209,33.635916,26.380416,99.18474921320316,1.7253407288249112,46.0,
+case2000_goc,PowerModels solve,tiny_qc,200.0,200.0,200.0,4.33,4.0,10.0,4.925,17.8689375,25.0827459,18.097937,2.3317334828964875,1.7287074651216515e-09,200.0,
+case2000_goc,PowerModels solve,tiny_q0,200.0,200.0,200.0,3.9,4.0,4.0,4.9,17.821958,18.1493042,18.061812500000002,7.377501010116646,6.210412585649434e-09,200.0,
+case2000_goc,PowerModels solve,small_qc,200.0,200.0,200.0,4.175,4.0,9.0,4.865,17.785542,18.4344083,17.988083000000003,1.9490534711728644,1.8082869695637132e-09,200.0,
+case2000_goc,PowerModels solve,default_p,200.0,199.0,199.0,3.0552763819095476,3.0,4.0,4.055276381909548,13.867958,14.507050000000005,14.078459,0.7715153771403693,2.993875430256144e-09,199.0,
+case2000_goc,PowerModels solve,flat_q0_p,200.0,62.0,62.0,7.467741935483871,6.0,37.0,7.741935483870968,26.029270500000003,42.2075453,26.522896000000003,108.53374287337104,1.079115880949043,20.0,
+case2000_goc,PowerModels solve,dc_qc_p,200.0,84.0,84.0,6.869047619047619,6.0,29.0,7.5,25.9474585,33.6406124,26.191083,99.18474921320316,2.1817622169993083,48.0,
+case2000_goc,PowerModels solve,tiny_qc_p,200.0,200.0,200.0,3.16,3.0,4.0,4.16,13.913167000000001,17.7943422,14.150061999999998,2.3317334828964875,1.7286700516584537e-09,200.0,
+case2000_goc,PowerModels solve,small_qc_p,200.0,200.0,200.0,3.155,3.0,4.0,4.155,13.8655,17.6729833,14.0677085,1.9490534711728644,1.7286575352253796e-09,200.0,
+case2000_goc,PowerModels solve,default_nt,200.0,199.0,199.0,4.321608040201005,4.0,6.0,5.321608040201005,17.644875,21.6884332,17.943417,0.7715153771403693,4.110119110053395e-09,199.0,
+case2000_goc,PowerModels solve,flat_q0_nt,200.0,50.0,50.0,10.58,10.5,16.0,11.58,43.9361045,49.127445800000004,44.404416999999995,108.53374287337104,2.4307583849760715e-09,50.0,
+case2000_goc,PowerModels solve,tiny_qc_nt,200.0,200.0,200.0,4.945,5.0,6.0,5.945,21.409229,21.892325300000003,21.734603999999997,2.3317334828964875,4.941898110578865e-09,200.0,
+case2000_goc,PowerModels solve,default_nt_p,200.0,199.0,199.0,3.9447236180904524,4.0,7.0,4.944723618090452,17.489916,21.443575,17.708291,0.7715153771403693,4.060053676002294e-09,199.0,
+case2000_goc,PowerModels solve,flat_q0_nt_p,200.0,50.0,50.0,10.58,10.5,16.0,11.58,43.604729,49.3362411,44.066708500000004,108.53374287337104,2.4307583849760715e-09,50.0,
+case2000_goc,PowerModels solve,dc_qc_nt_p,200.0,116.0,116.0,10.491379310344827,10.0,21.0,11.491379310344827,41.3602085,52.4197085,41.6886665,99.18474921320316,2.1510712089406305,115.0,
+case2000_goc,PowerModels solve,tiny_qc_nt_p,200.0,200.0,200.0,4.355,4.0,5.0,5.355,17.737229,21.6870295,18.015479,2.3317334828964875,8.02075779958406e-09,200.0,
+case2000_goc,PowerModels overhead,dict_ms: data dict (datakit _gfm_state),200.0,,,,,,,3.421083498324151,3.623315997174359,,,,,
+case2000_goc,PowerModels overhead,inst_ms: instantiate_pf_data (Ybus + Jacobian pattern),200.0,,,,,,,6.2432085,6.451129099999999,,,,,
+case2000_goc,PowerModels overhead,"stored_runtime_ms: datakit stored AC runtime (generation, loaded machine)",200.0,,,,,,,18.64945888519287,82.79938697814939,,,,,
+case2000_goc,chain,"tiny: graph build + normalise + transforms [cpu, batch 1]",16.0,,,,,,,2.1182914988457924,,,,,,
+case2000_goc,chain,"tiny: GENCO forward [cpu, batch 1]",7.0,,,,,,,33.8650419980695,,,,,,
+case2000_goc,chain,"tiny: GENCO forward [cpu, batch 4]",7.0,,,,,,,22.460156249508145,,,,,,
+case2000_goc,chain,"tiny: GENCO forward [cpu, batch 16]",7.0,,,,,,,20.236945312490207,,,,,,
+case2000_goc,chain,"tiny: GENCO forward [mps, batch 1]",7.0,,,,,,,27.261000002908983,,,,,,
+case2000_goc,chain,"tiny: GENCO forward [mps, batch 4]",7.0,,,,,,,14.760354250029197,,,,,,
+case2000_goc,chain,"tiny: GENCO forward [mps, batch 16]",7.0,,,,,,,12.615494749979916,,,,,,
+case2000_goc,chain,"tiny: GENCO end-to-end single state (graph+model+inverse+flows) [cpu, batch 1]",16.0,,,,,,,38.31916699891735,,,,,,
+case2000_goc,chain,"tiny: SciPy Newton problem build [cpu, batch 1]",16.0,,,,,,,1.190666498587234,,,,,,
+case2000_goc,chain,"tiny: SciPy one Newton step from GENCO [cpu, batch 1]",16.0,,,,,,,4.067354500875808,,,,,,min of 3 per state
+case2000_goc,chain,"tiny: SciPy two Newton steps from GENCO [cpu, batch 1]",16.0,,,,,,,8.071291500527877,,,,,,min of 3 per state
+case2000_goc,chain,"tiny: SciPy full Newton from GENCO [cpu, batch 1]",16.0,,,,,,,12.05016650055768,,,,,,"min of 3 per state; 3.24 iterations, converged 17/17"
+case2000_goc,chain,"small: graph build + normalise + transforms [cpu, batch 1]",16.0,,,,,,,2.016207998167374,,,,,,
+case2000_goc,chain,"small: GENCO forward [cpu, batch 1]",7.0,,,,,,,54.7565829983796,,,,,,
+case2000_goc,chain,"small: GENCO forward [cpu, batch 4]",7.0,,,,,,,41.01057299976674,,,,,,
+case2000_goc,chain,"small: GENCO forward [cpu, batch 16]",7.0,,,,,,,39.953932312528195,,,,,,
+case2000_goc,chain,"small: GENCO forward [mps, batch 1]",7.0,,,,,,,38.16683400145848,,,,,,
+case2000_goc,chain,"small: GENCO forward [mps, batch 4]",7.0,,,,,,,25.890124999932596,,,,,,
+case2000_goc,chain,"small: GENCO forward [mps, batch 16]",7.0,,,,,,,24.79733593736455,,,,,,
+case2000_goc,chain,"small: GENCO end-to-end single state (graph+model+inverse+flows) [cpu, batch 1]",16.0,,,,,,,59.406979500636226,,,,,,
+case2000_goc,chain,"small: SciPy Newton problem build [cpu, batch 1]",16.0,,,,,,,1.198520498292055,,,,,,
+case2000_goc,chain,"small: SciPy one Newton step from GENCO [cpu, batch 1]",16.0,,,,,,,4.078041500179097,,,,,,min of 3 per state
+case2000_goc,chain,"small: SciPy two Newton steps from GENCO [cpu, batch 1]",16.0,,,,,,,8.099041999230394,,,,,,min of 3 per state
+case2000_goc,chain,"small: SciPy full Newton from GENCO [cpu, batch 1]",16.0,,,,,,,12.094541498299805,,,,,,"min of 3 per state; 3.24 iterations, converged 17/17"
+case2000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 1] + PowerModels solve from tiny_qc",,,,,,,,53.852270996915294,,,,,,"graph 2.12 + forward 33.87 + solve 17.87; vs default 13.96 (x3.86), flat_q0 26.14 (x2.06), dc_qc 26.01 (x2.07)"
+case2000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 1] + PowerModels solve from tiny_qc_p",,,,,,,,49.896500496915294,,,,,,"graph 2.12 + forward 33.87 + solve 13.91; vs default_p 13.87 (x3.60), flat_q0_p 26.03 (x1.92), dc_qc_p 25.95 (x1.92)"
+case2000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 4] + PowerModels solve from tiny_qc",,,,,,,,42.44738524835394,,,,,,"graph 2.12 + forward 22.46 + solve 17.87; vs default 13.96 (x3.04), flat_q0 26.14 (x1.62), dc_qc 26.01 (x1.63)"
+case2000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 4] + PowerModels solve from tiny_qc_p",,,,,,,,38.49161474835394,,,,,,"graph 2.12 + forward 22.46 + solve 13.91; vs default_p 13.87 (x2.78), flat_q0_p 26.03 (x1.48), dc_qc_p 25.95 (x1.48)"
+case2000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 16] + PowerModels solve from tiny_qc",,,,,,,,40.224174311336,,,,,,"graph 2.12 + forward 20.24 + solve 17.87; vs default 13.96 (x2.88), flat_q0 26.14 (x1.54), dc_qc 26.01 (x1.55)"
+case2000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 16] + PowerModels solve from tiny_qc_p",,,,,,,,36.268403811336,,,,,,"graph 2.12 + forward 20.24 + solve 13.91; vs default_p 13.87 (x2.62), flat_q0_p 26.03 (x1.39), dc_qc_p 25.95 (x1.40)"
+case2000_goc,chain total,"graph + GENCO tiny forward [mps, batch 1] + PowerModels solve from tiny_qc",,,,,,,,47.24822900175478,,,,,,"graph 2.12 + forward 27.26 + solve 17.87; vs default 13.96 (x3.39), flat_q0 26.14 (x1.81), dc_qc 26.01 (x1.82)"
+case2000_goc,chain total,"graph + GENCO tiny forward [mps, batch 1] + PowerModels solve from tiny_qc_p",,,,,,,,43.29245850175478,,,,,,"graph 2.12 + forward 27.26 + solve 13.91; vs default_p 13.87 (x3.12), flat_q0_p 26.03 (x1.66), dc_qc_p 25.95 (x1.67)"
+case2000_goc,chain total,"graph + GENCO tiny forward [mps, batch 4] + PowerModels solve from tiny_qc",,,,,,,,34.74758324887499,,,,,,"graph 2.12 + forward 14.76 + solve 17.87; vs default 13.96 (x2.49), flat_q0 26.14 (x1.33), dc_qc 26.01 (x1.34)"
+case2000_goc,chain total,"graph + GENCO tiny forward [mps, batch 4] + PowerModels solve from tiny_qc_p",,,,,,,,30.79181274887499,,,,,,"graph 2.12 + forward 14.76 + solve 13.91; vs default_p 13.87 (x2.22), flat_q0_p 26.03 (x1.18), dc_qc_p 25.95 (x1.19)"
+case2000_goc,chain total,"graph + GENCO tiny forward [mps, batch 16] + PowerModels solve from tiny_qc",,,,,,,,32.60272374882571,,,,,,"graph 2.12 + forward 12.62 + solve 17.87; vs default 13.96 (x2.34), flat_q0 26.14 (x1.25), dc_qc 26.01 (x1.25)"
+case2000_goc,chain total,"graph + GENCO tiny forward [mps, batch 16] + PowerModels solve from tiny_qc_p",,,,,,,,28.64695324882571,,,,,,"graph 2.12 + forward 12.62 + solve 13.91; vs default_p 13.87 (x2.07), flat_q0_p 26.03 (x1.10), dc_qc_p 25.95 (x1.10)"
+case2000_goc,chain total,"graph + GENCO small forward [cpu, batch 1] + PowerModels solve from small_qc",,,,,,,,74.55833299654697,,,,,,"graph 2.02 + forward 54.76 + solve 17.79; vs default 13.96 (x5.34), flat_q0 26.14 (x2.85), dc_qc 26.01 (x2.87)"
+case2000_goc,chain total,"graph + GENCO small forward [cpu, batch 1] + PowerModels solve from small_qc_p",,,,,,,,70.63829099654697,,,,,,"graph 2.02 + forward 54.76 + solve 13.87; vs default_p 13.87 (x5.09), flat_q0_p 26.03 (x2.71), dc_qc_p 25.95 (x2.72)"
+case2000_goc,chain total,"graph + GENCO small forward [cpu, batch 4] + PowerModels solve from small_qc",,,,,,,,60.81232299793411,,,,,,"graph 2.02 + forward 41.01 + solve 17.79; vs default 13.96 (x4.36), flat_q0 26.14 (x2.33), dc_qc 26.01 (x2.34)"
+case2000_goc,chain total,"graph + GENCO small forward [cpu, batch 4] + PowerModels solve from small_qc_p",,,,,,,,56.89228099793411,,,,,,"graph 2.02 + forward 41.01 + solve 13.87; vs default_p 13.87 (x4.10), flat_q0_p 26.03 (x2.19), dc_qc_p 25.95 (x2.19)"
+case2000_goc,chain total,"graph + GENCO small forward [cpu, batch 16] + PowerModels solve from small_qc",,,,,,,,59.75568231069557,,,,,,"graph 2.02 + forward 39.95 + solve 17.79; vs default 13.96 (x4.28), flat_q0 26.14 (x2.29), dc_qc 26.01 (x2.30)"
+case2000_goc,chain total,"graph + GENCO small forward [cpu, batch 16] + PowerModels solve from small_qc_p",,,,,,,,55.83564031069557,,,,,,"graph 2.02 + forward 39.95 + solve 13.87; vs default_p 13.87 (x4.03), flat_q0_p 26.03 (x2.15), dc_qc_p 25.95 (x2.15)"
+case2000_goc,chain total,"graph + GENCO small forward [mps, batch 1] + PowerModels solve from small_qc",,,,,,,,57.96858399962586,,,,,,"graph 2.02 + forward 38.17 + solve 17.79; vs default 13.96 (x4.15), flat_q0 26.14 (x2.22), dc_qc 26.01 (x2.23)"
+case2000_goc,chain total,"graph + GENCO small forward [mps, batch 1] + PowerModels solve from small_qc_p",,,,,,,,54.048541999625854,,,,,,"graph 2.02 + forward 38.17 + solve 13.87; vs default_p 13.87 (x3.90), flat_q0_p 26.03 (x2.08), dc_qc_p 25.95 (x2.08)"
+case2000_goc,chain total,"graph + GENCO small forward [mps, batch 4] + PowerModels solve from small_qc",,,,,,,,45.69187499809997,,,,,,"graph 2.02 + forward 25.89 + solve 17.79; vs default 13.96 (x3.27), flat_q0 26.14 (x1.75), dc_qc 26.01 (x1.76)"
+case2000_goc,chain total,"graph + GENCO small forward [mps, batch 4] + PowerModels solve from small_qc_p",,,,,,,,41.77183299809997,,,,,,"graph 2.02 + forward 25.89 + solve 13.87; vs default_p 13.87 (x3.01), flat_q0_p 26.03 (x1.60), dc_qc_p 25.95 (x1.61)"
+case2000_goc,chain total,"graph + GENCO small forward [mps, batch 16] + PowerModels solve from small_qc",,,,,,,,44.599085935531924,,,,,,"graph 2.02 + forward 24.80 + solve 17.79; vs default 13.96 (x3.20), flat_q0 26.14 (x1.71), dc_qc 26.01 (x1.71)"
+case2000_goc,chain total,"graph + GENCO small forward [mps, batch 16] + PowerModels solve from small_qc_p",,,,,,,,40.67904393553192,,,,,,"graph 2.02 + forward 24.80 + solve 13.87; vs default_p 13.87 (x2.93), flat_q0_p 26.03 (x1.56), dc_qc_p 25.95 (x1.57)"
+case10000_goc,PowerModels solve,default,100.0,94.0,94.0,3.8297872340425534,3.0,35.0,4.627659574468085,89.4221665,114.2839786,93.6465,0.8133214167405228,1.061024394527411,92.0,
+case10000_goc,PowerModels solve,flat_q0,100.0,25.0,25.0,27.68,32.0,39.0,17.6,673.736042,857.2798168,749.837833,227.83997359833813,2.19064096092656,0.0,
+case10000_goc,PowerModels solve,dc_qc,100.0,0.0,0.0,,,,,,,,111.91637414032645,,0.0,
+case10000_goc,PowerModels solve,tiny_qc,100.0,100.0,100.0,4.68,4.0,9.0,5.0,111.3828335,179.1383786,114.087938,2.49847041318049,2.1030951200706314e-09,100.0,
+case10000_goc,PowerModels solve,tiny_q0,100.0,100.0,100.0,4.0,4.0,4.0,5.0,110.36531249999999,114.0772458,113.7439165,5.487184250376641,2.1031049734618327e-09,100.0,
+case10000_goc,PowerModels solve,small_qc,100.0,100.0,100.0,4.81,4.0,11.0,5.02,112.2656455,188.5059333,114.721104,4.133011177524818,2.103138334183424e-09,100.0,
+case10000_goc,PowerModels solve,default_p,100.0,95.0,95.0,3.4,3.0,29.0,4.2631578947368425,87.28875,110.7692832,90.243792,0.8133214167405228,1.0795901893531794,92.0,
+case10000_goc,PowerModels solve,flat_q0_p,100.0,25.0,25.0,27.68,32.0,39.0,17.6,661.647875,896.7520920000001,747.392041,227.83997359833813,2.19064096092656,0.0,
+case10000_goc,PowerModels solve,dc_qc_p,100.0,0.0,0.0,,,,,,,,111.91637414032645,,0.0,
+case10000_goc,PowerModels solve,tiny_qc_p,100.0,100.0,100.0,3.25,3.0,4.0,4.25,88.1070215,111.8582039,90.3375415,2.49847041318049,2.0880218184074315e-09,100.0,
+case10000_goc,PowerModels solve,small_qc_p,100.0,100.0,100.0,3.08,3.0,4.0,4.08,86.991646,92.2748914,89.9849375,4.133011177524818,7.498691842073302e-09,100.0,
+case10000_goc,PowerModels solve,default_nt,100.0,93.0,93.0,4.56989247311828,5.0,6.0,5.56989247311828,128.133167,135.8641582,133.10425,0.8133214167405228,1.0795901893518205,92.0,
+case10000_goc,PowerModels solve,flat_q0_nt,100.0,0.0,0.0,,,,,,,,227.83997359833813,,0.0,
+case10000_goc,PowerModels solve,tiny_qc_nt,100.0,100.0,100.0,5.04,5.0,6.0,6.04,134.2342085,138.4101833,137.9029995,2.49847041318049,2.1030882951535557e-09,100.0,
+case10000_goc,PowerModels solve,default_nt_p,100.0,94.0,94.0,4.23404255319149,4.0,6.0,5.23404255319149,111.40991700000001,136.2842875,115.142917,0.8133214167405228,1.0795901893531354,92.0,
+case10000_goc,PowerModels solve,flat_q0_nt_p,100.0,0.0,0.0,,,,,,,,227.83997359833813,,0.0,
+case10000_goc,PowerModels solve,dc_qc_nt_p,100.0,0.0,0.0,,,,,,,,111.91637414032645,,0.0,
+case10000_goc,PowerModels solve,tiny_qc_nt_p,100.0,100.0,100.0,4.42,4.0,7.0,5.42,112.8752705,135.8532289,115.306875,2.49847041318049,1.9890576415698626e-09,100.0,
+case10000_goc,PowerModels overhead,dict_ms: data dict (datakit _gfm_state),100.0,,,,,,,23.268500000995118,25.039879499672683,,,,,
+case10000_goc,PowerModels overhead,inst_ms: instantiate_pf_data (Ybus + Jacobian pattern),100.0,,,,,,,50.451292,64.07859590000001,,,,,
+case10000_goc,PowerModels overhead,"stored_runtime_ms: datakit stored AC runtime (generation, loaded machine)",100.0,,,,,,,275.8455276489258,648.0065822601325,,,,,
+case10000_goc,chain,"tiny: graph build + normalise + transforms [cpu, batch 1]",16.0,,,,,,,3.114520997769432,,,,,,
+case10000_goc,chain,"tiny: GENCO forward [cpu, batch 1]",7.0,,,,,,,100.02220800015492,,,,,,
+case10000_goc,chain,"tiny: GENCO forward [cpu, batch 4]",7.0,,,,,,,92.15111450066615,,,,,,
+case10000_goc,chain,"tiny: GENCO forward [cpu, batch 16]",7.0,,,,,,,85.59528387513637,,,,,,
+case10000_goc,chain,"tiny: GENCO forward [mps, batch 1]",7.0,,,,,,,63.688040998385986,,,,,,
+case10000_goc,chain,"tiny: GENCO forward [mps, batch 4]",7.0,,,,,,,62.555989500651776,,,,,,
+case10000_goc,chain,"tiny: GENCO forward [mps, batch 16]",7.0,,,,,,,61.4341224375039,,,,,,
+case10000_goc,chain,"tiny: GENCO end-to-end single state (graph+model+inverse+flows) [cpu, batch 1]",16.0,,,,,,,132.8309584987437,,,,,,
+case10000_goc,chain,"tiny: SciPy Newton problem build [cpu, batch 1]",16.0,,,,,,,2.3706249994575046,,,,,,
+case10000_goc,chain,"tiny: SciPy one Newton step from GENCO [cpu, batch 1]",16.0,,,,,,,19.107062498733285,,,,,,min of 3 per state
+case10000_goc,chain,"tiny: SciPy two Newton steps from GENCO [cpu, batch 1]",16.0,,,,,,,38.13591650032322,,,,,,min of 3 per state
+case10000_goc,chain,"tiny: SciPy full Newton from GENCO [cpu, batch 1]",16.0,,,,,,,57.001999999556574,,,,,,"min of 3 per state; 3.18 iterations, converged 17/17"
+case10000_goc,chain,"small: graph build + normalise + transforms [cpu, batch 1]",16.0,,,,,,,3.621396001108224,,,,,,
+case10000_goc,chain,"small: GENCO forward [cpu, batch 1]",7.0,,,,,,,215.99712500028545,,,,,,
+case10000_goc,chain,"small: GENCO forward [cpu, batch 4]",7.0,,,,,,,190.2982082501694,,,,,,
+case10000_goc,chain,"small: GENCO forward [cpu, batch 16]",7.0,,,,,,,188.3721119997972,,,,,,
+case10000_goc,chain,"small: GENCO forward [mps, batch 1]",7.0,,,,,,,113.34358300155144,,,,,,
+case10000_goc,chain,"small: GENCO forward [mps, batch 4]",7.0,,,,,,,122.70588550018148,,,,,,
+case10000_goc,chain,"small: GENCO forward [mps, batch 16]",7.0,,,,,,,125.11388281245672,,,,,,
+case10000_goc,chain,"small: GENCO end-to-end single state (graph+model+inverse+flows) [cpu, batch 1]",16.0,,,,,,,225.20593799890776,,,,,,
+case10000_goc,chain,"small: SciPy Newton problem build [cpu, batch 1]",16.0,,,,,,,2.375645999563858,,,,,,
+case10000_goc,chain,"small: SciPy one Newton step from GENCO [cpu, batch 1]",16.0,,,,,,,19.09156250076194,,,,,,min of 3 per state
+case10000_goc,chain,"small: SciPy two Newton steps from GENCO [cpu, batch 1]",16.0,,,,,,,38.16679149895208,,,,,,min of 3 per state
+case10000_goc,chain,"small: SciPy full Newton from GENCO [cpu, batch 1]",16.0,,,,,,,56.893250499342685,,,,,,"min of 3 per state; 3.06 iterations, converged 17/17"
+case10000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 1] + PowerModels solve from tiny_qc",,,,,,,,214.51956249792437,,,,,,"graph 3.11 + forward 100.02 + solve 111.38; vs default 89.42 (x2.40), flat_q0 673.74 (x0.32), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 1] + PowerModels solve from tiny_qc_p",,,,,,,,191.24375049792434,,,,,,"graph 3.11 + forward 100.02 + solve 88.11; vs default_p 87.29 (x2.19), flat_q0_p 661.65 (x0.29), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 4] + PowerModels solve from tiny_qc",,,,,,,,206.6484689984356,,,,,,"graph 3.11 + forward 92.15 + solve 111.38; vs default 89.42 (x2.31), flat_q0 673.74 (x0.31), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 4] + PowerModels solve from tiny_qc_p",,,,,,,,183.3726569984356,,,,,,"graph 3.11 + forward 92.15 + solve 88.11; vs default_p 87.29 (x2.10), flat_q0_p 661.65 (x0.28), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 16] + PowerModels solve from tiny_qc",,,,,,,,200.0926383729058,,,,,,"graph 3.11 + forward 85.60 + solve 111.38; vs default 89.42 (x2.24), flat_q0 673.74 (x0.30), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [cpu, batch 16] + PowerModels solve from tiny_qc_p",,,,,,,,176.8168263729058,,,,,,"graph 3.11 + forward 85.60 + solve 88.11; vs default_p 87.29 (x2.03), flat_q0_p 661.65 (x0.27), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [mps, batch 1] + PowerModels solve from tiny_qc",,,,,,,,178.18539549615542,,,,,,"graph 3.11 + forward 63.69 + solve 111.38; vs default 89.42 (x1.99), flat_q0 673.74 (x0.26), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [mps, batch 1] + PowerModels solve from tiny_qc_p",,,,,,,,154.90958349615542,,,,,,"graph 3.11 + forward 63.69 + solve 88.11; vs default_p 87.29 (x1.77), flat_q0_p 661.65 (x0.23), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [mps, batch 4] + PowerModels solve from tiny_qc",,,,,,,,177.0533439984212,,,,,,"graph 3.11 + forward 62.56 + solve 111.38; vs default 89.42 (x1.98), flat_q0 673.74 (x0.26), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [mps, batch 4] + PowerModels solve from tiny_qc_p",,,,,,,,153.7775319984212,,,,,,"graph 3.11 + forward 62.56 + solve 88.11; vs default_p 87.29 (x1.76), flat_q0_p 661.65 (x0.23), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [mps, batch 16] + PowerModels solve from tiny_qc",,,,,,,,175.93147693527334,,,,,,"graph 3.11 + forward 61.43 + solve 111.38; vs default 89.42 (x1.97), flat_q0 673.74 (x0.26), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO tiny forward [mps, batch 16] + PowerModels solve from tiny_qc_p",,,,,,,,152.65566493527334,,,,,,"graph 3.11 + forward 61.43 + solve 88.11; vs default_p 87.29 (x1.75), flat_q0_p 661.65 (x0.23), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [cpu, batch 1] + PowerModels solve from small_qc",,,,,,,,331.8841665013937,,,,,,"graph 3.62 + forward 216.00 + solve 112.27; vs default 89.42 (x3.71), flat_q0 673.74 (x0.49), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [cpu, batch 1] + PowerModels solve from small_qc_p",,,,,,,,306.6101670013937,,,,,,"graph 3.62 + forward 216.00 + solve 86.99; vs default_p 87.29 (x3.51), flat_q0_p 661.65 (x0.46), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [cpu, batch 4] + PowerModels solve from small_qc",,,,,,,,306.18524975127764,,,,,,"graph 3.62 + forward 190.30 + solve 112.27; vs default 89.42 (x3.42), flat_q0 673.74 (x0.45), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [cpu, batch 4] + PowerModels solve from small_qc_p",,,,,,,,280.91125025127764,,,,,,"graph 3.62 + forward 190.30 + solve 86.99; vs default_p 87.29 (x3.22), flat_q0_p 661.65 (x0.42), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [cpu, batch 16] + PowerModels solve from small_qc",,,,,,,,304.2591535009054,,,,,,"graph 3.62 + forward 188.37 + solve 112.27; vs default 89.42 (x3.40), flat_q0 673.74 (x0.45), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [cpu, batch 16] + PowerModels solve from small_qc_p",,,,,,,,278.9851540009054,,,,,,"graph 3.62 + forward 188.37 + solve 86.99; vs default_p 87.29 (x3.20), flat_q0_p 661.65 (x0.42), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [mps, batch 1] + PowerModels solve from small_qc",,,,,,,,229.23062450265968,,,,,,"graph 3.62 + forward 113.34 + solve 112.27; vs default 89.42 (x2.56), flat_q0 673.74 (x0.34), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [mps, batch 1] + PowerModels solve from small_qc_p",,,,,,,,203.95662500265968,,,,,,"graph 3.62 + forward 113.34 + solve 86.99; vs default_p 87.29 (x2.34), flat_q0_p 661.65 (x0.31), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [mps, batch 4] + PowerModels solve from small_qc",,,,,,,,238.5929270012897,,,,,,"graph 3.62 + forward 122.71 + solve 112.27; vs default 89.42 (x2.67), flat_q0 673.74 (x0.35), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [mps, batch 4] + PowerModels solve from small_qc_p",,,,,,,,213.3189275012897,,,,,,"graph 3.62 + forward 122.71 + solve 86.99; vs default_p 87.29 (x2.44), flat_q0_p 661.65 (x0.32), dc_qc_p nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [mps, batch 16] + PowerModels solve from small_qc",,,,,,,,241.00092431356495,,,,,,"graph 3.62 + forward 125.11 + solve 112.27; vs default 89.42 (x2.70), flat_q0 673.74 (x0.36), dc_qc nan (xnan)"
+case10000_goc,chain total,"graph + GENCO small forward [mps, batch 16] + PowerModels solve from small_qc_p",,,,,,,,215.72692481356495,,,,,,"graph 3.62 + forward 125.11 + solve 86.99; vs default_p 87.29 (x2.47), flat_q0_p 661.65 (x0.33), dc_qc_p nan (xnan)"

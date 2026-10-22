@@ -47,3 +47,4 @@ work/fresh/results_*_existing_dev.*
 work/fresh/results_n1_devcheck*
 work/goc10000/hybrid_variants_summary.md
 work/study/
+*.egg-info/

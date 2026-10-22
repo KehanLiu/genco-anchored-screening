@@ -1,0 +1,4 @@
+grid,model,train,val,test
+500,pf_case500_goc_ft_seed0,8969,995,995
+2000,pf_case2000_goc_ft2000_seed0,2248,250,250
+10000,pf_case10000_goc_ft10000_seed0,1347,150,150

@@ -1,0 +1,25 @@
+network,variant,item,device,batch,ms_per_state,ms_min,n,note
+case10000_goc,tiny,graph build + normalise + transforms,cpu,1,3.114520997769432,2.9622499969264027,16,
+case10000_goc,tiny,GENCO forward,cpu,1,100.02220800015493,99.08158400139655,7,
+case10000_goc,tiny,GENCO forward,cpu,4,92.15111450066615,91.92171875019994,7,
+case10000_goc,tiny,GENCO forward,cpu,16,85.59528387513637,84.99618231235218,7,
+case10000_goc,tiny,GENCO forward,mps,1,63.688040998385986,63.28258299981826,7,
+case10000_goc,tiny,GENCO forward,mps,4,62.555989500651776,62.46215625014884,7,
+case10000_goc,tiny,GENCO forward,mps,16,61.4341224375039,61.390044249947096,7,
+case10000_goc,tiny,GENCO end-to-end single state (graph+model+inverse+flows),cpu,1,132.8309584987437,131.6993750006077,16,
+case10000_goc,tiny,SciPy Newton problem build,cpu,1,2.3706249994575046,2.3530420003226027,16,
+case10000_goc,tiny,SciPy one Newton step from GENCO,cpu,1,19.107062498733285,18.86266699875705,16,min of 3 per state
+case10000_goc,tiny,SciPy two Newton steps from GENCO,cpu,1,38.13591650032322,37.65137499794946,16,min of 3 per state
+case10000_goc,tiny,SciPy full Newton from GENCO,cpu,1,57.001999999556574,56.309040999622084,16,"min of 3 per state; 3.18 iterations, converged 17/17"
+case10000_goc,small,graph build + normalise + transforms,cpu,1,3.6213960011082236,3.4994999987247866,16,
+case10000_goc,small,GENCO forward,cpu,1,215.99712500028545,214.88266700180247,7,
+case10000_goc,small,GENCO forward,cpu,4,190.2982082501694,190.0814167502176,7,
+case10000_goc,small,GENCO forward,cpu,16,188.3721119997972,187.68531512500886,7,
+case10000_goc,small,GENCO forward,mps,1,113.34358300155145,112.91787500158534,7,
+case10000_goc,small,GENCO forward,mps,4,122.70588550018147,122.66702099987015,7,
+case10000_goc,small,GENCO forward,mps,16,125.11388281245672,124.93932550000864,7,
+case10000_goc,small,GENCO end-to-end single state (graph+model+inverse+flows),cpu,1,225.20593799890776,218.85437500168337,16,
+case10000_goc,small,SciPy Newton problem build,cpu,1,2.375645999563858,2.3522499977843836,16,
+case10000_goc,small,SciPy one Newton step from GENCO,cpu,1,19.09156250076194,18.92158400005428,16,min of 3 per state
+case10000_goc,small,SciPy two Newton steps from GENCO,cpu,1,38.16679149895208,37.78741699716193,16,min of 3 per state
+case10000_goc,small,SciPy full Newton from GENCO,cpu,1,56.893250499342685,56.38320900106919,16,"min of 3 per state; 3.06 iterations, converged 17/17"
